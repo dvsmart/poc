@@ -12,10 +12,21 @@ import { FuseSidebarModule } from '../@core/components/sidebar/sidebar.module';
 import { Routes, RouterModule } from '../../node_modules/@angular/router';
 import { LayoutModule } from './layout/layout.module';
 import { fuseConfig } from './config';
+import { AuthGuard } from './login/auth.guard';
 
 
 const appRoutes: Routes = [
-  {path: '', redirectTo:'', pathMatch: 'full'},
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  {
+    path: 'login',
+    loadChildren: './login/login.module#LoginModule'
+  },
+  {
+    path: 'home',
+    canActivate: [AuthGuard],
+    loadChildren: './features/features.module#FeaturesModule'
+  },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
@@ -34,7 +45,7 @@ const appRoutes: Routes = [
     FuseProgressBarModule,
     CoreSharedModule.forRoot(fuseConfig),
     FuseSidebarModule,
-    
+
     LayoutModule
   ],
   providers: [],
