@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { HttpClient } from '../../../../node_modules/@angular/common/http';
+import { environment } from 'environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -36,6 +37,21 @@ export class CoreNavigationService
     }
 
     getMenu() : Observable<any>{
-        return this.http.get<any>('http://localhost:61011/api/Menu');
+        return this.http.get<any>(environment.apiUrl + 'Menu');
+    }
+
+    register(key, navigation): void
+    {
+        if ( this._registry[key] )
+        {
+            console.error(`The navigation with the key '${key}' already exists. Either unregister it first or use a unique key.`);
+
+            return;
+        }
+
+        this._registry[key] = navigation;
+
+        // Notify the subject
+        this._onNavigationRegistered.next([key, navigation]);
     }
 }

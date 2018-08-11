@@ -44,9 +44,9 @@ export class CoreNavigationComponent{
         // Load the navigation either from the input or from the service
         //this.navigation = this.navigation || this._fuseNavigationService.getCurrentNavigation();
 
-        // this._fuseNavigationService.getMenu().subscribe(x => {
-        //     this.navigation = x;
-        // });
+        this._fuseNavigationService.getMenu().subscribe(x => {
+            this.navigation = x;
+        });
 
         // Subscribe to the current navigation changes
         // this._fuseNavigationService.onNavigationChanged

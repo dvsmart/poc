@@ -13,20 +13,23 @@ import { Routes, RouterModule } from '../../node_modules/@angular/router';
 import { LayoutModule } from './layout/layout.module';
 import { fuseConfig } from './config';
 import { AuthGuard } from './login/auth.guard';
+import { FeaturesModule } from './features/features.module';
 
+FeaturesModule
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  {
-    path: 'login',
-    loadChildren: './login/login.module#LoginModule'
-  },
   {
     path: '',
-    canActivate: [AuthGuard],
-    loadChildren: './features/features.module#FeaturesModule'
-  },
-  { path: '**', redirectTo: '/home' }
+    canActivate:[AuthGuard],
+    loadChildren:'./features/features.module#FeaturesModule'
+  }
+  // { path: '', redirectTo: '/home', pathMatch: 'full' },
+  // {
+  //   path: 'login',
+  //   loadChildren: './login/login.module#LoginModule'
+  // },
+  
+  //{ path: '**', redirectTo: '' }
 ];
 
 @NgModule({
@@ -37,16 +40,16 @@ const appRoutes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes),
-
+    CoreSharedModule.forRoot(fuseConfig),
     MatButtonModule,
     MatIconModule,
 
     FuseProgressBarModule,
-    CoreSharedModule.forRoot(fuseConfig),
+
     FuseSidebarModule,
 
-    LayoutModule
+    LayoutModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]
