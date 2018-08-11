@@ -22,11 +22,11 @@ const appRoutes: Routes = [
     loadChildren: './login/login.module#LoginModule'
   },
   {
-    path: 'home',
+    path: '',
     canActivate: [AuthGuard],
     loadChildren: './features/features.module#FeaturesModule'
   },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '/home' }
 ];
 
 @NgModule({

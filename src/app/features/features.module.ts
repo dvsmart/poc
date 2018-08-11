@@ -5,7 +5,15 @@ import { CoreSharedModule } from '@core/core.module';
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: './home/home.module#HomeModule'
+    loadChildren: './home/home.module#HomeModule',
+  },
+  {
+    path: 'asset/properties',
+    loadChildren: './asset/asset.module#AssetModule'
+  },
+  {
+    path: 'assessment',
+    loadChildren: './assessment/assessment.module#AssessmentModule'
   }
 ];
 

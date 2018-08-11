@@ -4,6 +4,8 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FuseSidebarService } from '../../../../@core/components/sidebar/sidebar.service';
 import { FuseConfigService } from '@core/services/config.service';
+import { AuthService } from '../../../login/auth.service';
+import { Router } from '../../../../../node_modules/@angular/router';
 
 
 @Component({
@@ -20,7 +22,8 @@ export class ToolbarComponent implements OnInit {
   selectedLanguage: any;
   languages: any;
 
-  constructor(private _fuseSidebarService: FuseSidebarService, private _fuseConfigService: FuseConfigService) {
+  constructor(private _fuseSidebarService: FuseSidebarService, private _fuseConfigService: FuseConfigService,
+  private authservice: AuthService,private router: Router) {
     this._unsubscribeAll = new Subject();
     this.languages = [
       {
@@ -34,6 +37,11 @@ export class ToolbarComponent implements OnInit {
         flag: 'tr'
       }
     ];
+  }
+
+  logout(){
+    this.authservice.logout();
+    this.router.navigate(['/login']);
   }
 
   ngOnInit() {
