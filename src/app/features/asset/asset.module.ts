@@ -29,9 +29,6 @@ const routes: Routes = [
     CoreSharedModule,
     FuseConfirmDialogModule,
     FuseSidebarModule,
-
-    RouterModule.forChild(routes),
-
     MatButtonModule,
     MatCheckboxModule,
     MatDatepickerModule,
@@ -42,7 +39,8 @@ const routes: Routes = [
     MatRippleModule,
     MatTableModule,
     MatToolbarModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    RouterModule.forChild(routes),
   ],
   providers:[PropertiesService],
   declarations: [AssetComponent, PropertiesListComponent, PropertiesFormComponent, SelectedBarComponent, SidebarComponent],

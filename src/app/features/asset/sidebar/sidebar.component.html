@@ -7,12 +7,12 @@
         <div class="content py-16" fusePerfectScrollbar>
             <div class="nav">
                 <div class="nav-item" aria-label="inbox">
-                    <a class="nav-link" matRipple [ngClass]="{'active mat-accent-bg':filterBy ==='live'}">
+                    <a class="nav-link" (click)="changeFilter('live')" matRipple [ngClass]="{'active mat-accent-bg':filterBy ==='live'}">
                         <span class="title">Live</span>
                     </a>
                 </div>
                 <div class="nav-item" aria-label="frequently contacted">
-                    <a class="nav-link" matRipple [ngClass]="{'active mat-accent-bg':filterBy ==='new'}">
+                    <a class="nav-link" (click)="changeFilter('new')" matRipple [ngClass]="{'active mat-accent-bg':filterBy ==='new'}">
                         <div class="title">New</div>
                     </a>
                 </div>

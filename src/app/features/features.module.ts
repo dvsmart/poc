@@ -5,11 +5,6 @@ import { CoreSharedModule } from '../../@core/core.module';
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: '/home',
-    pathMatch: 'full'
-  },
-  {
     path: 'home',
     loadChildren: './home/home.module#HomeModule',
   },
@@ -28,6 +23,10 @@ const routes: Routes = [
   {
     path: 'todo',
     loadChildren: './todo/todo.module#TodoModule'
+  },
+  {
+    path: 'task',
+    loadChildren: './task/task.module#TaskModule'
   }
 ];
 

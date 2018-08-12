@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '../../node_modules/@angular/common/http';
 import { MatButtonModule, MatIconModule } from '../../node_modules/@angular/material';
@@ -13,23 +12,19 @@ import { Routes, RouterModule } from '../../node_modules/@angular/router';
 import { LayoutModule } from './layout/layout.module';
 import { fuseConfig } from './config';
 import { AuthGuard } from './login/auth.guard';
-import { FeaturesModule } from './features/features.module';
-
-FeaturesModule
 
 const appRoutes: Routes = [
+  // {path:'',redirectTo:'main',pathMatch:'full'},
   {
-    path: '',
-    canActivate:[AuthGuard],
-    loadChildren:'./features/features.module#FeaturesModule'
+    path: 'home',
+    canActivate: [AuthGuard],
+    loadChildren: './features/features.module#FeaturesModule',
+  },
+  {
+    path: 'login',
+    loadChildren: './login/login.module#LoginModule',
   }
-  // { path: '', redirectTo: '/home', pathMatch: 'full' },
-  // {
-  //   path: 'login',
-  //   loadChildren: './login/login.module#LoginModule'
-  // },
-  
-  //{ path: '**', redirectTo: '' }
+
 ];
 
 @NgModule({
@@ -40,7 +35,7 @@ const appRoutes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    CoreSharedModule.forRoot(fuseConfig),
+
     MatButtonModule,
     MatIconModule,
 
@@ -49,6 +44,7 @@ const appRoutes: Routes = [
     FuseSidebarModule,
 
     LayoutModule,
+    CoreSharedModule.forRoot(fuseConfig),
     RouterModule.forRoot(appRoutes)
   ],
   providers: [],

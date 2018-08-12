@@ -13,7 +13,8 @@ import { FormatCellPipe } from './format-cell.pipe';
         GetByIdPipe,
         HtmlToPlaintextPipe,
         FilterPipe,
-        CamelCaseToDashPipe
+        CamelCaseToDashPipe,
+        FormatCellPipe
     ],
     imports     : [],
     exports     : [
@@ -21,7 +22,8 @@ import { FormatCellPipe } from './format-cell.pipe';
         GetByIdPipe,
         HtmlToPlaintextPipe,
         FilterPipe,
-        CamelCaseToDashPipe
+        CamelCaseToDashPipe,
+        FormatCellPipe
     ]
 })
 export class FusePipesModule

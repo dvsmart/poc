@@ -1,0 +1,12 @@
+<div *ngIf="tasks.length === 0" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
+  <span class="no-todos-text hint-text">There are no Tasks!</span>
+</div>
+<div class="todo-list" ngxDroppable (out)="onDrop($event)" [@animateStagger]="{value:'50'}">
+  <task-list-item class="task-list-item has-handle"
+                  *ngFor="let taskItem of tasks" [task]="taskItem"
+                  ngxDraggable
+                  [ngClass]="{'current-todo mat-accent-50-bg':taskItem?.id == currentTodo?.id}"
+                  matRipple
+                  [@animate]="{value:'*',params:{y:'100%'}}">
+  </task-list-item>
+</div>

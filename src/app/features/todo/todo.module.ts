@@ -69,8 +69,6 @@ const routes: Routes = [
         TodoDetailsComponent
     ],
     imports     : [
-        RouterModule.forChild(routes),
-
         MatButtonModule,
         MatCheckboxModule,
         MatDatepickerModule,
@@ -81,7 +79,8 @@ const routes: Routes = [
         MatRippleModule,
         MatSelectModule,
         CoreSharedModule,
-        FuseSidebarModule
+        FuseSidebarModule,
+        RouterModule.forChild(routes),
     ],
     providers   : [
         TodoService
