@@ -62,7 +62,7 @@ export class TaskComponent implements OnInit {
   /**
    * Deselect todos
    */
-  deselectTodos(): void {
+  deselectTasks(): void {
     this._taskservice.deselectTasks();
   }
 

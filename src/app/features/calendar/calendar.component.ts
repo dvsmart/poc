@@ -35,7 +35,6 @@ export class CalendarComponent implements OnInit
         private _calendarService: CalendarService
     )
     {
-        debugger;
         // Set the defaults
         this.view = 'month';
         this.viewDate = new Date();
@@ -78,6 +77,7 @@ export class CalendarComponent implements OnInit
         this.refresh.subscribe(updateDB => {
             if ( updateDB )
             {
+                debugger;
                 this._calendarService.updateEvents(this.events);
             }
         });
@@ -217,6 +217,7 @@ export class CalendarComponent implements OnInit
 
         this.dialogRef.afterClosed()
             .subscribe(response => {
+                debugger;
                 if ( !response )
                 {
                     return;

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MatButtonModule, MatDatepickerModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSlideToggleModule, MatToolbarModule } from '@angular/material';
+import { MatButtonModule, MatDatepickerModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSlideToggleModule, MatToolbarModule, MatNativeDateModule } from '@angular/material';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { CalendarModule as AngularCalendarModule } from 'angular-calendar';
 import { CalendarComponent } from './calendar.component';
@@ -25,8 +25,6 @@ const routes: Routes = [
         CalendarEventFormDialogComponent
     ],
     imports: [
-        RouterModule.forChild(routes),
-
         MatButtonModule,
         MatDatepickerModule,
         MatDialogModule,
@@ -35,12 +33,13 @@ const routes: Routes = [
         MatInputModule,
         MatSlideToggleModule,
         MatToolbarModule,
-
+        MatNativeDateModule,
         AngularCalendarModule.forRoot(),
         ColorPickerModule,
 
         CoreSharedModule,
-        FuseConfirmDialogModule
+        FuseConfirmDialogModule,
+        RouterModule.forChild(routes),
     ],
     providers: [
         CalendarService

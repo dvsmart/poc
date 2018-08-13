@@ -31,8 +31,8 @@ export class CalendarEventModel
     constructor(data?)
     {
         data = data || {};
-        this.start = new Date(data.start) || startOfDay(new Date());
-        this.end = new Date(data.end) || endOfDay(new Date());
+        this.start = new Date(data.startDate) || startOfDay(new Date());
+        this.end = new Date(data.dueDate) || endOfDay(new Date());
         this.title = data.title || '';
         this.color = {
             primary  : data.color && data.color.primary || '#1e90ff',
@@ -44,11 +44,11 @@ export class CalendarEventModel
             afterEnd   : data.resizable && data.resizable.afterEnd || true
         };
         this.actions = data.actions || [];
-        this.allDay = data.allDay || false;
+        this.allDay = data.allDayEvent || false;
         this.cssClass = data.cssClass || '';
         this.meta = {
-            location: data.meta && data.meta.location || '',
-            notes   : data.meta && data.meta.notes || ''
+            location: data.location || '',
+            notes   : data.description || ''
         };
     }
 }

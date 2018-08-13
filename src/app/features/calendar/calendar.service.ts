@@ -38,7 +38,7 @@ export class CalendarService implements Resolve<any>
     {
         return new Promise((resolve, reject) => {
             Promise.all([
-                //this.getEvents()
+                this.getEvents()
             ]).then(
                 ([events]: [any]) => {
                     resolve();
@@ -57,7 +57,7 @@ export class CalendarService implements Resolve<any>
     {
         return new Promise((resolve, reject) => {
 
-            this._httpClient.get(environment.apiUrl + 'Task/Taskforgrid?page=1&pageSize=10')
+            this._httpClient.get(environment.apiUrl + 'Event?page=1&pageSize=5')
                 .subscribe((response: any) => {
                     this.events = response.data;
                     this.onEventsUpdated.next(this.events);
@@ -74,11 +74,9 @@ export class CalendarService implements Resolve<any>
      */
     updateEvents(events): Promise<any>
     {
+        let event = events[0];
         return new Promise((resolve, reject) => {
-            this._httpClient.post('api/Task', {
-                id  : 'events',
-                data: [...events]
-            })
+            this._httpClient.post(environment.apiUrl + 'Event', event)
                 .subscribe((response: any) => {
                     this.getEvents();
                 }, reject);

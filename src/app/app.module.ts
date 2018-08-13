@@ -14,7 +14,6 @@ import { fuseConfig } from './config';
 import { AuthGuard } from './login/auth.guard';
 
 const appRoutes: Routes = [
-  // {path:'',redirectTo:'main',pathMatch:'full'},
   {
     path: '',
     canActivate: [AuthGuard],
@@ -23,8 +22,12 @@ const appRoutes: Routes = [
   {
     path: 'login',
     loadChildren: './login/login.module#LoginModule',
+  },
+  {
+    path: '',
+    redirectTo: '',
+    pathMatch: 'full'
   }
-
 ];
 
 @NgModule({

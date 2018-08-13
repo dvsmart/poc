@@ -27,6 +27,11 @@ const routes: Routes = [
   {
     path: 'task',
     loadChildren: './task/task.module#TaskModule'
+  },
+  {
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full'
   }
 ];
 
