@@ -17,7 +17,7 @@ const appRoutes: Routes = [
   {
     path: '',
     canActivate: [AuthGuard],
-    loadChildren: './features/features.module#FeaturesModule',
+    loadChildren: 'app/features/features.module#FeaturesModule',
   },
   {
     path: 'login',
@@ -25,7 +25,7 @@ const appRoutes: Routes = [
   },
   {
     path: '',
-    redirectTo: '',
+    redirectTo: '/home',
     pathMatch: 'full'
   }
 ];

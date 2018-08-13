@@ -6,7 +6,7 @@ import { CoreSharedModule } from '../../@core/core.module';
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: './home/home.module#HomeModule',
+    loadChildren: 'app/features/home/home.module#HomeModule',
   },
   {
     path: 'asset/properties',
