@@ -6,7 +6,7 @@ import { TaskDetailComponent } from './task-detail/task-detail.component';
 import { TaskListComponent } from './task-list/task-list.component';
 import { Routes, RouterModule } from '../../../../node_modules/@angular/router';
 import { TaskService } from './task.service';
-import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatSelectModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatSelectModule, MatNativeDateModule, MatPaginatorModule } from '@angular/material';
 import { CoreSharedModule } from '@core/core.module';
 import { FuseSidebarModule } from '@core/components/sidebar/sidebar.module';
 import { TaskListItemComponent } from './task-list/task-list-item/task-list-item.component';
@@ -68,10 +68,12 @@ const routes: Routes = [
     MatCheckboxModule,
     MatDatepickerModule,
     MatFormFieldModule,
+    MatNativeDateModule, 
     MatIconModule,
     MatInputModule,
     MatMenuModule,
     MatRippleModule,
+    MatPaginatorModule,
     MatSelectModule,
     CoreSharedModule,
     FuseSidebarModule,

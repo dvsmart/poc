@@ -88,4 +88,10 @@ export class TaskComponent implements OnInit {
 
   }
 
+  toggleSelectAll(): void
+    {
+        this._taskservice.toggleSelectAll();
+    }
+
+
 }

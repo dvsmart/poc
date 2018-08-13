@@ -4,6 +4,8 @@ import { HttpClient } from '../../../../node_modules/@angular/common/http';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '../../../../node_modules/@angular/router';
 import { environment } from 'environments/environment';
 import { FuseUtils } from '@core/utils';
+import { Task } from './task.model';
+import { Location } from '@angular/common';
 
 
 @Injectable({
@@ -24,13 +26,17 @@ export class TaskService {
   searchText: string;
   filterBy: string;
 
+  currentTask: Task;
+    routeParams: any;
+
   /**
    * Constructor
    *
    * @param {HttpClient} _httpClient
    */
   constructor(
-      private _httpClient: HttpClient
+      private _httpClient: HttpClient,
+      private _location: Location
   ) {
       // Set the defaults
       this.onTasksChanged = new BehaviorSubject([]);
@@ -83,23 +89,43 @@ export class TaskService {
    *
    * @returns {Promise<any>}
    */
+//   gettasks(page?: number, size?: number): Promise<any> {
+//       return new Promise((resolve, reject) => {
+//           page = page === undefined ? 1 : page;
+//           size = size === undefined ? 5 : size;
+//           this._httpClient.get(environment.apiUrl + 'Task/TaskForGrid?page=' + page + '&pageSize=' + size)
+//               .subscribe((response: any) => {
+//                   this.apiResponse = response;
+//                   this.dataLength = response.totalCount;
+//                   this.tasks  = response.data;
+//                   if (this.searchText && this.searchText !== '') {
+//                       this.tasks = FuseUtils.filterArrayByString(this.apiResponse.data, this.searchText);
+//                   }
+//                   this.onTasksChanged.next(this.apiResponse.data);
+//                   resolve(this.tasks);
+//               }, reject);
+//       }
+//       );
+//   }
+
   gettasks(page?: number, size?: number): Promise<any> {
-      return new Promise((resolve, reject) => {
-          page = page === undefined ? 1 : page;
-          size = size === undefined ? 10 : size;
-          this._httpClient.get(environment.apiUrl + 'Task/TaskForGrid?page=' + page + '&pageSize=' + size)
-              .subscribe((response: any) => {
-                  this.apiResponse = response;
-                  this.dataLength = response.totalCount;
-                  if (this.searchText && this.searchText !== '') {
-                      this.tasks = FuseUtils.filterArrayByString(this.apiResponse.data, this.searchText);
-                  }
-                  this.onTasksChanged.next(this.apiResponse.data);
-                  resolve(this.tasks);
-              }, reject);
-      }
-      );
-  }
+    return new Promise((resolve, reject) => {
+        page = page === undefined ? 1 : page;
+        size = size === undefined ? 10 : size;
+        this._httpClient.get(environment.apiUrl + 'Task/TaskForGrid?page=' + page + '&pageSize=' + size)
+            .subscribe((response: any) => {
+                this.apiResponse = response;
+                this.dataLength = response.totalCount;
+                this.tasks  = response.data;
+                if (this.searchText && this.searchText !== '') {
+                    this.tasks = FuseUtils.filterArrayByString(this.apiResponse.data, this.searchText);
+                }
+                this.onTasksChanged.next(this.apiResponse);
+                resolve(this.tasks);
+            }, reject);
+    }
+    );
+}
 
   /**
    * Toggle selected contact by id
@@ -232,5 +258,30 @@ export class TaskService {
       this.onTasksChanged.next(this.tasks);
       this.deselectTasks();
   }
+
+  setCurrentTask(id): void
+    {
+        this.currentTask = this.tasks.find(task => {
+            return task.id === id;
+        });
+
+        this.onCurrentTaskChanged.next([this.currentTask, 'edit']);
+
+        // const tagHandle    = this.routeParams.tagHandle,
+        //       filterHandle = this.routeParams.filterHandle;
+
+        // if ( tagHandle )
+        // {
+        //     this._location.go('apps/todo/tag/' + tagHandle + '/' + id);
+        // }
+        // else if ( filterHandle )
+        // {
+        //     this._location.go('apps/todo/filter/' + filterHandle + '/' + id);
+        // }
+        // else
+        // {
+        //     this._location.go('apps/todo/all/' + id);
+        // }
+    }
 
 }

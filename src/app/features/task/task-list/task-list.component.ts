@@ -17,9 +17,9 @@ import { Location } from '@angular/common';
 export class TaskListComponent implements OnInit {
   // @ViewChild('dialogContent')
   // dialogContent: TemplateRef<any>;
-  // resultsLength: number;
+    resultsLength: number;
   // //tasks: any;
-  // pageSize = 10;
+    pageSize = 10;
   // dataSource: TaskDataSource | null;
   // displayedColumns = ['checkbox', 'dataId','name', 'description', 'dueDate','status','priority', 'buttons'];
   // selectedTasks: any[];
@@ -29,9 +29,9 @@ export class TaskListComponent implements OnInit {
 
   // Private
   private _unsubscribeAll: Subject<any>;
-  //currentPage: number;
+  currentPage: number;
   tasks: Task[];
-  currentTodo: Task;
+  currentTask: Task;
 
   /**
    * Constructor
@@ -52,6 +52,11 @@ export class TaskListComponent implements OnInit {
   // @ Lifecycle hooks
   // -----------------------------------------------------------------------------------------------------
 
+  pageEvent($event) {
+    this.currentPage = $event.pageIndex + 1;
+    this.pageSize = $event.pageSize;
+    this._taskservice.gettasks(this.currentPage,this.pageSize);
+  }
   /**
    * On init
    */
@@ -59,17 +64,20 @@ export class TaskListComponent implements OnInit {
     this._taskservice.onTasksChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(todos => {
-                this.tasks = todos;
+                this.tasks = todos.data;
+                this.resultsLength = todos.totalCount;
+                this.pageSize = todos.pageSize
+                this.currentPage = todos.currentPage
             });
 
         // Subscribe to update current todo on changes
         this._taskservice.onCurrentTaskChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(currentTodo => {
-                if ( !currentTodo )
+            .subscribe(currentTask => {
+                if ( !currentTask )
                 {
                     // Set the current todo id to null to deselect the current todo
-                    this.currentTodo = null;
+                    this.currentTask = null;
 
                     // Handle the location changes
                     const tagHandle    = this._activatedRoute.snapshot.params.tagHandle,
@@ -90,7 +98,7 @@ export class TaskListComponent implements OnInit {
                 }
                 else
                 {
-                    this.currentTodo = currentTodo;
+                    this.currentTask = currentTask;
                 }
             });
     //this.dataSource = new TaskDataSource(this._taskservice);
@@ -140,6 +148,12 @@ export class TaskListComponent implements OnInit {
   onDrop(ev): void
   {
 
+  }
+
+  readTask(taskId): void
+  {
+      // Set current todo
+      this._taskservice.setCurrentTask(taskId);
   }
 
 }

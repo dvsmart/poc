@@ -5,13 +5,13 @@
   <!-- / TOP BACKGROUND -->
 
   <!-- SIDEBAR -->
-  <fuse-sidebar class="sidebar" name="todo-main-sidebar" position="left" lockedOpen="gt-md">
+  <fuse-sidebar class="sidebar" name="task-main-sidebar" position="left" lockedOpen="gt-md">
       <task-filter></task-filter>
   </fuse-sidebar>
   <!-- / SIDEBAR -->
 
   <!-- CENTER -->
-  <div class="center">
+  <div class="center p-24 pb-56 ps ps--active-y">
 
       <!-- CONTENT HEADER -->
       <div class="header" fxLayout="row" fxLayoutAlign="start center">
@@ -19,7 +19,7 @@
           <div class="search-wrapper mat-white-bg" fxFlex fxLayout="row" fxLayoutAlign="start center">
 
               <button mat-icon-button class="sidebar-toggle" fxHide.gt-md
-                      (click)="toggleSidebar('todo-main-sidebar')">
+                      (click)="toggleSidebar('task-main-sidebar')">
                   <mat-icon>menu</mat-icon>
               </button>
 

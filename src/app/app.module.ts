@@ -16,7 +16,7 @@ import { AuthGuard } from './login/auth.guard';
 const appRoutes: Routes = [
   // {path:'',redirectTo:'main',pathMatch:'full'},
   {
-    path: 'home',
+    path: '',
     canActivate: [AuthGuard],
     loadChildren: './features/features.module#FeaturesModule',
   },
