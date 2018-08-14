@@ -8,6 +8,7 @@ import { takeUntil } from '../../../../../node_modules/rxjs/operators';
 import { AssessmentFormComponent } from '../assessment-form/assessment-form.component';
 import { FormGroup } from '../../../../../node_modules/@angular/forms';
 import { DataSource } from '../../../../../node_modules/@angular/cdk/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-assessment-list',
@@ -36,7 +37,8 @@ export class AssessmentListComponent implements OnInit {
 
   constructor(
     private _assessmentservice: AssessmentService,
-    public _matDialog: MatDialog
+    public _matDialog: MatDialog,
+    private router: Router
   ) {
     // Set the private defaults
     this._unsubscribeAll = new Subject();
@@ -103,41 +105,43 @@ export class AssessmentListComponent implements OnInit {
    *
    * @param contact
    */
-  editContact(contact): void {
-    this.dialogRef = this._matDialog.open(AssessmentFormComponent, {
-      panelClass: 'contact-form-dialog',
-      data: {
-        contact: contact,
-        action: 'edit'
-      }
-    });
+  editContact(assessment): void {
+    debugger;
+    this.router.navigate(['assessment/detail/'+ assessment.id]);
+    // this.dialogRef = this._matDialog.open(AssessmentFormComponent, {
+    //   panelClass: 'contact-form-dialog',
+    //   data: {
+    //     contact: contact,
+    //     action: 'edit'
+    //   }
+    // });
 
-    this.dialogRef.afterClosed()
-      .subscribe(response => {
-        if (!response) {
-          return;
-        }
-        const actionType: string = response[0];
-        const formData: FormGroup = response[1];
-        switch (actionType) {
-          /**
-           * Save
-           */
-          case 'save':
+    // this.dialogRef.afterClosed()
+    //   .subscribe(response => {
+    //     if (!response) {
+    //       return;
+    //     }
+    //     const actionType: string = response[0];
+    //     const formData: FormGroup = response[1];
+    //     switch (actionType) {
+    //       /**
+    //        * Save
+    //        */
+    //       case 'save':
 
-            this._assessmentservice.updateContact(formData.getRawValue());
+    //         this._assessmentservice.updateContact(formData.getRawValue());
 
-            break;
-          /**
-           * Delete
-           */
-          case 'delete':
+    //         break;
+    //       /**
+    //        * Delete
+    //        */
+    //       case 'delete':
 
-            this.deleteAssessment(contact);
+    //         this.deleteAssessment(contact);
 
-            break;
-        }
-      });
+    //         break;
+    //     }
+    //   });
   }
 
   /**

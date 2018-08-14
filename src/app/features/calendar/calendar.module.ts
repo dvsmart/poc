@@ -34,11 +34,12 @@ const routes: Routes = [
         MatSlideToggleModule,
         MatToolbarModule,
         MatNativeDateModule,
-        AngularCalendarModule.forRoot(),
+        
         ColorPickerModule,
 
         CoreSharedModule,
         FuseConfirmDialogModule,
+        AngularCalendarModule.forRoot(),
         RouterModule.forChild(routes),
     ],
     providers: [

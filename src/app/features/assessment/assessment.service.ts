@@ -4,6 +4,8 @@ import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { FuseUtils } from '@core/utils';
 import { environment } from 'environments/environment';
+import { ReferenceModel } from './models/reference.model';
+import { Assessment } from './models/assessment.model';
 
 @Injectable({
     providedIn: 'root'
@@ -21,6 +23,8 @@ export class AssessmentService {
     searchText: string;
     filterBy: string;
 
+    referenceApi = environment.apiUrl + 'AssessmentReference/'
+
     constructor(
         private _httpClient: HttpClient
     ) {
@@ -31,10 +35,35 @@ export class AssessmentService {
         this.dataLength = new BehaviorSubject(0);
     }
 
+    public getscopes(): Observable<ReferenceModel[]> {
+        return this._httpClient.get<ReferenceModel[]>(this.referenceApi + 'Scopes');
+    }
+    public getTypes(): Observable<ReferenceModel[]> {
+        return this._httpClient.get<ReferenceModel[]>(this.referenceApi + 'Types');
+    }
+    public getFrequencies(): Observable<ReferenceModel[]> {
+        return this._httpClient.get<ReferenceModel[]>(this.referenceApi + 'Frequencies');
+    }
+
+    public add(propertyModel: Assessment): Observable<boolean> {
+        return this._httpClient.post<boolean>(environment.apiUrl + 'Assessment/create', propertyModel);
+    }
+
+    public update(id: number, propertyModel: Assessment): Observable<boolean> {
+        return this._httpClient.put<boolean>(environment.apiUrl + 'Assessment/edit/?id=' + id, propertyModel);
+    }
+
+    public getSingle(id: number): Observable<Assessment> {
+        return this._httpClient.get<Assessment>(environment.apiUrl + 'Assessment/' + id);
+    }
+
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
         return new Promise((resolve, reject) => {
             Promise.all([
                 this.getAssessments(),
+                this.getFrequencies(),
+                this.getscopes(),
+                this.getTypes()
             ]).then(
                 ([files]) => {
 

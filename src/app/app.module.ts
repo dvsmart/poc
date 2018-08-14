@@ -17,7 +17,7 @@ const appRoutes: Routes = [
   {
     path: '',
     canActivate: [AuthGuard],
-    loadChildren: 'app/features/features.module#FeaturesModule',
+    loadChildren: './features/features.module#FeaturesModule',
   },
   {
     path: 'login',

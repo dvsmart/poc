@@ -5,7 +5,7 @@ import { AssessmentListComponent } from './assessment-list/assessment-list.compo
 import { AssessmentFormComponent } from './assessment-form/assessment-form.component';
 import { AssessmentFilterComponent } from './assessment-filter/assessment-filter.component';
 import { AssessmentService } from './assessment.service';
-import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatIconModule, MatFormFieldModule, MatMenuModule, MatInputModule, MatRippleModule, MatTableModule, MatPaginatorModule, MatToolbarModule } from '../../../../node_modules/@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatIconModule, MatFormFieldModule, MatMenuModule, MatInputModule, MatRippleModule, MatTableModule, MatPaginatorModule, MatToolbarModule, MatSelectModule, MatTabsModule, MatNativeDateModule } from '../../../../node_modules/@angular/material';
 import { Routes, RouterModule } from '../../../../node_modules/@angular/router';
 import { CoreSharedModule } from '@core/core.module';
 import { FuseConfirmDialogModule } from '@core/components/confirm-dialog/confirm-dialog.module';
@@ -15,20 +15,26 @@ const routes: Routes = [
   {
     path: '',
     component: AssessmentComponent,
-    resolve:{
+    resolve: {
       properties: AssessmentService
-    }
+    },
+    children:[
+      {
+        path: 'detail/:id',
+        component: AssessmentFormComponent,
+        resolve: {
+          properties: AssessmentService
+        }
+      }
+    ]
   }
 ];
 
 @NgModule({
   imports: [
-    CommonModule,
     CoreSharedModule,
     FuseConfirmDialogModule,
     FuseSidebarModule,
-
-    RouterModule.forChild(routes),
 
     MatButtonModule,
     MatCheckboxModule,
@@ -40,9 +46,14 @@ const routes: Routes = [
     MatRippleModule,
     MatTableModule,
     MatToolbarModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSelectModule,
+    MatNativeDateModule,
+    MatTabsModule,
+    RouterModule.forChild(routes),
   ],
-  providers:[AssessmentService],
-  declarations: [AssessmentComponent, AssessmentListComponent, AssessmentFormComponent, AssessmentFilterComponent]
+  providers: [AssessmentService],
+  declarations: [AssessmentComponent, AssessmentListComponent, AssessmentFormComponent, AssessmentFilterComponent],
+  entryComponents: [AssessmentFormComponent]
 })
 export class AssessmentModule { }

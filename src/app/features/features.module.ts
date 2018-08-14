@@ -6,7 +6,7 @@ import { CoreSharedModule } from '../../@core/core.module';
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: 'app/features/home/home.module#HomeModule',
+    loadChildren: './home/home.module#HomeModule',
   },
   {
     path: 'asset/properties',
@@ -17,7 +17,7 @@ const routes: Routes = [
     loadChildren: './assessment/assessment.module#AssessmentModule'
   },
   {
-    path: 'calendar',
+    path: 'calender',
     loadChildren: './calendar/calendar.module#CalendarModule'
   },
   {
