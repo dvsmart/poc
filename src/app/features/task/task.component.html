@@ -47,13 +47,13 @@
                   </button>
                   <mat-menu #selectMenu="matMenu">
                       <button mat-menu-item (click)="selectTodos()">All</button>
-                      <button mat-menu-item (click)="deselectTodos()">None</button>
-                      <button mat-menu-item (click)="selectTodos('read', true)">Read</button>
-                      <button mat-menu-item (click)="selectTodos('read', false)">Unread</button>
-                      <button mat-menu-item (click)="selectTodos('starred', true)">Starred</button>
-                      <button mat-menu-item (click)="selectTodos('starred', false)">Unstarred</button>
-                      <button mat-menu-item (click)="selectTodos('important', true)">Important</button>
-                      <button mat-menu-item (click)="selectTodos('important', false)">Unimportant</button>
+                      <button mat-menu-item (click)="deselectTasks()">None</button>
+                      <button mat-menu-item (click)="selectTasks('read', true)">Read</button>
+                      <button mat-menu-item (click)="selectTasks('read', false)">Unread</button>
+                      <button mat-menu-item (click)="selectTasks('starred', true)">Starred</button>
+                      <button mat-menu-item (click)="selectTasks('starred', false)">Unstarred</button>
+                      <button mat-menu-item (click)="selectTasks('important', true)">Important</button>
+                      <button mat-menu-item (click)="selectTasks('important', false)">Unimportant</button>
                   </mat-menu>
 
                   <div class="toolbar-separator" *ngIf="hasSelectedTasks"></div>
