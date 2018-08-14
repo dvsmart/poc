@@ -3,37 +3,20 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'environments/environment';
+import { EventModel } from './event.model';
 
 @Injectable()
 export class CalendarService implements Resolve<any>
 {
     events: any;
     onEventsUpdated: Subject<any>;
-
-    /**
-     * Constructor
-     *
-     * @param {HttpClient} _httpClient
-     */
-    constructor(
-        private _httpClient: HttpClient
-    )
-    {
-        // Set the defaults
+    constructor(private _httpClient: HttpClient){
         this.onEventsUpdated = new Subject();
     }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Resolver
-     *
-     * @param {ActivatedRouteSnapshot} route
-     * @param {RouterStateSnapshot} state
-     * @returns {Observable<any> | Promise<any> | any}
-     */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
     {
         return new Promise((resolve, reject) => {
@@ -48,11 +31,6 @@ export class CalendarService implements Resolve<any>
         });
     }
 
-    /**
-     * Get events
-     *
-     * @returns {Promise<any>}
-     */
     getEvents(): Promise<any>
     {
         return new Promise((resolve, reject) => {
@@ -66,19 +44,41 @@ export class CalendarService implements Resolve<any>
         });
     }
 
-    /**
-     * Update events
-     *
-     * @param events
-     * @returns {Promise<any>}
-     */
-    updateEvents(events): Promise<any>
+    updateEvent(event): Promise<any>
     {
-        let event = events[0];
+        var eventModel = new EventModel(event);
         return new Promise((resolve, reject) => {
-            this._httpClient.post(environment.apiUrl + 'Event', event)
+            this._httpClient.put(environment.apiUrl + 'Event?id=' + event.id, eventModel)
+                .subscribe((response: any) => {
+                    if(response.saveSuccessful){
+                        this.getEvents();
+                    }
+                    resolve();
+                }, reject);
+        });
+    }
+
+    AddEvent(event): Promise<any>
+    {
+        var eventModel = new EventModel(event);
+        return new Promise((resolve, reject) => {
+            this._httpClient.post(environment.apiUrl + 'Event', eventModel)
+                .subscribe((response: any) => {
+                    if(response.saveSuccessful){
+                        this.getEvents();
+                    }
+                    resolve();
+                }, reject);
+        });
+    }
+
+    DeleteEvent(id: any): Promise<any>
+    {
+        return new Promise((resolve, reject) => {
+            this._httpClient.delete(environment.apiUrl + 'Event?id=' + id)
                 .subscribe((response: any) => {
                     this.getEvents();
+                    resolve();
                 }, reject);
         });
     }

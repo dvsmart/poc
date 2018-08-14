@@ -15,7 +15,7 @@ import { CalendarEventModel } from '../event.model';
 
 export class CalendarEventFormDialogComponent {
     action: string;
-    event: CalendarEvent;
+    event: CalendarEventModel;
     eventForm: FormGroup;
     dialogTitle: string;
     presetColors = MatColors.presets;
@@ -41,8 +41,8 @@ export class CalendarEventFormDialogComponent {
         else {
             this.dialogTitle = 'New Event';
             this.event = new CalendarEventModel({
-                start: _data.date,
-                end: _data.date
+                startDate: _data.date,
+                dueDate: _data.date
             });
         }
 
@@ -62,8 +62,8 @@ export class CalendarEventFormDialogComponent {
         return new FormGroup({
             id: new FormControl(this.event.id),
             title: new FormControl(this.event.title),
-            start: new FormControl(this.event.start),
-            end: new FormControl(this.event.end),
+            startDate: new FormControl(this.event.start),
+            dueDate: new FormControl(this.event.end),
             allDay: new FormControl(this.event.allDay),
             isCompleted: new FormControl(false),
             allDayEvent: new FormControl(false),

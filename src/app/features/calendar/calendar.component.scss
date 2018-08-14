@@ -194,6 +194,10 @@
 #calendar {
     background: #FFFFFF;
 
+    .cal-month-view .cal-day-cell.cal-today {
+        background-color: #98de94!important;
+    }
+
     .header {
         height: 200px;
         min-height: 200px;
@@ -319,3 +323,4 @@
         padding: 24px;
     }
 }
+

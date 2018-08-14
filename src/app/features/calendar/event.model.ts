@@ -2,6 +2,7 @@ import { CalendarEventAction } from 'angular-calendar';
 import { startOfDay, endOfDay } from 'date-fns';
 
 export class CalendarEventModel {
+    id: number;
     start: Date;
     end?: Date;
     title: string;
@@ -21,6 +22,8 @@ export class CalendarEventModel {
         location: string,
         notes: string
     };
+    isCompleted?: boolean;
+    recurrenceTypeId: number;
 
     /**
      * Constructor
@@ -29,8 +32,8 @@ export class CalendarEventModel {
      */
     constructor(data?) {
         data = data || {};
-        this.start = new Date(data.startDate) || startOfDay(new Date());
-        this.end = new Date(data.dueDate) || endOfDay(new Date());
+        this.start = new Date(data.startDate);
+        this.end = new Date(data.dueDate);
         this.title = data.title || '';
         this.color = {
             primary: data.color && data.color.primary || '#1e90ff',
@@ -48,6 +51,9 @@ export class CalendarEventModel {
             location: data.location || '',
             notes: data.description || ''
         };
+        this.id = data.id;
+        this.isCompleted = data.isCompleted;
+        this.recurrenceTypeId = data.recurrenceTypeId
     }
 }
 
@@ -56,8 +62,8 @@ export class EventModel {
     title: string;
     description: string;
     location: string;
-    startDate: Date;
-    dueDate: Date;
+    startDate: Date | string;
+    dueDate: Date | string;
     recurrenceTypeId: number;
     allDayEvent: boolean;
     isCompleted: boolean;
@@ -65,4 +71,16 @@ export class EventModel {
     id: number;
     addedDate?: Date;
     modifiedDate?: Date;
+
+    constructor(data) {
+        this.id = data.id || 0;
+        this.description = data.meta.notes;
+        this.allDayEvent = data.allDay;
+        this.isCompleted = data.isCompleted;
+        this.startDate = data.startDate;
+        this.dueDate = data.dueDate;
+        this.recurrenceTypeId = data.recurrenceTypeId;
+        this.location = data.meta.location;
+        this.title = data.title;
+    }
 }
