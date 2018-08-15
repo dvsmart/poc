@@ -11,14 +11,9 @@ import { FuseSidebarModule } from '../@core/components/sidebar/sidebar.module';
 import { Routes, RouterModule } from '../../node_modules/@angular/router';
 import { LayoutModule } from './layout/layout.module';
 import { fuseConfig } from './config';
-import { AuthGuard } from './login/auth.guard';
+import { FeaturesModule } from './features/features.module';
 
 const appRoutes: Routes = [
-  {
-    path: '',
-    canActivate: [AuthGuard],
-    loadChildren: './features/features.module#FeaturesModule',
-  },
   {
     path: 'login',
     loadChildren: './login/login.module#LoginModule',
@@ -48,7 +43,8 @@ const appRoutes: Routes = [
 
     LayoutModule,
     CoreSharedModule.forRoot(fuseConfig),
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    FeaturesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
