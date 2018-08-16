@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AssessmentService } from '../assessment.service';
 import { Assessment } from '../models/assessment.model';
 import { ReferenceModel } from '../models/reference.model';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { fuseAnimations } from '@core/animations';
 
 @Component({
   selector: 'app-assessment-form',
   templateUrl: './assessment-form.component.html',
-  styleUrls: ['./assessment-form.component.scss']
+  styleUrls: ['./assessment-form.component.scss'],
+  animations: fuseAnimations
 })
 export class AssessmentFormComponent implements OnInit {
   formGroup: FormGroup;
@@ -17,11 +20,23 @@ export class AssessmentFormComponent implements OnInit {
   types: ReferenceModel[];
   frequencies: ReferenceModel[];
   assessment: Assessment;
-  constructor(private assessmentservice: AssessmentService, private route: ActivatedRoute) { }
+  @Output() closeForm: EventEmitter<boolean>;
+
+  constructor(private assessmentservice: AssessmentService, private route: ActivatedRoute, private _location: Location) {
+    this.route.params.subscribe(x => { 
+      if(x != null){
+        const id = parseInt(x["id"]);
+        this.assessmentservice.getSingle(id)
+        .subscribe(assessment => {
+          this.editFormGroup(assessment);
+      });
+      }
+    });
+  }
+
 
   ngOnInit() {
     this.createFormGroup();
-    this.getAssessment();
     this.getTypes();
     this.getFrequencies();
     this.getScopes();
@@ -33,9 +48,7 @@ export class AssessmentFormComponent implements OnInit {
       .subscribe(assessment => {
         this.editFormGroup(assessment);
       });
-
   }
-
 
   getScopes() {
     this.assessmentservice.getscopes().subscribe(x => this.scopes = x);
@@ -106,5 +119,9 @@ export class AssessmentFormComponent implements OnInit {
         }
       });
     }
+  }
+
+  cancel() {
+    this.closeForm.emit(true);
   }
 }

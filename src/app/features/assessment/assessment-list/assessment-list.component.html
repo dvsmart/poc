@@ -73,7 +73,7 @@
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let assessment; columns: displayedColumns;" class="contact" (click)="editContact(assessment)" [ngClass]="{'mat-accent-50-bg':checkboxes[assessment.id]}"
+  <mat-row *matRowDef="let assessment; columns: displayedColumns;" class="contact" (click)="editAssessment(assessment.id)" [ngClass]="{'mat-accent-50-bg':checkboxes[assessment.id]}"
       matRipple [@animate]="{value:'*',params:{y:'100%'}}">
   </mat-row>
 

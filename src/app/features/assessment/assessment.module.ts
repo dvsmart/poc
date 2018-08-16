@@ -21,10 +21,7 @@ const routes: Routes = [
     children:[
       {
         path: 'detail/:id',
-        component: AssessmentFormComponent,
-        resolve: {
-          properties: AssessmentService
-        }
+        component: AssessmentFormComponent
       }
     ]
   }
@@ -54,6 +51,5 @@ const routes: Routes = [
   ],
   providers: [AssessmentService],
   declarations: [AssessmentComponent, AssessmentListComponent, AssessmentFormComponent, AssessmentFilterComponent],
-  entryComponents: [AssessmentFormComponent]
 })
 export class AssessmentModule { }

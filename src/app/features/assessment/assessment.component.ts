@@ -18,6 +18,7 @@ export class AssessmentComponent implements OnInit {
   searchInput: FormControl;
   hasSelectedAssessments: boolean;
   private _unsubscribeAll: Subject<any>;
+
   constructor(private _fuseSidebarService: FuseSidebarService, private _assessmentservice: AssessmentService) {
     this.searchInput = new FormControl('');
     this._unsubscribeAll = new Subject();

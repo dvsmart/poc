@@ -9,6 +9,7 @@ import { AssessmentFormComponent } from '../assessment-form/assessment-form.comp
 import { FormGroup } from '../../../../../node_modules/@angular/forms';
 import { DataSource } from '../../../../../node_modules/@angular/cdk/table';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-assessment-list',
@@ -105,9 +106,8 @@ export class AssessmentListComponent implements OnInit {
    *
    * @param contact
    */
-  editContact(assessment): void {
-    debugger;
-    this.router.navigate(['assessment/detail/'+ assessment.id]);
+  editAssessment(assessmentId): void {
+    this.router.navigate(['assessment/detail/'+ assessmentId]);
     // this.dialogRef = this._matDialog.open(AssessmentFormComponent, {
     //   panelClass: 'contact-form-dialog',
     //   data: {

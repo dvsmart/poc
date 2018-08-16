@@ -11,7 +11,7 @@ const routes: Routes = [
     children: [
       { 
         path: 'home', 
-        loadChildren:'./home/home.module#HomeModule' },
+        loadChildren:'app/features/home/home.module#HomeModule' },
       {
         path: 'asset/properties',
         loadChildren: './asset/asset.module#AssetModule'

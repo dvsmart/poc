@@ -8,6 +8,7 @@ import { FormGroup } from '@angular/forms';
 import { PropertiesFormComponent } from '../properties-form/properties-form.component';
 import { fuseAnimations } from '@core/animations';
 import { FuseConfirmDialogComponent } from '@core/components/confirm-dialog/confirm-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-properties-list',
@@ -21,7 +22,7 @@ export class PropertiesListComponent implements OnInit {
   dialogContent: TemplateRef<any>;
   resultsLength: number;
   properties: any;
-  pageSize = 10;
+  pageSize = 5;
   dataSource: FilesDataSource | null;
   displayedColumns = ['checkbox', 'propertyReference','addressLine1', 'addressLine2', 'postCode', 'city', 'portfolioName', 'buttons'];
   selectedContacts: any[];
@@ -41,7 +42,8 @@ export class PropertiesListComponent implements OnInit {
    */
   constructor(
     private _propertyservice: PropertiesService,
-    public _matDialog: MatDialog
+    public _matDialog: MatDialog,
+    private router: Router
   ) {
     // Set the private defaults
     this._unsubscribeAll = new Subject();
@@ -56,8 +58,6 @@ export class PropertiesListComponent implements OnInit {
    */
   ngOnInit(): void {
     this.dataSource = new FilesDataSource(this._propertyservice);
-
-
 
     this._propertyservice.onPropertiesChanged
       .pipe(takeUntil(this._unsubscribeAll))
@@ -108,41 +108,42 @@ export class PropertiesListComponent implements OnInit {
    *
    * @param contact
    */
-  editContact(contact): void {
-    this.dialogRef = this._matDialog.open(PropertiesFormComponent, {
-      panelClass: 'contact-form-dialog',
-      data: {
-        contact: contact,
-        action: 'edit'
-      }
-    });
+  editProperty(propertyId): void {
+    this.router.navigate(['asset/properties/detail/'+ propertyId]);
+    // this.dialogRef = this._matDialog.open(PropertiesFormComponent, {
+    //   panelClass: 'contact-form-dialog',
+    //   data: {
+    //     contact: contact,
+    //     action: 'edit'
+    //   }
+    // });
 
-    this.dialogRef.afterClosed()
-      .subscribe(response => {
-        if (!response) {
-          return;
-        }
-        const actionType: string = response[0];
-        const formData: FormGroup = response[1];
-        switch (actionType) {
-          /**
-           * Save
-           */
-          case 'save':
+    // this.dialogRef.afterClosed()
+    //   .subscribe(response => {
+    //     if (!response) {
+    //       return;
+    //     }
+    //     const actionType: string = response[0];
+    //     const formData: FormGroup = response[1];
+    //     switch (actionType) {
+    //       /**
+    //        * Save
+    //        */
+    //       case 'save':
 
-            this._propertyservice.updateContact(formData.getRawValue());
+    //         this._propertyservice.updateContact(formData.getRawValue());
 
-            break;
-          /**
-           * Delete
-           */
-          case 'delete':
+    //         break;
+    //       /**
+    //        * Delete
+    //        */
+    //       case 'delete':
 
-            this.deleteContact(contact);
+    //         this.deleteContact(contact);
 
-            break;
-        }
-      });
+    //         break;
+    //     }
+    //   });
   }
 
   /**

@@ -1,3 +1,165 @@
-<p>
-  properties-form works!
-</p>
+<div class="content-card bg-white">
+  <mat-toolbar>{{title}}</mat-toolbar>
+  <form (ngSubmit)='save()' [formGroup]='formGroup' novalidate class="form">
+    <div class="content-card-form">
+      <mat-tab-group>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            Identification
+          </ng-template>
+          <div class="form-group">
+            <div class="example-container">
+              <mat-form-field>
+                <input matInput placeholder="PropertyReference" formControlName='PropertyReference'>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="AddressLine1" formControlName='AddressLine1'>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="AddressLine2" formControlName='AddressLine2'>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="AddressLine3" formControlName='AddressLine3'>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="City" formControlName='City'>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Postcode" formControlName='Postcode'>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="KnownAs" formControlName='KnownAs'>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            Details
+          </ng-template>
+          <div class="form-group">
+            <div class="example-container">
+              <mat-form-field>
+                <input matInput placeholder="PropertySize" formControlName='PropertySize'>
+              </mat-form-field>
+
+              <mat-form-field>
+                <input matInput placeholder="NetInternalSize" formControlName='NetInternalSize'>
+              </mat-form-field>
+
+              <mat-form-field>
+                <input matInput placeholder="GrossInternalSize" formControlName='GrossInternalSize'>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="NumberOfFloors" formControlName='NumberOfFloors'>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="NumberOfPlantRooms" formControlName='NumberOfPlantRooms'>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            Assets Summary
+          </ng-template>
+          <div class="form-group">
+            <div class="example-container">
+              <p>Nothing</p>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            Contact
+          </ng-template>
+          <div class="form-group">
+            <div class="example-container">
+              <mat-form-field>
+                <input matInput placeholder="Telephone">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Email">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Fax">
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            Status
+          </ng-template>
+          <div>
+            <mat-form-field>
+              <input matInput [matDatepicker]="StatusStartDate" placeholder="Status Start Date" formControlName='StatusStartDate'>
+              <mat-datepicker-toggle matSuffix [for]="StatusStartDate"></mat-datepicker-toggle>
+              <mat-datepicker #StatusStartDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            Documents
+          </ng-template>
+          <div class="form-group">
+            <div class="example-container">
+              <p>Attach Documents</p>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            Images & Videos
+          </ng-template>
+          <div class="form-group">
+            <div class="example-container">
+              <p>Attach Images & Videos</p>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            Notes & Observation
+          </ng-template>
+          <div class="form-group">
+            <mat-form-field class="example-full-width">
+              <textarea matInput placeholder="Leave a comment"></textarea>
+            </mat-form-field>
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            Associations
+          </ng-template>
+          <div class="form-group">
+            <p>Associations</p>
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            Responsibilities
+          </ng-template>
+          <div class="form-group">
+            <p>Primary Contact</p>
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            Security
+          </ng-template>
+          <div class="form-group">
+            <div class="example-container">
+              <p>Security</p>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+    <div mat-dialog-actions class="pt-24" align="end">
+      <button mat-raised-button type="submit" class="mr-10" color="primary" matripple>Save</button>
+      <button mat-raised-button type="button" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,35 @@
+.mat-accent-bg {
+    background-color: #03a9f4 !important;
+    color: #fff !important;
+}
+.content-card {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+    box-shadow: 0 4px 5px -2px rgba(0, 0, 0, .2), 0 7px 10px 1px rgba(0, 0, 0, .14), 0 2px 16px 1px rgba(0, 0, 0, .12);
+    margin: 10px;
+    padding: 15px;
+    min-height: 500px;
+}
+
+.bg-white{
+    background: white;
+}
+
+.example-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+.form-group{
+    padding: 10px;
+}
+
+.pt-24{
+    padding-top: 24px;
+}
+
+.mr-10{
+    margin-right: 10px;
+}

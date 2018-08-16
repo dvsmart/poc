@@ -4,6 +4,7 @@ import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { environment } from 'environments/environment';
 import { FuseUtils } from '@core/utils';
+import { CreateAssetPropertyRequest } from './models/createPropertyRequestModel';
 
 @Injectable({
     providedIn: 'root'
@@ -21,6 +22,8 @@ export class PropertiesService {
     searchText: string;
     filterBy: string;
 
+    api = environment.apiUrl + 'AssetProperties/create';
+
     /**
      * Constructor
      *
@@ -36,6 +39,21 @@ export class PropertiesService {
         this.onFilterChanged = new Subject();
         this.dataLength = new BehaviorSubject(0);
     }
+
+   
+  
+
+  public add(propertyModel: CreateAssetPropertyRequest): Observable<boolean> {
+    return this._httpClient.post<boolean>(environment.apiUrl + 'AssetProperties/create', propertyModel);
+  }
+
+  public update(id: number, propertyModel: CreateAssetPropertyRequest): Observable<boolean> {
+    return this._httpClient.put<boolean>(environment.apiUrl + 'AssetProperties/edit/?id=' + id, propertyModel);
+  }
+
+  public getSingle(id: number): Observable<CreateAssetPropertyRequest> {
+    return this._httpClient.get<CreateAssetPropertyRequest>(environment.apiUrl + 'AssetProperties/' + id);
+  }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
