@@ -55,7 +55,7 @@ export class TaskComponent implements OnInit {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }
-  selectTodos(filterParameter?, filterValue?): void {
+  selectTasks(filterParameter?, filterValue?): void {
     this._taskservice.selectTasks(filterParameter, filterValue);
   }
 

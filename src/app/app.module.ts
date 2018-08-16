@@ -17,11 +17,6 @@ const appRoutes: Routes = [
   {
     path: 'login',
     loadChildren: './login/login.module#LoginModule',
-  },
-  {
-    path: '',
-    redirectTo: '/home',
-    pathMatch: 'full'
   }
 ];
 

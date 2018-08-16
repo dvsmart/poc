@@ -73,4 +73,8 @@ export class PropertiesFormComponent implements OnInit {
     }
   }
 
+  cancel(){
+    debugger;
+    this._propertyservice.closeForm();
+  }
 }

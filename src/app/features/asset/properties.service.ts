@@ -24,6 +24,8 @@ export class PropertiesService {
 
     api = environment.apiUrl + 'AssetProperties/create';
 
+    close: BehaviorSubject<boolean>;
+
     /**
      * Constructor
      *
@@ -38,9 +40,16 @@ export class PropertiesService {
         this.onSearchTextChanged = new Subject();
         this.onFilterChanged = new Subject();
         this.dataLength = new BehaviorSubject(0);
+        this.close  = new BehaviorSubject(false);
     }
 
-   
+   closeForm(){
+       this.close.next(true);
+   }
+
+   isClosed(){
+       return this.close.asObservable();
+   }
   
 
   public add(propertyModel: CreateAssetPropertyRequest): Observable<boolean> {

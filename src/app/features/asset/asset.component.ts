@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { PropertiesService } from './properties.service';
 import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { fuseAnimations } from '@core/animations';
@@ -16,13 +16,16 @@ import { FuseSidebarService } from '@core/components/sidebar/sidebar.service';
 export class AssetComponent implements OnInit {
   searchInput: FormControl;
   hasSelectedProperties: boolean;
+  close: boolean;
   private _unsubscribeAll: Subject<any>;
   constructor(private _fuseSidebarService: FuseSidebarService, private _propertyservice: PropertiesService) {
     this.searchInput = new FormControl('');
     this._unsubscribeAll = new Subject();
+    this._propertyservice.isClosed().subscribe(x=>{this.close = x;});
   }
 
   ngOnInit(): void {
+    
     this._propertyservice.onSelectedPropertiesChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(selectedContacts => {

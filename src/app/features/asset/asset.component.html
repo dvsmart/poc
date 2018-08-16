@@ -1,6 +1,8 @@
-<router-outlet></router-outlet>
-
-<div id="assets" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+<div *ngIf="!close">
+    <router-outlet></router-outlet>
+</div>
+ 
+<div id="assets" class="page-layout simple left-sidebar inner-sidebar inner-scroll"> 
     <div class="header mat-accent-bg p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
         <div fxLayout="row" fxLayoutAlign="start center">
             <button mat-icon-button class="sidebar-toggle mr-12" fxHide.gt-md (click)="toggleSidebar('asset-main-sidebar')">
@@ -30,6 +32,7 @@
                 <properties-sidebar [@animate]="{value:'*'}"></properties-sidebar>
             </div>
         </fuse-sidebar>
+       
         <div class="center p-24 pb-56 pr-sm-92" fusePerfectScrollbar>
             <div class="content mat-white-bg mat-elevation-z4">
                 <app-properties-list [@animateStagger]="{value:'50'}"></app-properties-list>

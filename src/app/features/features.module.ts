@@ -9,9 +9,14 @@ const routes: Routes = [
     path: '',
     canActivate: [AuthGuard],
     children: [
+      {
+        path:'',
+        redirectTo:'/home',
+        pathMatch:'full'
+      },
       { 
         path: 'home', 
-        loadChildren:'app/features/home/home.module#HomeModule' },
+        loadChildren:'./home/home.module#HomeModule' },
       {
         path: 'asset/properties',
         loadChildren: './asset/asset.module#AssetModule'
@@ -33,11 +38,6 @@ const routes: Routes = [
         loadChildren: './task/task.module#TaskModule'
       }
     ]
-  },
-  {
-    path: '',
-    redirectTo: '/home',
-    pathMatch: 'full'
   }
   // { path: '**', redirectTo: '' }
   // {

@@ -14,17 +14,17 @@ import { FuseSidebarModule } from '@core/components/sidebar/sidebar.module';
 
 const routes: Routes = [
   {
-    path: '**',
+    path: '',
     component: AssetComponent,
+    children:[
+      {
+        path: 'edit/:id',
+        component: PropertiesFormComponent,
+      }
+    ],
     resolve:{
       properties: PropertiesService
     },
-    children:[
-      {
-        path: 'detail/:id',
-        component: PropertiesFormComponent
-      }
-    ]
   }
 ];
 

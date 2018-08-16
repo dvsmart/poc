@@ -109,7 +109,7 @@ export class PropertiesListComponent implements OnInit {
    * @param contact
    */
   editProperty(propertyId): void {
-    this.router.navigate(['asset/properties/detail/'+ propertyId]);
+    this.router.navigate(['asset/properties/edit/', propertyId]);
     // this.dialogRef = this._matDialog.open(PropertiesFormComponent, {
     //   panelClass: 'contact-form-dialog',
     //   data: {

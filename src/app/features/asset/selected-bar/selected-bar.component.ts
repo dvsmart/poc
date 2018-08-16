@@ -49,7 +49,7 @@ export class SelectedBarComponent implements OnInit {
                 this.selectedProperties = selectedProperties;
                 setTimeout(() => {
                     this.hasSelectedProperties = selectedProperties.length > 0;
-                    this.isIndeterminate = (selectedProperties.length !== this._propertiesservice.properties.length && selectedProperties.length > 0);
+                    this.isIndeterminate = (selectedProperties.length !== this._propertiesservice.dataLength && selectedProperties.length > 0);
                 }, 0);
             });
     }
