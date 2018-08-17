@@ -21,11 +21,9 @@ export class AssetComponent implements OnInit {
   constructor(private _fuseSidebarService: FuseSidebarService, private _propertyservice: PropertiesService) {
     this.searchInput = new FormControl('');
     this._unsubscribeAll = new Subject();
-    this._propertyservice.isClosed().subscribe(x=>{this.close = x;});
   }
 
   ngOnInit(): void {
-    
     this._propertyservice.onSelectedPropertiesChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(selectedContacts => {

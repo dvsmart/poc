@@ -38,23 +38,24 @@
                     <ng-container *ngTemplateOutlet="toolbar"></ng-container>
                 </ng-container>
                 <!-- / TOOLBAR: Below static -->
-
                 <!-- CONTENT -->
-                <content></content>
+                <content>
+                    
+                </content>
                 <!-- / CONTENT -->
 
-                <!-- FOOTER: Below static -->
-                <ng-container *ngIf="config.layout.footer.position === 'below-static'">
+                
+                <!-- <ng-container *ngIf="config.layout.footer.position === 'below-static'">
                     <ng-container *ngTemplateOutlet="footer"></ng-container>
-                </ng-container>
-                <!-- / FOOTER: Below static -->
+                </ng-container> -->
+                <!-- / FOOTER: Below static
 
             </div>
 
             <!-- FOOTER: Below fixed -->
-            <ng-container *ngIf="config.layout.footer.position === 'below-fixed'">
+            <!-- <ng-container *ngIf="config.layout.footer.position === 'below-fixed'">
                 <ng-container *ngTemplateOutlet="footer"></ng-container>
-            </ng-container>
+            </ng-container> -->
             <!-- / FOOTER: Below fixed -->
 
         </div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { environment } from 'environments/environment';
@@ -15,6 +15,7 @@ export class PropertiesService {
     onSearchTextChanged: Subject<any>;
     onFilterChanged: Subject<any>;
     dataLength: BehaviorSubject<number>;
+    pageSize: BehaviorSubject<number>;
 
     apiResponse: any;
     properties: any[];
@@ -24,45 +25,28 @@ export class PropertiesService {
 
     api = environment.apiUrl + 'AssetProperties/create';
 
-    close: BehaviorSubject<boolean>;
-
-    /**
-     * Constructor
-     *
-     * @param {HttpClient} _httpClient
-     */
     constructor(
         private _httpClient: HttpClient
     ) {
-        // Set the defaults
         this.onPropertiesChanged = new BehaviorSubject([]);
         this.onSelectedPropertiesChanged = new BehaviorSubject([]);
         this.onSearchTextChanged = new Subject();
         this.onFilterChanged = new Subject();
         this.dataLength = new BehaviorSubject(0);
-        this.close  = new BehaviorSubject(false);
+        this.pageSize = new BehaviorSubject(0);
     }
 
-   closeForm(){
-       this.close.next(true);
-   }
+    public add(propertyModel: CreateAssetPropertyRequest): Observable<boolean> {
+        return this._httpClient.post<boolean>(environment.apiUrl + 'AssetProperties/create', propertyModel);
+    }
 
-   isClosed(){
-       return this.close.asObservable();
-   }
-  
+    public update(id: number, propertyModel: CreateAssetPropertyRequest): Observable<boolean> {
+        return this._httpClient.put<boolean>(environment.apiUrl + 'AssetProperties/edit/?id=' + id, propertyModel);
+    }
 
-  public add(propertyModel: CreateAssetPropertyRequest): Observable<boolean> {
-    return this._httpClient.post<boolean>(environment.apiUrl + 'AssetProperties/create', propertyModel);
-  }
-
-  public update(id: number, propertyModel: CreateAssetPropertyRequest): Observable<boolean> {
-    return this._httpClient.put<boolean>(environment.apiUrl + 'AssetProperties/edit/?id=' + id, propertyModel);
-  }
-
-  public getSingle(id: number): Observable<CreateAssetPropertyRequest> {
-    return this._httpClient.get<CreateAssetPropertyRequest>(environment.apiUrl + 'AssetProperties/' + id);
-  }
+    public getSingle(id: number): Observable<CreateAssetPropertyRequest> {
+        return this._httpClient.get<CreateAssetPropertyRequest>(environment.apiUrl + 'AssetProperties/' + id);
+    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -114,6 +98,7 @@ export class PropertiesService {
                 .subscribe((response: any) => {
                     this.apiResponse = response;
                     this.dataLength = response.totalCount;
+                    this.pageSize = response.pageSize;
                     if (this.searchText && this.searchText !== '') {
                         this.properties = FuseUtils.filterArrayByString(this.apiResponse.data, this.searchText);
                     }
@@ -123,12 +108,8 @@ export class PropertiesService {
         }
         );
     }
+   
 
-    /**
-     * Toggle selected contact by id
-     *
-     * @param id
-     */
     toggleSelectedContact(id): void {
         // First, check if we already have that contact as selected...
         if (this.selectedProperties.length > 0) {
@@ -235,25 +216,28 @@ export class PropertiesService {
      *
      * @param contact
      */
-    deleteProperties(contact): void {
-        const contactIndex = this.properties.indexOf(contact);
-        this.properties.splice(contactIndex, 1);
-        this.onPropertiesChanged.next(this.properties);
+    deleteProperties(propertyId): void {
+        this._httpClient.delete(environment.apiUrl + 'AssetProperties/' + propertyId).subscribe(x=> this.getProperties());
     }
 
     /**
      * Delete selected contacts
      */
-    deleteSelectedProperties(): void {
-        for (const propertyId of this.selectedProperties) {
-            const contact = this.properties.find(_property => {
-                return _property.id.toString() === propertyId;
-            });
-            const contactIndex = this.properties.indexOf(contact);
-            this.properties.splice(contactIndex, 1);
-        }
-        this.onPropertiesChanged.next(this.properties);
+    deleteSelectedProperties(selectedProperties): void {
+        const ids = [];
+        let model = new deleteModel();
+        selectedProperties.forEach(element => {
+            model.ids.push(element);
+        });
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
+        this._httpClient.post(environment.apiUrl + 'AssetProperties/deleteAll',model,{ headers: headers }).subscribe(x=> this.getProperties());
         this.deselectProperties();
     }
+
+}
+
+export class deleteModel{
+    ids:any[]
+
 
 }

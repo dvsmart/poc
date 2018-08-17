@@ -19,28 +19,14 @@ export class SelectedBarComponent implements OnInit {
     // Private
     private _unsubscribeAll: Subject<any>;
 
-    /**
-     * Constructor
-     *
-     * @param {ContactsService} _contactsService
-     * @param {MatDialog} _matDialog
-     */
     constructor(
         private _propertiesservice: PropertiesService,
         public _matDialog: MatDialog
     )
     {
-        // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void
     {
         this._propertiesservice.onSelectedPropertiesChanged
@@ -54,9 +40,6 @@ export class SelectedBarComponent implements OnInit {
             });
     }
 
-    /**
-     * On destroy
-     */
     ngOnDestroy(): void
     {
         // Unsubscribe from all subscriptions
@@ -64,21 +47,12 @@ export class SelectedBarComponent implements OnInit {
         this._unsubscribeAll.complete();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Select all
-     */
     selectAll(): void
     {
         this._propertiesservice.selectProperties();
     }
 
-    /**
-     * Deselect all
-     */
+
     deselectAll(): void
     {
         this._propertiesservice.deselectProperties();
@@ -99,7 +73,8 @@ export class SelectedBarComponent implements OnInit {
             .subscribe(result => {
                 if ( result )
                 {
-                    this._propertiesservice.deleteSelectedProperties();
+                    debugger;
+                    this._propertiesservice.deleteSelectedProperties(this.selectedProperties);
                 }
                 this.confirmDialogRef = null;
             });

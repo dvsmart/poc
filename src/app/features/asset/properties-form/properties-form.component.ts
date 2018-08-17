@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PropertiesService } from '../properties.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { PropertiesService } from '../properties.service';
 export class PropertiesFormComponent implements OnInit {
   formGroup: FormGroup;
   title:string;
-  constructor(private _propertyservice: PropertiesService, private route: ActivatedRoute) {
+  constructor(private _propertyservice: PropertiesService, private route: ActivatedRoute,private router: Router) {
     this.route.params.subscribe(x => {
       if (x != null) {
         const id = parseInt(x["id"]);
@@ -74,7 +74,6 @@ export class PropertiesFormComponent implements OnInit {
   }
 
   cancel(){
-    debugger;
-    this._propertyservice.closeForm();
+    this.router.navigate(['asset/properties']);
   }
 }

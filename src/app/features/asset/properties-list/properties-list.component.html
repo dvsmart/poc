@@ -1,96 +1,84 @@
-<mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
-    <!-- Checkbox Column -->
-    <ng-container matColumnDef="checkbox">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let property">
-            <mat-checkbox [(ngModel)]="checkboxes[property.id]" (ngModelChange)="onSelectedChange(property.id)" (click)="$event.stopPropagation()">
-            </mat-checkbox>
-        </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="propertyReference">
+<div class="example-container">
+    <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="checkbox">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let property">
+                <mat-checkbox [(ngModel)]="checkboxes[property.id]" (ngModelChange)="onSelectedChange(property.id)" (click)="$event.stopPropagation()">
+                </mat-checkbox>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="propertyReference">
             <mat-header-cell *matHeaderCellDef>Reference</mat-header-cell>
             <mat-cell *matCellDef="let property">
                 <p class="text-truncate">{{property.propertyReference}}</p>
             </mat-cell>
         </ng-container>
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="addressLine1">
-        <mat-header-cell *matHeaderCellDef>Address Line 1</mat-header-cell>
-        <mat-cell *matCellDef="let property">
-            <p class="text-truncate">{{property.addressLine1}}</p>
-        </mat-cell>
-    </ng-container>
-
-    <!-- Email Column -->
-    <ng-container matColumnDef="addressLine2">
-        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Address Line 2</mat-header-cell>
-        <mat-cell *matCellDef="let property" fxHide fxShow.gt-sm>
-            <p class="email text-truncate">
-                {{property.addressLine2}}
-            </p>
-        </mat-cell>
-    </ng-container>
-
-    <!-- Phone Column -->
-    <ng-container matColumnDef="postCode">
-        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Post code</mat-header-cell>
-        <mat-cell *matCellDef="let property" fxHide fxShow.gt-md>
-            <p class="phone text-truncate">
-                {{property.postCode}}
-            </p>
-        </mat-cell>
-    </ng-container>
-
-    <!-- Job Title Column -->
-    <ng-container matColumnDef="city">
-        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-lg>City</mat-header-cell>
-        <mat-cell *matCellDef="let property" fxHide fxShow.gt-lg>
-            <p class="job-title text-truncate">
-                {{property.city}}
-            </p>
-        </mat-cell>
-    </ng-container>
-
-    <!-- Company Column -->
-    <ng-container matColumnDef="portfolioName">
-        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-lg>Portfolio</mat-header-cell>
-        <mat-cell *matCellDef="let property" fxHide fxShow.gt-lg>
-            <p class="company text-truncate">
-                {{property.portfolioName}}
-            </p>
-        </mat-cell>
-    </ng-container>
-
-    <!-- Buttons Column -->
-    <ng-container matColumnDef="buttons">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let property">
-            <div fxFlex="row">
-                <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More" (click)="$event.stopPropagation();">
-                    <mat-icon class="secondary-text">more_vert</mat-icon>
-                </button>
-                <mat-menu #moreMenu="matMenu">
-                    <button mat-menu-item aria-label="remove" (click)="deleteContact(property)">
-                        <mat-icon>delete</mat-icon>
-                        <span>Remove</span>
+        <ng-container matColumnDef="addressLine1">
+            <mat-header-cell *matHeaderCellDef>Address Line 1</mat-header-cell>
+            <mat-cell *matCellDef="let property">
+                <p class="text-truncate">{{property.addressLine1}}</p>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="addressLine2">
+            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Address Line 2</mat-header-cell>
+            <mat-cell *matCellDef="let property" fxHide fxShow.gt-sm>
+                <p class="email text-truncate">
+                    {{property.addressLine2}}
+                </p>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="postCode">
+            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Post code</mat-header-cell>
+            <mat-cell *matCellDef="let property" fxHide fxShow.gt-md>
+                <p class="phone text-truncate">
+                    {{property.postCode}}
+                </p>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="city">
+            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-lg>City</mat-header-cell>
+            <mat-cell *matCellDef="let property" fxHide fxShow.gt-lg>
+                <p class="job-title text-truncate">
+                    {{property.city}}
+                </p>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="portfolioName">
+            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-lg>Portfolio</mat-header-cell>
+            <mat-cell *matCellDef="let property" fxHide fxShow.gt-lg>
+                <p class="company text-truncate">
+                    {{property.portfolioName}}
+                </p>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="buttons">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let property">
+                <div fxFlex="row">
+                    <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More" (click)="$event.stopPropagation();">
+                        <mat-icon class="secondary-text">more_vert</mat-icon>
                     </button>
-                    <button mat-menu-item aria-label="archive" (click)="deleteContact(property)">
+                    <mat-menu #moreMenu="matMenu">
+                        <button mat-menu-item aria-label="remove" (click)="deleteProperty(property.id)">
+                            <mat-icon>delete</mat-icon>
+                            <span>Remove</span>
+                        </button>
+                        <button mat-menu-item aria-label="archive" (click)="deleteProperty(property.id)">
                             <mat-icon>archive</mat-icon>
                             <span>Archive</span>
                         </button>
-                </mat-menu>
-            </div>
-        </mat-cell>
-    </ng-container>
+                    </mat-menu>
+                </div>
+            </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let property; columns: displayedColumns;" class="contact" (click)="editProperty(property.id)" [ngClass]="{'mat-accent-50-bg':checkboxes[property.id]}"
+            matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+        </mat-row>
+    </mat-table>
+</div>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let property; columns: displayedColumns;" class="contact" (click)="editProperty(property.id)" [ngClass]="{'mat-accent-50-bg':checkboxes[property.id]}"
-        matRipple [@animate]="{value:'*',params:{y:'100%'}}">
-    </mat-row>
-
-</mat-table>
-<mat-paginator #paginator (page)="pageEvent($event)" [pageSize]="pageSize" [length]="getPageSize()" [pageSizeOptions]="[5, 10, 50, 100]"
-    [showFirstLastButtons]="true">
+<mat-paginator #paginator (page)="pageEvent($event)" [pageSize]="_propertyservice.pageSize" [length]="_propertyservice.dataLength"
+    [pageSizeOptions]="[5, 10, 50, 100]" [showFirstLastButtons]="true">
 </mat-paginator>

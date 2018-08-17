@@ -4,8 +4,6 @@ import { PropertiesService } from '../properties.service';
 import { Observable, Subject } from 'rxjs';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { takeUntil } from 'rxjs/operators';
-import { FormGroup } from '@angular/forms';
-import { PropertiesFormComponent } from '../properties-form/properties-form.component';
 import { fuseAnimations } from '@core/animations';
 import { FuseConfirmDialogComponent } from '@core/components/confirm-dialog/confirm-dialog.component';
 import { Router } from '@angular/router';
@@ -22,9 +20,10 @@ export class PropertiesListComponent implements OnInit {
   dialogContent: TemplateRef<any>;
   resultsLength: number;
   properties: any;
-  pageSize = 5;
+  pageSize: number;
+  total: number;
   dataSource: FilesDataSource | null;
-  displayedColumns = ['checkbox', 'propertyReference','addressLine1', 'addressLine2', 'postCode', 'city', 'portfolioName', 'buttons'];
+  displayedColumns = ['checkbox', 'propertyReference', 'addressLine1', 'addressLine2', 'postCode', 'city', 'portfolioName', 'buttons'];
   selectedContacts: any[];
   checkboxes: {};
   dialogRef: any;
@@ -90,66 +89,16 @@ export class PropertiesListComponent implements OnInit {
       });
   }
 
-  /**
-   * On destroy
-   */
   ngOnDestroy(): void {
-    // Unsubscribe from all subscriptions
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }
 
-  // -----------------------------------------------------------------------------------------------------
-  // @ Public methods
-  // -----------------------------------------------------------------------------------------------------
-
-  /**
-   * Edit contact
-   *
-   * @param contact
-   */
   editProperty(propertyId): void {
     this.router.navigate(['asset/properties/edit/', propertyId]);
-    // this.dialogRef = this._matDialog.open(PropertiesFormComponent, {
-    //   panelClass: 'contact-form-dialog',
-    //   data: {
-    //     contact: contact,
-    //     action: 'edit'
-    //   }
-    // });
-
-    // this.dialogRef.afterClosed()
-    //   .subscribe(response => {
-    //     if (!response) {
-    //       return;
-    //     }
-    //     const actionType: string = response[0];
-    //     const formData: FormGroup = response[1];
-    //     switch (actionType) {
-    //       /**
-    //        * Save
-    //        */
-    //       case 'save':
-
-    //         this._propertyservice.updateContact(formData.getRawValue());
-
-    //         break;
-    //       /**
-    //        * Delete
-    //        */
-    //       case 'delete':
-
-    //         this.deleteContact(contact);
-
-    //         break;
-    //     }
-    //   });
   }
 
-  /**
-   * Delete Contact
-   */
-  deleteContact(contact): void {
+  deleteProperty(id): void {
     this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
       disableClose: false
     });
@@ -158,58 +107,32 @@ export class PropertiesListComponent implements OnInit {
 
     this.confirmDialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this._propertyservice.deleteProperties(contact);
+        this._propertyservice.deleteProperties(id);
       }
       this.confirmDialogRef = null;
     });
 
   }
 
-  /**
-   * On selected change
-   *
-   * @param contactId
-   */
   onSelectedChange(contactId): void {
     this._propertyservice.toggleSelectedContact(contactId);
-  }
-
-  getPageSize(): Observable<number>{
-    return this._propertyservice.dataLength;
   }
 
   pageEvent($event) {
     this.currentPage = $event.pageIndex + 1;
     this.pageSize = $event.pageSize;
-    this._propertyservice.getProperties(this.currentPage,this.pageSize);
+    this._propertyservice.getProperties(this.currentPage, this.pageSize);
   }
-
 }
 
 export class FilesDataSource extends DataSource<any>
 {
-  /**
-   * Constructor
-   *
-   * @param {ContactsService} _contactsService
-   */
-  constructor(
-    private _propertiesservice: PropertiesService
-  ) {
+  constructor(private _propertiesservice: PropertiesService) {
     super();
   }
-
-  /**
-   * Connect function called by the table to retrieve one stream containing the data to render.
-   * @returns {Observable<any[]>}
-   */
   connect(): Observable<any[]> {
     return this._propertiesservice.onPropertiesChanged;
   }
-
-  /**
-   * Disconnect
-   */
   disconnect(): void {
   }
 }
