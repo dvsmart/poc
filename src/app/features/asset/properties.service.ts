@@ -224,8 +224,8 @@ export class PropertiesService {
      * Delete selected contacts
      */
     deleteSelectedProperties(selectedProperties): void {
-        const ids = [];
         let model = new deleteModel();
+        model.ids = [];
         selectedProperties.forEach(element => {
             model.ids.push(element);
         });
