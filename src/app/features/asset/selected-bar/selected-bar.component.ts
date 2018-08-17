@@ -73,7 +73,6 @@ export class SelectedBarComponent implements OnInit {
             .subscribe(result => {
                 if ( result )
                 {
-                    debugger;
                     this._propertiesservice.deleteSelectedProperties(this.selectedProperties);
                 }
                 this.confirmDialogRef = null;
