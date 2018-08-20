@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { Subject } from '../../../node_modules/rxjs';
 import { FuseConfigService } from '@core/services/config.service';
 import { takeUntil } from '../../../node_modules/rxjs/operators';
+import { MessageService } from '@core/services/message.service';
+import { ToasterComponent } from './components/toaster/toaster.component';
 
 @Component({
   selector: 'vertical-layout-1',
@@ -12,14 +14,23 @@ import { takeUntil } from '../../../node_modules/rxjs/operators';
 export class LayoutComponent implements OnInit {
   config: any;
   private _unsubscribeAll: Subject<any>;
-
+  @ViewChild('messagecontainer', { read: ViewContainerRef }) entry: ViewContainerRef;
     constructor(
-        private _fuseConfigService: FuseConfigService
+        private _fuseConfigService: FuseConfigService,
+        private toaster: MessageService,
+        private resolver: ComponentFactoryResolver
     )
     {
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
+    }
+
+    createComponent(message) {
+        this.entry.clear();
+        const factory = this.resolver.resolveComponentFactory(ToasterComponent);
+        const componentRef = this.entry.createComponent(factory);
+        componentRef.instance.openSnackBar(message,'Done');
     }
 
     ngOnInit(): void
@@ -30,6 +41,11 @@ export class LayoutComponent implements OnInit {
             .subscribe((config) => {
                 this.config = config;
             });
+
+        this.toaster.messageObserver.subscribe(x=>{
+            debugger;
+            this.createComponent(x);
+        });
     }
 
     /**

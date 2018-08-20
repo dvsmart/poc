@@ -7,7 +7,7 @@ import { environment } from 'environments/environment';
 import { ReferenceModel } from './models/reference.model';
 import { Assessment } from './models/assessment.model';
 import { DeleteModel } from '@core/types/deleteModel';
-import { ToasterService } from '@core/components/toaster/toaster.service';
+
 
 @Injectable({
     providedIn: 'root'
@@ -28,8 +28,7 @@ export class AssessmentService {
     referenceApi = environment.apiUrl + 'AssessmentReference/'
 
     constructor(
-        private _httpClient: HttpClient,
-        private toasterservice: ToasterService
+        private _httpClient: HttpClient
     ) {
         this.onAssessmentsChanged = new BehaviorSubject([]);
         this.onSelectedAssessmentsChanged = new BehaviorSubject([]);
