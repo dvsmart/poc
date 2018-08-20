@@ -7,6 +7,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FuseDirectivesModule } from './directives/directives';
 import { FusePipesModule } from './pipes/pipes.module';
 import { FUSE_CONFIG } from './services/config.service';
+import { ToasterModule } from './components/toaster/toaster.module';
+import { ToasterService } from './components/toaster/toaster.service';
 
 @NgModule({
     imports: [
@@ -17,7 +19,8 @@ import { FUSE_CONFIG } from './services/config.service';
         FlexLayoutModule,
 
         FuseDirectivesModule,
-        FusePipesModule
+        FusePipesModule,
+        ToasterModule
     ],
     exports: [
         CommonModule,
@@ -27,8 +30,10 @@ import { FUSE_CONFIG } from './services/config.service';
         FlexLayoutModule,
 
         FuseDirectivesModule,
-        FusePipesModule
-    ]
+        FusePipesModule,
+        ToasterModule
+    ],
+    providers:[ToasterService]
 })
 export class CoreSharedModule {
     static forRoot(config): ModuleWithProviders

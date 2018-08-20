@@ -59,11 +59,11 @@
                   <mat-icon class="secondary-text">more_vert</mat-icon>
               </button>
               <mat-menu #moreMenu="matMenu">
-                  <button mat-menu-item aria-label="remove" (click)="deleteAssessment(assessment)">
+                  <button mat-menu-item aria-label="remove" (click)="deleteAssessment(assessment.id)">
                       <mat-icon>delete</mat-icon>
                       <span>Remove</span>
                   </button>
-                  <button mat-menu-item aria-label="archive" (click)="deleteAssessment(assessment)">
+                  <button mat-menu-item aria-label="archive" (click)="deleteAssessment(assessment.id)">
                           <mat-icon>archive</mat-icon>
                           <span>Archive</span>
                       </button>

@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { FuseUtils } from '@core/utils';
 import { environment } from 'environments/environment';
 import { ReferenceModel } from './models/reference.model';
 import { Assessment } from './models/assessment.model';
+import { DeleteModel } from '@core/types/deleteModel';
+import { ToasterService } from '@core/components/toaster/toaster.service';
 
 @Injectable({
     providedIn: 'root'
@@ -26,7 +28,8 @@ export class AssessmentService {
     referenceApi = environment.apiUrl + 'AssessmentReference/'
 
     constructor(
-        private _httpClient: HttpClient
+        private _httpClient: HttpClient,
+        private toasterservice: ToasterService
     ) {
         this.onAssessmentsChanged = new BehaviorSubject([]);
         this.onSelectedAssessmentsChanged = new BehaviorSubject([]);
@@ -50,7 +53,7 @@ export class AssessmentService {
     }
 
     public update(id: number, propertyModel: Assessment): Observable<boolean> {
-        return this._httpClient.put<boolean>(environment.apiUrl + 'Assessment/edit/?id=' + id, propertyModel);
+        return this._httpClient.put<boolean>(environment.apiUrl + 'Assessment?id=' + id, propertyModel);
     }
 
     public getSingle(id: number): Observable<Assessment> {
@@ -103,37 +106,19 @@ export class AssessmentService {
         );
     }
 
-    /**
-     * Toggle selected contact by id
-     *
-     * @param id
-     */
-    toggleSelectedContact(id): void {
-        // First, check if we already have that contact as selected...
+    toggleSelectedAssessment(id): void {
         if (this.selectedAssessments.length > 0) {
             const index = this.selectedAssessments.indexOf(id);
-
             if (index !== -1) {
                 this.selectedAssessments.splice(index, 1);
-
-                // Trigger the next event
                 this.onSelectedAssessmentsChanged.next(this.selectedAssessments);
-
-                // Return
                 return;
             }
         }
-
-        // If we don't have it, push as selected
         this.selectedAssessments.push(id);
-
-        // Trigger the next event
         this.onSelectedAssessmentsChanged.next(this.selectedAssessments);
     }
 
-    /**
-     * Toggle select all
-     */
     toggleSelectAll(): void {
         if (this.selectedAssessments.length > 0) {
             this.deselectAssessments();
@@ -143,16 +128,8 @@ export class AssessmentService {
         }
     }
 
-    /**
-     * Select contacts
-     *
-     * @param filterParameter
-     * @param filterValue
-     */
     selectAssessments(filterParameter?, filterValue?): void {
-
         this.selectedAssessments = [];
-
         // If there is no filter, select all contacts
         if (filterParameter === undefined || filterValue === undefined) {
             this.selectedAssessments = [];
@@ -160,21 +137,13 @@ export class AssessmentService {
                 this.selectedAssessments.push(property.id.toString());
             });
         }
-
         // Trigger the next event
         this.onSelectedAssessmentsChanged.next(this.selectedAssessments);
     }
 
-    /**
-     * Update contact
-     *
-     * @param contact
-     * @returns {Promise<any>}
-     */
-    updateContact(contact): Promise<any> {
+    updateAssessment(assessment): Promise<any> {
         return new Promise((resolve, reject) => {
-
-            this._httpClient.post('api/contacts-contacts/' + contact.id, { ...contact })
+            this._httpClient.post('/api/Assessment/edit' + assessment.id, { ...assessment })
                 .subscribe(response => {
                     this.getAssessments();
                     resolve(response);
@@ -182,26 +151,6 @@ export class AssessmentService {
         });
     }
 
-    /**
-     * Update user data
-     *
-     * @param userData
-     * @returns {Promise<any>}
-     */
-    // updateUserData(userData): Promise<any>
-    // {
-    //     return new Promise((resolve, reject) => {
-    //         this._httpClient.post('api/contacts-user/' + this.user.id, {...userData})
-    //             .subscribe(response => {
-    //                 this.getProperties();
-    //                 resolve(response);
-    //             });
-    //     });
-    // }
-
-    /**
-     * Deselect contacts
-     */
     deselectAssessments(): void {
         this.selectedAssessments = [];
 
@@ -209,29 +158,21 @@ export class AssessmentService {
         this.onSelectedAssessmentsChanged.next(this.selectedAssessments);
     }
 
-    /**
-     * Delete contact
-     *
-     * @param contact
-     */
-    deleteAssessments(contact): void {
-        const contactIndex = this.assessments.indexOf(contact);
-        this.assessments.splice(contactIndex, 1);
-        this.onAssessmentsChanged.next(this.assessments);
+    deleteAssessments(assessmentId): void {
+        this._httpClient.delete(environment.apiUrl + 'Assessment?recordId=' + assessmentId).subscribe(x => {
+            debugger;
+            this.getAssessments()
+        });
     }
 
-    /**
-     * Delete selected contacts
-     */
     deleteSelectedAssessments(): void {
-        for (const propertyId of this.selectedAssessments) {
-            const contact = this.assessments.find(_property => {
-                return _property.id.toString() === propertyId;
-            });
-            const contactIndex = this.assessments.indexOf(contact);
-            this.assessments.splice(contactIndex, 1);
-        }
-        this.onAssessmentsChanged.next(this.assessments);
+        let model = new DeleteModel();
+        model.ids = [];
+        this.selectedAssessments.forEach(element => {
+            model.ids.push(element);
+        });
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
+        this._httpClient.post(environment.apiUrl + 'Assessment/deleteAll', model, { headers: headers }).subscribe(x => this.getAssessments());
         this.deselectAssessments();
     }
 

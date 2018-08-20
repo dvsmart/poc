@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PropertiesService } from '../properties.service';
+import { ToasterService } from '@core/components/toaster/toaster.service';
 
 @Component({
   selector: 'app-properties-form',
@@ -11,7 +12,7 @@ import { PropertiesService } from '../properties.service';
 export class PropertiesFormComponent implements OnInit {
   formGroup: FormGroup;
   title:string;
-  constructor(private _propertyservice: PropertiesService, private route: ActivatedRoute,private router: Router) {
+  constructor(private _propertyservice: PropertiesService, private route: ActivatedRoute,private router: Router,private toaster: ToasterService) {
     this.route.params.subscribe(x => {
       if (x != null) {
         const id = parseInt(x["id"]);
@@ -75,5 +76,24 @@ export class PropertiesFormComponent implements OnInit {
 
   cancel(){
     this.router.navigate(['asset/properties']);
+  }
+
+  save() {
+    if (this.formGroup.value.id == "") {
+      this._propertyservice.add(this.formGroup.value).subscribe(x => {
+        if (x['saveSuccessful'] === true) {
+          debugger;
+          this.title = 'Edit Property - ' + x['savedDataId'];
+        }
+      });
+    } else {
+      this._propertyservice.update(this.formGroup.value.id, this.formGroup.value).subscribe(x => {
+        if (x['saveSuccessful'] === true) {
+          debugger;
+          this.title = 'Edit Property - ' + x['savedDataId'];
+          this.toaster.changeMessage("updated");
+        }
+      });
+    }
   }
 }

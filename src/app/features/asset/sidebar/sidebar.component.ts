@@ -22,7 +22,6 @@ export class SidebarComponent implements OnInit {
         this._propertyService.onPropertiesChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(user => {
-                console.log(user);
             });
     }
 

@@ -114,8 +114,8 @@ export class PropertiesListComponent implements OnInit {
 
   }
 
-  onSelectedChange(contactId): void {
-    this._propertyservice.toggleSelectedContact(contactId);
+  onSelectedChange(propertyId): void {
+    this._propertyservice.toggleSelectedProperty(propertyId);
   }
 
   pageEvent($event) {

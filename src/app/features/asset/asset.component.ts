@@ -5,6 +5,7 @@ import { PropertiesService } from './properties.service';
 import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { fuseAnimations } from '@core/animations';
 import { FuseSidebarService } from '@core/components/sidebar/sidebar.service';
+import { ToasterService } from '@core/components/toaster/toaster.service';
 
 @Component({
   selector: 'app-asset',
@@ -18,12 +19,13 @@ export class AssetComponent implements OnInit {
   hasSelectedProperties: boolean;
   close: boolean;
   private _unsubscribeAll: Subject<any>;
-  constructor(private _fuseSidebarService: FuseSidebarService, private _propertyservice: PropertiesService) {
+  constructor(private _fuseSidebarService: FuseSidebarService, private _propertyservice: PropertiesService, private toaster: ToasterService) {
     this.searchInput = new FormControl('');
     this._unsubscribeAll = new Subject();
   }
 
   ngOnInit(): void {
+    //this.toaster.message.subscribe(x => { alert(x); });
     this._propertyservice.onSelectedPropertiesChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(selectedContacts => {

@@ -22,7 +22,6 @@ export class AssessmentFilterComponent implements OnInit {
       this._assessmentservice.onAssessmentsChanged
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(assessment => {
-              console.log(assessment);
           });
   }
 

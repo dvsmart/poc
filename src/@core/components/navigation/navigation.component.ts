@@ -18,41 +18,12 @@ export class CoreNavigationComponent{
     @Input()
     navigation: any;
 
-    // Private
-    private _unsubscribeAll: Subject<any>;
+    constructor(private _fuseNavigationService: CoreNavigationService){}
 
-    /**
-     * Constructor
-     */
-    constructor(
-        private _fuseNavigationService: CoreNavigationService
-    )
-    {
-        // Set the private defaults
-        this._unsubscribeAll = new Subject();
-    }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void
     {
-        // Load the navigation either from the input or from the service
-        //this.navigation = this.navigation || this._fuseNavigationService.getCurrentNavigation();
-
         this._fuseNavigationService.getMenu().subscribe(x => {
             this.navigation = x;
         });
-
-        // Subscribe to the current navigation changes
-        // this._fuseNavigationService.onNavigationChanged
-        //     .pipe(takeUntil(this._unsubscribeAll))
-        //     .subscribe(() => {
-        //         this.navigation = this._fuseNavigationService.getCurrentNavigation();
-        //     });
     }
 }

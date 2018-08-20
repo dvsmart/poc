@@ -1,15 +1,12 @@
-import { Component, OnInit, ViewChild, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { fuseAnimations } from '@core/animations';
 import { FuseConfirmDialogComponent } from '@core/components/confirm-dialog/confirm-dialog.component';
 import { MatDialogRef, MatDialog } from '../../../../../node_modules/@angular/material';
 import { Subject, Observable } from '../../../../../node_modules/rxjs';
 import { AssessmentService } from '../assessment.service';
 import { takeUntil } from '../../../../../node_modules/rxjs/operators';
-import { AssessmentFormComponent } from '../assessment-form/assessment-form.component';
-import { FormGroup } from '../../../../../node_modules/@angular/forms';
 import { DataSource } from '../../../../../node_modules/@angular/cdk/table';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-assessment-list',
@@ -20,14 +17,12 @@ import { Location } from '@angular/common';
 })
 
 export class AssessmentListComponent implements OnInit {
-  @ViewChild('dialogContent')
-  dialogContent: TemplateRef<any>;
   resultsLength: number;
   properties: any;
   pageSize = 10;
-  dataSource: FilesDataSource | null;
-  displayedColumns = ['checkbox', 'dataId', 'title','reference', 'assessmentType', 'assessmentScope', 'buttons'];
-  selectedContacts: any[];
+  dataSource: AssessmentDataSource | null;
+  displayedColumns = ['checkbox', 'dataId', 'title', 'reference', 'assessmentType', 'assessmentScope', 'buttons'];
+  selectedAssessments: any[];
   checkboxes: {};
   dialogRef: any;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
@@ -45,18 +40,8 @@ export class AssessmentListComponent implements OnInit {
     this._unsubscribeAll = new Subject();
   }
 
-  // -----------------------------------------------------------------------------------------------------
-  // @ Lifecycle hooks
-  // -----------------------------------------------------------------------------------------------------
-
-  /**
-   * On init
-   */
   ngOnInit(): void {
-    this.dataSource = new FilesDataSource(this._assessmentservice);
-
-
-
+    this.dataSource = new AssessmentDataSource(this._assessmentservice);
     this._assessmentservice.onAssessmentsChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(result => {
@@ -78,7 +63,7 @@ export class AssessmentListComponent implements OnInit {
 
           this.checkboxes[id] = selectedProperties.includes(id);
         }
-        this.selectedContacts = selectedProperties;
+        this.selectedAssessments = selectedProperties;
       });
 
     this._assessmentservice.onFilterChanged
@@ -88,122 +73,50 @@ export class AssessmentListComponent implements OnInit {
       });
   }
 
-  /**
-   * On destroy
-   */
   ngOnDestroy(): void {
-    // Unsubscribe from all subscriptions
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }
 
-  // -----------------------------------------------------------------------------------------------------
-  // @ Public methods
-  // -----------------------------------------------------------------------------------------------------
-
-  /**
-   * Edit contact
-   *
-   * @param contact
-   */
   editAssessment(assessmentId): void {
-    this.router.navigate(['assessment/detail/'+ assessmentId]);
-    // this.dialogRef = this._matDialog.open(AssessmentFormComponent, {
-    //   panelClass: 'contact-form-dialog',
-    //   data: {
-    //     contact: contact,
-    //     action: 'edit'
-    //   }
-    // });
-
-    // this.dialogRef.afterClosed()
-    //   .subscribe(response => {
-    //     if (!response) {
-    //       return;
-    //     }
-    //     const actionType: string = response[0];
-    //     const formData: FormGroup = response[1];
-    //     switch (actionType) {
-    //       /**
-    //        * Save
-    //        */
-    //       case 'save':
-
-    //         this._assessmentservice.updateContact(formData.getRawValue());
-
-    //         break;
-    //       /**
-    //        * Delete
-    //        */
-    //       case 'delete':
-
-    //         this.deleteAssessment(contact);
-
-    //         break;
-    //     }
-    //   });
+    this.router.navigate(['assessment/detail/' + assessmentId]);
   }
 
-  /**
-   * Delete Contact
-   */
-  deleteAssessment(assessment): void {
+  deleteAssessment(assessmentId): void {
     this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
       disableClose: false
     });
-
     this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-
     this.confirmDialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this._assessmentservice.deleteAssessments(assessment);
+        this._assessmentservice.deleteAssessments(assessmentId);
       }
       this.confirmDialogRef = null;
     });
 
   }
 
-  /**
-   * On selected change
-   *
-   * @param contactId
-   */
-  onSelectedChange(contactId): void {
-    this._assessmentservice.toggleSelectedContact(contactId);
+  onSelectedChange(assessmentId): void {
+    this._assessmentservice.toggleSelectedAssessment(assessmentId);
   }
 
-  getPageSize(): Observable<number>{
+  getPageSize(): Observable<number> {
     return this._assessmentservice.dataLength;
   }
 
   pageEvent($event) {
     this.currentPage = $event.pageIndex + 1;
     this.pageSize = $event.pageSize;
-    this._assessmentservice.getAssessments(this.currentPage,this.pageSize);
+    this._assessmentservice.getAssessments(this.currentPage, this.pageSize);
   }
-
 }
 
-export class FilesDataSource extends DataSource<any>
+export class AssessmentDataSource extends DataSource<any>
 {
-
-  constructor(
-    private _assessmentservice: AssessmentService
-  ) {
-    super();
-  }
-
-  /**
-   * Connect function called by the table to retrieve one stream containing the data to render.
-   * @returns {Observable<any[]>}
-   */
+  constructor(private _assessmentservice: AssessmentService) { super(); }
   connect(): Observable<any[]> {
     return this._assessmentservice.onAssessmentsChanged;
   }
-
-  /**
-   * Disconnect
-   */
   disconnect(): void {
   }
 }
