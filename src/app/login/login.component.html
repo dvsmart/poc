@@ -27,17 +27,17 @@
           </div>
 
           <div class="title">LOGIN TO YOUR ACCOUNT</div>
-
+          {{error}}
           <form name="loginForm" [formGroup]="loginForm" novalidate (ngSubmit)="onLogin()">
 
               <mat-form-field>
-                  <input matInput placeholder="Email" formControlName="email">
-                  <mat-error *ngIf="loginForm.get('email').hasError('required')">
+                  <input matInput placeholder="Username / Email" formControlName="username">
+                  <mat-error *ngIf="loginForm.get('username').hasError('required')">
                       Email is required
                   </mat-error>
                   <mat-error
-                      *ngIf="!loginForm.get('email').hasError('required') &&
-                              loginForm.get('email').hasError('email')">
+                      *ngIf="!loginForm.get('username').hasError('required') &&
+                              loginForm.get('username').hasError('username')">
                       Please enter a valid email address
                   </mat-error>
               </mat-form-field>

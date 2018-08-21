@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { FuseConfigService } from '@core/services/config.service';
 import { FormGroup, FormBuilder, Validators } from '../../../node_modules/@angular/forms';
 import { Router, ActivatedRoute } from '../../../node_modules/@angular/router';
+import { first } from 'rxjs/operators';
 
 @Component({
     selector: 'login',
@@ -14,6 +15,7 @@ import { Router, ActivatedRoute } from '../../../node_modules/@angular/router';
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     returnUrl: string;
+    error:string;
     /**
      * Constructor
      *
@@ -54,9 +56,10 @@ export class LoginComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
+        this.authservice.logout();
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'home';
         this.loginForm = this._formBuilder.group({
-            email: ['', [Validators.required]],
+            username: ['', [Validators.required]],
             password: ['', Validators.required]
         });
     }
@@ -65,12 +68,16 @@ export class LoginComponent implements OnInit {
         if (this.loginForm.invalid) {
             return;
         }
-        this.authservice.login(this.loginForm.value);
-        this.authservice.isLoginSuccessful().subscribe(isAuthenticated => {
-            if (isAuthenticated) {
-                this.router.navigateByUrl(this.returnUrl);
-            }
-        })
+        this.authservice.login(this.loginForm.value)
+            .pipe(first())
+            .subscribe(
+                data => {
+                    this.router.navigate([this.returnUrl]);
+                },
+                error => {
+                    debugger;
+                    this.error = error.error.message;
+                });
     }
 
 }
