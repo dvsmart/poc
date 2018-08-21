@@ -17,8 +17,12 @@ export class PropertiesFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private toaster: MessageService) {
+    
+  }
+
+  ngOnInit() {
     this.route.params.subscribe(x => {
-      if (x != null) {
+      if (x != null && x["id"] != undefined) {
         const id = parseInt(x["id"]);
         this._propertyservice.getSingle(id)
           .subscribe(property => {
@@ -26,13 +30,11 @@ export class PropertiesFormComponent implements OnInit {
           });
       }
     });
-  }
-
-  ngOnInit() {
     this.createFormGroup();
   }
 
   createFormGroup() {
+    this.title = 'Create new';
     this.formGroup = new FormGroup({
       PropertyReference: new FormControl('', Validators.required),
       AddressLine1: new FormControl('', Validators.required),
@@ -83,19 +85,22 @@ export class PropertiesFormComponent implements OnInit {
   }
 
   save() {
+    debugger;
     if (this.formGroup.value.id == "") {
       this._propertyservice.add(this.formGroup.value).subscribe(x => {
         if (x['saveSuccessful'] === true) {
-          debugger;
+          this.formGroup.patchValue({
+            id: parseInt(x['savedEntityId'])
+          });
           this.title = 'Edit Property - ' + x['savedDataId'];
+          this.toaster.add('created new property successfully');
         }
       });
     } else {
       this._propertyservice.update(this.formGroup.value.id, this.formGroup.value).subscribe(x => {
         if (x['saveSuccessful'] === true) {
-          debugger;
           this.title = 'Edit Property - ' + x['savedDataId'];
-          this.toaster.add('success');
+          this.toaster.add('updated successfully');
         }
       });
     }

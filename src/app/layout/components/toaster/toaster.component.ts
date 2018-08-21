@@ -31,4 +31,8 @@ export class ToasterComponent {
     showToaster(message) {
         this.snackBar.openFromComponent(ToasterComponent, { duration: 5000 });
     }
+
+    ngOnDestroy(){
+        this.snackBar.dismiss();
+    }
 }

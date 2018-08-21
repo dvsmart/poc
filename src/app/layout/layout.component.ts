@@ -21,7 +21,6 @@ export class LayoutComponent implements OnInit {
         private resolver: ComponentFactoryResolver
     )
     {
-
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
@@ -43,18 +42,14 @@ export class LayoutComponent implements OnInit {
             });
 
         this.toaster.messageObserver.subscribe(x=>{
-            debugger;
             this.createComponent(x);
         });
     }
 
-    /**
-     * On destroy
-     */
     ngOnDestroy(): void
     {
-        // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
+        this.entry.clear();
     }
 }

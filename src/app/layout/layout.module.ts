@@ -20,7 +20,7 @@ import { MatSnackBarModule } from '@angular/material';
 
     CoreSharedModule,
     FuseSidebarModule,
-MatSnackBarModule,
+    MatSnackBarModule,
     ContentModule,
     NavbarModule,
     ToolbarModule,

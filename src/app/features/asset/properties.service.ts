@@ -42,7 +42,7 @@ export class PropertiesService {
     }
 
     public update(id: number, propertyModel: CreateAssetPropertyRequest): Observable<boolean> {
-        return this._httpClient.put<boolean>(environment.apiUrl + 'AssetProperties?id=' + id, propertyModel);
+        return this._httpClient.put<boolean>(environment.apiUrl + 'AssetProperties', propertyModel);
     }
 
     public getSingle(id: number): Observable<CreateAssetPropertyRequest> {
