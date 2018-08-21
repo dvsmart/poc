@@ -17,7 +17,6 @@ export class AuthService {
   login(loginform: any) {
       return this.http.post<any>(this.api,loginform).pipe(map(user=>{
         if(user && user.token){
-          debugger;
           localStorage.setItem('currentUser', JSON.stringify(user));
           this._isLoggedIn.next(true);
         }else{
