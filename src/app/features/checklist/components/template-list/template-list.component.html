@@ -1,0 +1,21 @@
+
+{{title}}
+
+<div style="width:300px;">
+  <mat-nav-list>
+      <mat-list-item>
+          <a matLine [routerLink]="['l/1']">list 1</a>
+          <button mat-icon-button>
+              <mat-icon>info</mat-icon>
+          </button>
+      </mat-list-item>
+      <mat-list-item>
+          <a matLine [routerLink]="['l/2']">list 2</a>
+          <button mat-icon-button>
+              <mat-icon>info</mat-icon>
+          </button>
+      </mat-list-item>
+  </mat-nav-list>
+</div>
+
+<router-outlet></router-outlet>

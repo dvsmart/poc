@@ -27,7 +27,6 @@ const appRoutes: Routes = [
     AppComponent
   ],
   imports: [
-    BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
 

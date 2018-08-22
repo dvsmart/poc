@@ -36,34 +36,13 @@ const routes: Routes = [
       {
         path: 'task',
         loadChildren: './task/task.module#TaskModule'
+      },
+      {
+        path: 'checklist',
+        loadChildren: './checklist/checklist.module#ChecklistModule'
       }
     ]
   }
-  // { path: '**', redirectTo: '' }
-  // {
-  //   path: 'home',
-  //   loadChildren: './home/home.module#HomeModule',
-  // },
-  // {
-  //   path: 'asset/properties',
-  //   loadChildren: './asset/asset.module#AssetModule'
-  // },
-  // {
-  //   path: 'assessment',
-  //   loadChildren: './assessment/assessment.module#AssessmentModule'
-  // },
-  // {
-  //   path: 'calender',
-  //   loadChildren: './calendar/calendar.module#CalendarModule'
-  // },
-  // {
-  //   path: 'todo',
-  //   loadChildren: './todo/todo.module#TodoModule'
-  // },
-  // {
-  //   path: 'task',
-  //   loadChildren: './task/task.module#TaskModule'
-  // }
 ];
 
 
