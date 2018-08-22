@@ -46,7 +46,7 @@ vertical-layout-1 {
 
                     // Content component
                     content {
-
+                        flex: 1 1 0%;
                         &.inner-scroll {
                             flex: 1 1 0%;
                             min-height: 0;

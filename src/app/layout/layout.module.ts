@@ -17,10 +17,9 @@ import { MatSnackBarModule } from '@angular/material';
 @NgModule({
   imports: [
     RouterModule,
-
     CoreSharedModule,
     FuseSidebarModule,
-MatSnackBarModule,
+    MatSnackBarModule,
     ContentModule,
     NavbarModule,
     ToolbarModule,

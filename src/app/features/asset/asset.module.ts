@@ -20,6 +20,10 @@ const routes: Routes = [
       {
         path: 'edit/:id',
         component: PropertiesFormComponent,
+      },
+      {
+        path: 'new',
+        component: PropertiesFormComponent,
       }
     ],
     resolve:{

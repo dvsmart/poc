@@ -37,13 +37,7 @@ export class PropertiesService {
         this.pageSize = new BehaviorSubject(0);
     }
 
-    public add(propertyModel: CreateAssetPropertyRequest): Observable<boolean> {
-        return this._httpClient.post<boolean>(environment.apiUrl + 'AssetProperties', propertyModel);
-    }
 
-    public update(id: number, propertyModel: CreateAssetPropertyRequest): Observable<boolean> {
-        return this._httpClient.put<boolean>(environment.apiUrl + 'AssetProperties?id=' + id, propertyModel);
-    }
 
     public getSingle(id: number): Observable<CreateAssetPropertyRequest> {
         return this._httpClient.get<CreateAssetPropertyRequest>(environment.apiUrl + 'AssetProperties/' + id);
@@ -153,15 +147,26 @@ export class PropertiesService {
         this.onSelectedPropertiesChanged.next(this.selectedProperties);
     }
 
-    updateContact(contact): Promise<any> {
+    updateProperty(propertyModel: CreateAssetPropertyRequest): Promise<any> {
         return new Promise((resolve, reject) => {
-            this._httpClient.post('api/contacts-contacts/' + contact.id, { ...contact })
+            this._httpClient.put(environment.apiUrl + 'AssetProperties' , { ...propertyModel })
                 .subscribe(response => {
                     this.getProperties();
                     resolve(response);
                 });
         });
     }
+
+    addProperty(propertyModel: CreateAssetPropertyRequest): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this._httpClient.post(environment.apiUrl + 'AssetProperties' , { ...propertyModel })
+                .subscribe(response => {
+                    this.getProperties();
+                    resolve(response);
+                });
+        });
+    }
+    
 
     deselectProperties(): void {
         this.selectedProperties = [];

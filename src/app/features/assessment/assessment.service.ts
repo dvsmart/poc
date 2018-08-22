@@ -159,7 +159,6 @@ export class AssessmentService {
 
     deleteAssessments(assessmentId): void {
         this._httpClient.delete(environment.apiUrl + 'Assessment?recordId=' + assessmentId).subscribe(x => {
-            debugger;
             this.getAssessments()
         });
     }

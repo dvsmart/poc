@@ -3,22 +3,28 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PropertiesService } from '../properties.service';
 import { MessageService } from '@core/services/message.service';
+import { fuseAnimations } from '@core/animations';
 
 
 @Component({
   selector: 'app-properties-form',
   templateUrl: './properties-form.component.html',
-  styleUrls: ['./properties-form.component.scss']
+  styleUrls: ['./properties-form.component.scss'],
+  animations:fuseAnimations
 })
 export class PropertiesFormComponent implements OnInit {
   formGroup: FormGroup;
   title: string;
+  defaultTab: number;
   constructor(private _propertyservice: PropertiesService,
     private route: ActivatedRoute,
     private router: Router,
     private toaster: MessageService) {
+  }
+
+  ngOnInit() {
     this.route.params.subscribe(x => {
-      if (x != null) {
+      if (x != null && x["id"] != undefined) {
         const id = parseInt(x["id"]);
         this._propertyservice.getSingle(id)
           .subscribe(property => {
@@ -26,13 +32,11 @@ export class PropertiesFormComponent implements OnInit {
           });
       }
     });
-  }
-
-  ngOnInit() {
     this.createFormGroup();
   }
 
   createFormGroup() {
+    this.title = 'Create new';
     this.formGroup = new FormGroup({
       PropertyReference: new FormControl('', Validators.required),
       AddressLine1: new FormControl('', Validators.required),
@@ -76,6 +80,7 @@ export class PropertiesFormComponent implements OnInit {
     } else {
       this.title = 'Create New Property';
     }
+    this.defaultTab = 0;
   }
 
   cancel() {
@@ -84,18 +89,21 @@ export class PropertiesFormComponent implements OnInit {
 
   save() {
     if (this.formGroup.value.id == "") {
-      this._propertyservice.add(this.formGroup.value).subscribe(x => {
+      this._propertyservice.addProperty(this.formGroup.value).then(x => {
         if (x['saveSuccessful'] === true) {
-          debugger;
+          this.formGroup.patchValue({
+            assetId: parseInt(x['savedEntityId']),
+            id: parseInt(x['recordId'])
+          });
           this.title = 'Edit Property - ' + x['savedDataId'];
+          this.toaster.add('created new property successfully');
         }
       });
     } else {
-      this._propertyservice.update(this.formGroup.value.id, this.formGroup.value).subscribe(x => {
+      this._propertyservice.updateProperty(this.formGroup.value).then(x => {
         if (x['saveSuccessful'] === true) {
-          debugger;
           this.title = 'Edit Property - ' + x['savedDataId'];
-          this.toaster.add('success');
+          this.toaster.add('updated successfully');
         }
       });
     }

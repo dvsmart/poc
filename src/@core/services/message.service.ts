@@ -26,5 +26,10 @@ export class MessageService {
     clear(key?: string) {
         this.clearSource.next(key||null);
     }
+
+    ngOnDestroy(){
+        this.messageSource.unsubscribe();
+        this.clearSource.unsubscribe();
+    }
     
 }
