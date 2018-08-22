@@ -1,36 +1,16 @@
-import {Component, Input, OnInit, ViewEncapsulation} from "@angular/core";
-import {Router, ActivatedRoute, NavigationEnd, Params, PRIMARY_OUTLET} from "@angular/router";
+import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
+import { Router, ActivatedRoute, NavigationEnd, Params, PRIMARY_OUTLET } from "@angular/router";
 import "rxjs/add/operator/filter";
 import { IBreadcrumb } from "./breadcrumb.model";
 import { BreadcrumbsService } from "./breadcrumb.service";
-
+import { distinctUntilChanged, map } from 'rxjs/operators';
+import { pipe } from "rxjs";
 
 
 @Component({
     selector: "breadcrumb",
-    template: `
-        <div [ngClass]="{ 'container-fluid': allowBootstrap, 'fluid-bread': true}">
-            <div class="container">
-                <ol [ngClass]="{ 'breadcrumb': allowBootstrap}" class="{{addClass ? '' + addClass : ''}}">
-                    <li *ngFor="let breadcrumb of breadcrumbs; let last = last"
-                        [ngClass]="{ 'breadcrumb-item': allowBootstrap, 'list': true, 'active': last }">
-                        <a *ngIf="!last" [routerLink]="hasParams(breadcrumb)">
-                            {{breadcrumb.label}}
-                        </a>
-                        <span *ngIf="last">{{ breadcrumb.label }}</span>
-                    </li>
-                </ol>
-            </div>
-        </div>`,
-    styles: [`
-        .fluid-bread {
-            background-color: white;
-        }
-        .breadcrumb {
-            background-color: white;
-            padding: 4px;
-            margin-bottom: 0;
-        }`],
+    templateUrl: './breadcrumb.component.html',
+    styles: ['./breadcrumb.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 
@@ -49,14 +29,41 @@ export class BreadcrumbComponent implements OnInit {
 
 
     public constructor(private breadcrumbService: BreadcrumbsService, private activatedRoute: ActivatedRoute, private router: Router) {
-        breadcrumbService.get().subscribe((breadcrumbs: IBreadcrumb[]) => {
-            this.breadcrumbs = breadcrumbs as IBreadcrumb[];
-            console.log(this.breadcrumbs);
-        });
+        // breadcrumbService.get().subscribe((breadcrumbs: IBreadcrumb[]) => {
+        //     this.breadcrumbs = breadcrumbs as IBreadcrumb[];
+        //     console.log(this.breadcrumbs);
+        // });
+
+       
     }
+
+    breadcrumbs$ = this.router.events
+    .filter(event => event instanceof NavigationEnd).pipe(map(event => this.buildBreadCrumb(this.activatedRoute.root)));
+
 
     public hasParams(breadcrumb: IBreadcrumb) {
         return Object.keys(breadcrumb.params).length ? [breadcrumb.url, breadcrumb.params] : [breadcrumb.url];
+    }
+
+    buildBreadCrumb(route: ActivatedRoute, url: string = '',
+        breadcrumbs: Array<IBreadcrumb> = []): Array<IBreadcrumb> {
+        // If no routeConfig is avalailable we are on the root path
+        const label = route.routeConfig ? route.routeConfig.data['breadcrumb'] : 'Home';
+        const path = route.routeConfig ? route.routeConfig.path : '';
+        // In the routeConfig the complete path is not available,
+        // so we rebuild it each time
+        const nextUrl = `${url}${path}/`;
+        const breadcrumb = {
+            label: label,
+            url: nextUrl
+        };
+        const newBreadcrumbs = [...breadcrumbs, breadcrumb];
+        if (route.firstChild) {
+            // If we are not on our current path yet,
+            // there will be more children to look after, to build our breadcumb
+            return this.buildBreadCrumb(route.firstChild, nextUrl, newBreadcrumbs);
+        }
+        return newBreadcrumbs;
     }
 
 

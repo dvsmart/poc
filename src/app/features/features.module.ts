@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '../../../node_modules/@angular/router';
 import { CoreSharedModule } from '../../@core/core.module';
 import { AuthGuard } from '../login/auth.guard';
+import { BreadcrumbsModule } from '@core/components/breadcrumb/breadcrumb.module';
 
 
 const routes: Routes = [
@@ -38,8 +39,11 @@ const routes: Routes = [
         loadChildren: './task/task.module#TaskModule'
       },
       {
-        path: 'checklist',
-        loadChildren: './checklist/checklist.module#ChecklistModule'
+        path: 'profile',
+        loadChildren: './checklist/checklist.module#ChecklistModule',
+        data:{
+          breadcrumb:'Checklist Categories'
+        }
       }
     ]
   }
@@ -49,6 +53,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CoreSharedModule,
+    BreadcrumbsModule,
     RouterModule.forChild(routes),
   ],
   declarations: []

@@ -2,31 +2,35 @@ import { NgModule } from '@angular/core';
 import { CategoryListComponent } from './components/category-list/category-list.component';
 import { ListComponent } from './components/list/list.component';
 import { TemplateListComponent } from './components/template-list/template-list.component';
-import { CoreSharedModule } from '@core/core.module';
 import { ChecklistService } from './services/checklist.service';
 import { Routes, RouterModule } from '@angular/router';
-import { BreadcrumbsModule } from '@core/components/breadcrumb/breadcrumb.module';
 import { ChecklistComponent } from './checklist.component';
 import { MatListModule, MatIconModule } from '@angular/material';
+import { CoreSharedModule } from '@core/core.module';
+import { BreadcrumbsModule } from '@core/components/breadcrumb/breadcrumb.module';
 
 const routes: Routes = [
   {
     path: '',
     component: ChecklistComponent,
-    children:[
-      {
-        path: 'cat/:id',
-        component: CategoryListComponent,
-      },
-      {
-        path: 'tem/:id',
-        component: TemplateListComponent,
-      },
-      {
-        path: 'list/:id',
-        component: ListComponent,
-      }
-    ]
+  },
+  {
+    path: 'cat/:id',
+    component: CategoryListComponent,
+  },
+  {
+    path: 'tem/:id',
+    component: TemplateListComponent,
+    data:{
+      breadcrumb: 'Templates'
+    }
+  },
+  {
+    path: 'list/:id',
+    component: ListComponent,
+    data:{
+      breadcrumb: 'single'
+    }
   }
 ];
 
