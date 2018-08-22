@@ -1,8 +1,8 @@
-<div class="content-card bg-white">
+<div class="content-card bg-white" [@slideInBottom]>
   <mat-toolbar>{{title}}</mat-toolbar>
   <form (ngSubmit)='save()' [formGroup]='formGroup' novalidate class="form">
     <div class="content-card-form">
-      <mat-tab-group>
+      <mat-tab-group selectedIndex="0">
         <mat-tab>
           <ng-template mat-tab-label>
             Identification

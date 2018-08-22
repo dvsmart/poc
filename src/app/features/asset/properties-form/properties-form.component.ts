@@ -3,21 +3,23 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PropertiesService } from '../properties.service';
 import { MessageService } from '@core/services/message.service';
+import { fuseAnimations } from '@core/animations';
 
 
 @Component({
   selector: 'app-properties-form',
   templateUrl: './properties-form.component.html',
-  styleUrls: ['./properties-form.component.scss']
+  styleUrls: ['./properties-form.component.scss'],
+  animations:fuseAnimations
 })
 export class PropertiesFormComponent implements OnInit {
   formGroup: FormGroup;
   title: string;
+  defaultTab: number;
   constructor(private _propertyservice: PropertiesService,
     private route: ActivatedRoute,
     private router: Router,
     private toaster: MessageService) {
-    
   }
 
   ngOnInit() {
@@ -78,6 +80,7 @@ export class PropertiesFormComponent implements OnInit {
     } else {
       this.title = 'Create New Property';
     }
+    this.defaultTab = 0;
   }
 
   cancel() {
@@ -85,19 +88,19 @@ export class PropertiesFormComponent implements OnInit {
   }
 
   save() {
-    debugger;
     if (this.formGroup.value.id == "") {
-      this._propertyservice.add(this.formGroup.value).subscribe(x => {
+      this._propertyservice.addProperty(this.formGroup.value).then(x => {
         if (x['saveSuccessful'] === true) {
           this.formGroup.patchValue({
-            id: parseInt(x['savedEntityId'])
+            assetId: parseInt(x['savedEntityId']),
+            id: parseInt(x['recordId'])
           });
           this.title = 'Edit Property - ' + x['savedDataId'];
           this.toaster.add('created new property successfully');
         }
       });
     } else {
-      this._propertyservice.update(this.formGroup.value.id, this.formGroup.value).subscribe(x => {
+      this._propertyservice.updateProperty(this.formGroup.value).then(x => {
         if (x['saveSuccessful'] === true) {
           this.title = 'Edit Property - ' + x['savedDataId'];
           this.toaster.add('updated successfully');
