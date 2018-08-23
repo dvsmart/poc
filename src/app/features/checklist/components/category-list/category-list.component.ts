@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ChecklistService } from '../../services/checklist.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-category-list',
@@ -8,8 +11,11 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CategoryListComponent implements OnInit {
 
-  title:string;
-  constructor(private route: ActivatedRoute) { }
+  title: string;
+
+  private _unsubscribeAll: Subject<any>;
+  categories: any[];
+  constructor(private route: ActivatedRoute, private _checklistservice: ChecklistService) { }
 
   ngOnInit() {
     this.route.params.subscribe(x => {
@@ -17,6 +23,12 @@ export class CategoryListComponent implements OnInit {
         this.title = x["id"] + ' Category';
       }
     });
+
+    this._checklistservice.onCategories
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(result => {
+        this.categories = result;
+      });
   }
 
 }
