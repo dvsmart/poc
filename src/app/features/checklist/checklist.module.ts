@@ -21,16 +21,10 @@ const routes: Routes = [
   {
     path: 'tem/:id',
     component: TemplateListComponent,
-    data:{
-      breadcrumb: 'Templates'
-    }
   },
   {
     path: 'list/:id',
     component: ListComponent,
-    data:{
-      breadcrumb: 'single'
-    }
   }
 ];
 

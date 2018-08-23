@@ -12,6 +12,7 @@ import { MessageService } from '@core/services/message.service';
 import { ToasterComponent } from 'app/layout/components/toaster/toaster.component';
 import { ToasterModule } from 'app/layout/components/toaster/toaster.module';
 import { MatSnackBarModule } from '@angular/material';
+import { BreadcrumbsModule } from '@core/components/breadcrumb/breadcrumb.module';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { MatSnackBarModule } from '@angular/material';
     ToolbarModule,
     QuickPanelModule,
     CoreNavigationModule,
-    ToasterModule
+    ToasterModule,
+    BreadcrumbsModule
   ],
   exports:[LayoutComponent],
   providers:[MessageService],

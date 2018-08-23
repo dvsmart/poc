@@ -1,23 +1,5 @@
-<h4>Checklist Categories</h4>
+<breadcrumb [allowBootstrap]="true" [addClass]="'custom-crumbs'"></breadcrumb>
 
-<breadcrumb></breadcrumb>
-
-<div style="width:300px;">
-    <mat-nav-list>
-        <mat-list-item>
-            <a matLine [routerLink]="['cat/1']">Category 1</a>
-            <button mat-icon-button>
-                <mat-icon>info</mat-icon>
-            </button>
-        </mat-list-item>
-        <mat-list-item>
-            <a matLine [routerLink]="['cat/2']">Category 2</a>
-            <button mat-icon-button>
-                <mat-icon>info</mat-icon>
-            </button>
-        </mat-list-item>
-    </mat-nav-list>
-</div>
-
+<app-category-list></app-category-list>
 
 <router-outlet></router-outlet>

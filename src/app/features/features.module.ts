@@ -39,11 +39,8 @@ const routes: Routes = [
         loadChildren: './task/task.module#TaskModule'
       },
       {
-        path: 'profile',
+        path: 'checklist',
         loadChildren: './checklist/checklist.module#ChecklistModule',
-        data:{
-          breadcrumb:'Checklist Categories'
-        }
       }
     ]
   }
