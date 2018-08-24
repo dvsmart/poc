@@ -1,7 +1,8 @@
 <div style="width:300px;">
+  
     <mat-nav-list>
-        <mat-list-item *ngFor="let category of categories">
-            <a matLine [routerLink]="['/checklist/tem/1']">{{category}}</a>
+        <mat-list-item *ngFor="let category of categories | async">
+            <a matLine [routerLink]="['/checklist/cat/',category.id]">{{category.categoryName}}</a>
             <button mat-icon-button>
                 <mat-icon>info</mat-icon>
             </button>

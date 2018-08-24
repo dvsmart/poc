@@ -1,13 +1,9 @@
+<p>{{caption}}</p>
+
 <div style="width:300px;">
-  <mat-nav-list>
-      <mat-list-item>
-          <a matLine [routerLink]="['/checklist/list/1']">{{title}} Template 1</a>
-          <button mat-icon-button>
-              <mat-icon>info</mat-icon>
-          </button>
-      </mat-list-item>
-      <mat-list-item>
-          <a matLine [routerLink]="['/checklist/list/2']">{{title}} Template 2</a>
+  <mat-nav-list *ngIf="templates">
+      <mat-list-item *ngFor="let template of templates">
+          <a matLine [routerLink]="['/checklist/list/',template.id]">{{template.templateName}}</a>
           <button mat-icon-button>
               <mat-icon>info</mat-icon>
           </button>

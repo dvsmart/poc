@@ -13,13 +13,17 @@ const routes: Routes = [
   {
     path: '',
     component: ChecklistComponent,
+    redirectTo:'categories'
+  },
+  {
+    path: 'categories',
+    component: CategoryListComponent,
+    resolve:{
+      categories: ChecklistService
+    }
   },
   {
     path: 'cat/:id',
-    component: CategoryListComponent,
-  },
-  {
-    path: 'tem/:id',
     component: TemplateListComponent,
   },
   {

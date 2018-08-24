@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChecklistService } from '../../services/checklist.service';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-category-list',
@@ -14,7 +14,7 @@ export class CategoryListComponent implements OnInit {
   title: string;
 
   private _unsubscribeAll: Subject<any>;
-  categories: any[];
+  categories: Observable<any[]>;
   constructor(private route: ActivatedRoute, private _checklistservice: ChecklistService) { }
 
   ngOnInit() {
@@ -24,11 +24,7 @@ export class CategoryListComponent implements OnInit {
       }
     });
 
-    this._checklistservice.onCategories
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(result => {
-        this.categories = result;
-      });
+    this.categories = this._checklistservice.onCategories;
   }
 
 }
