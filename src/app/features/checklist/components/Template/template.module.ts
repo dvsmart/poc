@@ -12,15 +12,15 @@ const routes: Routes = [
     {
         path: '',
         component: TemplateComponent,
-        resolve:{
+        resolve: {
             template: TemplateService
         },
-        children:[
+        children: [
             {
-              path:'edit/:id',
-              component:TemplateFormComponent
+                path: 'edit/:id',
+                component: TemplateFormComponent,
             }
-          ]
+        ]
     }
 ];
 

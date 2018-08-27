@@ -73,23 +73,23 @@ export class TemplateListService {
         })
     }
 
-    getTabFieldsByTemplateId(templateId) {
-        return new Promise((resolve, reject) => {
-            this.http.get(environment.apiUrl + 'CustomTab/' + templateId)
-            .subscribe((res: any) => {
-                this.onSelectedTemplateChanged.next(res);
-                resolve(res);
-            });
-        })
-    }
+    // getTabFieldsByTemplateId(templateId) {
+    //     return new Promise((resolve, reject) => {
+    //         this.http.get(environment.apiUrl + 'CustomTab/' + templateId)
+    //         .subscribe((res: any) => {
+    //             this.onSelectedTemplateChanged.next(res);
+    //             resolve(res);
+    //         });
+    //     })
+    // }
 
     getCustomEntity(templateId){
         return this.http.get(environment.apiUrl + 'CustomTab/' + templateId);
     }
 
-    getTabFields() {
-        return this.onSelectedTemplateChanged.asObservable();
-    }
+    // getTabFields() {
+    //     return this.onSelectedTemplateChanged.asObservable();
+    // }
 
     getFields() {
         return this.onFieldsChanged.asObservable();

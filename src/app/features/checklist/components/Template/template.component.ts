@@ -15,7 +15,6 @@ export class TemplateComponent implements OnInit {
   constructor(private route: ActivatedRoute, private _checklistservice: TemplateService) { }
 
   ngOnInit() {
-    debugger;
     this.route.params.subscribe(x => {
       if (x != null && x["id"] != undefined) {
         this.title = x["id"] + ' List';
