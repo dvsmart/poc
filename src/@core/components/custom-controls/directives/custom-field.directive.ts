@@ -23,7 +23,8 @@ const componentMapper = {
   date: DateComponent,
   radiobutton: RadiobuttonComponent,
   checkbox: CheckboxComponent,
-  textarea: TextAreaComponent
+  textarea: TextAreaComponent,
+  phone:InputComponent
 };
 @Directive({
   selector: "[dynamicField]"

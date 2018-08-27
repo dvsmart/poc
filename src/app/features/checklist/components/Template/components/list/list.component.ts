@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
-import { ChecklistService } from '../../services/checklist.service';
 import { fuseAnimations } from '@core/animations';
+import { TemplateService } from '../../checklistTemplate.service';
+import { DataSource } from '@angular/cdk/table';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -12,19 +14,18 @@ import { fuseAnimations } from '@core/animations';
   animations: fuseAnimations
 })
 export class ListComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['dataId', 'status', 'dueDate', 'addedOn'];
+  dataSource: CustomEntityInstanceDataSource | null;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   title: string;
   templateId: string;
-  constructor(private route: ActivatedRoute, private _checklistservice: ChecklistService,private router: Router) {
-
+  constructor(private route: ActivatedRoute, private _checklistservice: TemplateService,private router: Router) {
    }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
+    this.dataSource = new CustomEntityInstanceDataSource(this._checklistservice);
     this.route.data.subscribe(x=>{
       this.templateId = x["param"]
     });
@@ -37,10 +38,19 @@ export class ListComponent implements OnInit {
   }
 
   edit(row){
-    debugger;
-    this.router.navigate([this.templateId + '/edit/', row.position ])
+    this.router.navigate([this.templateId + '/edit/', row.id ])
   }
 
+}
+
+export class CustomEntityInstanceDataSource extends DataSource<any>
+{
+  constructor(private _assessmentservice: TemplateService) { super(); }
+  connect(): Observable<any[]> {
+    return this._assessmentservice.onInstancesChanged;
+  }
+  disconnect(): void {
+  }
 }
 
 export interface PeriodicElement {

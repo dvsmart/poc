@@ -1,0 +1,17 @@
+<div class="content-card bg-white p-24" [formGroup]="customForm">
+    <ng-container *ngIf="(tabs) === null">Loading tabs...</ng-container>
+    <mat-toolbar>Edit Record - PI1234</mat-toolbar>
+    <form (submit)="saveForm()">
+        <mat-tab-group style="min-height: 400px;">
+            <mat-tab *ngFor="let tab of tabs">
+                <ng-template mat-tab-label="mat-tab-label">{{tab.caption}}</ng-template>
+                <dynamic-form [fields]="tab.fields" [form]="customForm">
+                </dynamic-form>
+            </mat-tab>
+        </mat-tab-group>
+        <div mat-dialog-actions class="pt-24" align="end">
+            <button mat-raised-button type="submit" class="mr-10" color="primary" matripple>Save</button>
+            <button mat-raised-button type="button" (click)="cancel()">Cancel</button>
+        </div>
+    </form>
+</div>

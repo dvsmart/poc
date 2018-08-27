@@ -1,15 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CategoryListComponent } from './components/category-list/category-list.component';
-import { ListComponent } from './components/list/list.component';
-import { TemplateListComponent } from './components/template-list/template-list.component';
 import { ChecklistService } from './services/checklist.service';
 import { Routes, RouterModule } from '@angular/router';
 import { ChecklistComponent } from './checklist.component';
-import { MatListModule, MatIconModule, MatTableModule, MatPaginatorModule, MatTabsModule, ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material';
 import { CoreSharedModule } from '@core/core.module';
-import { BreadcrumbsModule } from '@core/components/breadcrumb/breadcrumb.module';
-import { TemplateComponent } from './components/Template/template.component';
-import { TemplateFormComponent } from './components/templateForm/template-Form.component';
 import { CustomControlsModule } from '@core/components/custom-controls/custom-controls.module';
 import { DynamicFormComponent } from '@core/components/custom-controls/components/custom-form/custom-form.component';
 import { InputComponent } from '@core/components/custom-controls/components/textbox/textbox.component';
@@ -18,54 +11,39 @@ import { TextAreaComponent } from '@core/components/custom-controls/components/t
 import { SelectComponent } from '@core/components/custom-controls/components/select/select.component';
 import { DateComponent } from '@core/components/custom-controls/components/calender/calender.component';
 import { CheckboxComponent } from '@core/components/custom-controls/components/checkbox/checkbox.component';
+import { CustomMaterialModule } from './custom-material.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: ChecklistComponent,
     redirectTo:'categories'
   },
   {
     path: 'categories',
-    component: CategoryListComponent,
-    resolve:{
-      categories: ChecklistService
-    }
+    loadChildren: './components/category-list/category-list.module#CategoryListModule',
   },
   {
     path: 'cat/:id',
-    component: TemplateListComponent,
+    loadChildren:'./components/template-list/template-list.module#TemplateListModule',
   },
   {
     path: 'template/:id',
-    component: TemplateComponent,
+    loadChildren: './components/Template/template.module#TemplateModule',
     data:{
       param:'/checklist/template/'
-    },
-    children:[
-      {
-        path:'edit/:id',
-        component:TemplateFormComponent
-      }
-    ]
+    }
   }
 ];
 
 @NgModule({
   imports: [
     CoreSharedModule,
-    MatListModule,
-    MatTabsModule,
-    MatIconModule,
-    BreadcrumbsModule,
-    MatTableModule,
-    MatPaginatorModule,
     CustomControlsModule,
+    CustomMaterialModule,
     RouterModule.forChild(routes)
   ],
-  providers: [ChecklistService,{provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}],
-  declarations: [ChecklistComponent, TemplateListComponent, CategoryListComponent, ListComponent, TemplateComponent,
-  TemplateFormComponent],
+  providers: [ChecklistService],
+  declarations: [ChecklistComponent],
   entryComponents:[
     DynamicFormComponent,
     InputComponent,

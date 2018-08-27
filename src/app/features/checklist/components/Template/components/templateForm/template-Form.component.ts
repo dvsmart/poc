@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, pipe } from 'rxjs';
-import { ChecklistService } from '../../services/checklist.service';
+import { Observable } from 'rxjs';
 import { DynamicFormComponent } from '@core/components/custom-controls/components/custom-form/custom-form.component';
-import { Validators } from '@angular/forms';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { FieldConfig } from '@core/components/custom-controls/models/fieldConfig';
-import { allowPreviousPlayerStylesMerge } from '@angular/animations/browser/src/util';
-import { MapType } from '@angular/compiler';
+import { TemplateService } from '../../checklistTemplate.service';
 
 @Component({
   selector: 'app-template-form',
@@ -14,13 +12,17 @@ import { MapType } from '@angular/compiler';
   styleUrls: ['./template-form.component.scss']
 })
 export class TemplateFormComponent implements OnInit {
+  customForm: FormGroup;
   templates: Observable<any[]>;
   caption: Observable<string>;
   asyncTabs: Observable<CustomTab[]>;
   tabs: CustomTab[];
+  customEntityId: number;
 
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
-  constructor(private route: ActivatedRoute, private _checklistservice: ChecklistService) { }
+  constructor(private route: ActivatedRoute, private _checklistservice: TemplateService, private fb: FormBuilder) {
+    this.customForm = new FormGroup({});
+  }
   _regConfig: FieldConfig[] = [
     {
       type: "input",
@@ -109,14 +111,41 @@ export class TemplateFormComponent implements OnInit {
     }
   ];
 
+  saveForm() {
+    if (this.customForm.valid) {
+      this.SaveRecord();
+    } else {
+      this.validateAllFormFields(this.customForm);
+    }
+
+  }
+
+  SaveRecord() {
+    let instance = new CustomEntityInstance();
+    var fv = JSON.parse(JSON.stringify(this.customForm.value));
+    Object.keys(fv).forEach(function (prop) {
+      var id = parseInt(prop.split("_")[1]);
+      instance.fieldValues.push({ id: id, value: fv[prop] });
+    });
+    instance.customEntityId = this.customEntityId;
+    this._checklistservice.saveCustomEntity(instance);
+  }
 
   ngOnInit() {
     this.route.params.subscribe(x => {
       if (x != null && x["id"] != undefined) {
         const id = parseInt(x["id"]);
-        this._checklistservice.getCustomEntity(id).subscribe(x => {
+        this.customEntityId = id;
+        // this._checklistservice.getCustomEntity(id).subscribe(x => {
+        //   debugger;
+        //   this.populate(x);
+        //   this.customForm = this.createControl();
+        // })
+        this._checklistservice.getInstanceRecord(id);
+        this._checklistservice.onSelectedTemplateChanged.subscribe(x=>{
           this.populate(x);
-        })
+          this.customForm = this.createControl();
+        });
       }
     });
   }
@@ -130,12 +159,53 @@ export class TemplateFormComponent implements OnInit {
     }
   }
 
+  createControl() {
+    const group = this.fb.group({});
+    this.tabs.forEach(t => {
+      t.fields.forEach(field => {
+        if (field.type === "button") return;
+        const control = this.fb.control(
+          field.value,
+          this.bindValidations(field.validations || [])
+        );
+        group.addControl(field.name, control);
+      });
+    })
+    return group;
+  }
 
-  submit(value: any) {
-    alert(value);
+
+  bindValidations(validations: any) {
+    if (validations.length > 0) {
+      const validList = [];
+      validations.forEach(valid => {
+        validList.push(valid.validator);
+      });
+      return Validators.compose(validList);
+    }
+    return null;
+  }
+
+  validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      control.markAsTouched({ onlySelf: true });
+    });
   }
 
 }
+
+export class CustomEntityInstance {
+  customEntityId: number;
+  instanceId: number;
+  fieldValues: Field[] = [];
+}
+
+export class Field {
+  id: string | number;
+  value: string;
+}
+
 export interface CustomEntity {
   id: number
   tabs: CustomTab[]

@@ -18,20 +18,26 @@ import { FieldConfig } from "../../models/fieldConfig";
 @Component({
   exportAs: "dynamicForm",
   selector: "dynamic-form",
-  template: `
-  <form class="dynamic-form" [formGroup]="form" (submit)="onSubmit($event)">
-  <ng-container *ngFor="let field of fields;" dynamicField [field]="field" [group]="form">
-  </ng-container>
-  </form>
-  `,
+  // template: `
+  //           <form class="dynamic-form" [formGroup]="form" (submit)="onSubmit($event)">
+  //           <ng-container *ngFor="let field of fields;" dynamicField [field]="field" [group]="form">
+  //           </ng-container>
+  //           </form>
+  //           `,
+            template: `
+            <ng-container *ngFor="let field of fields;" dynamicField [field]="field" [group]="form">
+            </ng-container>
+            `,
   styles: []
 })
 export class DynamicFormComponent implements OnInit {
   @Input() fields: FieldConfig[] = [];
 
+  @Input() form: FormGroup;
+
   @Output() submit: EventEmitter<any> = new EventEmitter<any>();
 
-  form: FormGroup;
+  //form: FormGroup;
 
   get value() {
     return this.form.value;
@@ -39,7 +45,7 @@ export class DynamicFormComponent implements OnInit {
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.form = this.createControl();
+    //this.form = this.createControl();
   }
 
   onSubmit(event: Event) {
