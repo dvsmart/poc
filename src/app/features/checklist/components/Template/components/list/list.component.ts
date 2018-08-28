@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, ViewChild, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { fuseAnimations } from '@core/animations';
 import { TemplateService } from '../../checklistTemplate.service';
@@ -16,35 +15,38 @@ import { Observable } from 'rxjs';
 export class ListComponent implements OnInit {
   displayedColumns: string[] = ['dataId', 'status', 'dueDate', 'addedOn'];
   dataSource: CustomEntityInstanceDataSource | null;
+
+  pageSize: number;
+  total: number;
+  currentPage: number;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  templateId: string;
+  @Output() editRecord = new EventEmitter<number>()
 
-  constructor(private route: ActivatedRoute, private _checklistservice: TemplateService, private router: Router) {
+
+
+  constructor(private _checklistservice: TemplateService) {
   }
 
   ngOnInit() {
     this.dataSource = new CustomEntityInstanceDataSource(this._checklistservice);
-    this.route.data.subscribe(x => {
-      this.templateId = x["param"]
-    });
-    this.route.params.subscribe(x => {
-      if (x != null && x["id"] != undefined) {
-        const id = parseInt(x["id"]);
-        this.templateId = this.templateId + id;
-      }
-    });
   }
+
   edit(row) {
-    this.router.navigate([this.templateId + '/edit/', row.id])
+    this.editRecord.emit(row.id);
+  }
+
+  pageEvent($event) {
+    this.currentPage = $event.pageIndex + 1;
+    this.pageSize = $event.pageSize;
   }
 }
-
 export class CustomEntityInstanceDataSource extends DataSource<any>
 {
   constructor(private _customEntityGridService: TemplateService) { super(); }
   connect(): Observable<any[]> {
-    return this._customEntityGridService.onInstancesChanged;
+    return this._customEntityGridService.cevRecords;
   }
   disconnect(): void {
   }

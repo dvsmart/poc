@@ -24,13 +24,14 @@ const componentMapper = {
   radiobutton: RadiobuttonComponent,
   checkbox: CheckboxComponent,
   textarea: TextAreaComponent,
-  phone:InputComponent
+  phone:InputComponent,
+  email: InputComponent
 };
 @Directive({
   selector: "[dynamicField]"
 })
 export class DynamicFieldDirective implements OnInit {
-  @Input() field: FieldConfig;
+  @Input() field: any;
   @Input() group: FormGroup;
   componentRef: any;
   constructor(

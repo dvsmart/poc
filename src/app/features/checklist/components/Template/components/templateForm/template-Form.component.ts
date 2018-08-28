@@ -1,20 +1,27 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DynamicFormComponent } from '@core/components/custom-controls/components/custom-form/custom-form.component';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { FieldConfig } from '@core/components/custom-controls/models/fieldConfig';
 import { TemplateService } from '../../checklistTemplate.service';
+import { Observable } from 'rxjs';
+import { fuseAnimations } from '@core/animations';
 
 @Component({
   selector: 'app-template-form',
   templateUrl: './template-form.component.html',
-  styleUrls: ['./template-form.component.scss']
+  styleUrls: ['./template-form.component.scss'],
+  animations:fuseAnimations
 })
 export class TemplateFormComponent implements OnInit {
   customForm: FormGroup;
   tabs: CustomTab[];
-  customEntityId: number;
-  record: any;
+  recordId: number;
+  record$: Observable<CustomEntityRecord>;
+  record: CustomEntityRecord;
+
+  @Input() id: number;
+
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
   constructor(
     private route: ActivatedRoute,
@@ -23,20 +30,15 @@ export class TemplateFormComponent implements OnInit {
     this.customForm = new FormGroup({});
   }
 
-  ngOnInit() {
-    this.route.params.subscribe(x => {
-      debugger;
-      if (x != null && x["id"] != undefined) {
-        const id = parseInt(x["id"]);
-        this.customEntityId = id;
-        this._checklistservice.getEntityRecord(id).subscribe(x => {
-          debugger;
-          this.record = x;
-          this.populate(x);
-          this.customForm = this.createControl();
-        })
-      }
+  ngOnChanges() {
+    debugger;
+    this._checklistservice.editRecord(this.id).subscribe(x => {
+      this.record = x;
+      this.customForm = this.createControl();
     });
+  }
+
+  ngOnInit() {
   }
 
   saveForm() {
@@ -48,32 +50,20 @@ export class TemplateFormComponent implements OnInit {
   }
 
   SaveRecord() {
-    let instance = new CustomEntityInstance();
+    let instance = new CustomEntityValue();
     var fv = JSON.parse(JSON.stringify(this.customForm.value));
     Object.keys(fv).forEach(function (prop) {
       var id = parseInt(prop.split("_")[1]);
       instance.fieldValues.push({ id: id, value: fv[prop] });
     });
-    instance.customEntityId = this.customEntityId;
+    this._checklistservice.customEntityId.subscribe(x => instance.customEntityId = x);
     this._checklistservice.saveCustomEntity(instance);
   }
 
-
-
-  populate(x) {
-    this.tabs = [];
-    if (x != null && x.length > 0) {
-      for (let index = 0; index < x.length; index++) {
-        this.tabs.push(new CustomTab(x[index]));
-      }
-    }
-  }
-
   createControl() {
-    debugger;
     const group = this.fb.group({});
-    this.record.customTabs.forEach(t => {
-      t.customFields.forEach(field => {
+    this.record.customTabs.forEach(ct => {
+      ct.customFields.forEach(field => {
         if (field.type === "button") return;
         const control = this.fb.control(
           field.value,
@@ -108,34 +98,48 @@ export class TemplateFormComponent implements OnInit {
 
 
 
-export class checklistRecord {
+export class CustomField {
+  fieldId: number;
+  name: string;
+  caption: string;
+  sortOrder?: any;
+  isVisible: boolean;
+  type: string;
+  value?: string;
+  validations?: any[]
+
+  constructor(data: any) {
+    this.fieldId = data.fieldId;
+    this.caption = data.caption;
+    this.name = 'fieldId_' + data.fieldId;
+    this.type = data.fieldType;
+    this.sortOrder = data.sortOrder;
+    this.isVisible = data.isVisible = true;
+  }
+}
+
+export class CustomTab {
+  tabId: number;
+  caption: string;
+  sortOrder?: any;
+  isVisible: boolean;
+  customFields: FieldConfig[];
+}
+
+export class CustomEntityRecord {
   id: number;
   dataId: string;
   customEntityId: number;
-  customTabs: tab[]
-}
-
-export class tab {
-  tabId: number;
-  caption: string;
-  sortOrder: number;
-  isVisible: boolean;
-  customFields: customField[];
-}
-
-export class customField {
-  fieldId: number;
-  caption: string;
-  sortOrder: number;
-  isVisible: boolean;
-  fieldType: string
+  customTabs: CustomTab[];
 }
 
 
-export class CustomEntityInstance {
+export class CustomEntityValue {
   customEntityId: number;
-  instanceId: number;
+  CustomEntityValueId: number;
+  id: number;
   fieldValues: Field[] = [];
+  statusId: number = 1;
 }
 
 export class Field {
@@ -148,7 +152,7 @@ export interface CustomEntity {
   tabs: CustomTab[]
 }
 
-export class CustomField {
+export class CustomFieldDto {
   tabId: number;
   name: string;
   type: string | number;
@@ -156,7 +160,7 @@ export class CustomField {
 
 }
 
-export class CustomTab {
+export class CustomTabDto {
   customEntityId: number;
   caption: string;
   tabId: number;

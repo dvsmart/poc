@@ -29,9 +29,6 @@ const routes: Routes = [
   {
     path: 'template/:id',
     loadChildren: './components/Template/template.module#TemplateModule',
-    data:{
-      param:'/checklist/template/'
-    }
   }
 ];
 

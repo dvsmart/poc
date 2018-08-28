@@ -1,38 +1,39 @@
-
 <div class="center p-24" fusePerfectScrollbar>
-    <div class="content mat-white-bg mat-elevation-z4">
-        <div class="mat-elevation-z8">
-            <table mat-table [dataSource]="dataSource"  [@animateStagger]="{value:'50'}">
-          
-              <!-- Position Column -->
-              <ng-container matColumnDef="dataId">
-                <th mat-header-cell *matHeaderCellDef> ID </th>
-                <td mat-cell *matCellDef="let element"> {{element.dataId}} </td>
-              </ng-container>
-          
-              <!-- Name Column -->
-              <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef> Status </th>
-                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-              </ng-container>
-          
-              <!-- Weight Column -->
-              <ng-container matColumnDef="addedOn">
-                <th mat-header-cell *matHeaderCellDef> Added On </th>
-                <td mat-cell *matCellDef="let element"> {{element.addedOn}} </td>
-              </ng-container>
-          
-              <!-- Symbol Column -->
-              <ng-container matColumnDef="dueDate">
-                <th mat-header-cell *matHeaderCellDef> Due Date </th>
-                <td mat-cell *matCellDef="let element"> {{element.dueDate}} </td>
-              </ng-container>
-          
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="edit(row)"></tr>
-            </table>
-          
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-          </div>
+  <div class="content mat-white-bg mat-elevation-z4">
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="dataId">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.dataId}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> Status </th>
+          <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="addedOn">
+          <th mat-header-cell *matHeaderCellDef> Added On </th>
+          <td mat-cell *matCellDef="let element"> {{element.addedOn}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="dueDate">
+          <th mat-header-cell *matHeaderCellDef> Due Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.dueDate}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="edit(row)"></tr>
+      </table>
+
+      <mat-paginator #paginator (page)="pageEvent($event)" [pageSize]="10" [length]="100" [pageSizeOptions]="[5, 10, 50, 100]"
+        [showFirstLastButtons]="true">
+      </mat-paginator>
     </div>
+  </div>
 </div>

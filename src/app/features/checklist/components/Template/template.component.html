@@ -1,3 +1,17 @@
-<router-outlet></router-outlet>
+<!-- <router-outlet></router-outlet> -->
 
-<app-list></app-list>
+<div *ngIf="isEdit">
+    <app-template-form [id]="recordId" [@slideInTop]></app-template-form>
+</div>
+
+<div *ngIf="isNew">
+    <app-form [id]="templateId" [@slideInTop]></app-form>
+</div>
+
+
+<app-list (editRecord)="editRecord($event)"  [@animateStagger]="{value:'50'}"></app-list>
+
+<button mat-fab class="mat-accent-bg" id="add-property-button" aria-label="add contact"
+        [@animate]="{value:'*', params:{delay:'300ms',scale:'.2'}}" (click)="addNew()">
+    <mat-icon>person_add</mat-icon>
+</button>

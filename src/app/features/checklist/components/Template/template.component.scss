@@ -1,3 +1,14 @@
-table {
-  width: 100%;
+@import "src/@core/scss/fuse";
+#add-property-button {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  padding: 0;
+  z-index: 99;
+
+  @include media-breakpoint-down('xs') {
+      position: sticky;
+      top: calc(100vh - 72px);
+      bottom: auto;
+  }
 }

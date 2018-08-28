@@ -1,83 +1,60 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
-import { BehaviorSubject, Observable, pipe } from "rxjs";
 import { environment } from 'environments/environment';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
-import { CustomEntityInstance } from "./components/templateForm/template-Form.component";
+import { CustomEntityValue, CustomEntityRecord } from "./components/templateForm/template-Form.component";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
 })
 export class TemplateService {
     api = environment.apiUrl;
-    onInstancesChanged: BehaviorSubject<any>;
-    onCustomEntityRecordChanged: BehaviorSubject<any>;
 
-    onSelectedInstanceChanged: BehaviorSubject<any>;
+    cevRecords: BehaviorSubject<any>;
+
+    customEntityId: BehaviorSubject<number>;
 
     constructor(private http: HttpClient) {
-        this.onInstancesChanged = new BehaviorSubject([]);
-        this.onSelectedInstanceChanged = new BehaviorSubject({});
-        this.onCustomEntityRecordChanged = new BehaviorSubject({});
+        this.cevRecords = new BehaviorSubject([]);
+        this.customEntityId = new BehaviorSubject(0);
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
-        return new Promise((resolve, reject) => {
-            Promise.all([
-                this.getCustomEntityRecords()
-            ]).then(
-                ([files]) => {
-                    resolve();
-                },
-                reject
-            );
-        });
+    getcevRecords(templateId: number) {
+        return this.http.get(environment.apiUrl + 'CustomEntityInstance/GetCEVRecords/' + templateId)
+            .subscribe(x => {
+                this.cevRecords.next(x);
+            });
     }
 
-    getCustomEntityRecords() {
-        return new Promise((resolve, reject) => {
-            this.http.get(this.api + 'CustomEntityInstance').subscribe(x => {
-                this.onInstancesChanged.next(x);
-                resolve(x);
-            }, reject)
-        })
+    editRecord(id: number) {
+        return this.http.get<any>(environment.apiUrl + 'CustomEntityInstance/EditCevRecord/' + id);
     }
 
-    getCustomEntityRecord(id) {
-        return new Promise((resolve, reject) => {
-            this.http.get(this.api + 'CustomEntityInstance/'+ id).subscribe(x => {
-                debugger;
-                this.onCustomEntityRecordChanged.next(x);
-                resolve(x);
-            }, reject)
-        })
+    createRecord(templateId: number) {
+        return this.http.get<any>(environment.apiUrl + 'CustomEntity/' + templateId);
     }
 
-    getEntityRecord(id){
-        return this.http.get(this.api + 'CustomEntityInstance/'+ id);
+    getCustomEntityId() {
+        return this.customEntityId.asObservable()
     }
 
-    getRecord(){
-        return this.onCustomEntityRecordChanged.asObservable();
-    }
 
-    saveCustomEntity(customEntitymodel: CustomEntityInstance) {
+    saveCustomEntity(customEntitymodel: CustomEntityValue) {
         return this.http.post(environment.apiUrl + 'CustomEntityInstance', customEntitymodel).subscribe(
             x => {
+                debugger;
                 if (x != null && x["recordId"] != undefined) {
-                    const instanceId = parseInt(x["recordId"]);
-                    customEntitymodel.instanceId = instanceId
+                    const recordId = parseInt(x["recordId"]);
+                    customEntitymodel.CustomEntityValueId = recordId
                     this.http.post(environment.apiUrl + 'CustomFieldValue', customEntitymodel).subscribe(
-                        y => { alert(y); }
+                        () => {
+                            this.getcevRecords(customEntitymodel.customEntityId);
+                        }
                     )
                 }
             });
     }
 
-    ngOnDestroy() {
-        this.onInstancesChanged.unsubscribe();
-        this.onSelectedInstanceChanged.unsubscribe();
-    }
 
 }

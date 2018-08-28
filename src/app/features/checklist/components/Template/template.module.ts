@@ -7,20 +7,12 @@ import { CustomMaterialModule } from '../../custom-material.module';
 import { TemplateFormComponent } from './components/templateForm/template-Form.component';
 import { CoreSharedModule } from '@core/core.module';
 import { CustomControlsModule } from '@core/components/custom-controls/custom-controls.module';
+import { FormComponent } from './components/form/form.component';
 
 const routes: Routes = [
     {
         path: '',
         component: TemplateComponent,
-        resolve: {
-            template: TemplateService
-        },
-        children: [
-            {
-                path: 'edit/:id',
-                component: TemplateFormComponent,
-            }
-        ]
     }
 ];
 
@@ -32,6 +24,6 @@ const routes: Routes = [
         RouterModule.forChild(routes),
     ],
     exports: [TemplateComponent],
-    declarations: [TemplateComponent, ListComponent, TemplateFormComponent],
+    declarations: [TemplateComponent, ListComponent, TemplateFormComponent, FormComponent],
 })
 export class TemplateModule { }
