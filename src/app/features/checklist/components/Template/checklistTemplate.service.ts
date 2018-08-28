@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 
 import { environment } from 'environments/environment';
 import { CustomEntityValue, CustomEntityRecord } from "./components/templateForm/template-Form.component";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -14,6 +14,10 @@ export class TemplateService {
     cevRecords: BehaviorSubject<any>;
 
     customEntityId: BehaviorSubject<number>;
+
+    total: BehaviorSubject<number>;
+    pageSize: BehaviorSubject<number>;
+
 
     constructor(private http: HttpClient) {
         this.cevRecords = new BehaviorSubject([]);

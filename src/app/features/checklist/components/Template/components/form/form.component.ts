@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TemplateService } from '../../checklistTemplate.service';
@@ -16,6 +16,9 @@ export class FormComponent implements OnInit {
   customForm: FormGroup;
 
   @Input() id: number;
+
+  @Output() close =  new EventEmitter<boolean>(false);
+  
   constructor(
     private fb: FormBuilder,
     private _checklistservice: TemplateService) { 
@@ -24,6 +27,8 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  
 
   ngOnChanges(){
     this._checklistservice.createRecord(this.id).subscribe(x=> {
@@ -67,6 +72,10 @@ export class FormComponent implements OnInit {
       return Validators.compose(validList);
     }
     return null;
+  }
+
+  cancel(){
+    this.close.emit(true);
   }
 
 }

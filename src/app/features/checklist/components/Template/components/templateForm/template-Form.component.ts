@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DynamicFormComponent } from '@core/components/custom-controls/components/custom-form/custom-form.component';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
@@ -22,6 +22,7 @@ export class TemplateFormComponent implements OnInit {
 
   @Input() id: number;
 
+  @Output() close = new EventEmitter<boolean>(false);
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
   constructor(
     private route: ActivatedRoute,
@@ -92,6 +93,10 @@ export class TemplateFormComponent implements OnInit {
       const control = formGroup.get(field);
       control.markAsTouched({ onlySelf: true });
     });
+  }
+
+  cancel(){
+    this.close.emit(true);
   }
 
 }

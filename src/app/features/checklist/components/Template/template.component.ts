@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@core/animations';
 import { TemplateService } from './checklistTemplate.service';
@@ -26,6 +26,15 @@ export class TemplateComponent implements OnInit {
         this._checklistservice.getcevRecords(this.templateId);
       }
     });
+  }
+
+  closeForm($event){
+    if(this.isNew){
+      this.isNew = !$event;
+    }
+    if(this.isEdit){
+      this.isEdit = !$event;
+    }
   }
 
   addNew(){

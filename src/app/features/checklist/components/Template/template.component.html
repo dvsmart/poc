@@ -1,11 +1,11 @@
 <!-- <router-outlet></router-outlet> -->
 
 <div *ngIf="isEdit">
-    <app-template-form [id]="recordId" [@slideInTop]></app-template-form>
+    <app-template-form (close)="closeForm($event)" [id]="recordId" [@slideInTop]></app-template-form>
 </div>
 
 <div *ngIf="isNew">
-    <app-form [id]="templateId" [@slideInTop]></app-form>
+    <app-form (close)="closeForm($event)" [id]="templateId" [@slideInTop] ></app-form>
 </div>
 
 
