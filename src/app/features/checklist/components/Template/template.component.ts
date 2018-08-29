@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@core/animations';
 import { TemplateService } from './checklistTemplate.service';
@@ -7,6 +7,7 @@ import { TemplateService } from './checklistTemplate.service';
   selector: 'app-template',
   templateUrl: './template.component.html',
   styleUrls: ['./template.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
 export class TemplateComponent implements OnInit {
@@ -23,7 +24,7 @@ export class TemplateComponent implements OnInit {
         console.log(parseInt(x["id"]));
         this.templateId = parseInt(x["id"])
         this._checklistservice.customEntityId.next(this.templateId);
-        this._checklistservice.getcevRecords(this.templateId);
+        this._checklistservice.getcevRecords(this.templateId,1,10);
       }
     });
   }

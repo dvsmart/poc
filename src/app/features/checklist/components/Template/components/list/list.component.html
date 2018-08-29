@@ -1,7 +1,13 @@
 <div class="center p-24" fusePerfectScrollbar>
   <div class="content mat-white-bg mat-elevation-z4">
     <div class="mat-elevation-z8">
-      <table mat-table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
+      <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+        <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+          GitHub's API rate limit has been reached. It will be reset in one minute.
+        </div>
+      </div>
+      <table mat-table [dataSource]="dataSource" [@animateStagger]="{value:'50'}" matSort matSortActive="dataId" matSortDisableClear matSortDirection="asc">
 
         <!-- Position Column -->
         <ng-container matColumnDef="dataId">
@@ -31,7 +37,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="edit(row)"></tr>
       </table>
 
-      <mat-paginator #paginator (page)="pageEvent($event)" [pageSize]="10" [length]="100" [pageSizeOptions]="[5, 10, 50, 100]"
+      <mat-paginator #paginator (page)="pageEvent($event)" [pageSize]="pageSize" [length]="resultsLength" [pageSizeOptions]="[5, 10, 50, 100]"
         [showFirstLastButtons]="true">
       </mat-paginator>
     </div>

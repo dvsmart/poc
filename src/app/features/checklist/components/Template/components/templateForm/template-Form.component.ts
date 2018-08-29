@@ -32,7 +32,6 @@ export class TemplateFormComponent implements OnInit {
   }
 
   ngOnChanges() {
-    debugger;
     this._checklistservice.editRecord(this.id).subscribe(x => {
       this.record = x;
       this.customForm = this.createControl();
