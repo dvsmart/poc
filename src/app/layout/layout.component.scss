@@ -59,7 +59,7 @@ content {
 }
 
 content>:not(router-outlet) {
-    display: flex;
+    //display: flex;
     flex: 1 0 auto;
     width: 100%;
     min-width: 100%

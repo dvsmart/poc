@@ -9,19 +9,23 @@ import { ErrorInterceptor } from '../_helpers/error.interceptor';
 
 const routes: Routes = [
   {
-    path: '**',
-    component: LoginComponent
+    path: '',
+    redirectTo:'login'
+  },
+  {
+    path:'login',
+    component:LoginComponent
   }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes),
     MatButtonModule,
     MatCheckboxModule,
     MatFormFieldModule,
     MatInputModule,
-    CoreSharedModule
+    CoreSharedModule,
+    RouterModule.forChild(routes),
   ],
   declarations: [LoginComponent],
   exports: [LoginComponent]
