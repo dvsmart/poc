@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { MatListModule, MatIconModule, MatTableModule, MatPaginatorModule, MatTabsModule, ErrorStateMatcher, ShowOnDirtyErrorStateMatcher, MatButtonModule, MatToolbarModule, MatSortModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatListModule, MatIconModule, MatTableModule, MatPaginatorModule, MatTabsModule, ErrorStateMatcher, ShowOnDirtyErrorStateMatcher, MatButtonModule, MatToolbarModule, MatSortModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -11,7 +11,9 @@ import { MatListModule, MatIconModule, MatTableModule, MatPaginatorModule, MatTa
     MatToolbarModule,
     MatPaginatorModule,
     MatSortModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   exports:[
     MatListModule,
@@ -22,7 +24,9 @@ import { MatListModule, MatIconModule, MatTableModule, MatPaginatorModule, MatTa
     MatToolbarModule,
     MatPaginatorModule,
     MatSortModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers:[{provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}]
 })

@@ -13,6 +13,7 @@ import { ToasterComponent } from 'app/layout/components/toaster/toaster.componen
 import { ToasterModule } from 'app/layout/components/toaster/toaster.module';
 import { MatSnackBarModule } from '@angular/material';
 import { BreadcrumbsModule } from '@core/components/breadcrumb/breadcrumb.module';
+import { EmptyLayoutModule } from './empty-layout/empty-layout.module';
 
 
 @NgModule({

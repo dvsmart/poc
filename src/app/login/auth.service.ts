@@ -12,33 +12,29 @@ export class AuthService {
   api = environment.apiUrl + 'User/authenticate'
   constructor(private http: HttpClient) {
 
-   }
-
-  login(loginform: any) {
-      return this.http.post<any>(this.api,loginform).pipe(map(user=>{
-        if(user && user.token){
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this._isLoggedIn.next(true);
-        }else{
-          this._isLoggedIn.next(false);
-        }
-      }));
   }
 
-  private hasLoggedIn(){
+  login(loginform: any) {
+    return this.http.post<any>(this.api, loginform).pipe(map(user => {
+      if (user && user.token) {
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        this._isLoggedIn.next(true);
+      }
+    }));
+  }
+
+  private hasLoggedIn() {
     return !!localStorage.getItem('currentUser');
   }
 
-  isLoginSuccessful(){
+  isLoginSuccessful() {
     return this._isLoggedIn.asObservable();
   }
 
   logout() {
+    localStorage.clear();
     localStorage.removeItem('currentUser');
     this._isLoggedIn.next(false);
   }
-
-  ngOnDestroy(){
-    this._isLoggedIn.unsubscribe();
-  }
+  
 }

@@ -4,20 +4,20 @@ import { CoreSharedModule } from '../../@core/core.module';
 import { AuthGuard } from '../login/auth.guard';
 import { BreadcrumbsModule } from '@core/components/breadcrumb/breadcrumb.module';
 
-
 const routes: Routes = [
   {
     path: '',
     canActivate: [AuthGuard],
     children: [
       {
-        path:'',
-        redirectTo:'/home',
-        pathMatch:'full'
+        path: '',
+        redirectTo: '/home',
+        pathMatch: 'full'
       },
-      { 
-        path: 'home', 
-        loadChildren:'./home/home.module#HomeModule' },
+      {
+        path: 'home',
+        loadChildren: './home/home.module#HomeModule'
+      },
       {
         path: 'asset/properties',
         loadChildren: './asset/asset.module#AssetModule'
@@ -43,9 +43,16 @@ const routes: Routes = [
         loadChildren: './checklist/checklist.module#ChecklistModule',
       }
     ]
+  },
+  {
+    path: 'forgot-password',
+    loadChildren: './authentication/forgot-password/forgot-password.module#ForgotPasswordModule',
+  },
+  {
+    path: 'lock',
+    loadChildren: './authentication/lock-screen/lock-screen.module#LockModule',
   }
 ];
-
 
 @NgModule({
   imports: [

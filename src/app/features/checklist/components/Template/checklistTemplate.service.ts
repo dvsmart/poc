@@ -57,6 +57,10 @@ export class TemplateService {
         return this.customEntityId.asObservable()
     }
 
+    getTemplateInformation(id){
+        return this.http.get<CustomTemplate>(environment.apiUrl + 'CustomEntity/templateInfo/' + id);
+    }
+
 
     saveCustomEntity(customEntitymodel: CustomEntityValue) {
         return this.http.post(environment.apiUrl + 'CustomEntityInstance', customEntitymodel).subscribe(
@@ -80,4 +84,10 @@ export class TemplateService {
     }
 
 
+}
+
+export class CustomTemplate{
+    groupName: string;
+    templateName: string;
+    id:number;
 }

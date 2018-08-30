@@ -8,6 +8,7 @@ import { TemplateFormComponent } from './components/templateForm/template-Form.c
 import { CoreSharedModule } from '@core/core.module';
 import { CustomControlsModule } from '@core/components/custom-controls/custom-controls.module';
 import { FormComponent } from './components/form/form.component';
+import { DatePipe } from '@angular/common';
 
 const routes: Routes = [
     {
@@ -23,6 +24,7 @@ const routes: Routes = [
         CustomMaterialModule,
         RouterModule.forChild(routes),
     ],
+    providers:[DatePipe],
     exports: [TemplateComponent],
     declarations: [TemplateComponent, ListComponent, TemplateFormComponent, FormComponent],
 })

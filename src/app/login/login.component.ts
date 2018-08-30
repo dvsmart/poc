@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { fuseAnimations } from '@core/animations';
 import { AuthService } from './auth.service';
 import { FuseConfigService } from '@core/services/config.service';
