@@ -2,11 +2,30 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ChecklistService } from '../../services/checklist.service';
+import { fuseAnimations } from '@core/animations';
+import { trigger, transition, query, stagger, animate, style } from '@angular/animations';
 
 @Component({
   selector: 'app-template-list',
   templateUrl: './template-list.component.html',
-  styleUrls: ['./template-list.component.scss']
+  styleUrls: ['./template-list.component.scss'],
+  animations:[
+    trigger('listAnimation', [
+      transition('* => *', [ // each time the binding value changes
+        query(':leave', [
+          stagger(100, [
+            animate('0.5s', style({ opacity: 0 }))
+          ])
+        ]),
+        query(':enter', [
+          style({ opacity: 0 }),
+          stagger(100, [
+            animate('0.5s', style({ opacity: 1 }))
+          ])
+        ])
+      ])
+    ])
+  ]
 })
 export class TemplateListComponent implements OnInit {
   templates: Observable<any[]>;

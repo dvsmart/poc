@@ -1,14 +1,17 @@
-<p>Catagories</p>
-
-<div style="width:300px;">
-    <mat-nav-list>
-        <mat-list-item *ngFor="let category of categories | async">
-            <a matLine [routerLink]="['/checklist/cat/',category.id]">{{category.categoryName}}</a>
-            <button mat-icon-button>
-                <mat-icon>info</mat-icon>
-            </button>
-        </mat-list-item>
-    </mat-nav-list>
+<div class="sidebar-content">
+    <div class="card mat-white-bg">
+        <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon>filter_list</mat-icon>
+            <span class="h5">Categories</span>
+        </div>
+        <div class="content py-16" fusePerfectScrollbar>
+            <div class="nav">
+                <div class="nav-item" *ngFor="let category of categories | async" [@animateStagger]="{value:'100'}">
+                    <a  class="nav-link" [routerLink]="['/checklist/cat/',category.id]" matRipple [ngClass]="{'active mat-accent-bg':filterBy ==='live'}">
+                        <span class="title">{{category.categoryName}}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-

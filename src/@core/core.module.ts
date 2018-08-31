@@ -8,8 +8,6 @@ import { FuseDirectivesModule } from './directives/directives';
 import { FusePipesModule } from './pipes/pipes.module';
 import { FUSE_CONFIG } from './services/config.service';
 
-
-
 @NgModule({
     imports: [
         CommonModule,

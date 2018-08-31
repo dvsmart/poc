@@ -1,5 +1,5 @@
 @import "src/@core/scss/fuse";
-vertical-layout-1 {
+site-layout {
     display: flex;
     flex: 1 1 auto;
     width: 100%;
@@ -36,7 +36,6 @@ vertical-layout-1 {
                     overflow-y: auto;
                     -webkit-overflow-scrolling: touch; // Content component
                     content {
-                        flex: 1 1 0%;
                         &.inner-scroll {
                             flex: 1 1 0%;
                             min-height: 0;
@@ -59,9 +58,8 @@ content {
 }
 
 content>:not(router-outlet) {
-    //display: flex;
+    display: flex;
     flex: 1 0 auto;
     width: 100%;
     min-width: 100%
 }
-

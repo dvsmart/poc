@@ -2,11 +2,17 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '../../../node_modules/@angular/router';
 import { CoreSharedModule } from '../../@core/core.module';
 import { AuthGuard } from '../login/auth.guard';
-import { BreadcrumbsModule } from '@core/components/breadcrumb/breadcrumb.module';
+
+import { SiteLayoutComponent } from '../layout/site-layout/site-layout.component';
+import { AppLayoutComponent } from '../layout/app-layout/app-layout.component';
+import { Error404Component } from '../pages/errors/error404/error404.component';
+import { MatIconModule } from '@angular/material';
+
 
 const routes: Routes = [
   {
     path: '',
+    component: AppLayoutComponent,
     canActivate: [AuthGuard],
     children: [
       {
@@ -45,21 +51,36 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'forgot-password',
-    loadChildren: './authentication/forgot-password/forgot-password.module#ForgotPasswordModule',
+    path: '',
+    component: SiteLayoutComponent,
+    children: [
+      {
+        path: 'account/login',
+        loadChildren: '../login/login.module#LoginModule',
+      },
+      {
+        path: 'account/forgot-password',
+        loadChildren: '../pages/forgot-password/forgot-password.module#ForgotPasswordModule',
+      },
+      {
+        path: 'account/lock',
+        loadChildren: '../pages/lock-screen/lock-screen.module#LockModule',
+      },
+
+    ]
   },
   {
-    path: 'lock',
-    loadChildren: './authentication/lock-screen/lock-screen.module#LockModule',
+    path:'**',component:Error404Component
   }
 ];
 
 @NgModule({
   imports: [
     CoreSharedModule,
-    BreadcrumbsModule,
+    MatIconModule,
     RouterModule.forChild(routes),
   ],
-  declarations: []
+  declarations: [Error404Component],
+  entryComponents:[Error404Component]
 })
 export class FeaturesModule { }

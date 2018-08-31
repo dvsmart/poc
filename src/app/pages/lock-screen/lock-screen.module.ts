@@ -1,31 +1,31 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
 import { CoreSharedModule } from '@core/core.module';
-import { ForgotPasswordComponent } from './forgot-password.component';
-
+import { LockScreenComponent } from './lock-screen.component';
 
 const routes = [
     {
-        path     : 'forgot-password',
-        component: ForgotPasswordComponent
+        path     : '',
+        component: LockScreenComponent
     }
 ];
 
 @NgModule({
     declarations: [
-        ForgotPasswordComponent
+        LockScreenComponent
     ],
     imports     : [
         RouterModule.forChild(routes),
 
         MatButtonModule,
         MatFormFieldModule,
+        MatIconModule,
         MatInputModule,
 
-        CoreSharedModule,
+        CoreSharedModule
     ]
 })
-export class ForgotPasswordModule
+export class LockModule
 {
 }

@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { LayoutComponent } from './layout.component';
 import { RouterModule } from '../../../node_modules/@angular/router';
 import { CoreSharedModule } from '../../@core/core.module';
 import { FuseSidebarModule } from '../../@core/components/sidebar/sidebar.module';
@@ -12,9 +11,8 @@ import { MessageService } from '@core/services/message.service';
 import { ToasterComponent } from 'app/layout/components/toaster/toaster.component';
 import { ToasterModule } from 'app/layout/components/toaster/toaster.module';
 import { MatSnackBarModule } from '@angular/material';
-import { BreadcrumbsModule } from '@core/components/breadcrumb/breadcrumb.module';
-import { EmptyLayoutModule } from './empty-layout/empty-layout.module';
-
+import { AppLayoutComponent } from './app-layout/app-layout.component';
+import { SiteLayoutComponent } from './site-layout/site-layout.component';
 
 @NgModule({
   imports: [
@@ -27,12 +25,11 @@ import { EmptyLayoutModule } from './empty-layout/empty-layout.module';
     ToolbarModule,
     QuickPanelModule,
     CoreNavigationModule,
-    ToasterModule,
-    BreadcrumbsModule
+    ToasterModule
   ],
-  exports:[LayoutComponent],
+  exports:[AppLayoutComponent,SiteLayoutComponent],
   providers:[MessageService],
-  declarations:[LayoutComponent],
+  declarations:[AppLayoutComponent,SiteLayoutComponent],
   entryComponents:[ToasterComponent]
 })
 export class LayoutModule { }

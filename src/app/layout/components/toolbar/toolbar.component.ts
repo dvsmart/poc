@@ -41,7 +41,7 @@ export class ToolbarComponent implements OnInit {
 
   logout(){
     this.authservice.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['account/login']);
   }
 
   ngOnInit() {

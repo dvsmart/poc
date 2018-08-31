@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
      */
     ngOnInit(): void {
         this.authservice.logout();
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'home';
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
         this.loginForm = this._formBuilder.group({
             username: ['', [Validators.required]],
             password: ['', Validators.required]

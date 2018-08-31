@@ -1,0 +1,38 @@
+
+<div id="main">
+  <div id="container-1" class="container">
+      <ng-container *ngIf="config.layout.navbar.position === 'left'">
+          <ng-container *ngTemplateOutlet="leftNavbar"></ng-container>
+      </ng-container>
+      <div id="container-2" class="container">
+          <div id="container-3" class="container" fusePerfectScrollbar [fusePerfectScrollbarOptions]="{suppressScrollX: true, updateOnRouteChange : true}">
+              <ng-container *ngIf="config.layout.toolbar.position === 'below-static'">
+                  <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+              </ng-container>
+              <!-- CONTENT -->
+              <content></content>
+              <!-- / CONTENT -->
+              <template #messagecontainer></template>
+          </div>
+      </div>
+  </div>
+</div>
+
+<fuse-sidebar name="quickPanel" position="right" class="quick-panel">
+  <quick-panel></quick-panel>
+</fuse-sidebar>
+
+<ng-template #toolbar>
+  <toolbar *ngIf="!config.layout.toolbar.hidden"
+           [ngClass]="[config.layout.toolbar.position, config.layout.toolbar.background]"></toolbar>
+</ng-template>
+
+<ng-template #leftNavbar>
+  <fuse-sidebar name="navbar" class="navbar-fuse-sidebar"
+                [folded]="config.layout.navbar.folded"
+                lockedOpen="gt-md"
+                *ngIf="!config.layout.navbar.hidden">
+      <navbar [variant]="config.layout.navbar.variant"
+              class="left-navbar" [ngClass]="config.layout.navbar.background"></navbar>
+  </fuse-sidebar>
+</ng-template>
