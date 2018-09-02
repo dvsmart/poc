@@ -6,12 +6,13 @@ import { FieldConfig } from '@core/components/custom-controls/models/fieldConfig
 import { TemplateService } from '../../checklistTemplate.service';
 import { Observable } from 'rxjs';
 import { fuseAnimations } from '@core/animations';
+import { MessageService } from '@core/services/message.service';
 
 @Component({
   selector: 'app-template-form',
   templateUrl: './template-form.component.html',
   styleUrls: ['./template-form.component.scss'],
-  animations:fuseAnimations
+  animations: fuseAnimations
 })
 export class TemplateFormComponent implements OnInit {
   customForm: FormGroup;
@@ -25,9 +26,9 @@ export class TemplateFormComponent implements OnInit {
   @Output() close = new EventEmitter<boolean>(false);
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
   constructor(
-    private route: ActivatedRoute,
     private fb: FormBuilder,
-    private _checklistservice: TemplateService) {
+    private _checklistservice: TemplateService,
+    private toaster: MessageService) {
     this.customForm = new FormGroup({});
   }
 
@@ -57,7 +58,13 @@ export class TemplateFormComponent implements OnInit {
       instance.fieldValues.push({ id: id, value: fv[prop] });
     });
     this._checklistservice.customEntityId.subscribe(x => instance.customEntityId = x);
-    this._checklistservice.saveCustomEntity(instance);
+    instance.CustomEntityValueId = this.id;
+    this._checklistservice.saveCustomFields(instance).subscribe(x => {
+      if (x! = null && x['SaveSuccessful']) {
+        this.toaster.add('Saved Successfully');
+        this._checklistservice.getcevRecords(instance.customEntityId, 1, 10);
+      }
+    });
   }
 
   createControl() {
@@ -94,7 +101,7 @@ export class TemplateFormComponent implements OnInit {
     });
   }
 
-  cancel(){
+  cancel() {
     this.close.emit(true);
   }
 

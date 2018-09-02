@@ -23,7 +23,7 @@ export class ListComponent implements OnInit {
   isLoadingResults = false;
   isRateLimitReached = false;
 
-  pageSize: number;
+  pageSize: number = 10;
   total: number;
   currentPage: number;
 
@@ -72,17 +72,6 @@ export class ListComponent implements OnInit {
     })
   }
 }
-// export class CustomEntityInstanceDataSource extends MatTableDataSource<any>
-// {
-//   constructor(private _customEntityGridService: TemplateService) { super(); }
-//   data(): Observable<any[]> {
-//     return this._customEntityGridService.cevRecords;
-//   }
-
-
-//   disconnect(): void {
-//   }
-// }
 
 export class CustomEntityInstanceDataSource {
   constructor(private _customEntityGridService: TemplateService) { }

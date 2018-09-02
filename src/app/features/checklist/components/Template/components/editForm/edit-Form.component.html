@@ -1,9 +1,9 @@
-<div class="content-card bg-white p-24" [formGroup]="customForm" *ngIf="record">
+<div class="content-card bg-white p-24" [formGroup]="customRecordForm" *ngIf="record">
     <ng-container *ngIf="(record) === null">Loading tabs...</ng-container>
     <mat-toolbar>
-        Edit Record - {{record.dataId}}
+        {{title}}
     </mat-toolbar>
-    <form (submit)="saveForm()">
+    <form (submit)="SaveRecord()">
         <mat-tab-group style="min-height: 400px;">
             <mat-tab *ngFor="let tab of record.customTabs">
                 <ng-template mat-tab-label="mat-tab-label">{{tab.caption}}</ng-template>

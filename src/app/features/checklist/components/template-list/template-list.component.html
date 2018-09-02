@@ -1,18 +1,20 @@
 
-<div class="sidebar-content">
-    <div class="card mat-white-bg">
-        <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">
-            <mat-icon>filter_list</mat-icon>
-            <span class="h5">{{caption}}  - Templates</span>
-        </div>
-        <div class="content py-16" fusePerfectScrollbar>
-            <div class="nav" [@listAnimation]="templates.length">
-                <div class="nav-item" *ngFor="let template of templates">
-                    <a class="nav-link" [routerLink]="['/checklist/template/',template.id]" matRipple [ngClass]="{'active mat-accent-bg':filterBy ==='live'}">
-                        <span class="title">{{template.templateName}}</span>
-                    </a>
+<ng-container *ngIf="templateList">
+        <div class="sidebar-content">
+                <div class="card mat-white-bg">
+                    <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">
+                        <mat-icon>filter_list</mat-icon>
+                        <span class="h5">{{templateList.groupName}}</span>
+                    </div>
+                    <div class="content py-16" fusePerfectScrollbar>
+                        <div class="nav" [@listStagger]="templateList.templates.length" >
+                            <div class="nav-item" *ngFor="let template of templateList.templates">
+                                <a class="nav-link" [routerLink]="['/checklist/template/',template.id]" matRipple [ngClass]="{'active mat-accent-bg':filterBy ==='live'}">
+                                    <span class="title">{{template.templateName}}</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
+</ng-container>

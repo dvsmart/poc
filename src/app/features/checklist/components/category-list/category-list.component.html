@@ -4,10 +4,11 @@
             <mat-icon>filter_list</mat-icon>
             <span class="h5">Categories</span>
         </div>
-        <div class="content py-16" fusePerfectScrollbar>
-            <div class="nav">
-                <div class="nav-item" *ngFor="let category of categories | async" [@animateStagger]="{value:'100'}">
-                    <a  class="nav-link" [routerLink]="['/checklist/cat/',category.id]" matRipple [ngClass]="{'active mat-accent-bg':filterBy ==='live'}">
+        <div class="content py-16" fusePerfectScrollbar *ngIf="categories | async as categoriesContainer">
+            <div class="nav"  [@listStagger]="categoriesContainer.length" >
+                <div class="nav-item" *ngFor="let category of categoriesContainer">
+                    <a  class="nav-link" [routerLink]="['/checklist/cat/',category.id]" matRipple 
+                    [ngClass]="{'active mat-accent-bg':filterBy ==='live'}">
                         <span class="title">{{category.categoryName}}</span>
                     </a>
                 </div>

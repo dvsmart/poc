@@ -26,5 +26,5 @@ export const fuseConfig: Config = {
             position: 'right'
         }
     },
-    customScrollbars: true
+    customScrollbars: false
 };

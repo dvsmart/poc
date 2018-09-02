@@ -2,25 +2,47 @@ import { sequence, trigger, animate, style, group, query, transition, animateChi
 
 const customAnimation = animation([
     style({
-        opacity  : '{{opacity}}',
+        opacity: '{{opacity}}',
         transform: 'scale({{scale}}) translate3d({{x}}, {{y}}, {{z}})'
     }),
     animate('{{duration}} {{delay}} cubic-bezier(0.0, 0.0, 0.2, 1)', style('*'))
 ], {
-    params: {
-        duration: '200ms',
-        delay   : '0ms',
-        opacity : '0',
-        scale   : '1',
-        x       : '0',
-        y       : '0',
-        z       : '0'
-    }
-});
+        params: {
+            duration: '200ms',
+            delay: '0ms',
+            opacity: '0',
+            scale: '1',
+            x: '0',
+            y: '0',
+            z: '0'
+        }
+    });
 
 export const fuseAnimations = [
 
     trigger('animate', [transition('void => *', [useAnimation(customAnimation)])]),
+
+    trigger('listStagger', [
+        transition('* <=> *', [
+            query(
+                ':enter',
+                [
+                    style({ opacity: 0, transform: 'translateY(-15px)' }),
+                    stagger(
+                        '150ms',
+                        animate(
+                            '550ms ease-out',
+                            style({ opacity: 1, transform: 'translateY(0px)' })
+                        )
+                    )
+                ],
+                { optional: true }
+            ),
+            query(':leave', animate('50ms', style({ opacity: 0 })), {
+                optional: true
+            })
+        ])
+    ]),
 
     trigger('animateStagger', [
         state('50', style('*')),
@@ -33,21 +55,21 @@ export const fuseAnimations = [
                     stagger('50ms', [
                         animateChild()
                     ])
-                ], {optional: true})),
+                ], { optional: true })),
         transition('void => 100',
             query('@*',
                 [
                     stagger('100ms', [
                         animateChild()
                     ])
-                ], {optional: true})),
+                ], { optional: true })),
         transition('void => 200',
             query('@*',
                 [
                     stagger('200ms', [
                         animateChild()
                     ])
-                ], {optional: true}))
+                ], { optional: true }))
     ]),
 
     trigger('fadeInOut', [
@@ -65,11 +87,11 @@ export const fuseAnimations = [
 
     trigger('slideInOut', [
         state('0', style({
-            height : '0px',
+            height: '0px',
             display: 'none'
         })),
         state('1', style({
-            height : '*',
+            height: '*',
             display: 'block'
         })),
         transition('1 => 0', animate('300ms ease-out')),
@@ -78,59 +100,59 @@ export const fuseAnimations = [
 
     trigger('slideIn', [
         transition('void => left', [
+            style({
+                transform: 'translateX(100%)'
+            }),
+            animate('300ms ease-in',
                 style({
-                    transform: 'translateX(100%)'
-                }),
-                animate('300ms ease-in',
-                    style({
-                        transform: 'translateX(0)'
-                    })
-                )
-            ]
+                    transform: 'translateX(0)'
+                })
+            )
+        ]
         ),
         transition('left => void', [
-                style({
-                    transform: 'translateX(0)'
-                }),
-                animate('300ms ease-in',
-                    style({
-                        transform: 'translateX(-100%)'
-                    })
-                )
-            ]
-        ),
-        transition('void => right', [
+            style({
+                transform: 'translateX(0)'
+            }),
+            animate('300ms ease-in',
                 style({
                     transform: 'translateX(-100%)'
-                }),
-                animate('300ms ease-in',
-                    style({
-                        transform: 'translateX(0)'
-                    })
-                )
-            ]
+                })
+            )
+        ]
         ),
-        transition('right => void', [
+        transition('void => right', [
+            style({
+                transform: 'translateX(-100%)'
+            }),
+            animate('300ms ease-in',
                 style({
                     transform: 'translateX(0)'
-                }),
-                animate('300ms ease-in',
-                    style({
-                        transform: 'translateX(100%)'
-                    })
-                )
-            ]
+                })
+            )
+        ]
+        ),
+        transition('right => void', [
+            style({
+                transform: 'translateX(0)'
+            }),
+            animate('300ms ease-in',
+                style({
+                    transform: 'translateX(100%)'
+                })
+            )
+        ]
         ),
     ]),
 
     trigger('slideInLeft', [
         state('void', style({
             transform: 'translateX(-100%)',
-            display  : 'none'
+            display: 'none'
         })),
         state('*', style({
             transform: 'translateX(0)',
-            display  : 'flex'
+            display: 'flex'
         })),
         transition('void => *', animate('300ms')),
         transition('* => void', animate('300ms'))
@@ -139,11 +161,11 @@ export const fuseAnimations = [
     trigger('slideInRight', [
         state('void', style({
             transform: 'translateX(100%)',
-            display  : 'none'
+            display: 'none'
         })),
         state('*', style({
             transform: 'translateX(0)',
-            display  : 'flex'
+            display: 'flex'
         })),
         transition('void => *', animate('300ms')),
         transition('* => void', animate('300ms'))
@@ -152,11 +174,11 @@ export const fuseAnimations = [
     trigger('slideInTop', [
         state('void', style({
             transform: 'translateY(-100%)',
-            display  : 'none'
+            display: 'none'
         })),
         state('*', style({
             transform: 'translateY(0)',
-            display  : 'flex'
+            display: 'flex'
         })),
         transition('void => *', animate('300ms')),
         transition('* => void', animate('300ms'))
@@ -166,11 +188,11 @@ export const fuseAnimations = [
         state('void',
             style({
                 transform: 'translateY(100%)',
-                display  : 'none'
+                display: 'none'
             })),
         state('*', style({
             transform: 'translateY(0)',
-            display  : 'flex'
+            display: 'flex'
         })),
         transition('void => *', animate('300ms')),
         transition('* => void', animate('300ms'))
@@ -190,49 +212,49 @@ export const fuseAnimations = [
     // -----------------------------------------------------------------------------------------------------
     // @ Router animations
     // -----------------------------------------------------------------------------------------------------
-    
+
     trigger('routerTransitionLeft', [
 
         transition('* => *', [
             query('content > :enter, content > :leave', [
                 style({
                     position: 'absolute',
-                    top     : 0,
-                    bottom  : 0,
-                    left    : 0,
-                    right   : 0
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0
                 })
-            ], {optional: true}),
+            ], { optional: true }),
             query('content > :enter', [
                 style({
                     transform: 'translateX(100%)',
-                    opacity  : 0
+                    opacity: 0
                 })
-            ], {optional: true}),
+            ], { optional: true }),
             sequence([
                 group([
                     query('content > :leave', [
                         style({
                             transform: 'translateX(0)',
-                            opacity  : 1
+                            opacity: 1
                         }),
                         animate('600ms cubic-bezier(0.0, 0.0, 0.2, 1)',
                             style({
                                 transform: 'translateX(-100%)',
-                                opacity  : 0
+                                opacity: 0
                             }))
-                    ], {optional: true}),
+                    ], { optional: true }),
                     query('content > :enter', [
-                        style({transform: 'translateX(100%)'}),
+                        style({ transform: 'translateX(100%)' }),
                         animate('600ms cubic-bezier(0.0, 0.0, 0.2, 1)',
                             style({
                                 transform: 'translateX(0%)',
-                                opacity  : 1
+                                opacity: 1
                             }))
-                    ], {optional: true})
+                    ], { optional: true })
                 ]),
-                query('content > :leave', animateChild(), {optional: true}),
-                query('content > :enter', animateChild(), {optional: true})
+                query('content > :leave', animateChild(), { optional: true }),
+                query('content > :enter', animateChild(), { optional: true })
             ])
         ])
     ]),
@@ -243,42 +265,42 @@ export const fuseAnimations = [
             query('content > :enter, content > :leave', [
                 style({
                     position: 'absolute',
-                    top     : 0,
-                    bottom  : 0,
-                    left    : 0,
-                    right   : 0
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0
                 })
-            ], {optional: true}),
+            ], { optional: true }),
             query('content > :enter', [
                 style({
                     transform: 'translateX(-100%)',
-                    opacity  : 0
+                    opacity: 0
                 })
-            ], {optional: true}),
+            ], { optional: true }),
             sequence([
                 group([
                     query('content > :leave', [
                         style({
                             transform: 'translateX(0)',
-                            opacity  : 1
+                            opacity: 1
                         }),
                         animate('600ms cubic-bezier(0.0, 0.0, 0.2, 1)',
                             style({
                                 transform: 'translateX(100%)',
-                                opacity  : 0
+                                opacity: 0
                             }))
-                    ], {optional: true}),
+                    ], { optional: true }),
                     query('content > :enter', [
-                        style({transform: 'translateX(-100%)'}),
+                        style({ transform: 'translateX(-100%)' }),
                         animate('600ms cubic-bezier(0.0, 0.0, 0.2, 1)',
                             style({
                                 transform: 'translateX(0%)',
-                                opacity  : 1
+                                opacity: 1
                             }))
-                    ], {optional: true})
+                    ], { optional: true })
                 ]),
-                query('content > :leave', animateChild(), {optional: true}),
-                query('content > :enter', animateChild(), {optional: true})
+                query('content > :leave', animateChild(), { optional: true }),
+                query('content > :enter', animateChild(), { optional: true })
             ])
         ])
     ]),
@@ -289,41 +311,41 @@ export const fuseAnimations = [
             query('content > :enter, content > :leave', [
                 style({
                     position: 'absolute',
-                    top     : 0,
-                    bottom  : 0,
-                    left    : 0,
-                    right   : 0
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0
                 })
-            ], {optional: true}),
+            ], { optional: true }),
             query('content > :enter', [
                 style({
                     transform: 'translateY(100%)',
-                    opacity  : 0
+                    opacity: 0
                 })
-            ], {optional: true}),
+            ], { optional: true }),
             group([
                 query('content > :leave', [
                     style({
                         transform: 'translateY(0)',
-                        opacity  : 1
+                        opacity: 1
                     }),
                     animate('600ms cubic-bezier(0.0, 0.0, 0.2, 1)',
                         style({
                             transform: 'translateY(-100%)',
-                            opacity  : 0
+                            opacity: 0
                         }))
-                ], {optional: true}),
+                ], { optional: true }),
                 query('content > :enter', [
-                    style({transform: 'translateY(100%)'}),
+                    style({ transform: 'translateY(100%)' }),
                     animate('600ms cubic-bezier(0.0, 0.0, 0.2, 1)',
                         style({
                             transform: 'translateY(0%)',
-                            opacity  : 1
+                            opacity: 1
                         }))
-                ], {optional: true})
+                ], { optional: true })
             ]),
-            query('content > :leave', animateChild(), {optional: true}),
-            query('content > :enter', animateChild(), {optional: true})
+            query('content > :leave', animateChild(), { optional: true }),
+            query('content > :enter', animateChild(), { optional: true })
         ])
     ]),
 
@@ -333,42 +355,42 @@ export const fuseAnimations = [
             query('content > :enter, content > :leave', [
                 style({
                     position: 'absolute',
-                    top     : 0,
-                    bottom  : 0,
-                    left    : 0,
-                    right   : 0
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0
                 })
-            ], {optional: true}),
+            ], { optional: true }),
             query('content > :enter', [
                 style({
                     transform: 'translateY(-100%)',
-                    opacity  : 0
+                    opacity: 0
                 })
-            ], {optional: true}),
+            ], { optional: true }),
             sequence([
                 group([
                     query('content > :leave', [
                         style({
                             transform: 'translateY(0)',
-                            opacity  : 1
+                            opacity: 1
                         }),
                         animate('600ms cubic-bezier(0.0, 0.0, 0.2, 1)',
                             style({
                                 transform: 'translateY(100%)',
-                                opacity  : 0
+                                opacity: 0
                             }))
-                    ], {optional: true}),
+                    ], { optional: true }),
                     query('content > :enter', [
-                        style({transform: 'translateY(-100%)'}),
+                        style({ transform: 'translateY(-100%)' }),
                         animate('600ms cubic-bezier(0.0, 0.0, 0.2, 1)',
                             style({
                                 transform: 'translateY(0%)',
-                                opacity  : 1
+                                opacity: 1
                             }))
-                    ], {optional: true})
+                    ], { optional: true })
                 ]),
-                query('content > :leave', animateChild(), {optional: true}),
-                query('content > :enter', animateChild(), {optional: true})
+                query('content > :leave', animateChild(), { optional: true }),
+                query('content > :enter', animateChild(), { optional: true })
             ])
         ])
     ]),
@@ -380,18 +402,18 @@ export const fuseAnimations = [
             query('content > :enter, content > :leave ', [
                 style({
                     position: 'absolute',
-                    top     : 0,
-                    bottom  : 0,
-                    left    : 0,
-                    right   : 0
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0
                 })
-            ], {optional: true}),
+            ], { optional: true }),
 
             query('content > :enter', [
                 style({
                     opacity: 0
                 })
-            ], {optional: true}),
+            ], { optional: true }),
             query('content > :leave', [
                 style({
                     opacity: 1
@@ -400,7 +422,7 @@ export const fuseAnimations = [
                     style({
                         opacity: 0
                     }))
-            ], {optional: true}),
+            ], { optional: true }),
             query('content > :enter', [
                 style({
                     opacity: 0
@@ -409,9 +431,9 @@ export const fuseAnimations = [
                     style({
                         opacity: 1
                     }))
-            ], {optional: true}),
-            query('content > :enter', animateChild(), {optional: true}),
-            query('content > :leave', animateChild(), {optional: true})
+            ], { optional: true }),
+            query('content > :enter', animateChild(), { optional: true }),
+            query('content > :leave', animateChild(), { optional: true })
         ]))
     ])
 ];
