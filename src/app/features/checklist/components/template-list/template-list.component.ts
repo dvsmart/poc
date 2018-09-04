@@ -13,18 +13,14 @@ import { TemplateListService } from './templateList.service';
   animations: fuseAnimations
 })
 export class TemplateListComponent implements OnInit {
-  templateList: any;
+  templateList: Observable<any>;
   constructor(private route: ActivatedRoute, private _checklistTemplateservice: TemplateListService) { }
 
   ngOnInit() {
     this.route.params.subscribe(x => {
       if (x != null && x["id"] != undefined) {
         const id = parseInt(x["id"]);
-        this._checklistTemplateservice.getCustomEntityTemplates(id).subscribe(
-          x => {
-            this.templateList = x
-          }
-        );
+        this.templateList = this._checklistTemplateservice.getCustomEntityTemplates(id);
       }
     });
 

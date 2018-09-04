@@ -30,7 +30,6 @@ export class TemplateComponent implements OnInit {
         console.log(parseInt(x["id"]));
         this.templateId = parseInt(x["id"])
         this._checklistservice.customEntityId.next(this.templateId);
-        this._checklistservice.getcevRecords(this.templateId, 1, 10);
         this._checklistservice.getTemplateInformation(this.templateId).subscribe(x=>{
           this.groupName = x.groupName;
           this.templateName = x.templateName;

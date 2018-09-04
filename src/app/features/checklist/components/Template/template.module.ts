@@ -13,7 +13,7 @@ import { DatePipe } from '@angular/common';
 const routes: Routes = [
     {
         path: '',
-        component: TemplateComponent,
+        component: TemplateComponent
     }
 ];
 
