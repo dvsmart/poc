@@ -6,6 +6,7 @@ import { DataSource } from '@angular/cdk/table';
 import { Observable, merge, BehaviorSubject, Subject } from 'rxjs';
 import { startWith, switchMap, map, catchError, takeUntil } from 'rxjs/operators';
 import { of as observableOf } from 'rxjs/observable/of';
+import { MessageService } from '@core/services/message.service';
 
 @Component({
   selector: 'app-list',
@@ -15,7 +16,7 @@ import { of as observableOf } from 'rxjs/observable/of';
   animations: fuseAnimations
 })
 export class ListComponent implements OnInit {
-  displayedColumns: string[] = ['dataId', 'status', 'dueDate', 'addedOn'];
+  displayedColumns: string[] = ['dataId', 'status', 'dueDate', 'addedOn', 'buttons'];
   dataSource: FilesDataSource | null;
 
   resultsLength = 0;
@@ -31,7 +32,7 @@ export class ListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   @Output() editRecord = new EventEmitter<number>()
-  constructor(private _checklistservice: TemplateService) {
+  constructor(private _checklistservice: TemplateService,private toaster: MessageService) {
     this._unsubscribeAll = new Subject();
   }
 
@@ -50,6 +51,14 @@ export class ListComponent implements OnInit {
 
   edit(row) {
     this.editRecord.emit(row.id);
+  }
+
+  delete(id){
+    this._checklistservice.deleteRecord(id).subscribe(x=>{
+      if(x != null && x.saveSuccessful){
+        this.toaster.add("Deleted successfully");
+      }
+    })
   }
   
   pageEvent($event) {

@@ -1,9 +1,13 @@
-<div *ngIf="isEdit">
+<!-- <div *ngIf="isEdit">
     <app-template-form (close)="closeForm($event)" [id]="recordId" [@slideInTop]></app-template-form>
 </div>
 
 <div *ngIf="isNew">
     <app-form (close)="closeForm($event)" [id]="templateId" [@slideInTop]></app-form>
+</div> -->
+
+<div *ngIf="isNew || isEdit">
+    <edit-form [@slideInTop] [id]="recordId"></edit-form>
 </div>
 
 <div id="customEntityPage" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
@@ -38,12 +42,6 @@
         </div>
     </div>
     <div class="content">
-        <!-- <fuse-sidebar class="sidebar" name="asset-main-sidebar" position="left" lockedOpen="gt-sm">
-            <div class="content" fusePerfectScrollbar>
-                <properties-sidebar [@animate]="{value:'*'}"></properties-sidebar>
-            </div>
-        </fuse-sidebar>
-        -->
         <div class="center p-10" fusePerfectScrollbar>
             <div class="content mat-white-bg mat-elevation-z4">
                 <app-list (editRecord)="editRecord($event)" [@animateStagger]="{value:'50'}"></app-list>

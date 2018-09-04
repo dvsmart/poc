@@ -2,9 +2,9 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { environment } from 'environments/environment';
-import { CustomEntityValue, CustomEntityRecord } from "./components/templateForm/template-Form.component";
 import { BehaviorSubject, Observable } from "rxjs";
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
+import { CustomEntityValue } from "../../models/custom.model";
 
 export class PagedResult {
     data: any[];
@@ -29,11 +29,15 @@ export class TemplateService {
         this.customEntityId = new BehaviorSubject(0);
         this.result = new BehaviorSubject(new PagedResult);
     }
+
+    getCustomTempalateId(){
+        return this.customEntityId.asObservable();
+    }
     
 
     getcevRecords(templateId, page, pageSize): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.http.get(this.api + 'CustomEntityInstance/GetCEVRecords/' + templateId + '?page=' + page + '&pageSize=' + pageSize)
+            this.http.get(this.api + 'CustomEntityInstance?templateId=' + templateId + '&page=' + page + '&pageSize=' + pageSize)
                 .subscribe((response: PagedResult) => {
                     this.result.next(response);
                     this.onRecordsChanged.next(response.data);
@@ -54,17 +58,17 @@ export class TemplateService {
     //         });
     // }
 
-    getCustomEntityValues(templateId: number, page: number, pageSize: number) {
-        return this.http.get<PagedResult>(environment.apiUrl + 'CustomEntityInstance/GetCEVRecords/' + templateId + '?page=' + page + '&pageSize=' + pageSize);
-    }
-
 
     editRecord(id: number) {
-        return this.http.get<any>(environment.apiUrl + 'CustomEntityInstance/EditCevRecord/' + id);
+        return this.http.get<any>(environment.apiUrl + 'CustomEntityInstance/' + id);
     }
 
-    createRecord(templateId: number) {
-        return this.http.get<any>(environment.apiUrl + 'CustomEntity/' + templateId);
+    createRecord() {
+        return this.http.get<any>(environment.apiUrl + 'TemplateDefinition/' + this.customEntityId.getValue());
+    }
+
+    deleteRecord(id){
+        return this.http.get<SaveResponse>(environment.apiUrl + 'CustomEntityInstance?id=' + id);
     }
 
     getCustomEntityId() {
@@ -73,7 +77,7 @@ export class TemplateService {
 
     getTemplateInformation(id) {
         this.getcevRecords(id, 1, 10);
-        return this.http.get<CustomTemplate>(environment.apiUrl + 'CustomEntity/templateInfo/' + id);
+        return this.http.get<CustomTemplate>(environment.apiUrl + 'TemplateDefinition/' + id);
     }
 
     createNewRecord(customEntitymodel: CustomEntityValue) {

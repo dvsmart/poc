@@ -50,6 +50,7 @@ export class TemplateComponent implements OnInit {
   addNew() {
     this.isEdit = false;
     this.isNew = true;
+    
   }
 
   editRecord($event) {

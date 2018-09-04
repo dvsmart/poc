@@ -7,7 +7,7 @@
         <mat-tab-group style="min-height: 400px;">
             <mat-tab *ngFor="let tab of record.customTabs">
                 <ng-template mat-tab-label="mat-tab-label">{{tab.caption}}</ng-template>
-                <dynamic-form [fields]="tab.customFields" [form]="customForm"></dynamic-form>
+                <dynamic-form [fields]="tab.customFields" [form]="customRecordForm"></dynamic-form>
             </mat-tab>
         </mat-tab-group>
         <div mat-dialog-actions="mat-dialog-actions" class="pt-24" align="end">
