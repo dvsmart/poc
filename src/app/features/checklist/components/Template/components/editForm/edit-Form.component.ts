@@ -1,9 +1,10 @@
 import { fuseAnimations } from "@core/animations";
-import { Component, Input } from "@angular/core";
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { TemplateService } from "../../checklistTemplate.service";
 import { MessageService } from "@core/services/message.service";
 import { CustomEntityRecord, CustomEntityValue } from "../../../../models/custom.model";
+
 
 @Component({
   selector: 'edit-form',
@@ -19,6 +20,8 @@ export class EditFormComponent {
   title: string;
   @Input() id: number;
 
+  @Output() close: EventEmitter<boolean> = new EventEmitter(false);
+
   constructor(
     private fb: FormBuilder,
     private _checklistservice: TemplateService,
@@ -33,17 +36,21 @@ export class EditFormComponent {
   ngOnChanges() {
     if (this.id == null || this.id == undefined) {
       this._checklistservice.createRecord().subscribe(x => {
-        this.title = "Create New "+ x.templateName;
+        this.title = "Create New " + x.templateName;
         this.record = x;
         this.customRecordForm = this.createControl();
       });
     } else {
       this._checklistservice.editRecord(this.id).subscribe(x => {
-        this.title = "Edit "+ x.templateName;
+        this.title = "Edit " + x.templateName + " - " + x.dataId;
         this.record = x;
         this.customRecordForm = this.createControl();
       });
     }
+  }
+
+  cancel(){
+    this.close.emit(true);
   }
 
   createControl() {
@@ -91,7 +98,6 @@ export class EditFormComponent {
     if (this.id == null) {
       this._checklistservice.createNewRecord(instance).subscribe(x => {
         if (x != null && x.saveSuccessful) {
-          debugger;
           instance.CustomEntityValueId = x.recordId
           this.title = 'Edit Record -  ' + x.savedDataId;
           this.toaster.add('Record Added successfully. Updating fields...');
@@ -110,9 +116,8 @@ export class EditFormComponent {
     } else {
       instance.CustomEntityValueId = this.id;
       this._checklistservice.saveCustomFields(instance).subscribe(x => {
-        debugger;
         if (x != null && x['SaveSuccessful']) {
-          this.toaster.add('Saved Successfully');
+          this.toaster.add('Updated Successfully');
           this._checklistservice.getcevRecords(instance.customEntityId, 1, 10);
         }
       });

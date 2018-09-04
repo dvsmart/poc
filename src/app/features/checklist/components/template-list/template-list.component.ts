@@ -5,6 +5,7 @@ import { ChecklistService } from '../../services/checklist.service';
 import { fuseAnimations } from '@core/animations';
 import { trigger, transition, query, stagger, animate, style } from '@angular/animations';
 import { TemplateListService } from './templateList.service';
+import { TemplateList } from '../../models/custom.model';
 
 @Component({
   selector: 'app-template-list',
@@ -13,7 +14,7 @@ import { TemplateListService } from './templateList.service';
   animations: fuseAnimations
 })
 export class TemplateListComponent implements OnInit {
-  templateList: Observable<any>;
+  templateList: Observable<TemplateList>;
   constructor(private route: ActivatedRoute, private _checklistTemplateservice: TemplateListService) { }
 
   ngOnInit() {

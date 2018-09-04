@@ -4,7 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from 'environments/environment';
 import { BehaviorSubject, Observable } from "rxjs";
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
-import { CustomEntityValue } from "../../models/custom.model";
+import { CustomEntityValue, CustomEntityRecord } from "../../models/custom.model";
 
 export class PagedResult {
     data: any[];
@@ -48,19 +48,8 @@ export class TemplateService {
     }
 
 
-
-    // getcevRecords(templateId: number, page: number, pageSize?: number) {
-    //     page = page == undefined ? 1 : page;
-    //     pageSize = pageSize == null || pageSize == undefined ? 10 : pageSize;
-    //     return this.http.get<PagedResult>(environment.apiUrl + 'CustomEntityInstance/GetCEVRecords/' + templateId + '?page=' + page + '&pageSize=' + pageSize)
-    //         .subscribe(x => {
-    //             this.cevRecords.next(x);
-    //         });
-    // }
-
-
     editRecord(id: number) {
-        return this.http.get<any>(environment.apiUrl + 'CustomEntityInstance/' + id);
+        return this.http.get<CustomEntityRecord>(environment.apiUrl + 'CustomEntityInstance/' + id);
     }
 
     createRecord() {
@@ -68,7 +57,7 @@ export class TemplateService {
     }
 
     deleteRecord(id){
-        return this.http.get<SaveResponse>(environment.apiUrl + 'CustomEntityInstance?id=' + id);
+        return this.http.delete<SaveResponse>(environment.apiUrl + 'CustomEntityInstance?id=' + id);
     }
 
     getCustomEntityId() {

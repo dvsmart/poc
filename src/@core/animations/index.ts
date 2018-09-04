@@ -52,18 +52,18 @@ export const fuseAnimations = [
         transition('void => 50',
             query('@*',
                 [
-                    stagger('50ms', [
+                    stagger('150ms', [
                         animateChild()
                     ])
                 ], { optional: true })),
         transition('void => 100',
             query('@*',
                 [
-                    stagger('100ms', [
+                    stagger('200ms', [
                         animateChild()
                     ])
                 ], { optional: true })),
-        transition('void => 200',
+        transition('void => 250',
             query('@*',
                 [
                     stagger('200ms', [

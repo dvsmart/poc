@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 
 import { BehaviorSubject, Observable, pipe } from "rxjs";
 import { environment } from 'environments/environment';
+import { TemplateList } from "../../models/custom.model";
 
 
 @Injectable({
@@ -25,7 +26,7 @@ export class TemplateListService {
         //         resolve(x);
         //     }, reject)
         // })
-        return this.http.get(environment.apiUrl + 'CustomEntityGroup/' + groupId);
+        return this.http.get<TemplateList>(environment.apiUrl + 'CustomEntityGroup/' + groupId);
     }
 
 

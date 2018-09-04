@@ -20,6 +20,20 @@ export class CustomField {
     }
 }
 
+export interface Template {
+    templateName: string;
+    groupId: number;
+    groupName?: any;
+    id: number;
+}
+
+export class TemplateList {
+    groupName: string;
+    groupId: number;
+    count: number;
+    templates: Template[];
+}
+
 export class CustomTab {
     tabId: number;
     caption: string;
@@ -32,6 +46,7 @@ export class CustomEntityRecord {
     id: number;
     dataId: string;
     customEntityId: number;
+    templateName:string;
     customTabs: CustomTab[];
 }
 
@@ -62,54 +77,54 @@ export class CustomFieldDto {
 
 }
 
-export class CustomTabDto {
-    customEntityId: number;
-    caption: string;
-    tabId: number;
-    fields: FieldConfig[]
+// export class CustomTabDto {
+//     customEntityId: number;
+//     caption: string;
+//     tabId: number;
+//     fields: FieldConfig[]
 
-    /**
-     *
-     */
-    constructor(obj: any) {
-        if (obj == undefined) return;
-        this.customEntityId = obj.customEntityId;
-        this.caption = obj.caption;
-        this.tabId = obj.id;
-        this.fields = this.mapFields(obj.customFields);
-    }
+//     /**
+//      *
+//      */
+//     constructor(obj: any) {
+//         if (obj == undefined) return;
+//         this.customEntityId = obj.customEntityId;
+//         this.caption = obj.caption;
+//         this.tabId = obj.id;
+//         this.fields = this.mapFields(obj.customFields);
+//     }
 
-    mapFields(fields: any[]) {
-        let cusFields: FieldConfig[] = [];
-        fields.map(function (val) {
-            cusFields.push({
-                name: val.name,
-                type: val.type,
-                label: val.label,
-                id: val.id,
-                tabId: val.tabId,
-                inputType: val.type
-            })
-        })
-        return cusFields;
-    }
+//     mapFields(fields: any[]) {
+//         let cusFields: FieldConfig[] = [];
+//         fields.map(function (val) {
+//             cusFields.push({
+//                 name: val.name,
+//                 type: val.type,
+//                 label: val.label,
+//                 id: val.id,
+//                 tabId: val.tabId,
+//                 inputType: val.type
+//             })
+//         })
+//         return cusFields;
+//     }
 
-    mapType(type) {
-        switch (type) {
-            case "TextBox":
-                return "text";
-            case "Calender":
-                return "date";
-            case "Picklist":
-                return "select";
-            case "TextArea":
-                return "textarea";
-            default:
-                break;
-        }
-        return "text";
-    }
-}
+//     mapType(type) {
+//         switch (type) {
+//             case "TextBox":
+//                 return "text";
+//             case "Calender":
+//                 return "date";
+//             case "Picklist":
+//                 return "select";
+//             case "TextArea":
+//                 return "textarea";
+//             default:
+//                 break;
+//         }
+//         return "text";
+//     }
+// }
 
 export class PagedResult {
     data: any[];
@@ -117,3 +132,29 @@ export class PagedResult {
     currentPage: number;
     pageSize: number;
 }
+
+// export interface CustomField {
+//     fieldId: number;
+//     caption: string;
+//     sortOrder?: any;
+//     isVisible: boolean;
+//     type: string;
+//     name: string;
+//     value?: any;
+//     isRequired: boolean;
+// }
+
+// export interface CustomTab {
+//     tabId: number;
+//     caption: string;
+//     sortOrder?: any;
+//     isVisible: boolean;
+//     customFields?: CustomField[];
+// }
+
+// export class RootObject {
+//     id: number;
+//     dataId: string;
+//     customEntityId: number;
+//     customTabs: CustomTab[];
+// }

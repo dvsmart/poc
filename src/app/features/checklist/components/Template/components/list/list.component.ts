@@ -57,6 +57,7 @@ export class ListComponent implements OnInit {
     this._checklistservice.deleteRecord(id).subscribe(x=>{
       if(x != null && x.saveSuccessful){
         this.toaster.add("Deleted successfully");
+        this.refresh();
       }
     })
   }
@@ -64,6 +65,9 @@ export class ListComponent implements OnInit {
   pageEvent($event) {
     this.currentPage = $event.pageIndex + 1;
     this.pageSize = $event.pageSize;
+  }
+
+  refresh(){
     this._checklistservice.customEntityId.subscribe(x => {
       this._checklistservice.getcevRecords(x, this.currentPage, this.pageSize);
     })
@@ -73,9 +77,7 @@ export class ListComponent implements OnInit {
 
 export class FilesDataSource extends DataSource<any>
 {
-  constructor(
-    private _customEntityGridService: TemplateService
-  ) {
+  constructor(private _customEntityGridService: TemplateService) {
     super();
   }
 

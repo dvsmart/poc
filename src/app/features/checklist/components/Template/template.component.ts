@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@core/animations';
 import { TemplateService, CustomTemplate } from './checklistTemplate.service';
 import { FormControl } from '@angular/forms';
-import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-template',
@@ -13,13 +12,13 @@ import { filter, map } from 'rxjs/operators';
   animations: fuseAnimations
 })
 export class TemplateComponent implements OnInit {
-  isEdit: boolean = false;
-  isNew: boolean = false;
+  edit: boolean;
+
   searchInput: FormControl;
   recordId: number;
   templateId: number
   groupName: string;
-  templateName:string;
+  templateName: string;
   constructor(private route: ActivatedRoute, private _checklistservice: TemplateService, private router: Router) {
     this.searchInput = new FormControl('');
   }
@@ -27,10 +26,9 @@ export class TemplateComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(x => {
       if (x != null && x["id"] != undefined) {
-        console.log(parseInt(x["id"]));
         this.templateId = parseInt(x["id"])
         this._checklistservice.customEntityId.next(this.templateId);
-        this._checklistservice.getTemplateInformation(this.templateId).subscribe(x=>{
+        this._checklistservice.getTemplateInformation(this.templateId).subscribe(x => {
           this.groupName = x.groupName;
           this.templateName = x.templateName;
         });
@@ -39,23 +37,22 @@ export class TemplateComponent implements OnInit {
   }
 
   closeForm($event) {
-    if (this.isNew) {
-      this.isNew = !$event;
-    }
-    if (this.isEdit) {
-      this.isEdit = !$event;
+    if (this.edit) {
+      this.edit = !$event;
     }
   }
 
   addNew() {
-    this.isEdit = false;
-    this.isNew = true;
-    
+    this.edit = true;
+    this.recordId = null;
   }
 
   editRecord($event) {
-    this.isNew = false;
-    this.isEdit = true;
+    if(this.edit){
+      this.edit = this.edit;
+    }else{
+      this.edit = !this.edit;
+    }
     this.recordId = $event;
   }
 }
