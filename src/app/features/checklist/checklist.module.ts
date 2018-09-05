@@ -12,7 +12,6 @@ import { SelectComponent } from '@core/components/custom-controls/components/sel
 import { DateComponent } from '@core/components/custom-controls/components/calender/calender.component';
 import { CheckboxComponent } from '@core/components/custom-controls/components/checkbox/checkbox.component';
 import { CustomMaterialModule } from './custom-material.module';
-import { resolve } from 'url';
 
 const routes: Routes = [
   {

@@ -8,7 +8,6 @@ import { AppLayoutComponent } from '../layout/app-layout/app-layout.component';
 import { Error404Component } from '../pages/errors/error404/error404.component';
 import { MatIconModule } from '@angular/material';
 
-
 const routes: Routes = [
   {
     path: '',
@@ -47,6 +46,14 @@ const routes: Routes = [
       {
         path: 'checklist',
         loadChildren: './checklist/checklist.module#ChecklistModule',
+      },
+      {
+        path: 'settings/checklistManagement',
+        loadChildren: './settings/customEntity/custom-entity.module#CustomEntityModule',
+      },
+      {
+        path: 'users',
+        loadChildren: './users/users.module#UsersModule',
       }
     ]
   },
@@ -73,7 +80,6 @@ const routes: Routes = [
     path:'**',component:Error404Component
   }
 ];
-
 @NgModule({
   imports: [
     CoreSharedModule,

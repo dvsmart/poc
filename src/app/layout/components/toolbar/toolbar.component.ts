@@ -44,6 +44,14 @@ export class ToolbarComponent implements OnInit {
     this.router.navigate(['account/login']);
   }
 
+  settings(){
+    this.router.navigate(['settings/checklistManagement']);
+  }
+  
+  users(){
+    this.router.navigate(['users']);
+  }
+
   ngOnInit() {
     this._fuseConfigService.config
       .pipe(takeUntil(this._unsubscribeAll))
