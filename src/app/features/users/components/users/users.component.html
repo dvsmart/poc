@@ -37,7 +37,7 @@
             <!-- / SEARCH -->
 
             <button mat-raised-button
-                    [routerLink]="'edit/new'"
+                    [routerLink]="['/user/', 'new']"
                     class="add-user-button mat-white-bg my-12 mt-sm-0">
                 <span>ADD NEW USER</span>
             </button>
@@ -137,13 +137,13 @@
                 <mat-row *matRowDef="let user; columns: displayedColumns;"
                          class="user"
                          matRipple
-                         [routerLink]="'edit/'+user.id">
+                         [routerLink]="['/user/', user.id]">
                 </mat-row>
 
             </mat-table>
 
             <mat-paginator #paginator
-                           [length]="dataSource.filteredData.length"
+                           [length]="dataSource.paginatedData.totalCount"
                            [pageIndex]="0"
                            [pageSize]="10"
                            [pageSizeOptions]="[5, 10, 25, 100]">

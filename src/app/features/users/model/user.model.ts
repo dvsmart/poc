@@ -15,7 +15,6 @@ export class User{
      *
      */
     constructor(user?) {
-        debugger;
         user = user || {},
         this.id = user.id;
         this.firstname = user.firstName;

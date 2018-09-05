@@ -31,29 +31,27 @@ export class UsersComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
 
   constructor(
-      private _usersservice: UserService
-  )
-  {
-      // Set the private defaults
-      this._unsubscribeAll = new Subject();
+    private _usersservice: UserService
+  ) {
+    // Set the private defaults
+    this._unsubscribeAll = new Subject();
   }
   ngOnInit() {
+    debugger;
     this.dataSource = new FilesDataSource(this._usersservice, this.paginator, this.sort);
+    fromEvent(this.filter.nativeElement, 'keyup')
+      .pipe(
+        takeUntil(this._unsubscribeAll),
+        debounceTime(150),
+        distinctUntilChanged()
+      )
+      .subscribe(() => {
+        if (!this.dataSource) {
+          return;
+        }
 
-        fromEvent(this.filter.nativeElement, 'keyup')
-            .pipe(
-                takeUntil(this._unsubscribeAll),
-                debounceTime(150),
-                distinctUntilChanged()
-            )
-            .subscribe(() => {
-                if ( !this.dataSource )
-                {
-                    return;
-                }
-
-                this.dataSource.filter = this.filter.nativeElement.value;
-            });
+        this.dataSource.filter = this.filter.nativeElement.value;
+      });
   }
 
 }
@@ -62,14 +60,8 @@ export class FilesDataSource extends DataSource<any>
 {
   private _filterChange = new BehaviorSubject('');
   private _filteredDataChange = new BehaviorSubject('');
+  private _paginatedData = new BehaviorSubject('');
 
-  /**
-   * Constructor
-   *
-   * @param {EcommerceProductsService} _ecommerceProductsService
-   * @param {MatPaginator} _matPaginator
-   * @param {MatSort} _matSort
-   */
   constructor(
     private _userservice: UserService,
     private _matPaginator: MatPaginator,
@@ -77,14 +69,10 @@ export class FilesDataSource extends DataSource<any>
   ) {
     super();
 
-    this.filteredData = this._userservice.users;
+    this.filteredData = this._userservice.usersResult.data;
+    this.paginatedData = this._userservice.usersResult;
   }
 
-  /**
-   * Connect function called by the table to retrieve one stream containing the data to render.
-   *
-   * @returns {Observable<any[]>}
-   */
   connect(): Observable<any[]> {
     const displayDataChanges = [
       this._userservice.onUsersChanged,
@@ -96,7 +84,8 @@ export class FilesDataSource extends DataSource<any>
     return merge(...displayDataChanges)
       .pipe(
         map(() => {
-          let data = this._userservice.users.slice();
+          debugger;
+          let data = this._userservice.usersResult.data.slice();
           data = this.filterData(data);
           this.filteredData = [...data];
           data = this.sortData(data);
@@ -113,6 +102,14 @@ export class FilesDataSource extends DataSource<any>
 
   set filteredData(value: any) {
     this._filteredDataChange.next(value);
+  }
+
+  get paginatedData(){
+    return this._paginatedData.value;
+  }
+
+  set paginatedData(value: any){
+    this._paginatedData.next(value);
   }
 
   // Filter
@@ -144,23 +141,23 @@ export class FilesDataSource extends DataSource<any>
         case 'id':
           [propertyA, propertyB] = [a.id, b.id];
           break;
-        case 'name':
-          [propertyA, propertyB] = [a.name, b.name];
+        case 'userName':
+          [propertyA, propertyB] = [a.userName, b.userName];
           break;
-        case 'categories':
-          [propertyA, propertyB] = [a.categories[0], b.categories[0]];
+        case 'emailAddress':
+          [propertyA, propertyB] = [a.emailAddress, b.emailAddress];
           break;
-        case 'price':
-          [propertyA, propertyB] = [a.priceTaxIncl, b.priceTaxIncl];
+        case 'firstName':
+          [propertyA, propertyB] = [a.firstName, b.firstName];
           break;
-        case 'quantity':
-          [propertyA, propertyB] = [a.quantity, b.quantity];
+        case 'lastName':
+          [propertyA, propertyB] = [a.lastName, b.lastName];
           break;
-        case 'active':
-          [propertyA, propertyB] = [a.active, b.active];
+        case 'roleName':
+          [propertyA, propertyB] = [a.roleName, b.roleName];
           break;
       }
-
+    
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
       const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
 

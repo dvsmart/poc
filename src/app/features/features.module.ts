@@ -52,7 +52,7 @@ const routes: Routes = [
         loadChildren: './settings/customEntity/custom-entity.module#CustomEntityModule',
       },
       {
-        path: 'users',
+        path: '',
         loadChildren: './users/users.module#UsersModule',
       }
     ]

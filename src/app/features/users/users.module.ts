@@ -7,30 +7,20 @@ import { Routes, RouterModule } from '@angular/router';
 import { MatButtonModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatPaginatorModule, MatRippleModule, MatSelectModule, MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule } from '@angular/material';
 import { CoreSharedModule } from '@core/core.module';
 
-const routes: Routes = [
+const userRoutes: Routes = [
   {
-    path: '',
-    component: UsersComponent,
+    path: 'users', component: UsersComponent,
     resolve: {
-      data: UserService
+      users: UserService
     }
   },
   {
-    path: 'edit/:id',
-    component: UserDetailComponent,
+    path: 'user/:id', component: UserDetailComponent,
     resolve: {
-      data: UserDetailService
-    }
-  },
-  {
-    path: 'users/:id/:username',
-    component: UserDetailComponent,
-    resolve: {
-      data: UserDetailService
+      user: UserDetailService
     }
   }
 ];
-
 
 @NgModule({
   imports: [
@@ -47,10 +37,10 @@ const routes: Routes = [
     MatSnackBarModule,
     MatTableModule,
     MatTabsModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(userRoutes)
   ],
   declarations: [UsersComponent, UserDetailComponent],
-  providers:[
+  providers: [
     UserService,
     UserDetailService
   ]

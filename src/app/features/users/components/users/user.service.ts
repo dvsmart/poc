@@ -10,7 +10,7 @@ import { User } from '../../model/user.model';
   providedIn: 'root'
 })
 export class UserService {
-  users: User[];
+  usersResult: PagedResult;
   onUsersChanged: BehaviorSubject<any>;
   constructor(private _httpClient: HttpClient) {
     this.onUsersChanged = new BehaviorSubject({});
@@ -20,7 +20,7 @@ export class UserService {
     return new Promise((resolve, reject) => {
 
       Promise.all([
-        this.getUsers()
+        this.getUsers(1, 10)
       ]).then(
         () => {
           resolve();
@@ -30,12 +30,12 @@ export class UserService {
     });
   }
 
-  getUsers(): Promise<any> {
+  getUsers(page, pageSize): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<PagedResult>(environment.apiUrl + 'User?page=1&pageSize=10')
+      this._httpClient.get<PagedResult>(environment.apiUrl + 'User?page=' + page + '&pageSize=' + pageSize)
         .subscribe((response: PagedResult) => {
-          this.users = response.data;
-          this.onUsersChanged.next(this.users);
+          this.usersResult = response;
+          this.onUsersChanged.next(this.usersResult);
           resolve(response);
         }, reject);
     });
