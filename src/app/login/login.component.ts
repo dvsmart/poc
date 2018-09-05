@@ -5,6 +5,7 @@ import { FuseConfigService } from '@core/services/config.service';
 import { FormGroup, FormBuilder, Validators } from '../../../node_modules/@angular/forms';
 import { Router, ActivatedRoute } from '../../../node_modules/@angular/router';
 import { first } from 'rxjs/operators';
+import { UserIdleService } from './timeout/idle.service';
 
 @Component({
     selector: 'login',
@@ -27,34 +28,12 @@ export class LoginComponent implements OnInit {
         private _formBuilder: FormBuilder,
         private authservice: AuthService,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private userIdle: UserIdleService
     ) {
-        // Configure the layout
-        this._fuseConfigService.config = {
-            layout: {
-                navbar: {
-                    hidden: true
-                },
-                toolbar: {
-                    hidden: true
-                },
-                footer: {
-                    hidden: true
-                },
-                sidepanel: {
-                    hidden: true
-                }
-            }
-        };
+        
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void {
         this.authservice.logout();
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
@@ -72,6 +51,7 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
+                    this.userIdle.startWatching();
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {

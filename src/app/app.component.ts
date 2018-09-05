@@ -21,10 +21,8 @@ export class AppComponent {
   showMainLayout: boolean = false;
   constructor(
     @Inject(DOCUMENT) private document: any,
-    private _fuseConfigService: FuseConfigService,
     private _fuseSidebarService: FuseSidebarService,
     private _fuseSplashscreen: FuseSplashScreenService,
-    private _authservice: AuthService,
     private _platform: Platform,
     private router: Router
   ) {
@@ -36,6 +34,12 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    // const timer = JSON.parse(localStorage.getItem('timer'));
+    // if (timer && (Date.now() > timer)) {
+    //   this.router.navigate(['account/lock']);
+    // }else{
+    //   this.router.navigate(['account/login']);
+    // }
   }
 
   toggleSidebarOpen(key): void {

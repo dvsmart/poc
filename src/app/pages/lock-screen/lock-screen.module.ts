@@ -16,14 +16,12 @@ const routes = [
         LockScreenComponent
     ],
     imports     : [
-        RouterModule.forChild(routes),
-
+        CoreSharedModule,
         MatButtonModule,
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
-
-        CoreSharedModule
+        RouterModule.forChild(routes),
     ]
 })
 export class LockModule

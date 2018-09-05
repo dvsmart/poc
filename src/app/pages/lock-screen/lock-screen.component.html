@@ -18,17 +18,17 @@
                       Due to inactivity, your session is locked. Enter your password to continue.
                   </div>
               </div>
-
+              
           </div>
-
-          <form name="lockForm" [formGroup]="lockForm" novalidate>
+          {{error}}
+          <form name="lockForm" [formGroup]="lockForm" novalidate (ngSubmit)="unlock()">
 
               <mat-form-field>
                   <input matInput placeholder="Username" formControlName="username">
               </mat-form-field>
 
               <mat-form-field>
-                  <input matInput placeholder="Password" formControlName="password">
+                  <input matInput placeholder="Password" formControlName="password" type="password">
                   <mat-error>
                       Password is required
                   </mat-error>
@@ -42,7 +42,7 @@
           </form>
 
           <div class="message">
-              <a class="link" [routerLink]="'/pages/auth/login'">Are you not Katherine?</a>
+              <a class="link" [routerLink]="'account/login'">Are you not {{name}}?</a>
           </div>
 
       </div>

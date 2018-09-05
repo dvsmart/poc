@@ -1,48 +1,53 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { FuseConfigService } from '@core/services/config.service';
+import { AuthService } from '../../login/auth.service';
+import { first } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
+import { fuseAnimations } from '@core/animations';
 
 @Component({
-  selector: 'app-lock-screen',
-  templateUrl: './lock-screen.component.html',
-  styleUrls: ['./lock-screen.component.scss']
+    selector: 'app-lock-screen',
+    templateUrl: './lock-screen.component.html',
+    styleUrls: ['./lock-screen.component.scss'],
+    animations:fuseAnimations
 })
 export class LockScreenComponent implements OnInit {
-  lockForm: FormGroup;
-  constructor(
-    private _fuseConfigService: FuseConfigService,
-    private _formBuilder: FormBuilder
-)
-{
-    // Configure the layout
-    this._fuseConfigService.config = {
-        layout: {
-            navbar   : {
-                hidden: true
-            },
-            toolbar  : {
-                hidden: true
-            },
-            footer   : {
-                hidden: true
-            },
-            sidepanel: {
-                hidden: true
-            }
+    lockForm: FormGroup;
+    name: string;
+
+    returnUrl: string;
+    error: string;
+    constructor(
+        private _formBuilder: FormBuilder,
+        private authservice: AuthService,
+        private router: Router,
+        private route: ActivatedRoute
+    ) {
+        this.lockForm = new FormGroup({});
+    }
+
+    ngOnInit() {
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
+        var user = JSON.parse(localStorage.getItem('currentUser'));
+        this.name = user != null ? user.username : ''
+        this.lockForm = this._formBuilder.group({
+            username: [this.name, Validators.required],
+            password: ['', Validators.required]
+        });
+    }
+
+    unlock() {
+        if (this.lockForm.invalid) {
+            return;
         }
-    };
-}
-
-  ngOnInit() {
-    this.lockForm = this._formBuilder.group({
-      username: [
-        {
-          value: 'Katherine',
-          disabled: true
-        }, Validators.required
-      ],
-      password: ['', Validators.required]
-    });
-  }
-
+        this.authservice.login(this.lockForm.value)
+            .pipe(first())
+            .subscribe(
+                data => {
+                    this.router.navigate([this.returnUrl]);
+                },
+                error => {
+                    this.error = error;
+                });
+    }
 }
