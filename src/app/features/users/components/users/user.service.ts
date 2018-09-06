@@ -11,6 +11,7 @@ import { User } from '../../model/user.model';
 })
 export class UserService {
   usersResult: PagedResult;
+  users: any[];
   onUsersChanged: BehaviorSubject<any>;
   constructor(private _httpClient: HttpClient) {
     this.onUsersChanged = new BehaviorSubject({});
@@ -35,6 +36,7 @@ export class UserService {
       this._httpClient.get<PagedResult>(environment.apiUrl + 'User?page=' + page + '&pageSize=' + pageSize)
         .subscribe((response: PagedResult) => {
           this.usersResult = response;
+          this.users = response.data;
           this.onUsersChanged.next(this.usersResult);
           resolve(response);
         }, reject);

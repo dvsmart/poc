@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { fuseAnimations } from '@core/animations';
 import { FuseUtils } from '@core/utils';
 import { Observable, merge, BehaviorSubject, Subject, fromEvent } from 'rxjs';
-import { map, takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { map, takeUntil, debounceTime, distinctUntilChanged, startWith, switchMap, catchError } from 'rxjs/operators';
 import { DataSource } from '@angular/cdk/table';
 import { UserService } from './user.service';
 import { MatPaginator, MatSort } from '@angular/material';
@@ -49,11 +49,14 @@ export class UsersComponent implements OnInit {
         if (!this.dataSource) {
           return;
         }
-
         this.dataSource.filter = this.filter.nativeElement.value;
       });
   }
 
+  pageEvent($event) {
+    debugger;
+    this._usersservice.getUsers($event.pageIndex + 1, $event.pageSize);
+  }
 }
 
 export class FilesDataSource extends DataSource<any>
@@ -70,28 +73,35 @@ export class FilesDataSource extends DataSource<any>
     super();
 
     this.filteredData = this._userservice.usersResult.data;
-    this.paginatedData = this._userservice.usersResult;
+    this.paginatedData = this._userservice.usersResult.totalCount;
   }
 
   connect(): Observable<any[]> {
     const displayDataChanges = [
-      this._userservice.onUsersChanged,
+      //this._userservice.onUsersChanged,
       this._matPaginator.page,
       this._filterChange,
       this._matSort.sortChange
     ];
 
+    this._matSort.sortChange.subscribe(() => this._matPaginator.pageIndex = 0);
+    //this._userservice.getUsers(this._matPaginator.pageIndex + 1, this._matPaginator.pageSize);
     return merge(...displayDataChanges)
       .pipe(
+        switchMap(() => {
+          return this._userservice.getUsers(this._matPaginator.pageIndex + 1, this._matPaginator.pageSize);
+        }),
         map(() => {
-          debugger;
-          let data = this._userservice.usersResult.data.slice();
+          let data = this._userservice.users;
+
           data = this.filterData(data);
+
           this.filteredData = [...data];
+
           data = this.sortData(data);
+
           // Grab the page's slice of data.
-          const startIndex = this._matPaginator.pageIndex * this._matPaginator.pageSize;
-          return data.splice(startIndex, this._matPaginator.pageSize);
+          return data;
         }
         ));
   }
@@ -104,11 +114,11 @@ export class FilesDataSource extends DataSource<any>
     this._filteredDataChange.next(value);
   }
 
-  get paginatedData(){
+  get paginatedData() {
     return this._paginatedData.value;
   }
 
-  set paginatedData(value: any){
+  set paginatedData(value: any) {
     this._paginatedData.next(value);
   }
 
@@ -157,7 +167,7 @@ export class FilesDataSource extends DataSource<any>
           [propertyA, propertyB] = [a.roleName, b.roleName];
           break;
       }
-    
+
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
       const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
 
