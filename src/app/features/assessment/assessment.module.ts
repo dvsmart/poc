@@ -1,29 +1,28 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { AssessmentComponent } from './assessment.component';
 import { AssessmentListComponent } from './assessment-list/assessment-list.component';
 import { AssessmentFormComponent } from './assessment-form/assessment-form.component';
-import { AssessmentFilterComponent } from './assessment-filter/assessment-filter.component';
-import { AssessmentService } from './assessment.service';
-import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatIconModule, MatFormFieldModule, MatMenuModule, MatInputModule, MatRippleModule, MatTableModule, MatPaginatorModule, MatToolbarModule, MatSelectModule, MatTabsModule, MatNativeDateModule } from '../../../../node_modules/@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatIconModule, MatFormFieldModule, MatMenuModule, MatInputModule, MatRippleModule, MatTableModule, MatPaginatorModule, MatToolbarModule, MatSelectModule, MatTabsModule, MatNativeDateModule, MatSortModule, MatChipsModule, MatSnackBarModule } from '../../../../node_modules/@angular/material';
 import { Routes, RouterModule } from '../../../../node_modules/@angular/router';
 import { CoreSharedModule } from '@core/core.module';
 import { FuseConfirmDialogModule } from '@core/components/confirm-dialog/confirm-dialog.module';
 import { FuseSidebarModule } from '@core/components/sidebar/sidebar.module';
+import { AssessmentsService } from './assessment-list/assessments.service';
+import { AssessmentService } from './assessment-form/assessment.service';
 
-const routes: Routes = [
+const assessmentRoutes: Routes = [
   {
-    path: '',
-    component: AssessmentComponent,
+    path: 'assessment',
+    component: AssessmentListComponent,
     resolve: {
-      properties: AssessmentService
-    },
-    children:[
-      {
-        path: 'detail/:id',
-        component: AssessmentFormComponent
-      }
-    ]
+      assessments: AssessmentsService
+    }
+  },
+  {
+    path: 'assessment/:id',
+    component: AssessmentFormComponent,
+    resolve: {
+      assessment: AssessmentService
+    }
   }
 ];
 
@@ -34,22 +33,24 @@ const routes: Routes = [
     FuseSidebarModule,
 
     MatButtonModule,
-    MatCheckboxModule,
-    MatDatepickerModule,
+    MatChipsModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatMenuModule,
-    MatRippleModule,
-    MatTableModule,
-    MatToolbarModule,
     MatPaginatorModule,
+    MatRippleModule,
     MatSelectModule,
+    MatSortModule,
+    MatSnackBarModule,
+    MatDatepickerModule,
     MatNativeDateModule,
+    MatTableModule,
     MatTabsModule,
-    RouterModule.forChild(routes),
+    MatCheckboxModule,
+    MatMenuModule,
+    RouterModule.forChild(assessmentRoutes),
   ],
-  providers: [AssessmentService],
-  declarations: [AssessmentComponent, AssessmentListComponent, AssessmentFormComponent, AssessmentFilterComponent],
+  providers: [AssessmentService, AssessmentsService],
+  declarations: [AssessmentListComponent, AssessmentFormComponent],
 })
 export class AssessmentModule { }

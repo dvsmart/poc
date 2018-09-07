@@ -24,7 +24,8 @@ export class Assessment {
     /**
      *
      */
-    constructor(data) {
+    constructor(data?) {
+        data = data || {};
         if(data != null){
             this.title = data.title
             this.assessmentDate = data.assessmentDate

@@ -1,115 +1,137 @@
-<div class="content-card bg-white">
-  <mat-toolbar>{{title}}</mat-toolbar>
-  <form (ngSubmit)='save()' [formGroup]='formGroup' novalidate class="form">
-    <div class="content-card-form">
-      <mat-tab-group>
-        <mat-tab>
-          <ng-template mat-tab-label>
-            Details
-          </ng-template>
-          <div class="form-group">
-            <div class="example-container">
-              <mat-form-field>
-                <mat-select placeholder="Assessment Type" formControlName='assessmentTypeId' [compareWith]="compareFn">
-                  <mat-option *ngFor="let type of types" [value]="type.id">
-                    {{type.name}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field>
-                <input matInput placeholder="Title" formControlName='title'>
-              </mat-form-field>
-              <mat-form-field>
-                <input matInput placeholder="Reference" formControlName='reference'>
-              </mat-form-field>
-              <mat-form-field>
-                <input matInput [matDatepicker]="assessmentDate" placeholder="Assessment Date" formControlName='assessmentDate'>
-                <mat-datepicker-toggle matSuffix [for]="assessmentDate"></mat-datepicker-toggle>
-                <mat-datepicker #assessmentDate></mat-datepicker>
-              </mat-form-field>
-              <div>
+<div id="assessment" class="page-layout carded fullwidth inner-scroll">
+  <div class="top-bg mat-accent-bg"></div>
+  <div class="center">
+    <div class="header mat-accent-bg" fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/assessment'">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          <div class="h2" *ngIf="pageType ==='edit'">
+            Edit Assessment - {{assessment.dataId}}
+          </div>
+          <div class="h2" *ngIf="pageType ==='new'">
+            New Assessment
+          </div>
+          <div class="subtitle secondary-text">
+            <span>Assessment Detail</span>
+          </div>
+        </div>
+      </div>
+      <button mat-raised-button class="save-product-button mat-white-bg" [disabled]="assessmentForm.invalid" *ngIf="pageType ==='new'"
+        (click)="addAssessment()">
+        <span>ADD</span>
+      </button>
+      <button mat-raised-button class="save-product-button mat-white-bg" [disabled]="assessmentForm.invalid || assessmentForm.pristine"
+        *ngIf="pageType ==='edit'" (click)="saveAssessment()">
+        <span>SAVE</span>
+      </button>
+    </div>
+    <div class="content-card mat-white-bg">
+      <div class="content">
+        <form name="assessmentForm" [formGroup]="assessmentForm" class="property w-100-p" fxLayout="column" fxFlex>
+          <mat-tab-group>
+            <mat-tab label="Identification">
+              <div class="tab-content p-24" fusePerfectScrollbar>
+                <mat-form-field>
+                  <mat-select placeholder="Assessment Type" formControlName='assessmentTypeId' [compareWith]="compareFn">
+                    <mat-option *ngFor="let type of types" [value]="type.id">
+                      {{type.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Title" formControlName='title'>
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Reference" formControlName='reference'>
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput [matDatepicker]="assessmentDate" placeholder="Assessment Date" formControlName='assessmentDate'>
+                  <mat-datepicker-toggle matSuffix [for]="assessmentDate"></mat-datepicker-toggle>
+                  <mat-datepicker #assessmentDate></mat-datepicker>
+                </mat-form-field>
+                <div>
                   <mat-form-field>
-                      <mat-select placeholder="Assessment Scope" formControlName='scopeId' [compareWith]="compareFn">
-                        <mat-option *ngFor="let scope of scopes" [value]="scope.id">
-                          {{scope.name}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                    <mat-icon (click)="onClickScope()">search</mat-icon>
+                    <mat-select placeholder="Assessment Scope" formControlName='scopeId' [compareWith]="compareFn">
+                      <mat-option *ngFor="let scope of scopes" [value]="scope.id">
+                        {{scope.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-icon (click)="onClickScope()">search</mat-icon>
+                </div>
+                <mat-form-field>
+                  <mat-select placeholder="Frequency" formControlName='frequencyId' [compareWith]="compareFn">
+                    <mat-option *ngFor="let frequency of frequencies" [value]="frequency.id">
+                      <textarea matInput placeholder="Leave a comment">{{frequency.name}}</textarea>
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
               </div>
-              <mat-form-field>
-                <mat-select placeholder="Frequency" formControlName='frequencyId' [compareWith]="compareFn">
-                  <mat-option *ngFor="let frequency of frequencies" [value]="frequency.id">
-                    <textarea matInput placeholder="Leave a comment">{{frequency.name}}</textarea>
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-        </mat-tab>
-        <mat-tab>
-          <ng-template mat-tab-label>
-            Associations
-          </ng-template>
-          <div class="form-group">
-            <div class="example-container">
-
-            </div>
-          </div>
-        </mat-tab>
-        <mat-tab>
-          <ng-template mat-tab-label>
-            Risks
-          </ng-template>
-          <div class="form-group">
-            <div class="example-container">
-              <p>Nothing</p>
-            </div>
-          </div>
-        </mat-tab>
-        <mat-tab>
-          <ng-template mat-tab-label>
-            Status
-          </ng-template>
-          <div>
-
-          </div>
-        </mat-tab>
-        <mat-tab>
-          <ng-template mat-tab-label>
-            Documents
-          </ng-template>
-          <div class="form-group">
-            <div class="example-container">
-              <p>Attach Documents</p>
-            </div>
-          </div>
-        </mat-tab>
-        <mat-tab>
-          <ng-template mat-tab-label>
-            Images & Videos
-          </ng-template>
-          <div class="form-group">
-            <div class="example-container">
-              <p>Attach Images & Videos</p>
-            </div>
-          </div>
-        </mat-tab>
-        <mat-tab>
-          <ng-template mat-tab-label>
-            Notes & Observations
-          </ng-template>
-          <div class="form-group">
-            <mat-form-field class="example-full-width">
-              <textarea matInput placeholder="Leave a comment"></textarea>
-            </mat-form-field>
-          </div>
-        </mat-tab>
-      </mat-tab-group>
+            </mat-tab>
+            <mat-tab label="Details">
+              <div class="tab-content p-24" fusePerfectScrollbar>
+                <mat-form-field class="w-100-p">
+                  <input matInput placeholder="Telephone">
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input matInput placeholder="Email">
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input matInput placeholder="Fax">
+                </mat-form-field>
+              </div>
+            </mat-tab>
+            <mat-tab label="Attachments">
+              <div class="tab-content p-24" fusePerfectScrollbar>
+                <mat-form-field class="w-100-p">
+                  <input matInput placeholder="Telephone">
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input matInput placeholder="Email">
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input matInput placeholder="Fax">
+                </mat-form-field>
+              </div>
+            </mat-tab>
+            <mat-tab label="Contact">
+              <div class="tab-content p-24" fusePerfectScrollbar>
+                <mat-form-field class="w-100-p">
+                  <input matInput placeholder="Telephone">
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input matInput placeholder="Email">
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input matInput placeholder="Fax">
+                </mat-form-field>
+              </div>
+            </mat-tab>
+            <mat-tab label="Status">
+              <div class="tab-content p-24" fusePerfectScrollbar>
+                <mat-form-field class="w-100-p">
+                  <input matInput placeholder="Telephone">
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input matInput placeholder="Email">
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input matInput placeholder="Fax">
+                </mat-form-field>
+              </div>
+            </mat-tab>
+            <mat-tab label="Notes & Observation">
+              <div class="tab-content p-24" fusePerfectScrollbar>
+                <mat-form-field class="w-100-p">
+                  <textarea matInput placeholder="Leave a comment"></textarea>
+                </mat-form-field>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </form>
+      </div>
     </div>
-    <div mat-dialog-actions class="pt-24" align="end">
-      <button mat-raised-button type="submit" class="mr-10" color="primary" matripple>Save</button>
-      <button mat-raised-button type="button" (click)="cancel()">Cancel</button>
-    </div>
-  </form>
+  </div>
 </div>

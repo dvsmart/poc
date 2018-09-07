@@ -4,8 +4,51 @@
       <mat-icon>filter_list</mat-icon>
       <span class="h5">Management</span>
     </div>
-    <div class="content py-16" fusePerfectScrollbar>
-      <!-- <mat-nav-list *ngIf="entity">
+    <div class="content py-16" fusePerfectScrollbar *ngIf="entity">
+      <div class="nav" *ngFor="let group of entity.groups">
+        <div class="nav-item" aria-label="inbox">
+          <a class="nav-link" matRipple (click)="showTemplate()">
+            <span class="title">{{ group.name }}</span>
+          </a>
+          <div #templates style="display:none;">
+            <div *ngFor="let template of group.templates">
+              <div class="nav-item" style="margin-left:10px;" aria-label="inbox" [id]="template.templateId">
+                <a class="nav-link" matRipple (click)="showTab()">
+                  <span class="title">{{ template.templateName }}</span>
+                </a>
+              </div>
+              <div #tabs style="display:none;">
+                <div class="nav-item" style="margin-left:20px;" aria-label="inbox">
+                  <a class="nav-link" matRipple (click)="showTabs()">
+                    <span class="title">Tabs</span>
+                  </a>
+                </div>
+                <div *ngFor="let tab of template.tabs" #tab style="display:none;">
+                  <div class="nav-item" style="margin-left:30px;" aria-label="inbox">
+                    <a class="nav-link" matRipple>
+                      <span class="title">{{ tab.tabName }}</span>
+                    </a>
+                  </div>
+                  <a class="nav-link" style="color:rgb(190, 34, 99);margin-left:30px" href="...">Add Tab</a>
+                </div>
+                <a class="nav-link" style="color:rgb(64, 226, 43);margin-left:10px" href="...">Edit Template</a>
+                <a class="nav-link" style="color:rgb(64, 226, 43);margin-left:10px" href="...">Delete Template</a>
+                <a class="nav-link" style="color:rgb(64, 226, 43);margin-left:10px" href="...">Delete Template</a>
+              </div>
+            </div>
+            <a class="nav-link" style="color:blueviolet" href="...">Add New Template</a>
+            <a class="nav-link" style="color:blueviolet" href="...">Edit Category</a>
+            <a class="nav-link" style="color:blueviolet" href="...">Delete Category</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- <mat-nav-list *ngIf="entity">
         <mat-list-item *ngFor="let link of entity.groups">
           <a matLine href="...">{{ link.name }}</a>
           <button mat-icon-button (click)="showDetail(link.groupId)">
@@ -16,7 +59,7 @@
           </div>
         </mat-list-item>
       </mat-nav-list> -->
-      <div *ngIf="entity">
+<!-- <div *ngIf="entity">
         <div class="nav" *ngFor="let link of entity.groups">
           <div class="nav-item" aria-label="inbox">
             <a class="nav-link" (click)="showTemplate(link.groupId)" matRipple [ngClass]="{'active mat-accent-bg':filterBy ==='live'}">
@@ -25,22 +68,26 @@
           </div>
           <div *ngIf="link.templates && link.groupId == selectedgroupId">
               <div class="nav-item" href="..." *ngFor="let template of link.templates">
-                <a class="nav-link" style="margin-left:10px;">{{ template.templateName }}</a>
-                <!-- <a class="nav-link" style="margin-left:10px;" (click)="showTabs(template.templateId)">Tabs</a> -->
-                <div *ngIf="template.tabs && template.templateId == selectedtemplateId">Tabs
-                  <div class="nav-item" href="..." *ngFor="let tab of template.tabs">
-                    <a class="nav-link" style="margin-left:20px;" (click)="showfields(tab.tabId)">{{ tab.tabName }}</a>
-                    <div *ngIf="tab.fields && tab.tabId == selectedTabId">
-                      <div class="nav-item" href="..." *ngFor="let field of tab.fields">
-                        <a class="nav-link" style="margin-left:30px;">{{ field.caption }}</a>
+                <a class="nav-link" style="margin-left:10px;" (click)="showTab(template.templateId)">{{ template.templateName }}</a>
+                <!-- <a class="nav-link" style="margin-left:10px;" >Tabs</a> -->
+<!-- <div style="margin-left:20px;" *ngIf="showTabLink && template.templateId == selectedtemplateId" (click)="showTabs(template.templateId)">
+                    Tabs
+                    <div *ngIf="template.tabs && template.templateId == selectedtemplateId && expand">
+                      <div class="nav-item" href="..." *ngFor="let tab of template.tabs">
+                        <a class="nav-link" style="margin-left:30px;" (click)="showfields(tab.tabId)">{{ tab.tabName }}</a>
+                        <div *ngIf="tab.fields && tab.tabId == selectedTabId">
+                          <div class="nav-item" href="..." *ngFor="let field of tab.fields">
+                            <a class="nav-link" style="margin-left:30px;">{{ field.caption }}</a>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
                 </div>
               </div>
-            </div>
-        </div>
-        <!-- <div class="mat-nav-list" *ngFor="let link of entity.groups">
+            </div> -->
+<!-- </div> -->
+
+<!-- <div class="mat-nav-list" *ngFor="let link of entity.groups">
           <div class="mat-list-item">
             <a matLine href="...">{{ link.name }} {{link.groupId}}</a>
             <button mat-icon-button (click)="showTemplate(link.groupId)">
@@ -69,7 +116,3 @@
             </div>
           </div>
         </div> -->
-      </div>
-    </div>
-  </div>
-</div>

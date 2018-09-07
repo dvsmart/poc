@@ -8,6 +8,7 @@ import { AppLayoutComponent } from '../layout/app-layout/app-layout.component';
 import { Error404Component } from '../pages/errors/error404/error404.component';
 import { MatIconModule } from '@angular/material';
 
+
 const routes: Routes = [
   {
     path: '',
@@ -28,7 +29,7 @@ const routes: Routes = [
         loadChildren: './asset/asset.module#AssetModule'
       },
       {
-        path: 'assessment',
+        path: '',
         loadChildren: './assessment/assessment.module#AssessmentModule'
       },
       {

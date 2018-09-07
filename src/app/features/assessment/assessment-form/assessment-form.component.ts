@@ -1,11 +1,14 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AssessmentService } from '../assessment.service';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Assessment } from '../models/assessment.model';
 import { ReferenceModel } from '../models/reference.model';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { fuseAnimations } from '@core/animations';
+import { Subject } from 'rxjs';
+import { MatSnackBar } from '@angular/material';
+import { takeUntil } from 'rxjs/operators';
+import { AssessmentService } from './assessment.service';
 
 @Component({
   selector: 'app-assessment-form',
@@ -14,89 +17,68 @@ import { fuseAnimations } from '@core/animations';
   animations: fuseAnimations
 })
 export class AssessmentFormComponent implements OnInit {
-  formGroup: FormGroup;
-  title: string;
-  scopes: ReferenceModel[];
-  types: ReferenceModel[];
-  frequencies: ReferenceModel[];
   assessment: Assessment;
-  @Output() closeForm: EventEmitter<boolean>;
-
-  constructor(private assessmentservice: AssessmentService, private route: ActivatedRoute, private _location: Location) {
-    this.route.params.subscribe(x => { 
-      if(x != null){
-        const id = parseInt(x["id"]);
-        this.assessmentservice.getSingle(id)
-        .subscribe(assessment => {
-          this.editFormGroup(assessment);
-      });
-      }
-    });
+  pageType: string;
+  assessmentForm: FormGroup;
+  private _unsubscribeAll: Subject<any>;
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _matSnackBar: MatSnackBar,
+    private _assessmentservice: AssessmentService,
+    private _location: Location
+  ) {
+    // Set the private defaults
+    this._unsubscribeAll = new Subject();
   }
-
 
   ngOnInit() {
-    this.createFormGroup();
-    this.getTypes();
-    this.getFrequencies();
-    this.getScopes();
-  }
-
-  getAssessment(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.assessmentservice.getSingle(id)
-      .subscribe(assessment => {
-        this.editFormGroup(assessment);
+    this._assessmentservice.onAssessmentChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(property => {
+        if (property) {
+          this.assessment = new Assessment(property);
+          this.pageType = 'edit';
+        }
+        else {
+          this.pageType = 'new';
+          this.assessment = new Assessment();
+        }
+        this.assessmentForm = this.createAssessmentForm();
       });
   }
 
-  getScopes() {
-    this.assessmentservice.getscopes().subscribe(x => this.scopes = x);
-  }
-
-  getTypes() {
-    this.assessmentservice.getTypes().subscribe(x => this.types = x);
-  }
-
-  getFrequencies() {
-    this.assessmentservice.getFrequencies().subscribe(x => this.frequencies = x);
-  }
-
-  createFormGroup() {
-    this.formGroup = new FormGroup({
-      title: new FormControl('', Validators.required),
-      reference: new FormControl('', Validators.required),
-      assessmentTypeId: new FormControl('', Validators.required),
-      scope: new FormControl(''),
-      scopeId: new FormControl(''),
-      status: new FormControl(''),
-      assessmentDate: new FormControl(''),
-      id: new FormControl(0),
-      publishedBy: new FormControl(''),
-      frequencyId: new FormControl(''),
-      dataId: new FormControl(0)
+  createAssessmentForm(): FormGroup {
+    return this._formBuilder.group({
+      title: [this.assessment.title],
+      reference: [this.assessment.reference],
+      assessmentTypeId: [this.assessment.assessmentTypeId],
+      frequencyId: [this.assessment.frequencyId],
+      publishedBy: [this.assessment.publishedBy],
+      scope: [this.assessment.scope],
+      scopeId: [this.assessment.scopeId],
+      status: [this.assessment.status],
+      assessmentDate: [this.assessment.assessmentDate],
+      dataId:[this.assessment.dataId],
+      id: [this.assessment.id]
     });
-
   }
 
-  editFormGroup(data: Assessment) {
-    if (data != null && data != undefined) {
-      this.title = 'Edit Assessment - ' + data.dataId;
-      this.formGroup.patchValue({
-        id: data.id,
-        dataId: data.dataId,
-        title: data.title,
-        reference: data.reference,
-        assessmentTypeId: data.assessmentTypeId,
-        scope: data.scope,
-        assessmentDate: data.assessmentDate,
-        publishedBy: data.publishedBy,
-        scopeId: data.scopeId,
-        frequencyId: data.frequencyId
-      })
-    } else {
-      this.title = 'Create New Assessment';
-    }
+  saveAssessment(): void {
+    const data = this.assessmentForm.getRawValue();
+    this._assessmentservice.updateAssessment(data)
+      .then(x => {
+        if (x['saveSuccessful'] === true) {
+          data.id = parseInt(x['recordId']);
+          data.assetId =   parseInt(x['savedEntityId']);
+          data.dataId = x["savedDataId"];
+        }
+        this._assessmentservice.onAssessmentChanged.next(data);
+        this._matSnackBar.open('assessment saved', 'OK', {
+          verticalPosition: 'top',
+          duration: 2000
+        });
+        this._location.go('/assessment/' + data.id);
+      });
   }
 
   compareFn: ((f1: any, f2: any) => boolean) | null = this.compareByValue;
@@ -105,23 +87,21 @@ export class AssessmentFormComponent implements OnInit {
     return f1 && f2 && f1.value === f2.value;
   }
 
-  save() {
-    if (this.formGroup.value.id == "") {
-      this.assessmentservice.add(this.formGroup.value).subscribe(x => {
+  addAssessment(): void {
+    const data = this.assessmentForm.getRawValue();
+    this._assessmentservice.addAssessment(data)
+      .then(x => {
         if (x['saveSuccessful'] === true) {
-          this.title = 'Edit Property - ' + x['savedDataId'];
+          data.id = parseInt(x['recordId']);
+          data.assetId =   parseInt(x['savedEntityId']);
+          data.dataId = x["savedDataId"];
         }
+        this._assessmentservice.onAssessmentChanged.next(data);
+        this._matSnackBar.open('assessment added', 'OK', {
+          verticalPosition: 'top',
+          duration: 2000
+        });
+        this._location.go('/assessment/' + data.id);
       });
-    } else {
-      this.assessmentservice.update(this.formGroup.value.id, this.formGroup.value).subscribe(x => {
-        if (x['saveSuccessful'] === true) {
-          this.title = 'Edit Property - ' + x['savedDataId'];
-        }
-      });
-    }
-  }
-
-  cancel() {
-    this.closeForm.emit(true);
   }
 }

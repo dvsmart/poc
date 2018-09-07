@@ -1,83 +1,112 @@
-<mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
-  <!-- Checkbox Column -->
-  <ng-container matColumnDef="checkbox">
-      <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let assessment">
-          <mat-checkbox [(ngModel)]="checkboxes[assessment.id]" (ngModelChange)="onSelectedChange(assessment.id)" (click)="$event.stopPropagation()">
-          </mat-checkbox>
-      </mat-cell>
-  </ng-container>
+<div id="properties" class="page-layout carded fullwidth inner-scroll">
+    <div class="top-bg mat-accent-bg"></div>
+    <div class="center">
+        <div class="header mat-accent-bg" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+            fxLayoutAlign.gt-xs="space-between center">
+            <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    account_box
+                </mat-icon>
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Assessments
+                </span>
+            </div>
+            <div class="search-input-wrapper mx-24 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+                <label for="search" class="mr-8">
+                    <mat-icon class="secondary-text">search</mat-icon>
+                </label>
+                <mat-form-field floatLabel="never" fxFlex="1 0 auto">
+                    <input id="search" matInput #filter placeholder="Search">
+                </mat-form-field>
+            </div>
+            <button mat-raised-button [routerLink]="['/assessment/', 'new']" class="add-user-button mat-white-bg my-12 mt-sm-0">
+                <span>ADD NEW ASSESSMENT</span>
+            </button>
+        </div>
+        <div class="content-card mat-white-bg">
+            <mat-table class="assessments-table" #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="checkbox">
+                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                    <mat-cell *matCellDef="let assessment">
+                        <mat-checkbox (click)="$event.stopPropagation()">
+                        </mat-checkbox>
+                    </mat-cell>
+                </ng-container>
 
-  <ng-container matColumnDef="dataId">
-          <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
-          <mat-cell *matCellDef="let assessment">
-              <p class="text-truncate">{{assessment.dataId}}</p>
-          </mat-cell>
-      </ng-container>
+                <ng-container matColumnDef="dataId">
+                    <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+                    <mat-cell *matCellDef="let assessment">
+                        <p class="text-truncate">{{assessment.dataId}}</p>
+                    </mat-cell>
+                </ng-container>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="title">
-      <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
-      <mat-cell *matCellDef="let assessment">
-          <p class="text-truncate">{{assessment.title}}</p>
-      </mat-cell>
-  </ng-container>
+                <!-- Name Column -->
+                <ng-container matColumnDef="title">
+                    <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
+                    <mat-cell *matCellDef="let assessment">
+                        <p class="text-truncate">{{assessment.title}}</p>
+                    </mat-cell>
+                </ng-container>
 
-  <ng-container matColumnDef="reference">
-    <mat-header-cell *matHeaderCellDef>Reference</mat-header-cell>
-    <mat-cell *matCellDef="let assessment">
-        <p class="text-truncate">{{assessment.reference}}</p>
-    </mat-cell>
-</ng-container>
+                <ng-container matColumnDef="reference">
+                    <mat-header-cell *matHeaderCellDef>Reference</mat-header-cell>
+                    <mat-cell *matCellDef="let assessment">
+                        <p class="text-truncate">{{assessment.reference}}</p>
+                    </mat-cell>
+                </ng-container>
 
-  <!-- Email Column -->
-  <ng-container matColumnDef="assessmentType">
-      <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Assessment Type</mat-header-cell>
-      <mat-cell *matCellDef="let assessment" fxHide fxShow.gt-sm>
-          <p class="email text-truncate">
-              {{assessment.assessmentType}}
-          </p>
-      </mat-cell>
-  </ng-container>
+                <!-- Email Column -->
+                <ng-container matColumnDef="assessmentType">
+                    <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Assessment Type</mat-header-cell>
+                    <mat-cell *matCellDef="let assessment" fxHide fxShow.gt-sm>
+                        <p class="email text-truncate">
+                            {{assessment.assessmentType}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
 
-  <!-- Phone Column -->
-  <ng-container matColumnDef="assessmentScope">
-      <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Scope</mat-header-cell>
-      <mat-cell *matCellDef="let assessment" fxHide fxShow.gt-md>
-          <p class="phone text-truncate">
-              {{assessment.assessmentScope}}
-          </p>
-      </mat-cell>
-  </ng-container>
+                <!-- Phone Column -->
+                <ng-container matColumnDef="assessmentScope">
+                    <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Scope</mat-header-cell>
+                    <mat-cell *matCellDef="let assessment" fxHide fxShow.gt-md>
+                        <p class="phone text-truncate">
+                            {{assessment.assessmentScope}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
 
-  <!-- Buttons Column -->
-  <ng-container matColumnDef="buttons">
-      <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let assessment">
-          <div fxFlex="row">
-              <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More" (click)="$event.stopPropagation();">
-                  <mat-icon class="secondary-text">more_vert</mat-icon>
-              </button>
-              <mat-menu #moreMenu="matMenu">
-                  <button mat-menu-item aria-label="remove" (click)="deleteAssessment(assessment.id)">
-                      <mat-icon>delete</mat-icon>
-                      <span>Remove</span>
-                  </button>
-                  <button mat-menu-item aria-label="archive" (click)="deleteAssessment(assessment.id)">
-                          <mat-icon>archive</mat-icon>
-                          <span>Archive</span>
-                      </button>
-              </mat-menu>
-          </div>
-      </mat-cell>
-  </ng-container>
+                <!-- Buttons Column -->
+                <ng-container matColumnDef="buttons">
+                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                    <mat-cell *matCellDef="let assessment">
+                        <div fxFlex="row">
+                            <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More" (click)="$event.stopPropagation();">
+                                <mat-icon class="secondary-text">more_vert</mat-icon>
+                            </button>
+                            <mat-menu #moreMenu="matMenu">
+                                <button mat-menu-item aria-label="remove" (click)="deleteAssessment(assessment.id)">
+                                    <mat-icon>delete</mat-icon>
+                                    <span>Remove</span>
+                                </button>
+                                <button mat-menu-item aria-label="archive" (click)="deleteAssessment(assessment.id)">
+                                    <mat-icon>archive</mat-icon>
+                                    <span>Archive</span>
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </mat-cell>
+                </ng-container>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let assessment; columns: displayedColumns;" class="contact" (click)="editAssessment(assessment.id)" [ngClass]="{'mat-accent-50-bg':checkboxes[assessment.id]}"
-      matRipple [@animate]="{value:'*',params:{y:'100%'}}">
-  </mat-row>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let assessment; columns: displayedColumns;" class="assessment" [routerLink]="['/assessment/', assessment.id]"
+                   matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                </mat-row>
 
-</mat-table>
-<mat-paginator #paginator (page)="pageEvent($event)" [pageSize]="pageSize" [length]="getPageSize()" [pageSizeOptions]="[5, 10, 50, 100]"
-  [showFirstLastButtons]="true">
-</mat-paginator>
+            </mat-table>
+            <mat-paginator #paginator [length]="dataSource.paginatedData" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+            </mat-paginator>
+
+        </div>
+    </div>
+</div>

@@ -1,122 +1,164 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 import { fuseAnimations } from '@core/animations';
-import { FuseConfirmDialogComponent } from '@core/components/confirm-dialog/confirm-dialog.component';
-import { MatDialogRef, MatDialog } from '../../../../../node_modules/@angular/material';
-import { Subject, Observable } from '../../../../../node_modules/rxjs';
-import { AssessmentService } from '../assessment.service';
-import { takeUntil } from '../../../../../node_modules/rxjs/operators';
+import { MatPaginator, MatSort } from '../../../../../node_modules/@angular/material';
+import { Subject, Observable, fromEvent, BehaviorSubject, merge } from '../../../../../node_modules/rxjs';
+import { takeUntil, debounceTime, distinctUntilChanged, switchMap, map } from '../../../../../node_modules/rxjs/operators';
 import { DataSource } from '../../../../../node_modules/@angular/cdk/table';
-import { Router } from '@angular/router';
+import { AssessmentsService } from './assessments.service';
+import { FuseUtils } from '@core/utils';
 
 @Component({
   selector: 'app-assessment-list',
   templateUrl: './assessment-list.component.html',
   styleUrls: ['./assessment-list.component.scss'],
-  encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
 
 export class AssessmentListComponent implements OnInit {
-  resultsLength: number;
-  properties: any;
-  pageSize = 10;
-  dataSource: AssessmentDataSource | null;
+  dataSource: FilesDataSource | null;
   displayedColumns = ['checkbox', 'dataId', 'title', 'reference', 'assessmentType', 'assessmentScope', 'buttons'];
-  selectedAssessments: any[];
-  checkboxes: {};
-  dialogRef: any;
-  confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+
+  @ViewChild(MatPaginator)
+  paginator: MatPaginator;
+
+  @ViewChild(MatSort)
+  sort: MatSort;
+
+  @ViewChild('filter')
+  filter: ElementRef;
 
   // Private
   private _unsubscribeAll: Subject<any>;
-  currentPage: number;
 
   constructor(
-    private _assessmentservice: AssessmentService,
-    public _matDialog: MatDialog,
-    private router: Router
+    private _assessmentssservice: AssessmentsService
   ) {
-    // Set the private defaults
     this._unsubscribeAll = new Subject();
   }
-
-  ngOnInit(): void {
-    this.dataSource = new AssessmentDataSource(this._assessmentservice);
-    this._assessmentservice.onAssessmentsChanged
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(result => {
-        this.properties = result;
-        this.resultsLength = result;
-        this.checkboxes = {};
-        result.map(property => {
-          this.checkboxes[property.id] = false;
-        });
-      });
-
-    this._assessmentservice.onSelectedAssessmentsChanged
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(selectedProperties => {
-        for (const id in this.checkboxes) {
-          if (!this.checkboxes.hasOwnProperty(id)) {
-            continue;
-          }
-
-          this.checkboxes[id] = selectedProperties.includes(id);
-        }
-        this.selectedAssessments = selectedProperties;
-      });
-
-    this._assessmentservice.onFilterChanged
-      .pipe(takeUntil(this._unsubscribeAll))
+  ngOnInit() {
+    this.dataSource = new FilesDataSource(this._assessmentssservice, this.paginator, this.sort);
+    fromEvent(this.filter.nativeElement, 'keyup')
+      .pipe(
+        takeUntil(this._unsubscribeAll),
+        debounceTime(150),
+        distinctUntilChanged()
+      )
       .subscribe(() => {
-        this._assessmentservice.deselectAssessments();
+        if (!this.dataSource) {
+          return;
+        }
+        this.dataSource.filter = this.filter.nativeElement.value;
       });
-  }
-
-  ngOnDestroy(): void {
-    this._unsubscribeAll.next();
-    this._unsubscribeAll.complete();
-  }
-
-  editAssessment(assessmentId): void {
-    this.router.navigate(['assessment/detail/' + assessmentId]);
-  }
-
-  deleteAssessment(assessmentId): void {
-    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-      disableClose: false
-    });
-    this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-    this.confirmDialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this._assessmentservice.deleteAssessments(assessmentId);
-      }
-      this.confirmDialogRef = null;
-    });
-
-  }
-
-  onSelectedChange(assessmentId): void {
-    this._assessmentservice.toggleSelectedAssessment(assessmentId);
-  }
-
-  getPageSize(): Observable<number> {
-    return this._assessmentservice.dataLength;
-  }
-
-  pageEvent($event) {
-    this.currentPage = $event.pageIndex + 1;
-    this.pageSize = $event.pageSize;
-    this._assessmentservice.getAssessments(this.currentPage, this.pageSize);
   }
 }
 
-export class AssessmentDataSource extends DataSource<any>
+export class FilesDataSource extends DataSource<any>
 {
-  constructor(private _assessmentservice: AssessmentService) { super(); }
-  connect(): Observable<any[]> {
-    return this._assessmentservice.onAssessmentsChanged;
+  private _filterChange = new BehaviorSubject('');
+  private _filteredDataChange = new BehaviorSubject('');
+  private _paginatedData = new BehaviorSubject('');
+
+  constructor(
+    private _assessmentssservice: AssessmentsService,
+    private _matPaginator: MatPaginator,
+    private _matSort: MatSort
+  ) {
+    super();
+
+    this.filteredData = this._assessmentssservice.assessmentsResult.data;
+    this.paginatedData = this._assessmentssservice.assessmentsResult.totalCount;
   }
+
+  connect(): Observable<any[]> {
+    const displayDataChanges = [
+      this._matPaginator.page,
+      this._filterChange,
+      this._matSort.sortChange
+    ];
+
+    this._matSort.sortChange.subscribe(() => this._matPaginator.pageIndex = 0);
+    return merge(...displayDataChanges)
+      .pipe(
+        switchMap(() => {
+          return this._assessmentssservice.getAssessments(this._matPaginator.pageIndex + 1, this._matPaginator.pageSize);
+        }),
+        map(() => {
+          let data = this._assessmentssservice.assessments;
+          data = this.filterData(data);
+          this.filteredData = [...data];
+          data = this.sortData(data);
+          // Grab the page's slice of data.
+          return data;
+        }
+        ));
+  }
+
+  get filteredData(): any {
+    return this._filteredDataChange.value;
+  }
+
+  set filteredData(value: any) {
+    this._filteredDataChange.next(value);
+  }
+
+  get paginatedData() {
+    return this._paginatedData.value;
+  }
+
+  set paginatedData(value: any) {
+    this._paginatedData.next(value);
+  }
+
+  // Filter
+  get filter(): string {
+    return this._filterChange.value;
+  }
+
+  set filter(filter: string) {
+    this._filterChange.next(filter);
+  }
+
+  filterData(data): any {
+    if (!this.filter) {
+      return data;
+    }
+    return FuseUtils.filterArrayByString(data, this.filter);
+  }
+
+  sortData(data): any[] {
+    if (!this._matSort.active || this._matSort.direction === '') {
+      return data;
+    }
+
+    return data.sort((a, b) => {
+      let propertyA: number | string = '';
+      let propertyB: number | string = '';
+
+      switch (this._matSort.active) {
+        case 'propertyReference':
+          [propertyA, propertyB] = [a.propertyReference, b.propertyReference];
+          break;
+        case 'addressLine1':
+          [propertyA, propertyB] = [a.addressLine1, b.userName];
+          break;
+        case 'addressLine2':
+          [propertyA, propertyB] = [a.addressLine2, b.addressLine2];
+          break;
+        case 'postCode':
+          [propertyA, propertyB] = [a.postCode, b.postCode];
+          break;
+        case 'city':
+          [propertyA, propertyB] = [a.city, b.city];
+          break;
+      }
+
+      const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
+      const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
+
+      return (valueA < valueB ? -1 : 1) * (this._matSort.direction === 'asc' ? 1 : -1);
+    });
+  }
+
   disconnect(): void {
   }
 }

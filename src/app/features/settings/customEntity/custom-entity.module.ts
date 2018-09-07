@@ -3,7 +3,6 @@ import { TreeListComponent } from './components/tree-list/tree-list.component';
 import { Routes, RouterModule } from '@angular/router';
 import { CoreSharedModule } from '@core/core.module';
 import { MatTreeModule, MatIconModule, MatListModule } from '@angular/material';
-import { FuseSidebarModule } from '@core/components/sidebar/sidebar.module';
 
 const routes: Routes = [
   {
@@ -16,9 +15,9 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CoreSharedModule,
+    MatTreeModule,
     MatIconModule,
     MatListModule,
-    FuseSidebarModule,
     RouterModule.forChild(routes),
   ],
   declarations: [TreeListComponent]
