@@ -33,11 +33,9 @@ export class UsersComponent implements OnInit {
   constructor(
     private _usersservice: UserService
   ) {
-    // Set the private defaults
     this._unsubscribeAll = new Subject();
   }
   ngOnInit() {
-    debugger;
     this.dataSource = new FilesDataSource(this._usersservice, this.paginator, this.sort);
     fromEvent(this.filter.nativeElement, 'keyup')
       .pipe(
@@ -51,11 +49,6 @@ export class UsersComponent implements OnInit {
         }
         this.dataSource.filter = this.filter.nativeElement.value;
       });
-  }
-
-  pageEvent($event) {
-    debugger;
-    this._usersservice.getUsers($event.pageIndex + 1, $event.pageSize);
   }
 }
 
@@ -85,7 +78,6 @@ export class FilesDataSource extends DataSource<any>
     ];
 
     this._matSort.sortChange.subscribe(() => this._matPaginator.pageIndex = 0);
-    //this._userservice.getUsers(this._matPaginator.pageIndex + 1, this._matPaginator.pageSize);
     return merge(...displayDataChanges)
       .pipe(
         switchMap(() => {

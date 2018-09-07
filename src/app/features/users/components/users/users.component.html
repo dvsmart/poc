@@ -1,20 +1,8 @@
 <div id="users" class="page-layout carded fullwidth inner-scroll">
-
-    <!-- TOP BACKGROUND -->
     <div class="top-bg mat-accent-bg"></div>
-    <!-- / TOP BACKGROUND -->
-
-    <!-- CENTER -->
     <div class="center">
-
-        <!-- HEADER -->
-        <div class="header mat-accent-bg"
-             fxLayout="column" fxLayoutAlign="center center"
-             fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
-
-            <!-- APP TITLE -->
-            <div class="logo my-12 m-sm-0"
-                 fxLayout="row" fxLayoutAlign="start center">
+        <div class="header mat-accent-bg" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+            <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
                 <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
                     shopping_basket
                 </mat-icon>
@@ -22,11 +10,7 @@
                     Users
                 </span>
             </div>
-            <!-- / APP TITLE -->
-
-            <!-- SEARCH -->
-            <div class="search-input-wrapper mx-24 m-md-0"
-                 fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+            <div class="search-input-wrapper mx-24 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
                 <label for="search" class="mr-8">
                     <mat-icon class="secondary-text">search</mat-icon>
                 </label>
@@ -34,25 +18,12 @@
                     <input id="search" matInput #filter placeholder="Search">
                 </mat-form-field>
             </div>
-            <!-- / SEARCH -->
-
-            <button mat-raised-button
-                    [routerLink]="['/user/', 'new']"
-                    class="add-user-button mat-white-bg my-12 mt-sm-0">
+            <button mat-raised-button [routerLink]="['/user/', 'new']" class="add-user-button mat-white-bg my-12 mt-sm-0">
                 <span>ADD NEW USER</span>
             </button>
-
         </div>
-        <!-- / HEADER -->
-
-        <!-- CONTENT CARD -->
         <div class="content-card mat-white-bg">
-
-            <mat-table class="users-table"
-                       #table [dataSource]="dataSource"
-                       matSort
-                       [@animateStagger]="{value:'50'}"
-                       fusePerfectScrollbar>
+            <mat-table class="users-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
 
                 <!-- ID Column -->
                 <ng-container matColumnDef="id">
@@ -66,9 +37,7 @@
                 <ng-container matColumnDef="image">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let user">
-                        <img class="user-image"
-                             *ngIf="user.images[0]" [alt]="user.name"
-                             [src]="user.images[0].url"/>
+                        <img class="user-image" *ngIf="user.images[0]" [alt]="user.name" [src]="user.images[0].url" />
                         <img *ngIf="!user.images[0]" [src]="'assets/images/ecommerce/user-image-placeholder.png'">
                     </mat-cell>
                 </ng-container>
@@ -106,8 +75,7 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>lastName</mat-header-cell>
                     <mat-cell *matCellDef="let user" fxHide fxShow.gt-sm>
 
-                        <span class="quantity-indicator text-truncate"
-                              [ngClass]="{'mat-red-500-bg':user.quantity <= 5, 'mat-amber-500-bg':user.quantity > 5 && user.quantity <= 25,'mat-green-600-bg':user.quantity > 25}">
+                        <span class="quantity-indicator text-truncate" [ngClass]="{'mat-red-500-bg':user.quantity <= 5, 'mat-amber-500-bg':user.quantity > 5 && user.quantity <= 25,'mat-green-600-bg':user.quantity > 25}">
                         </span>
                         <span>
                             {{user.lastName}}
@@ -134,22 +102,14 @@
 
                 <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
 
-                <mat-row *matRowDef="let user; columns: displayedColumns;"
-                         class="user"
-                         matRipple
-                         [routerLink]="['/user/', user.id]">
+                <mat-row *matRowDef="let user; columns: displayedColumns;" class="user" matRipple [routerLink]="['/user/', user.id]">
                 </mat-row>
 
             </mat-table>
 
-            <mat-paginator #paginator
-                           [length]="dataSource.paginatedData"
-                           [pageSize]="10"
-                           [pageSizeOptions]="[5, 10, 25, 100]">
+            <mat-paginator #paginator [length]="dataSource.paginatedData" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
             </mat-paginator>
 
         </div>
-        <!-- / CONTENT CARD -->
     </div>
-    <!-- / CENTER -->
 </div>

@@ -24,7 +24,7 @@ const routes: Routes = [
         loadChildren: './home/home.module#HomeModule'
       },
       {
-        path: 'asset/properties',
+        path: 'asset',
         loadChildren: './asset/asset.module#AssetModule'
       },
       {

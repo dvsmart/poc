@@ -1,27 +1,29 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { environment } from '@env/environment';
+import { CreateAssetPropertyRequest } from '../models/createPropertyRequestModel';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserDetailService {
+export class PropertyService {
   routeParams: any;
-  user: any;
-  onUserChanged: BehaviorSubject<any>;
+  property: any;
+  onPropertyChanged: BehaviorSubject<any>;
   constructor(
     private _httpClient: HttpClient
   ) {
-    this.onUserChanged = new BehaviorSubject({});
+    this.onPropertyChanged = new BehaviorSubject({});
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
     this.routeParams = route.params;
     return new Promise((resolve, reject) => {
       Promise.all([
-        this.getUser()
+        this.getProperty()
       ]).then(
         () => {
           resolve();
@@ -31,17 +33,17 @@ export class UserDetailService {
     });
   }
 
-  getUser(): Promise<any> {
+  getProperty(): Promise<any> {
     return new Promise((resolve, reject) => {
       if (this.routeParams.id === 'new') {
-        this.onUserChanged.next(false);
+        this.onPropertyChanged.next(false);
         resolve(false);
       }
       else {
-        this._httpClient.get(environment.apiUrl + 'User/' + this.routeParams.id)
-          .subscribe((response: any) => {
-            this.user = response;
-            this.onUserChanged.next(this.user);
+        this._httpClient.get<CreateAssetPropertyRequest>(environment.apiUrl + 'AssetProperties/' + this.routeParams.id)
+          .subscribe((response: CreateAssetPropertyRequest) => {
+            this.property = response;
+            this.onPropertyChanged.next(this.property);
             resolve(response);
           }, reject);
       }
@@ -49,18 +51,18 @@ export class UserDetailService {
   }
 
 
-  saveUser(product): Promise<any> {
+  updateProperty(propertyModel: CreateAssetPropertyRequest): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.post(environment.apiUrl + 'User' + product.id, product)
+      this._httpClient.put(environment.apiUrl + 'AssetProperties', { ...propertyModel })
         .subscribe((response: any) => {
           resolve(response);
         }, reject);
     });
   }
 
-  addUser(product): Promise<any> {
+  addProperty(propertyModel: CreateAssetPropertyRequest): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.post(environment.apiUrl + 'User' , product)
+      this._httpClient.post(environment.apiUrl + 'AssetProperties', { ...propertyModel })
         .subscribe((response: any) => {
           resolve(response);
         }, reject);

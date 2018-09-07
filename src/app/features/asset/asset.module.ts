@@ -1,34 +1,48 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { AssetComponent } from './asset.component';
 import { PropertiesListComponent } from './properties-list/properties-list.component';
 import { PropertiesFormComponent } from './properties-form/properties-form.component';
-import { SelectedBarComponent } from './selected-bar/selected-bar.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { PropertiesService } from './properties.service';
 import { Routes, RouterModule } from '@angular/router';
-import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule, MatPaginatorModule, MatSelectModule, MatNativeDateModule, MatTabsModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule, MatPaginatorModule, MatSelectModule, MatNativeDateModule, MatTabsModule, MatSortModule, MatChipsModule, MatSnackBarModule } from '@angular/material';
 import { CoreSharedModule } from '@core/core.module';
 import { FuseConfirmDialogModule } from '@core/components/confirm-dialog/confirm-dialog.module';
 import { FuseSidebarModule } from '@core/components/sidebar/sidebar.module';
+import { PropertiesService } from './properties-list/properties.service';
+import { PropertyService } from './properties-form/property.service';
 
-const routes: Routes = [
+// const routes: Routes = [
+//   {
+//     path: '',
+//     component: AssetComponent,
+//     children:[
+//       {
+//         path: 'edit/:id',
+//         component: PropertiesFormComponent,
+//       },
+//       {
+//         path: 'new',
+//         component: PropertiesFormComponent,
+//       }
+//     ],
+//     resolve:{
+//       properties: PropertiesService
+//     },
+//   }
+// ];
+
+const propertyRoutes: Routes = [
   {
-    path: '',
-    component: AssetComponent,
-    children:[
-      {
-        path: 'edit/:id',
-        component: PropertiesFormComponent,
-      },
-      {
-        path: 'new',
-        component: PropertiesFormComponent,
-      }
-    ],
-    resolve:{
+    path: 'properties',
+    component: PropertiesListComponent,
+    resolve: {
       properties: PropertiesService
-    },
+    }
+  },
+  {
+    path: 'property/:id',
+    component: PropertiesFormComponent,
+    resolve: {
+      property: PropertyService
+    }
   }
 ];
 
@@ -36,25 +50,25 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CoreSharedModule,
-    FuseConfirmDialogModule,
-    FuseSidebarModule,
     MatButtonModule,
-    MatCheckboxModule,
-    MatDatepickerModule,
+    MatChipsModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatMenuModule,
-    MatRippleModule,
-    MatTableModule,
-    MatToolbarModule,
     MatPaginatorModule,
+    MatRippleModule,
     MatSelectModule,
+    MatSortModule,
+    MatSnackBarModule,
+    MatDatepickerModule,
     MatNativeDateModule,
+    MatTableModule,
     MatTabsModule,
-    RouterModule.forChild(routes)
+    MatCheckboxModule,
+    MatMenuModule,
+    RouterModule.forChild(propertyRoutes)
   ],
-  providers:[PropertiesService],
-  declarations: [AssetComponent, PropertiesListComponent, PropertiesFormComponent, SelectedBarComponent, SidebarComponent],
+  providers: [PropertiesService, PropertyService],
+  declarations: [PropertiesListComponent, PropertiesFormComponent],
 })
 export class AssetModule { }

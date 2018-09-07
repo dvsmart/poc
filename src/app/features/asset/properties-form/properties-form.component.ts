@@ -1,111 +1,104 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PropertiesService } from '../properties.service';
-import { MessageService } from '@core/services/message.service';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { fuseAnimations } from '@core/animations';
-
+import { PropertyService } from './property.service';
+import { CreateAssetPropertyRequest } from '../models/createPropertyRequestModel';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { MatSnackBar } from '@angular/material';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-properties-form',
   templateUrl: './properties-form.component.html',
   styleUrls: ['./properties-form.component.scss'],
-  animations:fuseAnimations
+  encapsulation: ViewEncapsulation.None,
+  animations: fuseAnimations
 })
 export class PropertiesFormComponent implements OnInit {
-  formGroup: FormGroup;
-  title: string;
-  defaultTab: number;
-  constructor(private _propertyservice: PropertiesService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private toaster: MessageService) {
+  property: CreateAssetPropertyRequest;
+  pageType: string;
+  propertyForm: FormGroup;
+  private _unsubscribeAll: Subject<any>;
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _matSnackBar: MatSnackBar,
+    private _propertyservice: PropertyService,
+    private _location: Location
+  ) {
+    // Set the private defaults
+    this._unsubscribeAll = new Subject();
   }
 
   ngOnInit() {
-    this.route.params.subscribe(x => {
-      if (x != null && x["id"] != undefined) {
-        const id = parseInt(x["id"]);
-        this._propertyservice.getSingle(id)
-          .subscribe(property => {
-            this.editFormGroup(property);
-          });
-      }
-    });
-    this.createFormGroup();
-  }
-
-  createFormGroup() {
-    this.title = 'Create new';
-    this.formGroup = new FormGroup({
-      PropertyReference: new FormControl('', Validators.required),
-      AddressLine1: new FormControl('', Validators.required),
-      AddressLine2: new FormControl('', Validators.required),
-      AddressLine3: new FormControl(''),
-      City: new FormControl(''),
-      Postcode: new FormControl(''),
-      KnownAs: new FormControl(''),
-      PropertySize: new FormControl(''),
-      NetInternalSize: new FormControl(''),
-      GrossInternalSize: new FormControl(''),
-      NumberOfFloors: new FormControl(''),
-      NumberOfPlantRooms: new FormControl(''),
-      StatusStartDate: new FormControl(''),
-      id: new FormControl(0),
-      assetId: new FormControl(0)
-    });
-  }
-
-  editFormGroup(property) {
-    if (property != null && property != undefined) {
-      this.title = 'Edit Property - ' + property.dataId;
-      this.formGroup.patchValue({
-        id: property.id,
-        dataId: property.dataId,
-        AddressLine1: property.addressLine1,
-        PropertyReference: property.propertyReference,
-        AddressLine2: property.addressLine2,
-        AddressLine3: property.addressLine3,
-        City: property.city,
-        Postcode: property.postcode,
-        KnownAs: property.knownAs,
-        PropertySize: property.propertySize,
-        NetInternalSize: property.netInternalSize,
-        GrossInternalSize: property.grossInternalSize,
-        NumberOfFloors: property.numberOfFloors,
-        NumberOfPlantRooms: property.numberOfPlantRooms,
-        StatusStartDate: property.statusStartDate,
-        assetId: property.assetId
-      })
-    } else {
-      this.title = 'Create New Property';
-    }
-    this.defaultTab = 0;
-  }
-
-  cancel() {
-    this.router.navigate(['asset/properties']);
-  }
-
-  save() {
-    if (this.formGroup.value.id == "") {
-      this._propertyservice.addProperty(this.formGroup.value).then(x => {
-        if (x['saveSuccessful'] === true) {
-          this.formGroup.patchValue({
-            assetId: parseInt(x['savedEntityId']),
-            id: parseInt(x['recordId'])
-          });
-          this.title = 'Edit Property - ' + x['savedDataId'];
-          this.toaster.add('created new property successfully');
+    this._propertyservice.onPropertyChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(property => {
+        if (property) {
+          this.property = new CreateAssetPropertyRequest(property);
+          this.pageType = 'edit';
         }
-      });
-    } else {
-      this._propertyservice.updateProperty(this.formGroup.value).then(x => {
-        if (x['saveSuccessful'] === true) {
-          this.title = 'Edit Property - ' + x['savedDataId'];
-          this.toaster.add('updated successfully');
+        else {
+          this.pageType = 'new';
+          this.property = new CreateAssetPropertyRequest();
         }
+        this.propertyForm = this.createPropertyForm();
       });
-    }
+  }
+
+  createPropertyForm(): FormGroup {
+    return this._formBuilder.group({
+      propertyReference: [this.property.propertyReference],
+      addressLine1: [this.property.addressLine1],
+      addressLine2: [this.property.addressLine2],
+      addressLine3: [this.property.addressLine3],
+      city: [this.property.city],
+      postcode: [this.property.postcode],
+      knownAs: [this.property.knownAs],
+      propertySize: [this.property.propertySize],
+      netInternalSize: [this.property.netInternalSize],
+      grossInternalSize: [this.property.grossInternalSize],
+      numberOfFloors: [this.property.numberOfFloors],
+      numberOfPlantRooms: [this.property.numberOfPlantRooms],
+      statusStartDate: [this.property.statusStartDate],
+      id: [this.property.id],
+      assetId: [this.property.assetId],
+    });
+  }
+
+  saveProperty(): void {
+    const data = this.propertyForm.getRawValue();
+    this._propertyservice.updateProperty(data)
+      .then(x => {
+        if (x['saveSuccessful'] === true) {
+          data.id = parseInt(x['recordId']);
+          data.assetId =   parseInt(x['savedEntityId']);
+          data.dataId = x["savedDataId"];
+        }
+        this._propertyservice.onPropertyChanged.next(data);
+        this._matSnackBar.open('Property saved', 'OK', {
+          verticalPosition: 'top',
+          duration: 2000
+        });
+        this._location.go('/asset/property/' + data.id);
+      });
+  }
+
+  addProperty(): void {
+    const data = this.propertyForm.getRawValue();
+    this._propertyservice.addProperty(data)
+      .then(x => {
+        if (x['saveSuccessful'] === true) {
+          data.id = parseInt(x['recordId']);
+          data.assetId =   parseInt(x['savedEntityId']);
+          data.dataId = x["savedDataId"];
+        }
+        this._propertyservice.onPropertyChanged.next(data);
+        this._matSnackBar.open('Property added', 'OK', {
+          verticalPosition: 'top',
+          duration: 2000
+        });
+        this._location.go('/asset/property/' + data.id);
+      });
   }
 }

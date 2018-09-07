@@ -1,138 +1,167 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 import { DataSource } from '@angular/cdk/table';
-import { PropertiesService } from '../properties.service';
-import { Observable, Subject } from 'rxjs';
-import { MatDialogRef, MatDialog } from '@angular/material';
-import { takeUntil } from 'rxjs/operators';
+import { Observable, Subject, fromEvent, BehaviorSubject, merge } from 'rxjs';
+import { MatPaginator, MatSort } from '@angular/material';
+import { takeUntil, debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
 import { fuseAnimations } from '@core/animations';
-import { FuseConfirmDialogComponent } from '@core/components/confirm-dialog/confirm-dialog.component';
-import { Router } from '@angular/router';
+import { PropertiesService } from './properties.service';
+import { FuseUtils } from '@core/utils';
 
 @Component({
   selector: 'app-properties-list',
   templateUrl: './properties-list.component.html',
   styleUrls: ['./properties-list.component.scss'],
-  encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
 export class PropertiesListComponent implements OnInit {
-  @ViewChild('dialogContent')
-  dialogContent: TemplateRef<any>;
-  resultsLength: number;
-  properties: any;
-  pageSize: number;
-  total: number;
   dataSource: FilesDataSource | null;
-  displayedColumns = ['checkbox', 'propertyReference', 'addressLine1', 'addressLine2', 'postCode', 'city', 'portfolioName', 'buttons'];
-  selectedContacts: any[];
-  checkboxes: {};
-  dialogRef: any;
-  confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+  displayedColumns = ['checkbox','dataId', 'propertyReference', 'addressLine1', 'addressLine2', 'postCode', 'city', 'portfolioName', 'buttons'];
+
+  @ViewChild(MatPaginator)
+  paginator: MatPaginator;
+
+  @ViewChild(MatSort)
+  sort: MatSort;
+
+  @ViewChild('filter')
+  filter: ElementRef;
 
   // Private
   private _unsubscribeAll: Subject<any>;
-  currentPage: number;
 
-  /**
-   * Constructor
-   *
-   * @param {ContactsService} _contactsService
-   * @param {MatDialog} _matDialog
-   */
   constructor(
-    private _propertyservice: PropertiesService,
-    public _matDialog: MatDialog,
-    private router: Router
+    private _propertiesservice: PropertiesService
   ) {
-    // Set the private defaults
     this._unsubscribeAll = new Subject();
   }
-
-  // -----------------------------------------------------------------------------------------------------
-  // @ Lifecycle hooks
-  // -----------------------------------------------------------------------------------------------------
-
-  /**
-   * On init
-   */
-  ngOnInit(): void {
-    this.dataSource = new FilesDataSource(this._propertyservice);
-
-    this._propertyservice.onPropertiesChanged
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(result => {
-        this.properties = result;
-        this.resultsLength = result;
-        this.checkboxes = {};
-        result.map(property => {
-          this.checkboxes[property.id] = false;
-        });
-      });
-
-    this._propertyservice.onSelectedPropertiesChanged
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(selectedProperties => {
-        for (const id in this.checkboxes) {
-          if (!this.checkboxes.hasOwnProperty(id)) {
-            continue;
-          }
-
-          this.checkboxes[id] = selectedProperties.includes(id);
-        }
-        this.selectedContacts = selectedProperties;
-      });
-
-    this._propertyservice.onFilterChanged
-      .pipe(takeUntil(this._unsubscribeAll))
+  ngOnInit() {
+    this.dataSource = new FilesDataSource(this._propertiesservice, this.paginator, this.sort);
+    fromEvent(this.filter.nativeElement, 'keyup')
+      .pipe(
+        takeUntil(this._unsubscribeAll),
+        debounceTime(150),
+        distinctUntilChanged()
+      )
       .subscribe(() => {
-        this._propertyservice.deselectProperties();
+        if (!this.dataSource) {
+          return;
+        }
+        this.dataSource.filter = this.filter.nativeElement.value;
       });
-  }
-
-  ngOnDestroy(): void {
-    this._unsubscribeAll.next();
-    this._unsubscribeAll.complete();
-  }
-
-  editProperty(propertyId): void {
-    this.router.navigate(['asset/properties/edit/', propertyId]);
-  }
-
-  deleteProperty(id): void {
-    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-      disableClose: false
-    });
-
-    this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-
-    this.confirmDialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this._propertyservice.deleteProperties(id);
-      }
-      this.confirmDialogRef = null;
-    });
-
-  }
-
-  onSelectedChange(propertyId): void {
-    this._propertyservice.toggleSelectedProperty(propertyId);
-  }
-
-  pageEvent($event) {
-    this.currentPage = $event.pageIndex + 1;
-    this.pageSize = $event.pageSize;
-    this._propertyservice.getProperties(this.currentPage, this.pageSize);
   }
 }
 
 export class FilesDataSource extends DataSource<any>
 {
-  constructor(private _propertiesservice: PropertiesService) {
+  private _filterChange = new BehaviorSubject('');
+  private _filteredDataChange = new BehaviorSubject('');
+  private _paginatedData = new BehaviorSubject('');
+
+  constructor(
+    private _propertiesservice: PropertiesService,
+    private _matPaginator: MatPaginator,
+    private _matSort: MatSort
+  ) {
     super();
+
+    this.filteredData = this._propertiesservice.propertiesResult.data;
+    this.paginatedData = this._propertiesservice.propertiesResult.totalCount;
   }
+
   connect(): Observable<any[]> {
-    return this._propertiesservice.onPropertiesChanged;
+    const displayDataChanges = [
+      this._matPaginator.page,
+      this._filterChange,
+      this._matSort.sortChange
+    ];
+
+    this._matSort.sortChange.subscribe(() => this._matPaginator.pageIndex = 0);
+    return merge(...displayDataChanges)
+      .pipe(
+        switchMap(() => {
+          return this._propertiesservice.getProperties(this._matPaginator.pageIndex + 1, this._matPaginator.pageSize);
+        }),
+        map(() => {
+          let data = this._propertiesservice.properties;
+
+          data = this.filterData(data);
+
+          this.filteredData = [...data];
+
+          data = this.sortData(data);
+
+          // Grab the page's slice of data.
+          return data;
+        }
+        ));
   }
+
+  get filteredData(): any {
+    return this._filteredDataChange.value;
+  }
+
+  set filteredData(value: any) {
+    this._filteredDataChange.next(value);
+  }
+
+  get paginatedData() {
+    return this._paginatedData.value;
+  }
+
+  set paginatedData(value: any) {
+    this._paginatedData.next(value);
+  }
+
+  // Filter
+  get filter(): string {
+    return this._filterChange.value;
+  }
+
+  set filter(filter: string) {
+    this._filterChange.next(filter);
+  }
+
+  filterData(data): any {
+    if (!this.filter) {
+      return data;
+    }
+    return FuseUtils.filterArrayByString(data, this.filter);
+  }
+
+  sortData(data): any[] {
+    if (!this._matSort.active || this._matSort.direction === '') {
+      return data;
+    }
+
+    return data.sort((a, b) => {
+      let propertyA: number | string = '';
+      let propertyB: number | string = '';
+
+      switch (this._matSort.active) {
+        case 'propertyReference':
+          [propertyA, propertyB] = [a.propertyReference, b.propertyReference];
+          break;
+        case 'addressLine1':
+          [propertyA, propertyB] = [a.addressLine1, b.userName];
+          break;
+        case 'addressLine2':
+          [propertyA, propertyB] = [a.addressLine2, b.addressLine2];
+          break;
+        case 'postCode':
+          [propertyA, propertyB] = [a.postCode, b.postCode];
+          break;
+        case 'city':
+          [propertyA, propertyB] = [a.city, b.city];
+          break;
+      }
+
+      const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
+      const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
+
+      return (valueA < valueB ? -1 : 1) * (this._matSort.direction === 'asc' ? 1 : -1);
+    });
+  }
+
   disconnect(): void {
   }
 }

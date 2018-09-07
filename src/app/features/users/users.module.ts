@@ -9,13 +9,15 @@ import { CoreSharedModule } from '@core/core.module';
 
 const userRoutes: Routes = [
   {
-    path: 'users', component: UsersComponent,
+    path: 'users', 
+    component: UsersComponent,
     resolve: {
       users: UserService
     }
   },
   {
-    path: 'user/:id', component: UserDetailComponent,
+    path: 'user/:id', 
+    component: UserDetailComponent,
     resolve: {
       user: UserDetailService
     }

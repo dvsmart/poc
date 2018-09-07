@@ -1,26 +1,41 @@
 export class CreateAssetPropertyRequest {
-    PropertyReference: string;
-    AddressLine1: string;
-    AddressLine2: string;
-    AddressLine3: string;
-    City: string;
-    Postcode: string;
-    KnownAs: string;
-    PropertySize: number | null;
-    NetInternalSize: number | null;
-    GrossInternalSize: number | null;
-    NumberOfFloors: number | null;
-    NumberOfPlantRooms: number | null;
-    StatusStartDate: Date | string | null;
-    CountyId: number | null;
-    CountryId: number | null;
-    AssetId: number;
+    propertyReference: string;
+    addressLine1: string;
+    addressLine2: string;
+    addressLine3: string;
+    city: string;
+    postcode: string;
+    knownAs: string;
+    propertySize: number | null;
+    netInternalSize: number | null;
+    grossInternalSize: number | null;
+    numberOfFloors: number | null;
+    numberOfPlantRooms: number | null;
+    statusStartDate: Date | string | null;
+    countyId: number | null;
+    countryId: number | null;
+    assetId: number;
     id: number;
-    /**
-     *
-     */
-    constructor(CreateAssetPropertyRequest) {
-        this.AddressLine1=  CreateAssetPropertyRequest.AddressLine1;
-    }
+    dataId: string;
 
+    constructor(data?) {
+        data = data || {};
+        this.propertyReference = data.propertyReference;
+        this.addressLine1 = data.addressLine1;
+        this.addressLine2 = data.addressLine2;
+        this.addressLine3 = data.addressLine3
+        this.city = data.city;
+        this.countryId = data.countryId;
+        this.countyId = data.countyId;
+        this.statusStartDate = data.statusStartDate;
+        this.netInternalSize =data.netInternalSize;
+        this.grossInternalSize = data.grossInternalSize;
+        this.numberOfFloors = data.numberOfFloors;
+        this.numberOfPlantRooms = data.numberOfPlantRooms;
+        this.id = data.id | 0;
+        this.assetId = data.assetId | 0;
+        this.dataId = data.dataId ;
+        this.postcode = data.postcode;
+        this.knownAs = data.knownAs;
+    }
 }

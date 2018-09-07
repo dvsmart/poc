@@ -1,35 +1,75 @@
-.mat-accent-bg {
-    background-color: #03a9f4 !important;
-    color: #fff !important;
-}
-.content-card {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    overflow: hidden;
-    box-shadow: 0 4px 5px -2px rgba(0, 0, 0, .2), 0 7px 10px 1px rgba(0, 0, 0, .14), 0 2px 16px 1px rgba(0, 0, 0, .12);
-    margin: 10px;
-    padding: 15px;
-    min-height: 500px;
-}
-
-.bg-white{
-    background: white;
-}
-
-.example-container {
-    display: flex;
-    flex-direction: column;
-  }
-
-.form-group{
-    padding: 10px;
-}
-
-.pt-24{
-    padding-top: 24px;
-}
-
-.mr-10{
-    margin-right: 10px;
+// .mat-accent-bg {
+//     background-color: #03a9f4 !important;
+//     color: #fff !important;
+// }
+// .content-card {
+//     display: flex;
+//     flex-direction: column;
+//     flex: 1;
+//     overflow: hidden;
+//     box-shadow: 0 4px 5px -2px rgba(0, 0, 0, .2), 0 7px 10px 1px rgba(0, 0, 0, .14), 0 2px 16px 1px rgba(0, 0, 0, .12);
+//     margin: 10px;
+//     padding: 15px;
+//     min-height: 500px;
+// }
+// .bg-white{
+//     background: white;
+// }
+// .example-container {
+//     display: flex;
+//     flex-direction: column;
+//   }
+// .form-group{
+//     padding: 10px;
+// }
+// .pt-24{
+//     padding-top: 24px;
+// }
+// .mr-10{
+//     margin-right: 10px;
+// }
+#property {
+    .header {
+        .product-image {
+            overflow: hidden;
+            width: 56px;
+            height: 56px;
+            border: 3px solid rgba(0, 0, 0, 0.12);
+            img {
+                height: 100%;
+                width: auto;
+                max-width: none;
+            }
+        }
+        .subtitle {
+            margin: 6px 0 0 0;
+        }
+    }
+    .content {
+        .mat-tab-group,
+        .mat-tab-body-wrapper,
+        .tab-content {
+            flex: 1 1 auto;
+            max-width: 100%;
+        }
+        .mat-tab-body-content {
+            display: flex;
+        }
+        .mat-tab-label {
+            height: 64px;
+        }
+        .product-image {
+            overflow: hidden;
+            width: 128px;
+            height: 128px;
+            margin-right: 16px;
+            margin-bottom: 16px;
+            border: 3px solid rgba(0, 0, 0, 0.12);
+            img {
+                height: 100%;
+                width: auto;
+                max-width: none;
+            }
+        }
+    }
 }
