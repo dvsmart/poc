@@ -50,7 +50,6 @@ const assessmentRoutes: Routes = [
     MatMenuModule,
     RouterModule.forChild(assessmentRoutes),
   ],
-  providers: [AssessmentService, AssessmentsService],
   declarations: [AssessmentListComponent, AssessmentFormComponent],
 })
 export class AssessmentModule { }

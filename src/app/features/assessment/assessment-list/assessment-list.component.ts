@@ -57,14 +57,12 @@ export class FilesDataSource extends DataSource<any>
   private _filterChange = new BehaviorSubject('');
   private _filteredDataChange = new BehaviorSubject('');
   private _paginatedData = new BehaviorSubject('');
-  private data:any[];
   constructor(
     private _assessmentssservice: AssessmentsService,
     private _matPaginator: MatPaginator,
     private _matSort: MatSort
   ) {
     super();
-    this.filteredData = this._assessmentssservice.assessmentsResult.data;
     this.paginatedData = this._assessmentssservice.assessmentsResult.totalCount;
   }
 
@@ -79,21 +77,17 @@ export class FilesDataSource extends DataSource<any>
     return merge(...displayDataChanges)
       .pipe(
         startWith({}),
-        // switchMap(() => {
-        //   debugger;
-        //   return this._assessmentssservice.getAssessments(this._matPaginator.pageIndex + 1, this._matPaginator.pageSize);
-        // }),
+        switchMap(() => {
+          debugger;
+          return this._assessmentssservice.getAssessments(this._matPaginator.pageIndex + 1, this._matPaginator.pageSize);
+        }),
         map(() => {
           debugger;
-          this._assessmentssservice.getAssessments(this._matPaginator.pageIndex + 1, this._matPaginator.pageSize)
-            .then(() => {
-              this.data = this._assessmentssservice.assessments;
-              this.data = this.filterData(this.data);
-              this.filteredData = [...this.data];
-              this.data = this.sortData(this.data);
-              // Grab the page's slice of data.
-            })
-          return this.data;
+          let data = this._assessmentssservice.assessments;
+          data = this.filterData(data);
+          this.filteredData = [...data];
+          data = this.sortData(data);
+          return data;
         }
         ));
   }
