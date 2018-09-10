@@ -37,7 +37,6 @@ export class AssessmentsService {
       this._httpClient.get<PagedResult>(environment.apiUrl + 'Assessment?page=' + page + '&pageSize=' + size)
         .subscribe(
           (response: PagedResult) => {
-            debugger;
             this.assessmentsResult = response;
             this.assessments = response.data;
             this.onAssessmentChanged.next(this.assessmentsResult);

@@ -40,7 +40,7 @@ export class AssessmentListComponent implements OnInit {
     fromEvent(this.filter.nativeElement, 'keyup')
       .pipe(
         takeUntil(this._unsubscribeAll),
-        debounceTime(150),
+        debounceTime(400),
         distinctUntilChanged()
       )
       .subscribe(() => {
@@ -57,6 +57,7 @@ export class FilesDataSource extends DataSource<any>
   private _filterChange = new BehaviorSubject('');
   private _filteredDataChange = new BehaviorSubject('');
   private _paginatedData = new BehaviorSubject('');
+
   constructor(
     private _assessmentssservice: AssessmentsService,
     private _matPaginator: MatPaginator,
@@ -74,15 +75,12 @@ export class FilesDataSource extends DataSource<any>
     ];
 
     this._matSort.sortChange.subscribe(() => this._matPaginator.pageIndex = 0);
+    
     return merge(...displayDataChanges)
       .pipe(
         startWith({}),
-        switchMap(() => {
-          debugger;
-          return this._assessmentssservice.getAssessments(this._matPaginator.pageIndex + 1, this._matPaginator.pageSize);
-        }),
         map(() => {
-          debugger;
+          this.getPagedData().then(x=>console.log(x));
           let data = this._assessmentssservice.assessments;
           data = this.filterData(data);
           this.filteredData = [...data];
@@ -90,6 +88,10 @@ export class FilesDataSource extends DataSource<any>
           return data;
         }
         ));
+  }
+
+  getPagedData(){
+    return this._assessmentssservice.getAssessments(this._matPaginator.pageIndex + 1, this._matPaginator.pageSize);
   }
 
   get filteredData(): any {
