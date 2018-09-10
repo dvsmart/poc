@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@an
 import { fuseAnimations } from '@core/animations';
 import { MatPaginator, MatSort } from '../../../../../node_modules/@angular/material';
 import { Subject, Observable, fromEvent, BehaviorSubject, merge } from '../../../../../node_modules/rxjs';
-import { takeUntil, debounceTime, distinctUntilChanged, switchMap, map } from '../../../../../node_modules/rxjs/operators';
+import { takeUntil, debounceTime, distinctUntilChanged, switchMap, map, startWith, tap } from '../../../../../node_modules/rxjs/operators';
 import { DataSource } from '../../../../../node_modules/@angular/cdk/table';
 import { AssessmentsService } from './assessments.service';
 import { FuseUtils } from '@core/utils';
@@ -16,7 +16,7 @@ import { FuseUtils } from '@core/utils';
 
 export class AssessmentListComponent implements OnInit {
   dataSource: FilesDataSource | null;
-  displayedColumns = ['checkbox', 'dataId', 'title', 'reference', 'assessmentType', 'assessmentScope', 'buttons'];
+  displayedColumns = ['checkbox', 'dataId', 'title', 'reference', 'assessmentType', 'assessmentScope', 'assessmentDate', 'buttons'];
 
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
@@ -57,14 +57,13 @@ export class FilesDataSource extends DataSource<any>
   private _filterChange = new BehaviorSubject('');
   private _filteredDataChange = new BehaviorSubject('');
   private _paginatedData = new BehaviorSubject('');
-
+  private data:any[];
   constructor(
     private _assessmentssservice: AssessmentsService,
     private _matPaginator: MatPaginator,
     private _matSort: MatSort
   ) {
     super();
-
     this.filteredData = this._assessmentssservice.assessmentsResult.data;
     this.paginatedData = this._assessmentssservice.assessmentsResult.totalCount;
   }
@@ -79,16 +78,22 @@ export class FilesDataSource extends DataSource<any>
     this._matSort.sortChange.subscribe(() => this._matPaginator.pageIndex = 0);
     return merge(...displayDataChanges)
       .pipe(
-        switchMap(() => {
-          return this._assessmentssservice.getAssessments(this._matPaginator.pageIndex + 1, this._matPaginator.pageSize);
-        }),
+        startWith({}),
+        // switchMap(() => {
+        //   debugger;
+        //   return this._assessmentssservice.getAssessments(this._matPaginator.pageIndex + 1, this._matPaginator.pageSize);
+        // }),
         map(() => {
-          let data = this._assessmentssservice.assessments;
-          data = this.filterData(data);
-          this.filteredData = [...data];
-          data = this.sortData(data);
-          // Grab the page's slice of data.
-          return data;
+          debugger;
+          this._assessmentssservice.getAssessments(this._matPaginator.pageIndex + 1, this._matPaginator.pageSize)
+            .then(() => {
+              this.data = this._assessmentssservice.assessments;
+              this.data = this.filterData(this.data);
+              this.filteredData = [...this.data];
+              this.data = this.sortData(this.data);
+              // Grab the page's slice of data.
+            })
+          return this.data;
         }
         ));
   }
@@ -160,5 +165,12 @@ export class FilesDataSource extends DataSource<any>
   }
 
   disconnect(): void {
+    this._filterChange.complete();
+    this._filteredDataChange.complete();
+    this._paginatedData.complete();
+    this._filterChange.observers = [];
+    this._filteredDataChange.observers = [];
+    this._paginatedData.observers = [];
   }
+
 }

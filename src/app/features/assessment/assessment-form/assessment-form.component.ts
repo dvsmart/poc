@@ -20,6 +20,11 @@ export class AssessmentFormComponent implements OnInit {
   assessment: Assessment;
   pageType: string;
   assessmentForm: FormGroup;
+
+  scopes: ReferenceModel[];
+  types: ReferenceModel[];
+  frequencies: ReferenceModel[];
+
   private _unsubscribeAll: Subject<any>;
   constructor(
     private _formBuilder: FormBuilder,
@@ -48,6 +53,9 @@ export class AssessmentFormComponent implements OnInit {
   }
 
   createAssessmentForm(): FormGroup {
+    this.getFrequencies();
+    this.getScopes();
+    this.getTypes();
     return this._formBuilder.group({
       title: [this.assessment.title],
       reference: [this.assessment.reference],
@@ -79,6 +87,18 @@ export class AssessmentFormComponent implements OnInit {
         });
         this._location.go('/assessment/' + data.id);
       });
+  }
+
+  getScopes() {
+    this._assessmentservice.getscopes().subscribe(x => this.scopes = x);
+  }
+
+  getTypes() {
+    this._assessmentservice.getTypes().subscribe(x => this.types = x);
+  }
+
+  getFrequencies() {
+    this._assessmentservice.getFrequencies().subscribe(x => this.frequencies = x);
   }
 
   compareFn: ((f1: any, f2: any) => boolean) | null = this.compareByValue;

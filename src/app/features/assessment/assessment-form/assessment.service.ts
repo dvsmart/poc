@@ -4,6 +4,7 @@ import { Assessment } from '../models/assessment.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { ReferenceModel } from '../models/reference.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,9 @@ export class AssessmentService {
   routeParams: any;
   assessment: any;
   onAssessmentChanged: BehaviorSubject<any>;
+
+  referenceApi = environment.apiUrl + 'AssessmentReference/';
+
   constructor(
     private _httpClient: HttpClient
   ) {
@@ -30,6 +34,16 @@ export class AssessmentService {
         reject
       );
     });
+  }
+
+  public getscopes(): Observable<ReferenceModel[]> {
+    return this._httpClient.get<ReferenceModel[]>(this.referenceApi + 'Scopes');
+  }
+  public getTypes(): Observable<ReferenceModel[]> {
+    return this._httpClient.get<ReferenceModel[]>(this.referenceApi + 'Types');
+  }
+  public getFrequencies(): Observable<ReferenceModel[]> {
+    return this._httpClient.get<ReferenceModel[]>(this.referenceApi + 'Frequencies');
   }
 
   getAssessment(): Promise<any> {

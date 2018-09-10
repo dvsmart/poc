@@ -1,4 +1,4 @@
-<div id="properties" class="page-layout carded fullwidth inner-scroll">
+<div id="assessments" class="page-layout carded fullwidth inner-scroll">
     <div class="top-bg mat-accent-bg"></div>
     <div class="center">
         <div class="header mat-accent-bg" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
@@ -24,7 +24,7 @@
             </button>
         </div>
         <div class="content-card mat-white-bg">
-            <mat-table class="assessments-table" #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
+            <mat-table class="assessments-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}">
                 <!-- Checkbox Column -->
                 <ng-container matColumnDef="checkbox">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
@@ -75,6 +75,15 @@
                         </p>
                     </mat-cell>
                 </ng-container>
+
+                <ng-container matColumnDef="assessmentDate">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Assessment Date</mat-header-cell>
+                        <mat-cell *matCellDef="let assessment" fxHide fxShow.gt-sm>
+                            <p class="date">
+                                {{assessment.assessmentDate | date}}
+                            </p>
+                        </mat-cell>
+                    </ng-container>
 
                 <!-- Buttons Column -->
                 <ng-container matColumnDef="buttons">

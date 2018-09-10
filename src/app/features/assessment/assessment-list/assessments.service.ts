@@ -4,6 +4,7 @@ import { environment } from '@env/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -34,12 +35,14 @@ export class AssessmentsService {
       page = page === undefined ? 1 : page;
       size = size === undefined ? 10 : size;
       this._httpClient.get<PagedResult>(environment.apiUrl + 'Assessment?page=' + page + '&pageSize=' + size)
-        .subscribe((response: PagedResult) => {
-          this.assessmentsResult = response;
-          this.assessments = response.data;
-          this.onAssessmentChanged.next(this.assessmentsResult);
-          resolve(this.assessments);
-        }, reject);
+        .subscribe(
+          (response: PagedResult) => {
+            debugger;
+            this.assessmentsResult = response;
+            this.assessments = response.data;
+            this.onAssessmentChanged.next(this.assessmentsResult);
+            resolve(this.assessments);
+          }, reject);
     }
     );
   }
