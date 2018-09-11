@@ -4,15 +4,14 @@ import { environment } from '@env/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AssessmentsService {
   assessmentsResult: PagedResult;
-  assessments: any[];
   onAssessmentChanged: BehaviorSubject<any>;
+
   constructor(private _httpClient: HttpClient) {
     this.onAssessmentChanged = new BehaviorSubject({});
   }
@@ -38,11 +37,14 @@ export class AssessmentsService {
         .subscribe(
           (response: PagedResult) => {
             this.assessmentsResult = response;
-            this.assessments = response.data;
             this.onAssessmentChanged.next(this.assessmentsResult);
-            resolve(this.assessments);
+            resolve(response);
           }, reject);
     }
     );
   }
+
+  // getAssessmentList(page?: number, size?: number): Observable<any> {
+  //   return this._httpClient.get<PagedResult>(environment.apiUrl + 'Assessment?page=' + page + '&pageSize=' + size)
+  // }
 }
