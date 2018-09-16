@@ -13,7 +13,7 @@
           <div #templates style="display:none;">
             <div *ngFor="let template of group.templates">
               <div class="nav-item" style="margin-left:10px;" aria-label="inbox" [id]="template.templateId">
-                <a class="nav-link" matRipple (click)="showTab()">
+                <a class="nav-link" matRipple (click)="showTab(template.templateId)">
                   <span class="title">{{ template.templateName }}</span>
                 </a>
               </div>
@@ -23,11 +23,13 @@
                     <span class="title">Tabs</span>
                   </a>
                 </div>
-                <div *ngFor="let tab of template.tabs" #tab style="display:none;">
-                  <div class="nav-item" style="margin-left:30px;" aria-label="inbox">
-                    <a class="nav-link" matRipple>
-                      <span class="title">{{ tab.tabName }}</span>
-                    </a>
+                <div #tab style="display:none;">
+                  <div *ngFor="let tab of template.tabs" [id]="template.templateId">
+                    <div class="nav-item" style="margin-left:30px;" aria-label="inbox">
+                      <a class="nav-link" matRipple>
+                        <span class="title">{{ tab.tabName }}</span>
+                      </a>
+                    </div>
                   </div>
                   <a class="nav-link" style="color:rgb(190, 34, 99);margin-left:30px" href="...">Add Tab</a>
                 </div>

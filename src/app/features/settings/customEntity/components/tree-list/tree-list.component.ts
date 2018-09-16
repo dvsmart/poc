@@ -36,6 +36,7 @@ export class TreeListComponent {
   }
 
   showTab(){
+    debugger;
     if(this.tabs.nativeElement.style.display === 'block'){
       this.tabs.nativeElement.style.display = 'none'
     }else{
@@ -44,6 +45,7 @@ export class TreeListComponent {
   }
 
   showTabs(){
+    debugger;
     if(this.tab.nativeElement.style.display === 'block'){
       this.tab.nativeElement.style.display = 'none'
     }else{

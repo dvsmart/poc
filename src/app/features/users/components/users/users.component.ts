@@ -85,13 +85,9 @@ export class FilesDataSource extends DataSource<any>
         }),
         map(() => {
           let data = this._userservice.users;
-
           data = this.filterData(data);
-
           this.filteredData = [...data];
-
           data = this.sortData(data);
-
           // Grab the page's slice of data.
           return data;
         }
