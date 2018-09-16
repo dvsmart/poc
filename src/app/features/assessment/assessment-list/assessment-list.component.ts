@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@an
 import { fuseAnimations } from '@core/animations';
 import { MatPaginator, MatSort } from '../../../../../node_modules/@angular/material';
 import { Subject, Observable, fromEvent, BehaviorSubject, merge } from '../../../../../node_modules/rxjs';
-import { takeUntil, debounceTime, distinctUntilChanged, switchMap, map } from '../../../../../node_modules/rxjs/operators';
+import { takeUntil, debounceTime, distinctUntilChanged, switchMap, map, startWith, tap } from '../../../../../node_modules/rxjs/operators';
 import { DataSource } from '../../../../../node_modules/@angular/cdk/table';
 import { AssessmentsService } from './assessments.service';
 import { FuseUtils } from '@core/utils';
@@ -16,7 +16,7 @@ import { FuseUtils } from '@core/utils';
 
 export class AssessmentListComponent implements OnInit {
   dataSource: FilesDataSource | null;
-  displayedColumns = ['checkbox', 'dataId', 'title', 'reference', 'assessmentType', 'assessmentScope', 'buttons'];
+  displayedColumns = ['checkbox', 'dataId', 'title', 'reference', 'assessmentType', 'assessmentScope', 'assessmentDate', 'buttons'];
 
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
@@ -30,17 +30,16 @@ export class AssessmentListComponent implements OnInit {
   // Private
   private _unsubscribeAll: Subject<any>;
 
-  constructor(
-    private _assessmentssservice: AssessmentsService
-  ) {
+  constructor(private _assessmentssservice: AssessmentsService) {
     this._unsubscribeAll = new Subject();
   }
+
   ngOnInit() {
     this.dataSource = new FilesDataSource(this._assessmentssservice, this.paginator, this.sort);
     fromEvent(this.filter.nativeElement, 'keyup')
       .pipe(
         takeUntil(this._unsubscribeAll),
-        debounceTime(150),
+        debounceTime(400),
         distinctUntilChanged()
       )
       .subscribe(() => {
@@ -50,13 +49,14 @@ export class AssessmentListComponent implements OnInit {
         this.dataSource.filter = this.filter.nativeElement.value;
       });
   }
+
 }
 
 export class FilesDataSource extends DataSource<any>
 {
   private _filterChange = new BehaviorSubject('');
   private _filteredDataChange = new BehaviorSubject('');
-  private _paginatedData = new BehaviorSubject('');
+
 
   constructor(
     private _assessmentssservice: AssessmentsService,
@@ -64,9 +64,7 @@ export class FilesDataSource extends DataSource<any>
     private _matSort: MatSort
   ) {
     super();
-
-    this.filteredData = this._assessmentssservice.assessmentsResult.data;
-    this.paginatedData = this._assessmentssservice.assessmentsResult.totalCount;
+    this.filteredData = this._assessmentssservice.assessmentsResult ? this._assessmentssservice.assessmentsResult.data : 0;
   }
 
   connect(): Observable<any[]> {
@@ -77,17 +75,21 @@ export class FilesDataSource extends DataSource<any>
     ];
 
     this._matSort.sortChange.subscribe(() => this._matPaginator.pageIndex = 0);
+
     return merge(...displayDataChanges)
       .pipe(
+        startWith({}),
         switchMap(() => {
-          return this._assessmentssservice.getAssessments(this._matPaginator.pageIndex + 1, this._matPaginator.pageSize);
+          return this._assessmentssservice.getAssessments(this._matPaginator.pageIndex + 1, this._matPaginator.pageSize).then(q=>{
+          })
         }),
         map(() => {
-          let data = this._assessmentssservice.assessments;
-          data = this.filterData(data);
-          this.filteredData = [...data];
-          data = this.sortData(data);
-          // Grab the page's slice of data.
+          let data = this._assessmentssservice.assessmentsResult ? this._assessmentssservice.assessmentsResult.data : null;
+          if (data) {
+            data = this.filterData(data);
+            this.filteredData = [...data];
+            data = this.sortData(data);
+          }
           return data;
         }
         ));
@@ -101,12 +103,8 @@ export class FilesDataSource extends DataSource<any>
     this._filteredDataChange.next(value);
   }
 
-  get paginatedData() {
-    return this._paginatedData.value;
-  }
-
-  set paginatedData(value: any) {
-    this._paginatedData.next(value);
+  get getTotal() {
+    return this._assessmentssservice.assessmentsResult.totalCount;
   }
 
   // Filter
@@ -135,20 +133,20 @@ export class FilesDataSource extends DataSource<any>
       let propertyB: number | string = '';
 
       switch (this._matSort.active) {
-        case 'propertyReference':
-          [propertyA, propertyB] = [a.propertyReference, b.propertyReference];
+        case 'dataId':
+          [propertyA, propertyB] = [a.dataId, b.dataId];
           break;
-        case 'addressLine1':
-          [propertyA, propertyB] = [a.addressLine1, b.userName];
+        case 'title':
+          [propertyA, propertyB] = [a.title, b.userName];
           break;
-        case 'addressLine2':
-          [propertyA, propertyB] = [a.addressLine2, b.addressLine2];
+        case 'reference':
+          [propertyA, propertyB] = [a.reference, b.addressLine2];
           break;
-        case 'postCode':
-          [propertyA, propertyB] = [a.postCode, b.postCode];
+        case 'assessmentType':
+          [propertyA, propertyB] = [a.assessmentType, b.assessmentType];
           break;
-        case 'city':
-          [propertyA, propertyB] = [a.city, b.city];
+        case 'assessmentScope':
+          [propertyA, propertyB] = [a.assessmentScope, b.assessmentScope];
           break;
       }
 
@@ -160,5 +158,9 @@ export class FilesDataSource extends DataSource<any>
   }
 
   disconnect(): void {
+    this._filterChange.complete();
+    this._filteredDataChange.complete();
+    this._filterChange.observers = [];
+    this._filteredDataChange.observers = [];
   }
 }

@@ -10,8 +10,8 @@ import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 })
 export class AssessmentsService {
   assessmentsResult: PagedResult;
-  assessments: any[];
   onAssessmentChanged: BehaviorSubject<any>;
+
   constructor(private _httpClient: HttpClient) {
     this.onAssessmentChanged = new BehaviorSubject({});
   }
@@ -34,13 +34,17 @@ export class AssessmentsService {
       page = page === undefined ? 1 : page;
       size = size === undefined ? 10 : size;
       this._httpClient.get<PagedResult>(environment.apiUrl + 'Assessment?page=' + page + '&pageSize=' + size)
-        .subscribe((response: PagedResult) => {
-          this.assessmentsResult = response;
-          this.assessments = response.data;
-          this.onAssessmentChanged.next(this.assessmentsResult);
-          resolve(this.assessments);
-        }, reject);
+        .subscribe(
+          (response: PagedResult) => {
+            this.assessmentsResult = response;
+            this.onAssessmentChanged.next(this.assessmentsResult);
+            resolve(response);
+          }, reject);
     }
     );
   }
+
+  // getAssessmentList(page?: number, size?: number): Observable<any> {
+  //   return this._httpClient.get<PagedResult>(environment.apiUrl + 'Assessment?page=' + page + '&pageSize=' + size)
+  // }
 }

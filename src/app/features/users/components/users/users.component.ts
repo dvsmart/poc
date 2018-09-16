@@ -77,7 +77,7 @@ export class FilesDataSource extends DataSource<any>
       this._matSort.sortChange
     ];
 
-    this._matSort.sortChange.subscribe(() => this._matPaginator.pageIndex = 0);
+    this._matSort.sortChange.subscribe(() => this._matPaginator.pageIndex = 0)
     return merge(...displayDataChanges)
       .pipe(
         switchMap(() => {

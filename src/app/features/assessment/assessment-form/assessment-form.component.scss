@@ -28,18 +28,5 @@
         .mat-tab-label {
             height: 64px;
         }
-        .product-image {
-            overflow: hidden;
-            width: 128px;
-            height: 128px;
-            margin-right: 16px;
-            margin-bottom: 16px;
-            border: 3px solid rgba(0, 0, 0, 0.12);
-            img {
-                height: 100%;
-                width: auto;
-                max-width: none;
-            }
-        }
     }
 }
