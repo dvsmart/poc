@@ -2,9 +2,9 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { environment } from 'environments/environment';
-import { BehaviorSubject, Observable } from "rxjs";
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
+import { BehaviorSubject } from "rxjs";
 import { CustomEntityValue, CustomEntityRecord } from "../../models/custom.model";
+import { CustomTemplate, SaveResponse } from "./model/record.model";
 
 export class PagedResult {
     data: any[];
@@ -76,19 +76,4 @@ export class TemplateService {
     saveCustomFields(customEntitymodel: CustomEntityValue) {
         return this.http.post<SaveResponse>(environment.apiUrl + 'CustomFieldValue', customEntitymodel);
     }
-
-}
-
-export class CustomTemplate {
-    groupName: string;
-    templateName: string;
-    id: number;
-}
-
-export class SaveResponse {
-    errorMessage: string;
-    recordId: number;
-    saveSuccessful: boolean;
-    savedDataId: string;
-    savedEntityId: number;
 }

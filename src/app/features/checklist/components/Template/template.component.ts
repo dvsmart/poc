@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@core/animations';
-import { TemplateService, CustomTemplate } from './checklistTemplate.service';
+import { TemplateService } from './checklistTemplate.service';
 import { FormControl } from '@angular/forms';
 
 @Component({

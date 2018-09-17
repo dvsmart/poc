@@ -46,7 +46,6 @@ const propertyRoutes: Routes = [
   }
 ];
 
-
 @NgModule({
   imports: [
     CoreSharedModule,

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
-import { BehaviorSubject, Observable, pipe } from "rxjs";
+import { BehaviorSubject} from "rxjs";
 import { environment } from 'environments/environment';
 import { TemplateList } from "../../models/custom.model";
 

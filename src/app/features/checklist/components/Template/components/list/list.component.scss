@@ -1,49 +1,5 @@
 @import "src/@core/scss/fuse";
 
-app-list {
-  flex: 1 1 auto;
-  width: 100%;
-
-  .mat-table {
-      width: 100%;
-      background: transparent;
-      box-shadow: none;
-
-      .mat-column-checkbox {
-          flex: 0 1 64px;
-          padding-left: 18px;
-      }
-
-      .mat-column-avatar {
-          flex: 0 1 64px;
-      }
-
-      .mat-column-buttons {
-          flex: 0 1 80px;
-      }
-
-      .mat-row {
-          position: relative;
-          cursor: pointer;
-          padding: 8px;
-
-          .mat-cell {
-              min-width: 0;
-
-              &.mat-column-detail-button {
-                  flex: 0 1 auto;
-                  padding: 0 24px 0 0;
-
-                  @include media-breakpoint('gt-md') {
-                      display: none;
-                  }
-              }
-          }
-      }
-  }
-}
-
-
 .example-loading-shade {
     position: absolute;
     top: 0;
@@ -54,10 +10,81 @@ app-list {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  
-  .example-rate-limit-reached {
+}
+
+.example-rate-limit-reached {
     color: #980000;
     max-width: 360px;
     text-align: center;
-  }
+}
+
+:host {
+    #records {
+        .top-bg {
+            @include media-breakpoint-down(xs) {
+                height: 240px;
+            }
+        }
+        >.center {
+            >.header {
+                .search-input-wrapper {
+                    max-width: 480px;
+                }
+                @include media-breakpoint-down(xs) {
+                    margin: 8px 0;
+                    height: 192px !important;
+                    min-height: 192px !important;
+                    max-height: 192px !important;
+                }
+            }
+        }
+    }
+    .records-table {
+        flex: 1 1 auto;
+        border-bottom: 1px solid rgba(0, 0, 0, .12);
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        .mat-header-row {
+            min-height: 71px;
+        }
+        .record {
+            position: relative;
+            cursor: pointer;
+            height: 63px;
+        }
+        .mat-cell {
+            min-width: 0;
+            display: flex;
+            align-items: center;
+        }
+        .mat-column-id {
+            flex: 0 1 84px;
+        }
+        .mat-column-image {
+            flex: 0 1 84px;
+            .product-image {
+                width: 52px;
+                height: 52px;
+                border: 1px solid rgba(0, 0, 0, .12);
+            }
+        }
+        .mat-column-buttons {
+            flex: 0 1 80px;
+        }
+        .quantity-indicator {
+            display: inline-block;
+            vertical-align: middle;
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+            margin-right: 8px;
+            &+span {
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }
+        .active-icon {
+            border-radius: 50%;
+        }
+    }
+}

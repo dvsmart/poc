@@ -46,8 +46,21 @@ export class CustomEntityRecord {
     id: number;
     dataId: string;
     customEntityId: number;
-    templateName:string;
+    templateName: string;
     customTabs: CustomTab[];
+
+    /**
+     *
+     */
+    constructor(data?) {
+        data = data || {};
+        this.id = data.id;
+        this.dataId = data.dataId;
+        this.customEntityId = data.customEntityId;
+        this.customTabs = data.customTabs;
+        this.templateName = data.templateName;
+    }
+
 }
 
 

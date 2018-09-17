@@ -1,9 +1,14 @@
 import { fuseAnimations } from "@core/animations";
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { TemplateService } from "../../checklistTemplate.service";
-import { MessageService } from "@core/services/message.service";
 import { CustomEntityRecord, CustomEntityValue } from "../../../../models/custom.model";
+import { Subject } from "rxjs";
+import { takeUntil, take } from "rxjs/operators";
+import { EditFormService } from "./editForm.service";
+import { MatSnackBar } from "@angular/material";
+import { Location } from '@angular/common';
+import { SaveResponse } from "../../model/record.model";
+import { ActivatedRoute } from "@angular/router";
 
 
 @Component({
@@ -14,51 +19,53 @@ import { CustomEntityRecord, CustomEntityValue } from "../../../../models/custom
 })
 
 export class EditFormComponent {
+  title: string;
+  record: CustomEntityRecord;
+  pageType: string;
   customRecordForm: FormGroup;
 
-  record: CustomEntityRecord;
-  title: string;
-  @Input() id: number;
+  customEntityId: number;
 
-  @Output() close: EventEmitter<boolean> = new EventEmitter(false);
-
+  private _unsubscribeAll: Subject<any>;
   constructor(
-    private fb: FormBuilder,
-    private _checklistservice: TemplateService,
-    private toaster: MessageService
+    private _formBuilder: FormBuilder,
+    private _matSnackBar: MatSnackBar,
+    private _recordservice: EditFormService,
+    private _location: Location,
+    private route: ActivatedRoute
   ) {
+    // Set the private defaults
+    this._unsubscribeAll = new Subject();
     this.customRecordForm = new FormGroup({});
   }
 
   ngOnInit() {
+    this.route.params.subscribe(x => {
+      let cev = this._recordservice.onRecordChanged.getValue();
+      if (x != null && x["id"] != "new") {
+        this.record = new CustomEntityRecord(cev);
+        this.pageType = 'edit';
+        this.title = "Edit " + cev.templateName + ' - ' + cev.dataId;
+      } else {
+        this.pageType = 'new';
+        this.title = "New " + cev.templateName;
+        this.record = new CustomEntityRecord(cev);
+      }
+      this.customRecordForm = this.createRecordForm();
+    });
   }
 
-  ngOnChanges() {
-    if (this.id == null || this.id == undefined) {
-      this._checklistservice.createRecord().subscribe(x => {
-        this.title = "Create New " + x.templateName;
-        this.record = x;
-        this.customRecordForm = this.createControl();
-      });
-    } else {
-      this._checklistservice.editRecord(this.id).subscribe(x => {
-        this.title = "Edit " + x.templateName + " - " + x.dataId;
-        this.record = x;
-        this.customRecordForm = this.createControl();
-      });
-    }
+  ngOnDestroy() {
+    this._recordservice.onRecordChanged.complete();
+    this._unsubscribeAll.complete();
   }
 
-  cancel(){
-    this.close.emit(true);
-  }
-
-  createControl() {
-    const group = this.fb.group({});
+  createRecordForm() {
+    const group = this._formBuilder.group({});
     this.record.customTabs.forEach(ct => {
       ct.customFields.forEach(field => {
         if (field.type === "button") return;
-        const control = this.fb.control(
+        const control = this._formBuilder.control(
           field.value,
           this.bindValidations(field.validations || [])
         );
@@ -67,7 +74,6 @@ export class EditFormComponent {
     })
     return group;
   }
-
 
   bindValidations(validations: any) {
     if (validations.length > 0) {
@@ -80,49 +86,52 @@ export class EditFormComponent {
     return null;
   }
 
-  validateAllFormFields(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(field => {
-      const control = formGroup.get(field);
-      control.markAsTouched({ onlySelf: true });
-    });
-  }
-
-  SaveRecord() {
+  populateData(): CustomEntityValue {
     let instance = new CustomEntityValue();
     var fv = JSON.parse(JSON.stringify(this.customRecordForm.value));
     Object.keys(fv).forEach(function (prop) {
       var id = parseInt(prop.split("_")[1]);
       instance.fieldValues.push({ id: id, value: fv[prop] });
     });
-    this._checklistservice.customEntityId.subscribe(x => instance.customEntityId = x);
-    if (this.id == null) {
-      this._checklistservice.createNewRecord(instance).subscribe(x => {
-        if (x != null && x.saveSuccessful) {
-          instance.CustomEntityValueId = x.recordId
-          this.title = 'Edit Record -  ' + x.savedDataId;
-          this.toaster.add('Record Added successfully. Updating fields...');
-          this._checklistservice.saveCustomFields(instance).subscribe(response => {
-            if (response != null && response.saveSuccessful) {
-              this.toaster.add('Saved Successfully');
-              this._checklistservice.getcevRecords(instance.customEntityId, 1, 10);
-            } else {
-              this.toaster.add('Saving fields failed.');
-            }
-          })
-        } else {
-          this.toaster.add('Oops! Something went wrong. Please try again');
-        }
-      })
-    } else {
-      instance.CustomEntityValueId = this.id;
-      this._checklistservice.saveCustomFields(instance).subscribe(x => {
-        if (x != null && x['SaveSuccessful']) {
-          this.toaster.add('Updated Successfully');
-          this._checklistservice.getcevRecords(instance.customEntityId, 1, 10);
-        }
+    return instance;
+  }
+
+  saveRecord(): void {
+    var record = this.populateData();
+    record.customEntityId = this._recordservice.record.id;
+    this._recordservice.add(record)
+      .subscribe((res: SaveResponse) => {
+        record.CustomEntityValueId = res.recordId;
+        this.mapResponse(res);
+        this._recordservice.updateFields(record).subscribe(() => {
+          this.refresh();
+        })
       });
+  }
+
+  refresh() {
+    this.updateRecord();
+    this.notify();
+  }
+
+  private notify(msg?: string) {
+    this._matSnackBar.open('Record saved successfully', 'OK', {
+      verticalPosition: 'top',
+      duration: 2000
+    });
+  }
+
+  private updateRecord() {
+    this.title = 'Edit ' + this.record.templateName + ' - ' + this.record.dataId;
+    this._recordservice.onRecordChanged.next(this.record);
+    this._location.go('/checklist/template/' + this.record.customEntityId + '/record/' + this.record.id);
+  }
+
+  private mapResponse(response: SaveResponse) {
+    if (response.saveSuccessful) {
+      this.record.id = response.recordId;
+      this.record.dataId = response.savedDataId;
+      this.record.customEntityId = response.savedEntityId;
     }
-
-
   }
 }
