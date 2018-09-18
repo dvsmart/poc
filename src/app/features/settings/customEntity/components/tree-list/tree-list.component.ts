@@ -1,74 +1,48 @@
-import { Component, OnInit, Injectable, ViewChild, ElementRef } from '@angular/core';
-import { CustomentityService, Entity, Group } from '../../service/customentity.service';
-import { Observable } from 'rxjs';
+import { Component, ViewChild, ElementRef, HostBinding, Input } from '@angular/core';
+import { CustomentityService } from '../../service/customentity.service';
+import { trigger, state, animate, transition, style } from '@angular/animations';
+import { fuseAnimations } from '@core/animations';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-tree-list',
+  selector: 'tree-menu',
   templateUrl: './tree-list.component.html',
-  styleUrls: ['./tree-list.component.scss']
+  styleUrls: ['./tree-list.component.scss'],
+  animations: fuseAnimations
 })
 export class TreeListComponent {
   entity: any;
-
-  @ViewChild('templates') templates: ElementRef;
-
-  @ViewChild('tabs') tabs: ElementRef;
-
-  @ViewChild('tab') tab: ElementRef;
+  private _unsubscribeAll: Subject<any>;
+  expanded: boolean;
+  @HostBinding('attr.aria-expanded') ariaExpanded = this.expanded;
+  @Input() depth: number;
+  @Input() item: any;
 
   constructor(private ceService: CustomentityService) {
-
+    if (this.depth === undefined) {
+      this.depth = 0;
+    }
+    this._unsubscribeAll = new Subject();
   }
 
   ngOnInit() {
-    this.ceService.getGroups().subscribe(x=>{
-      this.entity = x;
-      console.log(this.entity);
-    });
+    // this.ceService.getGroups().subscribe(x => {
+    //   this.entity = x;
+    //   console.log(this.entity);
+    // });
+    this.ceService.customGroups
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(groups => {
+        debugger;
+        this.entity = groups;
+      });
   }
 
-  showTemplate(){
-    if(this.templates.nativeElement.style.display === 'block'){
-      this.templates.nativeElement.style.display = 'none'
-    }else{
-      this.templates.nativeElement.style.display = 'block'
+  refreshTree($event){
+    debugger;
+    if($event){
+      this.ceService.getCustomGroups();
     }
   }
-
-  showTab(){
-    if(this.tabs.nativeElement.style.display === 'block'){
-      this.tabs.nativeElement.style.display = 'none'
-    }else{
-      this.tabs.nativeElement.style.display = 'block'
-    }
-  }
-
-  showTabs(){
-    if(this.tab.nativeElement.style.display === 'block'){
-      this.tab.nativeElement.style.display = 'none'
-    }else{
-      this.tab.nativeElement.style.display = 'block'
-    }
-  }
-
-
-  // showTemplate(id){
-  //   this.expand = !this.expand;
-  //   this.selectedgroupId = id;
-  // }
-
-  // showTabs(id){
-  //   this.expand = !this.expand;
-  //   this.selectedtemplateId = id;
-  // }
-
-  // showfields(id){
-  //   this.expand = !this.expand;
-  //   this.selectedTabId = id;
-  // }
-
-  // showTab(id){
-  //   this.selectedtemplateId = id;
-  //   this.showTabLink = true;
-  // }
 }

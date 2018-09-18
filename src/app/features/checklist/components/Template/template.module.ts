@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TemplateComponent } from './template.component';
 import { ListComponent } from './components/list/list.component';
 import { CustomMaterialModule } from '../../custom-material.module';
 import { CoreSharedModule } from '@core/core.module';
@@ -35,7 +34,6 @@ const routes: Routes = [
         RouterModule.forChild(routes),
     ],
     providers: [DatePipe],
-    exports: [TemplateComponent],
-    declarations: [TemplateComponent, ListComponent, EditFormComponent],
+    declarations: [ListComponent, EditFormComponent],
 })
 export class TemplateModule { }
