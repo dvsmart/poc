@@ -1,0 +1,40 @@
+@import "src/@core/scss/fuse";
+#knowledgebase {
+    .content {
+        // max-width: 960px;
+        width: 100%;
+        margin: 0 auto;
+        .articles-list {
+            width: 365px;
+            min-width: 300px;
+            margin: 16px;
+            padding: 16px;
+            max-height: 350px;
+            min-height: 350px;
+            overflow: scroll;
+            @include media-breakpoint-down('xs') {
+                min-width: 300px;
+                margin: 16px 0;
+            }
+            .mat-list-item {
+                text-decoration: none !important;
+            }
+            .see-all-link {
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+#add-contact-button {
+    position: absolute;
+    bottom: 400px;
+    padding: 0;
+    z-index: 99;
+    left: 361px;
+    @include media-breakpoint-down('xs') {
+        position: sticky;
+        top: calc(100vh - 72px);
+        bottom: auto;
+    }
+}

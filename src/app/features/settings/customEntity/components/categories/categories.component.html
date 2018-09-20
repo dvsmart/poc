@@ -1,0 +1,46 @@
+<div id="knowledgebase" class="page-layout simple full-width">
+  <div class="content p-24">
+    <div fxLayout="row wrap" fxLayoutAlign="start center">
+      <mat-nav-list class="articles-list mat-white-bg mat-elevation-z4">
+        <h3 mat-subheader>Categories</h3>
+        <a mat-list-item *ngFor="let category of categories" (click)="getTemplate(category.id)">
+          <mat-icon class="secondary-text mr-8">note</mat-icon>
+          {{ category.categoryName }}
+        </a>
+        <a mat-list-item class="see-all-link accent-fg" (click)="add('category')">
+          Add Category
+        </a>
+      </mat-nav-list>
+      <div *ngIf="showTemplate">
+        <mat-nav-list class="articles-list mat-white-bg mat-elevation-z4">
+          <div *ngIf="groupTemplate">
+            <h3 mat-subheader>{{groupTemplate?.groupName}}</h3>
+            <ng-container *ngFor="let template of groupTemplate.templates">
+              <a mat-list-item (click)="getTabs(template.id)">
+                <mat-icon class="secondary-text mr-8">note</mat-icon>
+                {{ template.templateName }}
+              </a>
+            </ng-container>
+          </div>
+          <p *ngIf="groupTemplate?.count === 0">No Templates found!</p>
+          <a mat-list-item class="see-all-link accent-fg" (click)="add('template',groupTemplate?.groupId)">
+            Add Template
+          </a>
+        </mat-nav-list>
+      </div>
+      <div *ngIf="showTab">
+        <mat-nav-list class="articles-list mat-white-bg mat-elevation-z4" *ngIf="tabs">
+          <h3 mat-subheader>Tabs</h3>
+          <a mat-list-item *ngFor="let tab of tabs.customTabs">
+            <mat-icon class="secondary-text mr-8">note</mat-icon>
+            {{ tab.tabName }} - {{ tab.fieldsCount}}
+          </a>
+          <p *ngIf="tabs?.length === 0">No Tabs found!</p>
+          <a mat-list-item class="see-all-link accent-fg" (click)="add('tab',tabs.customEntityId)">
+            Add Tab
+          </a>
+        </mat-nav-list>
+      </div>
+    </div>
+  </div>
+</div>

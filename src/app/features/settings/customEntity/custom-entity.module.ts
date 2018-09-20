@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
-import { TreeListComponent } from './components/tree-list/tree-list.component';
 import { Routes, RouterModule } from '@angular/router';
 import { CoreSharedModule } from '@core/core.module';
-import { MatTreeModule, MatIconModule, MatListModule } from '@angular/material';
-import { SubTreeListComponent } from './components/sub-tree/sub-tree.component';
-import { TabTreeComponent } from './components/tab-tree/tab-tree.component';
+import { MatTreeModule, MatIconModule, MatListModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule } from '@angular/material';
 import { CustomentityService } from './service/customentity.service';
+import { CategoriesComponent } from './components/categories/categories.component';
+import { AddCustomDialog } from './components/categories/add.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
     path: '',
-    component: TreeListComponent,
-    resolve:{
-      groups: CustomentityService
+    component: CategoriesComponent,
+    resolve: {
+      categories: CustomentityService
     }
   },
 ];
@@ -24,8 +24,15 @@ const routes: Routes = [
     MatTreeModule,
     MatIconModule,
     MatListModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    FormsModule,
     RouterModule.forChild(routes),
   ],
-  declarations: [TreeListComponent, SubTreeListComponent, TabTreeComponent]
+  declarations: [CategoriesComponent, AddCustomDialog],
+  entryComponents: [AddCustomDialog]
 })
 export class CustomEntityModule { }
