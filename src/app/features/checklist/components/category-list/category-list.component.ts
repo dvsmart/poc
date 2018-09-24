@@ -4,6 +4,7 @@ import { Subject, Observable } from 'rxjs';
 import { CategoryListService } from './category.service';
 import { trigger, transition, query, stagger, animate, style } from '@angular/animations';
 import { fuseAnimations } from '@core/animations';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-category-list',
@@ -17,16 +18,23 @@ export class CategoryListComponent implements OnInit {
 
   private _unsubscribeAll: Subject<any>;
   categories: Observable<any[]>;
-  constructor(private route: ActivatedRoute, private _checklistservice: CategoryListService) { }
+  constructor(private route: ActivatedRoute, private _checklistservice: CategoryListService) {
+    this._unsubscribeAll = new Subject();
+   }
 
   ngOnInit() {
-    this.route.params.subscribe(x => {
-      if (x != null && x["id"] != undefined) {
-        this.title = x["id"] + ' Category';
-      }
-    });
+    // this.route.params.subscribe(x => {
+    //   if (x != null && x["id"] != undefined) {
+    //     this.title = x["id"] + ' Category';
+    //   }
+    // });
 
-    this.categories = this._checklistservice.onCategories;
+    // this.categories = this._checklistservice.onCategories;
+    this._checklistservice.onCategories
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(x => {
+        this.categories = x
+      });
   }
 
 }

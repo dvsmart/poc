@@ -3,11 +3,15 @@ import { Routes, RouterModule } from '@angular/router';
 import { TemplateListComponent } from './template-list.component';
 import { CustomMaterialModule } from '../../custom-material.module';
 import { CoreSharedModule } from '@core/core.module';
+import { TemplateListService } from './templateList.service';
 
 const routes: Routes = [
   {
     path: '',
     component: TemplateListComponent,
+    resolve:{
+      templates: TemplateListService
+    }
   }
 ];
 

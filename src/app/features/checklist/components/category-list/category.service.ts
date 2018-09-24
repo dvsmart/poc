@@ -9,7 +9,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
     providedIn: 'root'
 })
 export class CategoryListService {
-    api = environment.apiUrl;
+    api = environment.apiUrl + 'TemplateCategory';
     onCategories: BehaviorSubject<any>;
 
     constructor(private http: HttpClient) {
@@ -19,7 +19,7 @@ export class CategoryListService {
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
         return new Promise((resolve, reject) => {
             Promise.all([
-                this.getCustomEntityCategories(),
+                this.getTemplateCategories(),
             ]).then(
                 ([files]) => {
                     resolve();
@@ -29,9 +29,9 @@ export class CategoryListService {
         });
     }
 
-    getCustomEntityCategories() {
+    getTemplateCategories() {
         return new Promise((resolve, reject) => {
-            this.http.get(this.api + 'CustomEntityGroup').subscribe(x => {
+            this.http.get(this.api).subscribe(x => {
                 this.onCategories.next(x);
                 resolve(x);
             }, reject)

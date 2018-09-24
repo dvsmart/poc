@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { ChecklistService } from '../../services/checklist.service';
+import { Subject } from 'rxjs';
 import { fuseAnimations } from '@core/animations';
-import { trigger, transition, query, stagger, animate, style } from '@angular/animations';
 import { TemplateListService } from './templateList.service';
-import { TemplateList } from '../../models/custom.model';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-template-list',
@@ -14,17 +12,24 @@ import { TemplateList } from '../../models/custom.model';
   animations: fuseAnimations
 })
 export class TemplateListComponent implements OnInit {
-  templateList: Observable<TemplateList>;
-  constructor(private route: ActivatedRoute, private _checklistTemplateservice: TemplateListService) { }
+  templateList: any;
+  private _unsubscribeAll: Subject<any>;
+  constructor(private route: ActivatedRoute, private _checklistTemplateservice: TemplateListService) {
+    this._unsubscribeAll = new Subject();
+  }
 
   ngOnInit() {
-    this.route.params.subscribe(x => {
-      if (x != null && x["id"] != undefined) {
-        const id = parseInt(x["id"]);
-        this.templateList = this._checklistTemplateservice.getCustomEntityTemplates(id);
-      }
-    });
+    this._checklistTemplateservice.onTemplatesChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(x => {
+        this.templateList = x
+      });
+  }
 
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 
 }

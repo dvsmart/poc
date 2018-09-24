@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/observable/throw'
 import 'rxjs/add/operator/catch';
@@ -18,8 +18,11 @@ export class JwtInterceptor implements HttpInterceptor {
         }
         return next.handle(request)
             .catch((error, caught) => {
-                console.log("Error Occurred");
-                console.log(error);
+                if (error instanceof HttpErrorResponse) {
+                    if (error.status === 401) {
+                        //this.router.navigate(['account/login'], { queryParams: { returnUrl: this.state.url } });
+                    }
+                }
                 return Observable.throw(error);
             }) as any;
     }

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ChecklistService } from './services/checklist.service';
 import { Routes, RouterModule } from '@angular/router';
-import { ChecklistComponent } from './checklist.component';
 import { CoreSharedModule } from '@core/core.module';
 import { CustomControlsModule } from '@core/components/custom-controls/custom-controls.module';
 import { DynamicFormComponent } from '@core/components/custom-controls/components/custom-form/custom-form.component';
@@ -15,7 +14,7 @@ import { CustomMaterialModule } from './custom-material.module';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'checklist',
     redirectTo:'categories'
   },
   {
@@ -40,7 +39,6 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   providers: [ChecklistService],
-  declarations: [ChecklistComponent],
   entryComponents:[
     DynamicFormComponent,
     InputComponent,
