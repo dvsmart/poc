@@ -21,6 +21,9 @@ export class CategoriesComponent implements OnInit {
 
   showTemplate: boolean = false;
   showTab: boolean = false;
+  showFieldsManagement: boolean = false;
+  showFields: boolean = false;
+  selectedTabId:number;
 
   constructor(private ceAdminService: CustomentityService, public dialog: MatDialog) {
     this._unsubscribeAll = new Subject();
@@ -56,12 +59,18 @@ export class CategoriesComponent implements OnInit {
   getTemplate(id) {
     this.showTab = false;
     this.showTemplate = true;
-    this.ceAdminService.getCustomTemplates(id);
+    this.ceAdminService.getTemplates(id);
   }
 
   getTabs(id) {
     this.showTab = true;
     this.ceAdminService.getCustomTabs(id);
+  }
+
+  manageFields(id){
+    this.showFieldsManagement = true;
+    this.showFields = true;
+    this.selectedTabId = id;
   }
 
   add(type, id?: number): void {
@@ -81,7 +90,7 @@ export class CategoriesComponent implements OnInit {
         }
         if (type === 'tab') {
           let tabRequest = new CreateCustomTabRequest(result,id);
-          this.ceAdminService.addCustomTab(tabRequest);
+          this.ceAdminService.addTemplateTab(tabRequest);
         }
       }
     });

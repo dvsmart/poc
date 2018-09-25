@@ -11,7 +11,7 @@ import { AssessmentService } from './assessment-form/assessment.service';
 
 const assessmentRoutes: Routes = [
   {
-    path: 'assessment',
+    path: '',
     component: AssessmentListComponent,
     resolve: {
       assessments: AssessmentsService

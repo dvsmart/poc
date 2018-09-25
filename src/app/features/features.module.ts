@@ -29,7 +29,7 @@ const routes: Routes = [
         loadChildren: './asset/asset.module#AssetModule'
       },
       {
-        path: '',
+        path: 'assessment',
         loadChildren: './assessment/assessment.module#AssessmentModule'
       },
       {

@@ -18,9 +18,7 @@ export class AuthService {
     return this.http.post<any>(this.api, loginform).pipe(map(user => {
       if (user && user.token) {
         localStorage.setItem('currentUser', JSON.stringify(user));
-        const time_to_login = new Date().getHours() + new Date().setHours(6);
-        console.log(time_to_login);
-        localStorage.setItem('timer', JSON.stringify(time_to_login));
+        sessionStorage.setItem('token',user.token);
         this._isLoggedIn.next(true);
       }
     }));

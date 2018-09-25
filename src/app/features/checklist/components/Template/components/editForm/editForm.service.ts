@@ -39,14 +39,14 @@ export class EditFormService {
     getRecord(): Promise<any> {
         return new Promise((resolve, reject) => {
             if (this.routeParams.id === 'new') {
-                this._httpClient.get<any>(environment.apiUrl + 'TemplateDefinition/' + this.templateId.getValue()).subscribe(response => {
+                this._httpClient.get<any>(environment.apiUrl + 'Template/' + this.templateId.getValue()).subscribe(response => {
                     this.record = response;
                     this.onRecordChanged.next(this.record);
                     resolve(false);
                 }, reject);
             }
             else {
-                this._httpClient.get<CustomEntityRecord>(environment.apiUrl + 'CustomEntityInstance/' + this.routeParams.id)
+                this._httpClient.get<CustomEntityRecord>(environment.apiUrl + 'TemplateFormRecord/' + this.routeParams.id)
                     .subscribe((response: CustomEntityRecord) => {
                         this.record = response;
                         this.onRecordChanged.next(this.record);

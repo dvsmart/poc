@@ -8,6 +8,13 @@ import { DatePipe } from '@angular/common';
 import { EditFormComponent } from './components/editForm/edit-Form.component';
 import { ListService } from './components/list/list.service';
 import { EditFormService } from './components/editForm/editForm.service';
+import { DynamicFormComponent } from '@core/components/custom-controls/components/custom-form/custom-form.component';
+import { InputComponent } from '@core/components/custom-controls/components/textbox/textbox.component';
+import { RadiobuttonComponent } from '@core/components/custom-controls/components/radio/radio.component';
+import { TextAreaComponent } from '@core/components/custom-controls/components/textarea/textarea.component';
+import { SelectComponent } from '@core/components/custom-controls/components/select/select.component';
+import { DateComponent } from '@core/components/custom-controls/components/calender/calender.component';
+import { CheckboxComponent } from '@core/components/custom-controls/components/checkbox/checkbox.component';
 
 const routes: Routes = [
     {
@@ -35,5 +42,14 @@ const routes: Routes = [
     ],
     providers: [DatePipe],
     declarations: [ListComponent, EditFormComponent],
+    entryComponents:[
+        DynamicFormComponent,
+        InputComponent,
+        RadiobuttonComponent,
+        TextAreaComponent,
+        SelectComponent,
+        DateComponent,
+        CheckboxComponent
+      ]
 })
 export class TemplateModule { }

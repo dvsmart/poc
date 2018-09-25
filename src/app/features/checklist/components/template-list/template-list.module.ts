@@ -7,7 +7,7 @@ import { TemplateListService } from './templateList.service';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'cat/:id',
     component: TemplateListComponent,
     resolve:{
       templates: TemplateListService

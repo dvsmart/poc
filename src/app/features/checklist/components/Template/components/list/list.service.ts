@@ -35,7 +35,7 @@ export class ListService {
         return new Promise((resolve, reject) => {
             page = page === undefined ? 1 : page;
             size = size === undefined ? 10 : size;
-            this._httpClient.get<PagedResult>(environment.apiUrl + 'CustomEntityInstance?templateId=' + this.routeParams.id + '&page=' + page + '&pageSize=' + size)
+            this._httpClient.get<PagedResult>(environment.apiUrl + 'TemplateFormRecord?templateId=' + this.routeParams.id + '&page=' + page + '&pageSize=' + size)
                 .subscribe((response: PagedResult) => {
                     this.recordsResult = response;
                     this.customEntityValues = response.data;
@@ -47,6 +47,6 @@ export class ListService {
     }
 
     getTemplateInformation(id) {
-        return this._httpClient.get<CustomTemplate>(environment.apiUrl + 'TemplateDefinition/' + id);
+        return this._httpClient.get<CustomTemplate>(environment.apiUrl + 'Template/' + id);
     }
 }

@@ -23,13 +23,6 @@ export class CategoryListComponent implements OnInit {
    }
 
   ngOnInit() {
-    // this.route.params.subscribe(x => {
-    //   if (x != null && x["id"] != undefined) {
-    //     this.title = x["id"] + ' Category';
-    //   }
-    // });
-
-    // this.categories = this._checklistservice.onCategories;
     this._checklistservice.onCategories
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(x => {

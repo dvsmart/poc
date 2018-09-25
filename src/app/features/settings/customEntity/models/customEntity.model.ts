@@ -4,6 +4,7 @@ export class CustomTabModel {
 }
 
 export class CustomFieldModel {
+    id:number;
     customTabId: number;
     fieldName: string;
     fieldtypeId: number;
@@ -79,6 +80,8 @@ export interface CustomTab {
 
 export interface CustomTabResponse {
     customEntityId: number;
+    templateName:string;
+    groupName: string;
     customTabs: CustomTab[];
 }
 
@@ -94,4 +97,25 @@ export class CreateCustomTabRequest {
         this.caption = caption;
         this.customEntityId = customEntityId;
     }
+}
+
+
+export interface TemplateTabField {
+    label?: any;
+    name: string;
+    type: string;
+    value?: any;
+    tabId: number;
+    sortOrder?: any;
+    isMandatory: boolean;
+    isVisible: boolean;
+    id: number;
+}
+
+export class TemplateTab {
+    tabId: number;
+    tabCaption: string;
+    sortOrder?: any;
+    isVisible: boolean;
+    customFields: TemplateTabField[];
 }
