@@ -12,7 +12,7 @@
         .example-card {
             width: 365px;
             min-width: 300px;
-            margin-right: 25px;
+            margin-right: 15px;
             @include media-breakpoint-down('xs') {
                 width: 330px;
                 margin: 16px 0;
@@ -24,6 +24,40 @@
                     text-decoration: none !important;
                 }
             }
+        }
+    }
+}
+
+:host {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    height: 100%;
+    .sidebar-content {
+        display: flex;
+        flex-direction: column;
+        padding: 0; // @include media-breakpoint(gt-sm) {
+        //     padding: 24px 4px 24px 24px;
+        // }
+        .card {
+            display: flex;
+            flex-direction: column;
+            flex: 0 1 auto;
+            padding: 0;
+            @include media-breakpoint(gt-sm) {
+                @include mat-elevation(4);
+            }
+            >.header {
+                padding-top: 18px;
+                padding-left: 16px;
+            }
+            >.content {
+                flex: 0 1 auto;
+            }
+        }
+        .mat-card-actions-align-end {
+            display: flex;
+            justify-content: center;
         }
     }
 }

@@ -43,7 +43,7 @@
         </mat-card>
       </div>
       <div *ngIf="showTab" [@slideInLeft]>
-        <mat-card class="example-card mat-white-bg mat-elevation-z4" *ngIf="tabs">
+        <!-- <mat-card class="example-card mat-white-bg mat-elevation-z4" *ngIf="tabs">
           <mat-card-header>
             <mat-card-title>Tabs</mat-card-title>
             <mat-card-subtitle>{{tabs.templateName}}</mat-card-subtitle>
@@ -66,7 +66,34 @@
             <button mat-raised-button color="accent" *ngIf="showFieldsManagement" (click)="showFieldsManagement = false">Back</button>
             <button mat-raised-button color="accent" (click)="add('tab',tabs.id)">Add New</button>
           </mat-card-actions>
-        </mat-card>
+        </mat-card> -->
+        <div class="sidebar-content" *ngIf="tabs">
+          <div class="card example-card mat-white-bg">
+            <!-- <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">
+              <mat-card-header>
+                <mat-card-title>Tabs</mat-card-title>
+                <mat-card-subtitle>{{tabs.templateName}}</mat-card-subtitle>
+              </mat-card-header>
+            </div> -->
+            <mat-card-header  class="header">
+                <mat-card-title>Tabs</mat-card-title>
+                <mat-card-subtitle>{{tabs.templateName}}</mat-card-subtitle>
+              </mat-card-header>
+            <div class="content" fusePerfectScrollbar>
+              <div class="nav">
+                <div class="nav-item" *ngFor="let tab of tabs.customTabs">
+                  <a class="nav-link" matRipple (click)="manageFields(tab.tabId)" [ngClass]="{'active mat-accent-bg':selectedTabId === tab.tabId && showFieldsManagement}">
+                    <span class="title">{{ tab.caption }} - {{ tab.customFields.length}}</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <mat-card-actions align="end">
+              <button mat-raised-button color="accent" *ngIf="showFieldsManagement" (click)="showFieldsManagement = false">Back</button>
+              <button mat-raised-button color="accent" (click)="add('tab',tabs.id)">Add New</button>
+            </mat-card-actions>
+          </div>
+        </div>
       </div>
       <div *ngIf="showFields && showFieldsManagement" [@slideInRight] style="width:100%;flex-direction: column;">
         <mat-card class="mat-white-bg mat-elevation-z4">
