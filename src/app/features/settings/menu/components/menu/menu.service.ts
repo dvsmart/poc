@@ -86,7 +86,7 @@ export class MenuService {
     return new Promise((resolve, reject) => {
       this._httpClient.put(environment.apiUrl + 'Menu', { ...menuItem })
         .subscribe((response: any) => {
-          this.menuItem.next(response);
+          this.onMenuItemChanged.next(response);
           resolve(response);
         }, reject);
     });
@@ -97,7 +97,7 @@ export class MenuService {
     return new Promise((resolve, reject) => {
       this._httpClient.post(environment.apiUrl + 'Menu', { ...menuItem })
         .subscribe((response: any) => {
-          this.menuItem.next(response);
+          this.onMenuItemChanged.next(response);
           resolve(response);
         }, reject);
     });
