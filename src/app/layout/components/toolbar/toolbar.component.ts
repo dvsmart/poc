@@ -52,6 +52,10 @@ export class ToolbarComponent implements OnInit {
     this.router.navigate(['users']);
   }
 
+  menu(){
+    this.router.navigate(['settings/menuManagement']);
+  }
+
   ngOnInit() {
     this._fuseConfigService.config
       .pipe(takeUntil(this._unsubscribeAll))
