@@ -47,7 +47,6 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this._cevrecordsservice.onTemplatechanged
       .pipe(takeUntil(this._unsubscribeAll)).subscribe(x => {
-        debugger;
         this.groupName = x.groupName;
         this.templateName = x.templateName;
         this._recordService.templateId.next(x.id);

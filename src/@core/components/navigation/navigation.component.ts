@@ -26,19 +26,11 @@ export class CoreNavigationComponent {
     }
 
     ngOnInit(): void {
-        this._fuseNavigationService.getMenu()
-            .subscribe(x => {
-                this.navigation = x;
-            })
-
         this._fuseNavigationService.onMenuItemsChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(hasUpdated => {
-                if(hasUpdated){
-                    this._fuseNavigationService.getMenu()
-                    .subscribe(x => {
-                        this.navigation = x;
-                    });
+            .subscribe(menuItems => {
+                if (menuItems) {
+                    this.navigation = menuItems;
                 }
             })
     }

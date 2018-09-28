@@ -33,12 +33,9 @@ export class CoreNavigationService {
         this._onNavigationRegistered = new BehaviorSubject(null);
         this._onNavigationUnregistered = new BehaviorSubject(null);
         this.onMenuItemsChanged = new BehaviorSubject({});
+        this.getMenuItems();
     }
-
-    getMenu(): Observable<any> {
-        return this.http.get<any>(environment.apiUrl + 'Menu');
-    }
-
+   
     getMenuItems(): Promise<any> {
         return new Promise((resolve, reject) => {
             this.http.get<any>(environment.apiUrl + 'Menu')

@@ -81,11 +81,9 @@ export class MenuComponent implements OnInit {
 
 
   addMenu() {
-    debugger;
     const data = this.menuForm.getRawValue();
     this._menuservice.addMenu(data)
       .then(x => {
-        debugger;
         if (x != null) {
           this._menuservice.onMenuItemChanged.next(x);
           this._matSnackBar.open('Menu added', 'OK', {
@@ -101,7 +99,6 @@ export class MenuComponent implements OnInit {
     const data = this.menuForm.getRawValue();
     this._menuservice.updateMenu(data)
       .then(x => {
-        debugger;
         if (x != null) {
           this._menuservice.onMenuItemChanged.next(x);
           this._matSnackBar.open('Menu Updated', 'OK', {
