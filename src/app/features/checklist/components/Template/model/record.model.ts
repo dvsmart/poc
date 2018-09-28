@@ -9,6 +9,13 @@ export class CustomTemplate {
     groupName: string;
     templateName: string;
     id: number;
+
+    constructor(data?) {
+        data = data || {},
+        this.id = data.id;
+        this.groupName = data.groupName;
+        this.templateName = data.templateName;
+    }
 }
 
 export class SaveResponse {

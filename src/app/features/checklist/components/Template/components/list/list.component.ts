@@ -45,15 +45,14 @@ export class ListComponent implements OnInit {
     this._unsubscribeAll = new Subject();
   }
   ngOnInit() {
-    this.route.params.subscribe(x => {
-      if (x != null && x["id"] != undefined) {
-        this._cevrecordsservice.getTemplateInformation(parseInt(x["id"])).subscribe(x => {
-          this.groupName = x.groupName;
-          this.templateName = x.templateName;
-          this._recordService.templateId.next(x.id);
-        });
-      }
-    });
+    this._cevrecordsservice.onTemplatechanged
+      .pipe(takeUntil(this._unsubscribeAll)).subscribe(x => {
+        debugger;
+        this.groupName = x.groupName;
+        this.templateName = x.templateName;
+        this._recordService.templateId.next(x.id);
+      })
+
 
     this.dataSource = new FilesDataSource(this._cevrecordsservice, this.paginator, this.sort);
     fromEvent(this.filter.nativeElement, 'keyup')

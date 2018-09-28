@@ -14,14 +14,18 @@ export class ListService {
     recordsResult: PagedResult;
     customEntityValues: any[];
     onRecordsChanged: BehaviorSubject<any>;
+
+    onTemplatechanged: BehaviorSubject<CustomTemplate>;
     constructor(private _httpClient: HttpClient) {
         this.onRecordsChanged = new BehaviorSubject({});
+        this.onTemplatechanged = new BehaviorSubject(null);
     }
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
         this.routeParams = route.params;
         return new Promise((resolve, reject) => {
             Promise.all([
-                this.getRecords(1, 10)
+                this.getRecords(1, 10),
+                this.getTemplateInformation()
             ]).then(
                 () => {
                     resolve();
@@ -46,7 +50,15 @@ export class ListService {
         );
     }
 
-    getTemplateInformation(id) {
-        return this._httpClient.get<CustomTemplate>(environment.apiUrl + 'Template/' + id);
+    getTemplateInformation(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this._httpClient.get<any>(environment.apiUrl + 'Template/' + this.routeParams.id)
+                .subscribe((response: any) => {
+                    let template = new CustomTemplate(response);
+                    this.onTemplatechanged.next(template);
+                    resolve(template);
+                }, reject);
+        }
+        );
     }
 }
