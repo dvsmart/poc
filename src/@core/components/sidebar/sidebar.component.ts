@@ -14,7 +14,7 @@ import { FuseConfigService } from '../../services/config.service';
     styleUrls    : ['./sidebar.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class FuseSidebarComponent implements OnInit, OnDestroy
+export class SidebarComponent implements OnInit, OnDestroy
 {
     // Name
     @Input()
@@ -76,18 +76,6 @@ export class FuseSidebarComponent implements OnInit, OnDestroy
     @HostBinding('class.animations-enabled')
     private _animationsEnabled: boolean;
 
-    /**
-     * Constructor
-     *
-     * @param {AnimationBuilder} _animationBuilder
-     * @param {ChangeDetectorRef} _changeDetectorRef
-     * @param {ElementRef} _elementRef
-     * @param {FuseConfigService} _fuseConfigService
-     * @param {FuseMatchMediaService} _fuseMatchMediaService
-     * @param {FuseSidebarService} _fuseSidebarService
-     * @param {ObservableMedia} _observableMedia
-     * @param {Renderer2} _renderer
-     */
     constructor(
         private _animationBuilder: AnimationBuilder,
         private _changeDetectorRef: ChangeDetectorRef,

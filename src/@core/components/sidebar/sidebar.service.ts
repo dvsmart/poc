@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { FuseSidebarComponent } from './sidebar.component';
+import { SidebarComponent } from './sidebar.component';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '@env/environment';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -8,14 +11,26 @@ import { FuseSidebarComponent } from './sidebar.component';
 export class FuseSidebarService
 {
     // Private
-    private _registry: { [key: string]: FuseSidebarComponent } = {};
-
+    private _registry: { [key: string]: SidebarComponent } = {};
+    
+    onMenuItemsChanged:BehaviorSubject<any>;
     /**
      * Constructor
      */
-    constructor()
+    constructor(private http:HttpClient)
     {
+        this.onMenuItemsChanged = new BehaviorSubject({});
+    }
 
+    getMenuItems(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.http.get<any>(environment.apiUrl + 'Menu')
+                .subscribe(response => {
+                    this.onMenuItemsChanged.next(response);
+                    resolve(response);
+                }, reject);
+        }
+        );
     }
 
     /**
@@ -61,7 +76,7 @@ export class FuseSidebarService
      * @param key
      * @returns {FuseSidebarComponent}
      */
-    getSidebar(key): FuseSidebarComponent
+    getSidebar(key): SidebarComponent
     {
         // Check if the sidebar exists
         if ( !this._registry[key] )

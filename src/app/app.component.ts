@@ -42,9 +42,9 @@ export class AppComponent {
     // }
   }
 
-  toggleSidebarOpen(key): void {
-    this._fuseSidebarService.getSidebar(key).toggleOpen();
-  }
+  // toggleSidebarOpen(key): void {
+  //   this._fuseSidebarService.getSidebar(key).toggleOpen();
+  // }
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions

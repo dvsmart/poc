@@ -1,4 +1,4 @@
-<div class="nav" [ngClass]="{'horizontal':layout === 'horizontal', 'vertical':layout === 'vertical'}">
+<div class="nav" [ngClass]="{'horizontal':layout === 'horizontal', 'vertical':layout === 'vertical'}" *ngIf="navigation">
     <ng-container *ngIf="layout === 'vertical'">
         <ng-container *ngFor="let item of navigation">
             <fuse-nav-vertical-group *ngIf="item.type=='group'" [item]="item"></fuse-nav-vertical-group>

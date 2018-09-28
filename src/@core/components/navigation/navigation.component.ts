@@ -5,6 +5,7 @@ import { CoreNavigationService } from './navigation.service';
 import { Subject } from '../../../../node_modules/rxjs';
 import { AuthService } from 'app/login/auth.service';
 import { takeUntil } from 'rxjs/operators';
+import { FuseSidebarService } from '../sidebar/sidebar.service';
 
 @Component({
     selector: 'core-navigation',
@@ -21,12 +22,12 @@ export class CoreNavigationComponent {
     navigation: any;
 
     private _unsubscribeAll: Subject<any>;
-    constructor(private _fuseNavigationService: CoreNavigationService) {
+    constructor(private _navigationService: FuseSidebarService) {
         this._unsubscribeAll = new Subject();
     }
 
     ngOnInit(): void {
-        this._fuseNavigationService.onMenuItemsChanged
+        this._navigationService.onMenuItemsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(menuItems => {
                 if (menuItems) {
