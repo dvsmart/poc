@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { environment } from '@env/environment';
 import { MenuItemModel, MenuItem } from '../../model/menu.model';
+import { CoreNavigationService } from '@core/components/navigation/navigation.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class MenuService {
   parentMenuItems: MenuItem[];
 
   constructor(
-    private _httpClient: HttpClient
+    private _httpClient: HttpClient,
+    private _navigationService: CoreNavigationService
   ) {
     this.onMenuItemChanged = new BehaviorSubject({});
     this.menuGroupChanged = new BehaviorSubject({});
@@ -70,8 +72,9 @@ export class MenuService {
 
   getParentMenuItems(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'Menu')
+      this._httpClient.get<any>(environment.apiUrl + 'MenuItem')
         .subscribe(response => {
+          response = response.filter(x=> x.hasChildren === true && x.type === 'collapsable');
           this.parentMenuItems = response.map(item => {
             return new MenuItem(item);
           });
@@ -87,19 +90,24 @@ export class MenuService {
       this._httpClient.put(environment.apiUrl + 'Menu', { ...menuItem })
         .subscribe((response: any) => {
           this.onMenuItemChanged.next(response);
+          this.refreshSideBarMenu();
           resolve(response);
         }, reject);
     });
   }
 
   addMenu(menuItem: MenuItemModel): Promise<any> {
-    debugger;
     return new Promise((resolve, reject) => {
       this._httpClient.post(environment.apiUrl + 'Menu', { ...menuItem })
         .subscribe((response: any) => {
           this.onMenuItemChanged.next(response);
+          this.refreshSideBarMenu();
           resolve(response);
         }, reject);
     });
+  }
+
+  refreshSideBarMenu(){
+    this._navigationService.onMenuItemsChanged.next(true);
   }
 }

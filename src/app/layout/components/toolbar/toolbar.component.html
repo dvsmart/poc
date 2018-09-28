@@ -24,9 +24,11 @@
         </div>
 
         <div class="" fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start center">
-            <button mat-button (click)="users()">Users</button>
-            <button mat-button (click)="settings()">Settings</button>
-            <button mat-button (click)="menu()">Menu</button>
+            <button mat-button [matMenuTriggerFor]="settingsMenu" class="user-button">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-icon class="icon">settings</mat-icon>
+                    </div>
+                </button>
             <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
                 <div fxLayout="row" fxLayoutAlign="center center">
                     <img class="avatar mr-0 mr-sm-16" src="../../../../assets/images/avatars/Velazquez.jpg">
@@ -34,6 +36,23 @@
                     <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon>
                 </div>
             </button>
+            <mat-menu #settingsMenu="matMenu" [overlapTrigger]="false">
+                    <button mat-menu-item (click)="users()">
+                        <mat-icon>account_circle</mat-icon>
+                        <span>Users Management</span>
+                    </button>
+    
+                    <button mat-menu-item class="" (click)="settings()">
+                        <mat-icon>mail</mat-icon>
+                        <span>Custom Forms</span>
+                    </button>
+    
+                    <button mat-menu-item class="" (click)="menu()">
+                        <mat-icon>exit_to_app</mat-icon>
+                        <span>Menu Management</span>
+                    </button>
+    
+                </mat-menu>
 
             <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
 
