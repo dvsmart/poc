@@ -5,6 +5,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { environment } from '@env/environment';
 import { MenuItemModel, MenuItem } from '../../model/menu.model';
 import { CoreNavigationService } from '@core/components/navigation/navigation.service';
+import { FuseSidebarService } from '@core/components/sidebar/sidebar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class MenuService {
 
   constructor(
     private _httpClient: HttpClient,
-    private _navigationService: CoreNavigationService
+    private _navigationService: FuseSidebarService
   ) {
     this.onMenuItemChanged = new BehaviorSubject({});
     this.menuGroupChanged = new BehaviorSubject({});
@@ -108,6 +109,6 @@ export class MenuService {
   }
 
   refreshSideBarMenu(){
-    this._navigationService.onMenuItemsChanged.next(true);
+    this._navigationService.getMenuItems();
   }
 }
