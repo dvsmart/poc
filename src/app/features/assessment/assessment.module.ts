@@ -18,7 +18,7 @@ const assessmentRoutes: Routes = [
     }
   },
   {
-    path: 'assessment/:id',
+    path: ':id',
     component: AssessmentFormComponent,
     resolve: {
       assessment: AssessmentService
