@@ -91,7 +91,6 @@ export class MenuService {
       this._httpClient.put(environment.apiUrl + 'Menu', { ...menuItem })
         .subscribe((response: any) => {
           this.onMenuItemChanged.next(response);
-          this.refreshSideBarMenu();
           resolve(response);
         }, reject);
     });
@@ -102,13 +101,9 @@ export class MenuService {
       this._httpClient.post(environment.apiUrl + 'Menu', { ...menuItem })
         .subscribe((response: any) => {
           this.onMenuItemChanged.next(response);
-          this.refreshSideBarMenu();
           resolve(response);
         }, reject);
     });
   }
-
-  refreshSideBarMenu(){
-    this._navigationService.getMenuItems();
-  }
+ 
 }

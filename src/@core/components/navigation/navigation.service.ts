@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { HttpClient } from '../../../../node_modules/@angular/common/http';
+import { environment } from '@env/environment';
 
 
 @Injectable({
@@ -18,7 +19,7 @@ export class CoreNavigationService {
 
     private _currentNavigationKey: string;
     private _registry: { [key: string]: any } = {};
-
+    onMenuItemsChanged: BehaviorSubject<any>;
     /**
      * Constructor
      */
@@ -32,19 +33,22 @@ export class CoreNavigationService {
         this._onNavigationChanged = new BehaviorSubject(null);
         this._onNavigationRegistered = new BehaviorSubject(null);
         this._onNavigationUnregistered = new BehaviorSubject(null);
+        this.onMenuItemsChanged = new BehaviorSubject(null);
     }
-   
-    
+
+    getMenuItems() {
+        this.http.get<any>(environment.apiUrl + 'Menu')
+            .subscribe(response => {
+                this.onMenuItemsChanged.next(response);
+            });
+    }
 
     register(key, navigation): void {
         if (this._registry[key]) {
             console.error(`The navigation with the key '${key}' already exists. Either unregister it first or use a unique key.`);
-
             return;
         }
-
         this._registry[key] = navigation;
-
         // Notify the subject
         this._onNavigationRegistered.next([key, navigation]);
     }

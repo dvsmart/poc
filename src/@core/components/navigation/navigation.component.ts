@@ -1,11 +1,10 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 import { fuseAnimations } from '../../animations';
-import { CoreNavigationService } from './navigation.service';
 import { Subject } from '../../../../node_modules/rxjs';
-import { AuthService } from 'app/login/auth.service';
 import { takeUntil } from 'rxjs/operators';
 import { FuseSidebarService } from '../sidebar/sidebar.service';
+import { CoreNavigationService } from './navigation.service';
 
 @Component({
     selector: 'core-navigation',
@@ -22,8 +21,10 @@ export class CoreNavigationComponent {
     navigation: any;
 
     private _unsubscribeAll: Subject<any>;
-    constructor(private _navigationService: FuseSidebarService) {
+    
+    constructor(private _navigationService: CoreNavigationService) {
         this._unsubscribeAll = new Subject();
+        this._navigationService.getMenuItems();
     }
 
     ngOnInit(): void {
@@ -34,5 +35,11 @@ export class CoreNavigationComponent {
                     this.navigation = menuItems;
                 }
             })
+    }
+
+    ngOnDestroy(): void
+    {
+        this._unsubscribeAll.next();
+        this._unsubscribeAll.complete();
     }
 }

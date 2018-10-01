@@ -82,7 +82,7 @@ export class SidebarComponent implements OnInit, OnDestroy
         private _elementRef: ElementRef,
         private _fuseConfigService: FuseConfigService,
         private _fuseMatchMediaService: FuseMatchMediaService,
-        private _fuseSidebarService: FuseSidebarService,
+        private _coreSidebarService: FuseSidebarService,
         private _observableMedia: ObservableMedia,
         private _renderer: Renderer2
     )
@@ -205,7 +205,7 @@ export class SidebarComponent implements OnInit, OnDestroy
             });
 
         // Register the sidebar
-        this._fuseSidebarService.register(this.name, this);
+        this._coreSidebarService.register(this.name, this);
 
         // Setup visibility
         this._setupVisibility();
@@ -232,7 +232,7 @@ export class SidebarComponent implements OnInit, OnDestroy
         }
 
         // Unregister the sidebar
-        this._fuseSidebarService.unregister(this.name);
+        this._coreSidebarService.unregister(this.name);
 
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();

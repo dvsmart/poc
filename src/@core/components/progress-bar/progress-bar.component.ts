@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { FuseProgressBarService } from './progress-bar.service';
+import { CoreProgressBarService } from './progress-bar.service';
 
 @Component({
     selector     : 'fuse-progress-bar',
@@ -10,7 +10,7 @@ import { FuseProgressBarService } from './progress-bar.service';
     styleUrls    : ['./progress-bar.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class FuseProgressBarComponent implements OnInit, OnDestroy
+export class CoreProgressBarComponent implements OnInit, OnDestroy
 {
     bufferValue: number;
     mode: 'determinate' | 'indeterminate' | 'buffer' | 'query';
@@ -20,13 +20,8 @@ export class FuseProgressBarComponent implements OnInit, OnDestroy
     // Private
     private _unsubscribeAll: Subject<any>;
 
-    /**
-     * Constructor
-     *
-     * @param {FuseProgressBarService} _fuseProgressBarService
-     */
     constructor(
-        private _fuseProgressBarService: FuseProgressBarService
+        private _coreProgressBarService: CoreProgressBarService
     )
     {
         // Set the defaults
@@ -47,28 +42,28 @@ export class FuseProgressBarComponent implements OnInit, OnDestroy
         // Subscribe to the progress bar service properties
 
         // Buffer value
-        this._fuseProgressBarService.bufferValue
+        this._coreProgressBarService.bufferValue
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((bufferValue) => {
                 this.bufferValue = bufferValue;
             });
 
         // Mode
-        this._fuseProgressBarService.mode
+        this._coreProgressBarService.mode
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((mode) => {
                 this.mode = mode;
             });
 
         // Value
-        this._fuseProgressBarService.value
+        this._coreProgressBarService.value
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((value) => {
                 this.value = value;
             });
 
         // Visible
-        this._fuseProgressBarService.visible
+        this._coreProgressBarService.visible
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((visible) => {
                 this.visible = visible;

@@ -17,11 +17,10 @@ export class AppLayoutComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
   @ViewChild('messagecontainer', { read: ViewContainerRef }) entry: ViewContainerRef;
 
-  constructor(private _fuseConfigService: FuseConfigService,private menuservice: FuseSidebarService,
+  constructor(private _fuseConfigService: FuseConfigService,
     private toaster: MessageService,
     private resolver: ComponentFactoryResolver) {
     this._unsubscribeAll = new Subject();
-    this.menuservice.getMenuItems();
   }
 
   createComponent(message) {

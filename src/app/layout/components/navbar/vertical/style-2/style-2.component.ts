@@ -32,7 +32,6 @@ export class NavbarVerticalStyle2Component implements OnInit, OnDestroy
         private _router: Router
     )
     {
-        // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
 
