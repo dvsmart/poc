@@ -15,6 +15,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { FeaturesModule } from './features/features.module';
 import { MaintenanceComponent } from './pages/maintenance/maintenance.component';
 import { Error500Component } from './pages/errors/error500/error500.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { Error500Component } from './pages/errors/error500/error500.component';
     FeaturesModule,
     LayoutModule,
     CoreSharedModule.forRoot(fuseConfig),
-    AppRoutingModule
+    AppRoutingModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: true })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

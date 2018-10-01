@@ -23,11 +23,13 @@
       <div id="login-form">
 
           <div class="logo" fxHide.gt-xs>
-              <span>F</span>
+              <span>SR</span>
           </div>
 
           <div class="title">LOGIN TO YOUR ACCOUNT</div>
-          {{error}}
+          <div fxLayout="column" fxLayoutAlign="start center" *ngIf="error && loginForm.valid">
+                <span class="text error-message">{{error}}</span>
+          </div>
           <form name="loginForm" [formGroup]="loginForm" novalidate (ngSubmit)="onLogin()">
 
               <mat-form-field>
@@ -64,7 +66,7 @@
                       [disabled]="loginForm.invalid">
                   LOGIN
               </button>
-
+              
           </form>
 
           <div class="separator">
@@ -76,11 +78,6 @@
               <button mat-raised-button class="google">
                   Log in with Google
               </button>
-
-              <button mat-raised-button class="facebook">
-                  Log in with Facebook
-              </button>
-
           </div>
 
           <div class="register" fxLayout="column" fxLayoutAlign="center center">
