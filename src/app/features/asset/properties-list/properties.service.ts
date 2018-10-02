@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { PagedResult } from '../../checklist/models/custom.model';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { environment } from '@env/environment';
+import { DataSourceRequest } from '@core/types/datasourceRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -31,10 +32,9 @@ export class PropertiesService {
 
   getProperties(page?: number, size?: number): Promise<any> {
     return new Promise((resolve, reject) => {
-      page = page === undefined ? 1 : page;
-      size = size === undefined ? 10 : size;
       this._httpClient.get<PagedResult>(environment.apiUrl + 'AssetProperties?page=' + page + '&pageSize=' + size)
         .subscribe((response: PagedResult) => {
+          debugger;
           this.propertiesResult = response;
           this.properties = response.data;
           this.onPropertiesChanged.next(this.propertiesResult);

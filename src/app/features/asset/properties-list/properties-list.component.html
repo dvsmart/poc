@@ -23,7 +23,7 @@
             </button>
         </div>
         <div class="content-card mat-white-bg">
-            <mat-table class="properties-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}">
+            <mat-table class="properties-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'10'}">
                 <!-- Checkbox Column -->
                 <ng-container matColumnDef="checkbox">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
@@ -108,7 +108,7 @@
                     matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                 </mat-row>
             </mat-table>
-            <mat-paginator #paginator  [length]="dataSource.paginatedData" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+            <mat-paginator #paginator  [length]="resultsLength" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
             </mat-paginator>
 
         </div>

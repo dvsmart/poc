@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { environment } from '@env/environment';
 import { PagedResult } from '../../../checklist/models/custom.model';
 import { User } from '../../model/user.model';
+import { DataSourceRequest } from '@core/types/datasourceRequest';
 
 @Injectable({
   providedIn: 'root'

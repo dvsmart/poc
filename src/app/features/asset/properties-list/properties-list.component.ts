@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 import { DataSource } from '@angular/cdk/table';
 import { Observable, Subject, fromEvent, BehaviorSubject, merge } from 'rxjs';
-import { MatPaginator, MatSort } from '@angular/material';
-import { takeUntil, debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { takeUntil, debounceTime, distinctUntilChanged, switchMap, map, tap } from 'rxjs/operators';
 import { fuseAnimations } from '@core/animations';
 import { PropertiesService } from './properties.service';
 import { FuseUtils } from '@core/utils';
@@ -14,7 +14,7 @@ import { FuseUtils } from '@core/utils';
   animations: fuseAnimations
 })
 export class PropertiesListComponent implements OnInit {
-  dataSource: FilesDataSource | null;
+  dataSource: MatTableDataSource<any> | null;
   displayedColumns = ['checkbox','dataId', 'propertyReference', 'addressLine1', 'addressLine2', 'postCode', 'city', 'portfolioName', 'buttons'];
 
   @ViewChild(MatPaginator)
@@ -29,13 +29,40 @@ export class PropertiesListComponent implements OnInit {
   // Private
   private _unsubscribeAll: Subject<any>;
 
+  resultsLength: number;
+
   constructor(
     private _propertiesservice: PropertiesService
   ) {
     this._unsubscribeAll = new Subject();
   }
+  //ngOnInit() {
+  //   this.dataSource = new FilesDataSource(this._propertiesservice, this.paginator, this.sort);
+  //   fromEvent(this.filter.nativeElement, 'keyup')
+  //     .pipe(
+  //       takeUntil(this._unsubscribeAll),
+  //       debounceTime(150),
+  //       distinctUntilChanged()
+  //     )
+  //     .subscribe(() => {
+  //       debugger;
+  //       if (!this.dataSource) {
+  //         return;
+  //       }
+  //       this.dataSource.filter = this.filter.nativeElement.value;
+  //     });
+  // }
   ngOnInit() {
-    this.dataSource = new FilesDataSource(this._propertiesservice, this.paginator, this.sort);
+    this._propertiesservice.onPropertiesChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(res => {
+        if (res) {
+          debugger;
+          this.dataSource = res.data;
+          this.resultsLength = res.totalCount;
+        }
+      });
+
     fromEvent(this.filter.nativeElement, 'keyup')
       .pipe(
         takeUntil(this._unsubscribeAll),
@@ -48,6 +75,16 @@ export class PropertiesListComponent implements OnInit {
         }
         this.dataSource.filter = this.filter.nativeElement.value;
       });
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.paginator.page
+      .pipe(
+        tap(() => this._propertiesservice.getProperties(this.paginator.pageIndex + 1, this.paginator.pageSize))
+      )
+      .subscribe();
   }
 }
 
