@@ -13,6 +13,7 @@ import { ToasterModule } from 'app/layout/components/toaster/toaster.module';
 import { MatSnackBarModule } from '@angular/material';
 import { AppLayoutComponent } from './app-layout/app-layout.component';
 import { SiteLayoutComponent } from './site-layout/site-layout.component';
+import { FuseProgressBarModule } from '@core/components/progress-bar/progress-bar.module';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { SiteLayoutComponent } from './site-layout/site-layout.component';
     ToolbarModule,
     QuickPanelModule,
     CoreNavigationModule,
-    ToasterModule
+    ToasterModule,
+    FuseProgressBarModule
   ],
   exports:[AppLayoutComponent,SiteLayoutComponent],
   providers:[MessageService],
