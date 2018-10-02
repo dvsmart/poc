@@ -16,7 +16,7 @@ import { FeaturesModule } from './features/features.module';
 import { MaintenanceComponent } from './pages/maintenance/maintenance.component';
 import { Error500Component } from './pages/errors/error500/error500.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
+import { environment } from '@env/environment';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,7 @@ import { environment } from '../environments/environment';
     LayoutModule,
     CoreSharedModule.forRoot(fuseConfig),
     AppRoutingModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: true })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

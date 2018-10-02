@@ -7,6 +7,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FuseDirectivesModule } from './directives/directives';
 import { FusePipesModule } from './pipes/pipes.module';
 import { FUSE_CONFIG } from './services/config.service';
+import { DataTableModule } from './components/data-table/data-table.module';
 
 @NgModule({
     imports: [
@@ -17,7 +18,8 @@ import { FUSE_CONFIG } from './services/config.service';
         FlexLayoutModule,
 
         FuseDirectivesModule,
-        FusePipesModule
+        FusePipesModule,
+        DataTableModule
     ],
     exports: [
         CommonModule,
@@ -27,7 +29,8 @@ import { FUSE_CONFIG } from './services/config.service';
         FlexLayoutModule,
 
         FuseDirectivesModule,
-        FusePipesModule
+        FusePipesModule,
+        DataTableModule
     ]
 })
 export class CoreSharedModule {

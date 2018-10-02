@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { Error404Component } from './pages/errors/error404/error404.component';
 
 const appRoutes: Routes = [
     {
-        path: '**', redirectTo: '/home', pathMatch: 'full'
+        path:'**',component:Error404Component
     }
 ];
 
