@@ -15,7 +15,8 @@ import { FuseUtils } from '@core/utils';
 })
 export class PropertiesListComponent implements OnInit {
   dataSource: MatTableDataSource<any> | null;
-  displayedColumns = ['checkbox','dataId', 'propertyReference', 'addressLine1', 'addressLine2', 'postCode', 'city', 'portfolioName', 'buttons'];
+  isLoading: boolean;
+  displayedColumns = ['checkbox', 'dataId', 'propertyReference', 'addressLine1', 'addressLine2', 'postCode', 'city', 'portfolioName', 'buttons'];
 
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
@@ -36,28 +37,14 @@ export class PropertiesListComponent implements OnInit {
   ) {
     this._unsubscribeAll = new Subject();
   }
-  //ngOnInit() {
-  //   this.dataSource = new FilesDataSource(this._propertiesservice, this.paginator, this.sort);
-  //   fromEvent(this.filter.nativeElement, 'keyup')
-  //     .pipe(
-  //       takeUntil(this._unsubscribeAll),
-  //       debounceTime(150),
-  //       distinctUntilChanged()
-  //     )
-  //     .subscribe(() => {
-  //       debugger;
-  //       if (!this.dataSource) {
-  //         return;
-  //       }
-  //       this.dataSource.filter = this.filter.nativeElement.value;
-  //     });
-  // }
+
   ngOnInit() {
+    this.isLoading = true;
     this._propertiesservice.onPropertiesChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(res => {
         if (res) {
-          debugger;
+          this.isLoading = false;
           this.dataSource = res.data;
           this.resultsLength = res.totalCount;
         }
@@ -82,7 +69,11 @@ export class PropertiesListComponent implements OnInit {
     this.dataSource.sort = this.sort;
     this.paginator.page
       .pipe(
-        tap(() => this._propertiesservice.getProperties(this.paginator.pageIndex + 1, this.paginator.pageSize))
+        tap(() => {
+          debugger;
+          this.isLoading = true;
+          this._propertiesservice.getProperties(this.paginator.pageIndex + 1, this.paginator.pageSize)
+        })
       )
       .subscribe();
   }

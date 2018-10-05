@@ -1,5 +1,4 @@
 @import "src/@core/scss/fuse";
-
 :host {
     #properties {
         .top-bg {
@@ -7,8 +6,8 @@
                 height: 240px;
             }
         }
-        > .center {
-            > .header {
+        >.center {
+            >.header {
                 .search-input-wrapper {
                     max-width: 480px;
                 }
@@ -42,21 +41,17 @@
         .mat-column-id {
             flex: 0 1 84px;
         }
-
         .mat-column-image {
             flex: 0 1 84px;
-
             .product-image {
                 width: 52px;
                 height: 52px;
                 border: 1px solid rgba(0, 0, 0, .12);
             }
         }
-
         .mat-column-buttons {
             flex: 0 1 80px;
         }
-
         .quantity-indicator {
             display: inline-block;
             vertical-align: middle;
@@ -64,15 +59,25 @@
             height: 8px;
             border-radius: 4px;
             margin-right: 8px;
-
-            & + span {
+            &+span {
                 display: inline-block;
                 vertical-align: middle;
             }
         }
-
         .active-icon {
             border-radius: 50%;
         }
+    }
+    .example-loading-shade {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 56px;
+        right: 0;
+        background: rgba(0, 0, 0, 0.15);
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }

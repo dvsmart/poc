@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiUrl:'https://qpoc-api.azurewebsites.net/api/'
+  apiUrl:'http://localhost:61011/api/'
 };

@@ -34,7 +34,6 @@ export class PropertiesService {
     return new Promise((resolve, reject) => {
       this._httpClient.get<PagedResult>(environment.apiUrl + 'AssetProperties?page=' + page + '&pageSize=' + size)
         .subscribe((response: PagedResult) => {
-          debugger;
           this.propertiesResult = response;
           this.properties = response.data;
           this.onPropertiesChanged.next(this.propertiesResult);
