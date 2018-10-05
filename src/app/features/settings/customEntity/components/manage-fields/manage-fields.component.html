@@ -3,10 +3,11 @@
 <mat-form-field>
   <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
 </mat-form-field>
-<div class="example-loading-shade" *ngIf="isLoading">
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
-</div>
+<button mat-raised-button (click)="addNewField()">Add New</button>
 <div class="mat-elevation-z8" *ngIf="dataSource != null">
+  <div class="example-loading-shade" *ngIf="isLoading">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+  </div>
   <table mat-table [dataSource]="dataSource" matSort>
 
     <!-- ID Column -->

@@ -118,6 +118,14 @@ export class CustomentityService {
     });
   }
 
+  CreateCustomField(customFieldModel: CustomFieldModel) {
+    this.http.post(environment.apiUrl + 'TemplateFormControl', customFieldModel).subscribe((res: SaveResponse) => {
+      if (res.saveSuccessful) {
+        this.getCustomTabs(customFieldModel.customEntityId);
+        this.getTabFields(customFieldModel.customTabId);
+      }
+    })
+  }
 
 }
 

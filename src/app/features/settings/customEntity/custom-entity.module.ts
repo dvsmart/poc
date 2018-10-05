@@ -7,6 +7,7 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { AddCustomDialog } from './components/categories/add.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ManageFieldsComponent } from './components/manage-fields/manage-fields.component';
+import { FieldTypesComponent } from './components/field-types/field-types.component';
 
 const routes: Routes = [
   {
@@ -38,9 +39,10 @@ const routes: Routes = [
     MatCheckboxModule,
     MatToolbarModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
     RouterModule.forChild(routes),
   ],
-  declarations: [CategoriesComponent, AddCustomDialog, ManageFieldsComponent],
-  entryComponents: [AddCustomDialog]
+  declarations: [CategoriesComponent, AddCustomDialog, ManageFieldsComponent, FieldTypesComponent],
+  entryComponents: [AddCustomDialog, FieldTypesComponent]
 })
 export class CustomEntityModule { }

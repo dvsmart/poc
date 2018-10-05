@@ -7,6 +7,7 @@ import { SiteLayoutComponent } from '../layout/site-layout/site-layout.component
 import { AppLayoutComponent } from '../layout/app-layout/app-layout.component';
 import { Error404Component } from '../pages/errors/error404/error404.component';
 import { MatIconModule } from '@angular/material';
+import { FieldTypesComponent } from './settings/customEntity/components/field-types/field-types.component';
 
 
 const routes: Routes = [

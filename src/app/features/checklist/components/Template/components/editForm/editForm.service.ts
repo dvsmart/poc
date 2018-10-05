@@ -58,10 +58,10 @@ export class EditFormService {
 
     addRecord(customEntitymodel: CustomEntityValue): Promise<any> {
         return new Promise((resolve, reject) => {
-            this._httpClient.post<SaveResponse>(environment.apiUrl + 'CustomEntityInstance', customEntitymodel)
+            this._httpClient.post<SaveResponse>(environment.apiUrl + 'TemplateFormRecord', customEntitymodel)
                 .subscribe((response: SaveResponse) => {
                     customEntitymodel.CustomEntityValueId = response.recordId;
-                    this._httpClient.post<SaveResponse>(environment.apiUrl + 'CustomFieldValue', customEntitymodel).subscribe((res: SaveResponse) => {
+                    this._httpClient.post<SaveResponse>(environment.apiUrl + 'TemplateFormValue', customEntitymodel).subscribe((res: SaveResponse) => {
                         this.getRecord();
                     });
                 }, reject);
@@ -70,9 +70,9 @@ export class EditFormService {
 
     updateRecord(customEntitymodel: any): Promise<any> {
         return new Promise((resolve, reject) => {
-            this._httpClient.post<SaveResponse>(environment.apiUrl + 'CustomEntityInstance', customEntitymodel)
+            this._httpClient.post<SaveResponse>(environment.apiUrl + 'TemplateFormRecord', customEntitymodel)
                 .subscribe((response: any) => {
-                    this._httpClient.post<SaveResponse>(environment.apiUrl + 'CustomFieldValue', customEntitymodel).subscribe((res: SaveResponse) => {
+                    this._httpClient.post<SaveResponse>(environment.apiUrl + 'TemplateFormValue', customEntitymodel).subscribe((res: SaveResponse) => {
                         this.getRecord();
                     });
                 }, reject);
@@ -80,14 +80,14 @@ export class EditFormService {
     }
 
     add(customEntitymodel: CustomEntityValue) {
-        return this._httpClient.post<SaveResponse>(environment.apiUrl + 'CustomEntityInstance', customEntitymodel);
+        return this._httpClient.post<SaveResponse>(environment.apiUrl + 'TemplateFormRecord', customEntitymodel);
     }
 
     update(customEntitymodel: CustomEntityValue) {
-        return this._httpClient.post<SaveResponse>(environment.apiUrl + 'CustomEntityInstance', customEntitymodel);
+        return this._httpClient.post<SaveResponse>(environment.apiUrl + 'TemplateFormRecord', customEntitymodel);
     }
 
     updateFields(customEntitymodel: CustomEntityValue){
-        return this._httpClient.post(environment.apiUrl + 'CustomFieldValue', customEntitymodel);
+        return this._httpClient.post(environment.apiUrl + 'TemplateFormValue', customEntitymodel);
     }
 }

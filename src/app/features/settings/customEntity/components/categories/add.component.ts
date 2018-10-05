@@ -30,7 +30,9 @@ export class AddCustomDialog {
             case 'tab':
                 this.title = 'Tab'
                 break;
-
+            case 'field':
+                this.title = 'Field'
+                break;
             default:
                 break;
         }

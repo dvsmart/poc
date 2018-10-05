@@ -4,10 +4,20 @@ export class CustomTabModel {
 }
 
 export class CustomFieldModel {
-    id:number;
+    id:number | 0;
     customTabId: number;
     fieldName: string;
     fieldtypeId: number;
+    customEntityId?: number;
+
+    /**
+     *
+     */
+    constructor(tabId,fieldName,fieldTypeId) {
+        this.customTabId = tabId;
+        this.fieldName = fieldName;
+        this.fieldtypeId = fieldTypeId;
+    }
 }
 
 export class Category {
