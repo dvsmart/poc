@@ -8,6 +8,9 @@
   <div class="example-loading-shade" *ngIf="isLoading">
     <mat-spinner *ngIf="isLoading"></mat-spinner>
   </div>
+  <div *ngIf="dataSource == null">
+    <p>No Fields Available</p>
+  </div>
   <table mat-table [dataSource]="dataSource" matSort>
 
     <!-- ID Column -->
@@ -41,7 +44,4 @@
   </table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [length]="resultsLength" showFirstLastButtons></mat-paginator>
-</div>
-<div *ngIf="!dataSource">
-  <p>No Fields Available</p>
 </div>
