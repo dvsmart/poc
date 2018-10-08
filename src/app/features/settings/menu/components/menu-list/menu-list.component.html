@@ -35,28 +35,28 @@
           <mat-cell *matCellDef="let row"> {{row.title}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="type">
-          <mat-header-cell *matHeaderCellDef> Menu Group </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.type}} </mat-cell>
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm fxHide.lg> Menu Group </mat-header-cell>
+          <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm fxHide.lg> {{row.type}} </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="parentMenuItemName">
-          <mat-header-cell *matHeaderCellDef> Parent Menu </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.parentMenuItemName}} </mat-cell>
+        <ng-container matColumnDef="parentMenuItemName" >
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm> Parent Menu </mat-header-cell>
+          <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm> {{row.parentMenuItemName}} </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="url">
-          <mat-header-cell *matHeaderCellDef> Route </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.url}} </mat-cell>
+        <ng-container matColumnDef="url" >
+          <mat-header-cell *matHeaderCellDef  fxHide fxShow.gt-sm> Route </mat-header-cell>
+          <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm> {{row.url}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="icon">
-          <mat-header-cell *matHeaderCellDef> Icon Name </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.icon}} </mat-cell>
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm> Icon Name </mat-header-cell>
+          <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm> {{row.icon}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="sortOrder">
-          <mat-header-cell *matHeaderCellDef> Sort Order </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.sortOrder}} </mat-cell>
+          <mat-header-cell *matHeaderCellDef  fxHide fxShow.gt-sm> Sort Order </mat-header-cell>
+          <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm> {{row.sortOrder}} </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="hasChildren">
-          <mat-header-cell *matHeaderCellDef> Has Children </mat-header-cell>
-          <mat-cell *matCellDef="let row">
+        <ng-container matColumnDef="hasChildren" fxHide fxShow.gt-sm>
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm> Has Children </mat-header-cell>
+          <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
             <mat-checkbox [checked]="row.hasChildren" (click)="$event.stopPropagation()"></mat-checkbox>
           </mat-cell>
         </ng-container>
@@ -67,8 +67,8 @@
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="addedDate">
-            <mat-header-cell *matHeaderCellDef> Added On </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.addedDate | date}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm> Added On </mat-header-cell>
+            <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm> {{row.addedDate | date}} </mat-cell>
           </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;" class="menu" matRipple [routerLink]="['/settings/menuManagement/menu/', row.id]"
