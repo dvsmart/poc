@@ -10,6 +10,7 @@ import { AddCustomDialog } from '../categories/add.component';
 import { fuseAnimations } from '@core/animations';
 import { FormControl } from '@angular/forms';
 import { FuseSidebarService } from '@core/components/sidebar/sidebar.service';
+import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'manage-fields',
@@ -36,13 +37,21 @@ export class ManageFieldsComponent implements OnInit {
     private ceAdminService: CustomentityService, 
     private fieldService: CustomFieldService, 
     public dialog: MatDialog,
-    private coreSideBarService:FuseSidebarService) {
+    private coreSideBarService:FuseSidebarService,
+    private route: ActivatedRoute) {
     this._unsubscribeAll = new Subject();
     this.customEntityId = new BehaviorSubject(0);
     this.searchInput = new FormControl('');
   }
 
   ngOnInit() {
+   this.route.params.subscribe(x=>{
+     if(x["id"] != null || x["id"] != ''){
+       debugger;
+      this.ceAdminService.getCustomTabs(parseInt(x["id"]));
+     }
+   })
+  
     this.searchInput.valueChanges
       .pipe(
         takeUntil(this._unsubscribeAll),
@@ -60,6 +69,8 @@ export class ManageFieldsComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((response: any) => {
         if (response) {
+          debugger;
+          this.tabId = response.tabId;
           this.isLoading = false;
           this.customEntityId.next(response.customEntityId);
           this.tabTitle = response.tabCaption;
