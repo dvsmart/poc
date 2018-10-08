@@ -95,7 +95,6 @@ export class FilesDataSource extends DataSource<any>
     private _matSort: MatSort
   ) {
     super();
-    debugger;
     this.filteredData = this._userservice.usersResult.data;
     this.paginatedData = this._userservice.usersResult.totalCount;
   }
@@ -112,11 +111,9 @@ export class FilesDataSource extends DataSource<any>
     return merge(...displayDataChanges)
       .pipe(
         switchMap(() => {
-          debugger;
           return this._userservice.getUsers(this._matPaginator.pageIndex + 1, this._matPaginator.pageSize);
         }),
         map(() => {
-          debugger;
           let data = this._userservice.users;
           data = this.filterData(data);
           this.filteredData = [...data];

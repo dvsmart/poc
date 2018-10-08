@@ -63,12 +63,10 @@ export class CustomTabService {
     }
 
     getTabFields(tabId): Promise<any> {
-        debugger;
         return new Promise((resolve, reject) => {
           this.http.get<any>(environment.apiUrl + 'TemplateTab?id=' + tabId)
             .subscribe((response: TemplateTab) => {
               this.customTabFields.next(response);
-              //this.tabFields.next(response.customFields);
               resolve(response);
             }, reject);
         });

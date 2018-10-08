@@ -70,7 +70,6 @@ export class PropertiesListComponent implements OnInit {
     this.paginator.page
       .pipe(
         tap(() => {
-          debugger;
           this.isLoading = true;
           this._propertiesservice.getProperties(this.paginator.pageIndex + 1, this.paginator.pageSize)
         })

@@ -43,8 +43,6 @@ export class ManageFieldsComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger;
-
     this.searchInput.valueChanges
       .pipe(
         takeUntil(this._unsubscribeAll),
@@ -54,12 +52,6 @@ export class ManageFieldsComponent implements OnInit {
       .subscribe(searchText => {
         this.ceAdminService.onSearchTextChanged.next(searchText);
       });
-    this.loadCustomFields();
-  }
-
-  ngOnChanges() {
-    this.isLoading = true;
-    this.ceAdminService.getTabFields(this.tabId);
     this.loadCustomFields();
   }
 

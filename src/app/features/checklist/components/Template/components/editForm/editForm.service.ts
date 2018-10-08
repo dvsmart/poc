@@ -14,13 +14,13 @@ export class EditFormService {
     routeParams: any;
     record: any;
     onRecordChanged: BehaviorSubject<any>;
-    templateId: BehaviorSubject<any>;
+    templateId: BehaviorSubject<number>;
 
     constructor(
         private _httpClient: HttpClient
     ) {
         this.onRecordChanged = new BehaviorSubject({});
-        this.templateId = new BehaviorSubject({});
+        this.templateId = new BehaviorSubject(0);
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
@@ -37,18 +37,16 @@ export class EditFormService {
         });
     }
 
-    getTemplateId(){
-        return this.templateId.getValue();
-    }
-
     getRecord(): Promise<any> {
         return new Promise((resolve, reject) => {
             if (this.routeParams.id === 'new') {
-                this._httpClient.get<any>(environment.apiUrl + 'NewTemplateFormRecord/' + this.getTemplateId()).subscribe(response => {
-                    this.record = response;
-                    this.onRecordChanged.next(this.record);
-                    resolve(false);
-                }, reject);
+                this.templateId.subscribe(id => {
+                    this._httpClient.get<any>(environment.apiUrl + 'NewTemplateFormRecord/' + id).subscribe(response => {
+                        this.record = response;
+                        this.onRecordChanged.next(this.record);
+                        resolve(false);
+                    }, reject);
+                })
             }
             else {
                 this._httpClient.get<CustomEntityRecord>(environment.apiUrl + 'TemplateFormRecord/' + this.routeParams.id)

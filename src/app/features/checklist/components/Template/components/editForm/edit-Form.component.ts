@@ -47,7 +47,6 @@ export class EditFormComponent {
         this.pageType = 'edit';
         this.title = "Edit " + cev.templateName + ' - ' + cev.dataId;
       } else {
-        debugger;
         this.pageType = 'new';
         this.title = "New " + cev.templateName;
         this.record = new CustomEntityRecord(cev);

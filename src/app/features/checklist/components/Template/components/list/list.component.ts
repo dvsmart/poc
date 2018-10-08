@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { fuseAnimations } from '@core/animations';
 import { DataSource } from '@angular/cdk/table';
 import { Observable, merge, BehaviorSubject, Subject, fromEvent } from 'rxjs';
-import { switchMap, map, takeUntil, distinctUntilChanged, debounceTime, take } from 'rxjs/operators';
+import { switchMap, map, takeUntil, distinctUntilChanged, debounceTime, take, tap } from 'rxjs/operators';
 import { FuseUtils } from '@core/utils';
 import { ListService } from './list.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,7 +16,7 @@ import { EditFormService } from '../editForm/editForm.service';
   animations: fuseAnimations
 })
 export class ListComponent implements OnInit {
-  dataSource: FilesDataSource | null;
+  dataSource: MatTableDataSource<any> | null;
   displayedColumns: string[] = ['dataId', 'status', 'dueDate', 'addedOn', 'buttons'];
 
   @ViewChild(MatPaginator)
@@ -32,8 +32,8 @@ export class ListComponent implements OnInit {
   templateName: string;
   customEntityId: number;
   groupId: number;
-
-
+  isLoading: boolean = false;
+  resultsLength: number;
 
   // Private
   private _unsubscribeAll: Subject<any>;
@@ -51,11 +51,20 @@ export class ListComponent implements OnInit {
         this.groupName = x.groupName;
         this.templateName = x.templateName;
         this.groupId = x.groupId;
-        this._recordService.templateId.next(this.customEntityId);
+        this._recordService.templateId.next(x.id);
       })
 
+    this._cevrecordsservice.onRecordsChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(res => {
+        if (res) {
+          this.isLoading = false;
+          this.dataSource = res.data;
+          this.resultsLength = res.totalCount;
+        }
+      });
 
-    this.dataSource = new FilesDataSource(this._cevrecordsservice, this.paginator, this.sort);
+
     fromEvent(this.filter.nativeElement, 'keyup')
       .pipe(
         takeUntil(this._unsubscribeAll),
@@ -70,15 +79,24 @@ export class ListComponent implements OnInit {
       });
   }
 
-  ngOnDestroy() {
-    this._unsubscribeAll.complete();
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.paginator.page
+      .pipe(
+        tap(() => {
+          this.isLoading = true;
+          this._cevrecordsservice.getRecords(this.paginator.pageIndex + 1, this.paginator.pageSize)
+        })
+      )
+      .subscribe();
   }
 
-  // addNew() {
-  //   debugger;
-  //   this._recordService.templateId.next(this.customEntityId);
-  //   this.router.navigate(['/checklist/template/' + this.customEntityId + '/record/', 'new'], { queryParams: { templateId: this.customEntityId } });
-  // }
+  ngOnDestroy() {
+    this._unsubscribeAll.complete();
+    this._recordService.templateId.complete();
+  }
+
 }
 
 export class FilesDataSource extends DataSource<any>

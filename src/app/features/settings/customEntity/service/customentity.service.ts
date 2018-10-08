@@ -64,7 +64,7 @@ export class CustomentityService {
 
   getCustomTabs(templateId: number): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.http.get<CustomTabResponse>(environment.apiUrl + 'Template/' + templateId)
+      this.http.get<CustomTabResponse>(environment.apiUrl + 'NewTemplateFormRecord/' + templateId)
         .subscribe((response: CustomTabResponse) => {
           this.customTabs.next(response);
           resolve(response);
