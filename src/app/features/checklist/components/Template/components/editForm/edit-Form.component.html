@@ -1,22 +1,3 @@
-<!-- <div class="content-card bg-white p-24" [formGroup]="customRecordForm" *ngIf="record">
-    <ng-container *ngIf="(record) === null">Loading tabs...</ng-container>
-    <mat-toolbar>
-        {{title}}
-    </mat-toolbar>
-    <form (submit)="SaveRecord()">
-        <mat-tab-group style="min-height: 400px;">
-            <mat-tab *ngFor="let tab of record.customTabs">
-                <ng-template mat-tab-label="mat-tab-label">{{tab.caption}}</ng-template>
-                <dynamic-form [fields]="tab.customFields" [form]="customRecordForm"></dynamic-form>
-            </mat-tab>
-        </mat-tab-group>
-        <div mat-dialog-actions="mat-dialog-actions" class="pt-24" align="end">
-            <button mat-raised-button="mat-raised-button" type="submit" class="mr-10" color="primary" matripple="matripple">Save</button>
-            <button mat-raised-button="mat-raised-button" type="button" (click)="cancel()">Cancel</button>
-        </div>
-    </form>
-</div> -->
-
 <div id="customEntityRecordForm" class="page-layout carded fullwidth inner-scroll">
     <div class="top-bg mat-accent-bg"></div>
     <div class="center">
@@ -56,11 +37,6 @@
                             <dynamic-form [fields]="tab.customFields" [form]="customRecordForm"></dynamic-form>
                         </mat-tab>
                     </mat-tab-group>
-                    <!-- <div mat-dialog-actions="mat-dialog-actions" class="pt-24" align="end">
-                        <button mat-raised-button="mat-raised-button" type="submit" class="mr-10" color="primary"
-                            matripple="matripple">Save</button>
-                        <button mat-raised-button="mat-raised-button" type="button" (click)="cancel()">Cancel</button>
-                    </div> -->
                 </form>
             </div>
         </div>

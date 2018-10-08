@@ -18,12 +18,6 @@ import { FieldConfig } from "../../models/fieldConfig";
 @Component({
   exportAs: "dynamicForm",
   selector: "dynamic-form",
-  // template: `
-  //           <form class="dynamic-form" [formGroup]="form" (submit)="onSubmit($event)">
-  //           <ng-container *ngFor="let field of fields;" dynamicField [field]="field" [group]="form">
-  //           </ng-container>
-  //           </form>
-  //           `,
             template: `
             <ng-container *ngFor="let field of fields;" dynamicField [field]="field" [group]="form">
             </ng-container>

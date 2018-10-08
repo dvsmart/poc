@@ -1,0 +1,16 @@
+<div class="sidebar-content">
+  <div class="card mat-white-bg" *ngIf="tabs">
+    <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">
+      <span class="h5">{{tabs.templateName}}</span>
+    </div>
+    <div class="content py-16" fusePerfectScrollbar>
+      <div class="nav">
+        <div class="nav-item" *ngFor="let tab of tabs.customTabs">
+          <a class="nav-link" matRipple (click)="changeTab(tab.tabId)" [ngClass]="{'active mat-accent-bg':selectedTabId === tab.tabId}">
+            <span class="title">{{ tab.caption }} - {{ tab.customFields.length}}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

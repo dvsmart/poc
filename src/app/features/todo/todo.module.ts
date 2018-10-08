@@ -9,7 +9,7 @@ import { TodoListItemComponent } from './todo-list/todo-list-item/todo-list-item
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoDetailsComponent } from './todo-details/todo-details.component';
 import { CoreSharedModule } from '@core/core.module';
-import { FuseSidebarModule } from '@core/components/sidebar/sidebar.module';
+import { CoreSidebarModule } from '@core/components/sidebar/sidebar.module';
 
 const routes: Routes = [
     {
@@ -79,7 +79,7 @@ const routes: Routes = [
         MatRippleModule,
         MatSelectModule,
         CoreSharedModule,
-        FuseSidebarModule,
+        CoreSidebarModule,
         RouterModule.forChild(routes),
     ],
     providers   : [

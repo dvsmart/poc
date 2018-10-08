@@ -1,56 +1,39 @@
 @import "src/@core/scss/fuse";
+
 :host {
     display: flex;
     flex-direction: column;
     flex: 1 0 auto;
     height: 100%;
+
     .sidebar-content {
         display: flex;
         flex-direction: column;
         padding: 0;
-        width: 600px;
+
         @include media-breakpoint(gt-sm) {
             padding: 24px 4px 24px 24px;
         }
+
         .card {
             display: flex;
             flex-direction: column;
             flex: 0 1 auto;
             padding: 0;
+
             @include media-breakpoint(gt-sm) {
                 @include mat-elevation(4);
             }
-            >.header {
+
+            > .header {
                 flex: 0 1 auto;
                 border-bottom: 1px solid rgba(0, 0, 0, 0.12);
             }
-            >.content {
+
+            > .content {
                 flex: 0 1 auto;
             }
         }
-    }
-    mat-toolbar-row {
-        >a {
-            color: white;
-            font-size: 12px;
-        }
-    }
-}
 
-.breadcrumb:before {
-    content: "\e7c3";
-    font-family: "Material-Design-Icons";
-}
-
-.breadcrumb:before {
-    content: '\E5CC';
-    color: rgba(255, 255, 255, 0.7);
-    vertical-align: top;
-    display: inline-block;
-    font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 25px;
-    margin: 0 10px 0 8px;
-    -webkit-font-smoothing: antialiased;
+    }
 }

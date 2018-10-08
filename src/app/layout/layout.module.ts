@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '../../../node_modules/@angular/router';
 import { CoreSharedModule } from '../../@core/core.module';
-import { FuseSidebarModule } from '../../@core/components/sidebar/sidebar.module';
+import { CoreSidebarModule } from '../../@core/components/sidebar/sidebar.module';
 import { ContentModule } from './components/content/content.module';
 import { NavbarModule } from './components/navbar/navbar.module';
 import { ToolbarModule } from './components/toolbar/toolbar.module';
@@ -19,7 +19,7 @@ import { FuseProgressBarModule } from '@core/components/progress-bar/progress-ba
   imports: [
     RouterModule,
     CoreSharedModule,
-    FuseSidebarModule,
+    CoreSidebarModule,
     MatSnackBarModule,
     ContentModule,
     NavbarModule,

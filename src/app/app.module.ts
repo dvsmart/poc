@@ -6,7 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '../../node_modules/@angular
 import { MatButtonModule, MatIconModule } from '../../node_modules/@angular/material';
 import { FuseProgressBarModule } from '../@core/components/progress-bar/progress-bar.module';
 import { CoreSharedModule } from '../@core/core.module';
-import { FuseSidebarModule } from '../@core/components/sidebar/sidebar.module';
+import { CoreSidebarModule } from '../@core/components/sidebar/sidebar.module';
 import { LayoutModule } from './layout/layout.module';
 import { fuseConfig } from './config';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
@@ -30,7 +30,7 @@ import { environment } from '@env/environment';
     MatButtonModule,
     MatIconModule,
     FuseProgressBarModule,
-    FuseSidebarModule,
+    CoreSidebarModule,
     FeaturesModule,
     LayoutModule,
     CoreSharedModule.forRoot(fuseConfig),

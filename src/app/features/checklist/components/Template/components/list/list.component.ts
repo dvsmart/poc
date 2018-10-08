@@ -31,6 +31,7 @@ export class ListComponent implements OnInit {
   groupName: string;
   templateName: string;
   customEntityId: number;
+  groupId: number;
 
 
 
@@ -49,7 +50,8 @@ export class ListComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll)).subscribe(x => {
         this.groupName = x.groupName;
         this.templateName = x.templateName;
-        this._recordService.templateId.next(x.id);
+        this.groupId = x.groupId;
+        this._recordService.templateId.next(this.customEntityId);
       })
 
 
@@ -68,9 +70,15 @@ export class ListComponent implements OnInit {
       });
   }
 
-  addNew() {
-    this.router.navigate(['/checklist/template/' + this.customEntityId + '/record/', 'new'], { queryParams: { templateId: this.customEntityId } });
+  ngOnDestroy() {
+    this._unsubscribeAll.complete();
   }
+
+  // addNew() {
+  //   debugger;
+  //   this._recordService.templateId.next(this.customEntityId);
+  //   this.router.navigate(['/checklist/template/' + this.customEntityId + '/record/', 'new'], { queryParams: { templateId: this.customEntityId } });
+  // }
 }
 
 export class FilesDataSource extends DataSource<any>

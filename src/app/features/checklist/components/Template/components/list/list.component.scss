@@ -1,5 +1,4 @@
 @import "src/@core/scss/fuse";
-
 .example-loading-shade {
     position: absolute;
     top: 0;
@@ -16,6 +15,12 @@
     color: #980000;
     max-width: 360px;
     text-align: center;
+}
+
+.h1 {
+    @include media-breakpoint-down(xs) {
+        font-size: 20px !important;
+    }
 }
 
 :host {

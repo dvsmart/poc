@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { fuseAnimations } from '@core/animations';
 import { MatDialog } from '@angular/material';
 import { AddCustomDialog } from './add.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-categories',
@@ -18,31 +19,38 @@ export class CategoriesComponent implements OnInit {
   groupTemplate: customGroupTemplate;
   tabs: CustomTabResponse;
   private _unsubscribeAll: Subject<any>;
+  loading_categories: boolean = false;
+  loading_templates: boolean = false;
+  loading_taps: boolean = false;
 
   showTemplate: boolean = false;
   showTab: boolean = false;
   showFieldsManagement: boolean = false;
   showFields: boolean = false;
-  selectedTabId:number;
+  selectedTabId: number;
 
-  constructor(private ceAdminService: CustomentityService, public dialog: MatDialog) {
+  constructor(private ceAdminService: CustomentityService, public dialog: MatDialog, private router: Router) {
     this._unsubscribeAll = new Subject();
   }
 
   ngOnInit(): void {
+    this.loading_categories = true;
     this.ceAdminService.customGroups
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
         this.categories = response;
+        this.loading_categories = false;
       });
     this.ceAdminService.customTemplates
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
+        this.loading_templates = false;
         this.groupTemplate = response;
       });
     this.ceAdminService.customTabs
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
+        this.loading_taps = false;
         this.tabs = response;
       });
   }
@@ -67,30 +75,34 @@ export class CategoriesComponent implements OnInit {
     this.ceAdminService.getCustomTabs(id);
   }
 
-  manageFields(id){
+  manageFields(id) {
     this.showFieldsManagement = true;
     this.showFields = true;
     this.selectedTabId = id;
+    this.router.navigate(['tab/', id]);
   }
 
   add(type, id?: number): void {
     const dialogRef = this.dialog.open(AddCustomDialog, {
       width: '250px',
-      data: { name: "",type: type }
+      data: { name: "", type: type }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== "" && result !== undefined) {
         if (type === 'category') {
-          this.ceAdminService.addCustomGroup(result);
+          this.loading_categories = true;
+          this.ceAdminService.addCustomGroup(result).then(() => { this.loading_categories = false; });
         }
         if (type === 'template') {
+          this.loading_templates = true;
           let template = new CreateCustomTemplateRequest(id, result);
-          this.ceAdminService.addCustomTemplate(template);
+          this.ceAdminService.addCustomTemplate(template).then(() => { this.loading_templates = false; });
         }
         if (type === 'tab') {
-          let tabRequest = new CreateCustomTabRequest(result,id);
-          this.ceAdminService.addTemplateTab(tabRequest);
+          this.loading_taps = true;
+          let tabRequest = new CreateCustomTabRequest(result, id);
+          this.ceAdminService.addTemplateTab(tabRequest).then(() => { this.loading_taps = false; });
         }
       }
     });

@@ -5,7 +5,7 @@ import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatIconModule,
 import { Routes, RouterModule } from '../../../../node_modules/@angular/router';
 import { CoreSharedModule } from '@core/core.module';
 import { FuseConfirmDialogModule } from '@core/components/confirm-dialog/confirm-dialog.module';
-import { FuseSidebarModule } from '@core/components/sidebar/sidebar.module';
+import { CoreSidebarModule } from '@core/components/sidebar/sidebar.module';
 import { AssessmentsService } from './assessment-list/assessments.service';
 import { AssessmentService } from './assessment-form/assessment.service';
 
@@ -30,7 +30,7 @@ const assessmentRoutes: Routes = [
   imports: [
     CoreSharedModule,
     FuseConfirmDialogModule,
-    FuseSidebarModule,
+    CoreSidebarModule,
 
     MatButtonModule,
     MatChipsModule,

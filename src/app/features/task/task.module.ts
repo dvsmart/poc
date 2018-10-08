@@ -8,7 +8,7 @@ import { Routes, RouterModule } from '../../../../node_modules/@angular/router';
 import { TaskService } from './task.service';
 import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatSelectModule, MatNativeDateModule, MatPaginatorModule } from '@angular/material';
 import { CoreSharedModule } from '@core/core.module';
-import { FuseSidebarModule } from '@core/components/sidebar/sidebar.module';
+import { CoreSidebarModule } from '@core/components/sidebar/sidebar.module';
 import { TaskListItemComponent } from './task-list/task-list-item/task-list-item.component';
 
 
@@ -76,7 +76,7 @@ const routes: Routes = [
     MatPaginatorModule,
     MatSelectModule,
     CoreSharedModule,
-    FuseSidebarModule,
+    CoreSidebarModule,
     RouterModule.forChild(routes),
   ],
   declarations: [TaskComponent, TaskFilterComponent, TaskDetailComponent, TaskListComponent, TaskListItemComponent]

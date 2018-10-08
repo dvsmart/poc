@@ -1,10 +1,11 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 import { environment } from "@env/environment";
 import { CustomEntityRecord, CustomEntityValue } from "../../../../models/custom.model";
 import { SaveResponse } from "../../model/record.model";
+import { takeUntil } from "rxjs/operators";
 
 @Injectable({
     providedIn: 'root'
@@ -13,13 +14,13 @@ export class EditFormService {
     routeParams: any;
     record: any;
     onRecordChanged: BehaviorSubject<any>;
-    templateId: BehaviorSubject<number>;
+    templateId: BehaviorSubject<any>;
 
     constructor(
         private _httpClient: HttpClient
     ) {
         this.onRecordChanged = new BehaviorSubject({});
-        this.templateId = new BehaviorSubject(0);
+        this.templateId = new BehaviorSubject({});
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
@@ -36,10 +37,14 @@ export class EditFormService {
         });
     }
 
+    getTemplateId(){
+        return this.templateId.getValue();
+    }
+
     getRecord(): Promise<any> {
         return new Promise((resolve, reject) => {
             if (this.routeParams.id === 'new') {
-                this._httpClient.get<any>(environment.apiUrl + 'Template/' + this.templateId.getValue()).subscribe(response => {
+                this._httpClient.get<any>(environment.apiUrl + 'NewTemplateFormRecord/' + this.getTemplateId()).subscribe(response => {
                     this.record = response;
                     this.onRecordChanged.next(this.record);
                     resolve(false);
@@ -87,7 +92,7 @@ export class EditFormService {
         return this._httpClient.post<SaveResponse>(environment.apiUrl + 'TemplateFormRecord', customEntitymodel);
     }
 
-    updateFields(customEntitymodel: CustomEntityValue){
+    updateFields(customEntitymodel: CustomEntityValue) {
         return this._httpClient.post(environment.apiUrl + 'TemplateFormValue', customEntitymodel);
     }
 }

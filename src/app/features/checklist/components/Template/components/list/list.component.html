@@ -8,7 +8,7 @@
           account_box
         </mat-icon>
         <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-          {{groupName}} / {{templateName}}
+          <span [routerLink]="['/checklist/cat/', groupId]" matLine style="cursor:pointer;">{{groupName}}</span>  / <span>{{templateName}}</span>
         </span>
       </div>
       <div class="search-input-wrapper mx-24 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">

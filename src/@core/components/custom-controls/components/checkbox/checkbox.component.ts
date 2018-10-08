@@ -6,7 +6,7 @@ import { FieldConfig } from "../../models/fieldConfig";
   selector: "app-checkbox",
   template: `
 <div class="demo-full-width margin-top" [formGroup]="group" >
-<mat-checkbox [formControlName]="field.name">{{field.label}}</mat-checkbox>
+<mat-checkbox [formControlName]="field.name">{{field.caption}}</mat-checkbox>
 </div>
 `,
   styles: [

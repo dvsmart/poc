@@ -6,7 +6,7 @@ import { FieldConfig } from "../../models/fieldConfig";
   selector: "app-input",
   template: `
 <mat-form-field class="demo-full-width" [formGroup]="group">
-<input matInput [formControlName]="field.name" [placeholder]="field.label" [type]="field.type">
+<input matInput [formControlName]="field.name" [placeholder]="field.caption" [type]="field.type">
 <ng-container *ngFor="let validation of field.validations;" ngProjectAs="mat-error">
 </ng-container>
 </mat-form-field>

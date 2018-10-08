@@ -9,12 +9,14 @@ export class CustomTemplate {
     groupName: string;
     templateName: string;
     id: number;
+    groupId: number;
 
     constructor(data?) {
         data = data || {},
         this.id = data.id;
         this.groupName = data.groupName;
         this.templateName = data.templateName;
+        this.groupId = data.groupId;
     }
 }
 

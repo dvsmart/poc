@@ -1,5 +1,5 @@
 <div *ngIf="templateList">
-    <mat-toolbar color="primary">
+    <mat-toolbar class="header mat-accent-bg">
         <mat-toolbar-row>
             <a href="#!" [routerLink]="['/checklist']">Categories</a>
             <a href="#!" [routerLink]="['/checklist/cat/',templateList.groupId]" class="breadcrumb">{{templateList.groupName}}</a>

@@ -10,6 +10,6 @@ import { SidebarComponent } from './sidebar.component';
         SidebarComponent
     ]
 })
-export class FuseSidebarModule
+export class CoreSidebarModule
 {
 }

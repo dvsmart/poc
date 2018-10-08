@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { CustomTabModel, CustomFieldModel, Category, CustomTemplateTab, customGroupTemplate, CreateCustomTemplateRequest, CreateCustomTabRequest, CustomTabResponse, TemplateTab, TemplateTabField } from '../models/customEntity.model';
 import { SaveResponse } from '../../../checklist/components/Template/model/record.model';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { CustomField } from '../../../checklist/models/custom.model';
@@ -17,6 +17,8 @@ export class CustomentityService {
   customTabs: BehaviorSubject<CustomTabResponse>;
   customTabFields: BehaviorSubject<any>;
   tabFields: BehaviorSubject<any[]>;
+  onSearchTextChanged: Subject<any>;
+  searchText: string;
 
   constructor(private http: HttpClient) {
     this.customGroups = new BehaviorSubject<Category[]>(null);
@@ -24,6 +26,7 @@ export class CustomentityService {
     this.customTabs = new BehaviorSubject<CustomTabResponse>(null);
     this.customTabFields = new BehaviorSubject<TemplateTab>(null);
     this.tabFields = new BehaviorSubject<any[]>(null);
+    this.onSearchTextChanged = new Subject();
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
