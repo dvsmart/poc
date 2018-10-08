@@ -6,7 +6,7 @@ export interface Validator {
   message: string;
 }
 export class FieldConfig {
-  label?: string;
+  caption?: string;
   name?: string;
   inputType?: string;
   options?: string[];

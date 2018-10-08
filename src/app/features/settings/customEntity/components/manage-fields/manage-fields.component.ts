@@ -9,6 +9,7 @@ import { FieldTypesComponent } from '../field-types/field-types.component';
 import { AddCustomDialog } from '../categories/add.component';
 import { fuseAnimations } from '@core/animations';
 import { FormControl } from '@angular/forms';
+import { FuseSidebarService } from '@core/components/sidebar/sidebar.service';
 
 @Component({
   selector: 'manage-fields',
@@ -31,7 +32,11 @@ export class ManageFieldsComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private ceAdminService: CustomentityService, private fieldService: CustomFieldService, public dialog: MatDialog) {
+  constructor(
+    private ceAdminService: CustomentityService, 
+    private fieldService: CustomFieldService, 
+    public dialog: MatDialog,
+    private coreSideBarService:FuseSidebarService) {
     this._unsubscribeAll = new Subject();
     this.customEntityId = new BehaviorSubject(0);
     this.searchInput = new FormControl('');
@@ -72,6 +77,10 @@ export class ManageFieldsComponent implements OnInit {
           this.dataSource.sort = this.sort;
         }
       });
+  }
+
+  toggleSidebar(name): void {
+    this.coreSideBarService.getSidebar(name).toggleOpen();
   }
 
   addNewField() {
