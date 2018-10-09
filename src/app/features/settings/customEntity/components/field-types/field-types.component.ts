@@ -20,6 +20,7 @@ export class FieldTypesComponent implements OnInit {
 
   constructor(private _fieldService: CustomFieldService,public dialogRef: MatDialogRef<FieldTypesComponent>,public dialog: MatDialog) {
     this._unsubscribeAll = new Subject();
+    this._fieldService.getFieldTypes();
   }
 
   ngOnInit() {

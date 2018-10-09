@@ -23,6 +23,14 @@ export class CustomFieldModel {
 export class Category {
     id: number;
     categoryName: string;
+
+    /**
+     *
+     */
+    constructor(id,caption:string) {
+        this.id = id;
+        this.categoryName = caption;
+    }
 }
 
 export class customGroupTemplate {
@@ -32,7 +40,7 @@ export class customGroupTemplate {
     /**
      *
      */
-    constructor(data?) {
+    constructor(data?,extra?) {
         data = data || {};
         this.groupId = data.groupId;
         this.groupName = data.groupName;
@@ -82,10 +90,18 @@ export class CustomTemplateTab {
     }
 }
 
-export interface CustomTab {
+export class CustomTab {
     id: number;
     tabName: string;
     fieldsCount: number;
+
+    /**
+     *
+     */
+    constructor(id: number,caption:string) {
+        this.id= id;
+        this.tabName = caption
+    }
 }
 
 export interface CustomTabResponse {

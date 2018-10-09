@@ -1,18 +1,16 @@
 <div class="sidebar-content">
-  <div class="card mat-white-bg">
-      <div class="header p-24" fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
-          <mat-icon>filter_list</mat-icon>
-          <span class="h5">Fields</span>
-      </div>
-      <div class="content py-16" fusePerfectScrollbar *ngIf="fields">
-          <div class="nav"  [@listStagger]="fields.length" >
-              <div class="nav-item" *ngFor="let field of fields">
-                  <a  class="nav-link" matRipple mat-button (click)="onNoClick(field.id)"
-                  [ngClass]="{'active mat-accent-bg':filterBy ==='live'}">
-                      <span class="title">{{field.caption}}</span>
-                  </a>
-              </div>
-          </div>
-      </div>
-  </div>
+    <div class="card mat-white-bg">
+        <div class="header" fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+            <span class="h5">Control Types</span>
+        </div>
+        <div class="content py-16" fusePerfectScrollbar *ngIf="fields">
+            <div class="nav" [@listStagger]="fields.length">
+                <div class="nav-item" *ngFor="let field of fields">
+                    <a class="nav-link" matRipple mat-button (click)="onNoClick(field.id)">
+                        <span class="title">{{field.caption}}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

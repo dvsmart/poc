@@ -47,8 +47,9 @@ export class ManageFieldsComponent implements OnInit {
   ngOnInit() {
    this.route.params.subscribe(x=>{
      if(x["id"] != null || x["id"] != ''){
-       debugger;
-      this.ceAdminService.getCustomTabs(parseInt(x["id"]));
+      const tabId = parseInt(x["id"]);
+      this.ceAdminService.getCustomTabs(tabId);
+      this.ceAdminService.getTabFields(tabId);
      }
    })
   
@@ -69,7 +70,6 @@ export class ManageFieldsComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((response: any) => {
         if (response) {
-          debugger;
           this.tabId = response.tabId;
           this.isLoading = false;
           this.customEntityId.next(response.customEntityId);
@@ -87,9 +87,8 @@ export class ManageFieldsComponent implements OnInit {
   }
 
   addNewField() {
-    this.fieldService.getFieldTypes();
     const dialogRef = this.dialog.open(FieldTypesComponent, {
-      width: '400px',
+      width: '300px',
     });
 
     dialogRef.afterClosed().subscribe(fieldTypeId => {
