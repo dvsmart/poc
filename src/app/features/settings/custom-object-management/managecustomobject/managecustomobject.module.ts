@@ -28,7 +28,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'manageTab',
+    path: '/manage',
     component: CustomobjectcontentComponent
   }
 ];
