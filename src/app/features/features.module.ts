@@ -53,6 +53,10 @@ const routes: Routes = [
         loadChildren: './settings/customEntity/custom-entity.module#CustomEntityModule',
       },
       {
+        path: 'customObject/setup',
+        loadChildren: './settings/custom-object-management/custom-object-management.module#CustomObjectManagementModule',
+      },
+      {
         path: 'settings/menuManagement',
         loadChildren: './settings/menu/menu.module#MenuManagementModule',
       },

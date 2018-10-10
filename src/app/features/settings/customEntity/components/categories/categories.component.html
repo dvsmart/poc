@@ -58,7 +58,7 @@
             <div class="content" fusePerfectScrollbar>
               <div class="nav">
                 <div class="nav-item" *ngFor="let tab of tabs.customTabs">
-                  <a class="nav-link" matRipple  [routerLink]="['tab/',tab.tabId]" [ngClass]="{'active mat-accent-bg':selectedTabId === tab.tabId && showFieldsManagement}">
+                  <a class="nav-link" matRipple [routerLink]="['tab/',tab.tabId]" [ngClass]="{'active mat-accent-bg':selectedTabId === tab.tabId && showFieldsManagement}">
                     <span class="title">{{ tab.caption }} - {{ tab.customFields.length}}</span>
                   </a>
                 </div>

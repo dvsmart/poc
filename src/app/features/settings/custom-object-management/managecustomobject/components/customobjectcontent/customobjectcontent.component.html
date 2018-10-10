@@ -1,0 +1,24 @@
+<div id="todo" class="page-layout carded left-sidebar inner-scroll">
+  <div class="top-bg mat-accent-bg"></div>
+  <fuse-sidebar class="sidebar" name="custom-object-sidebar" position="left" lockedOpen="gt-md">
+    <customobjectsidebar></customobjectsidebar>
+  </fuse-sidebar>
+  <div class="center p-24 pb-56 ps ps--active-y">
+    <div class="header" fxLayout="row" fxLayoutAlign="start center">
+      <div class="search-wrapper mat-white-bg" fxFlex fxLayout="row" fxLayoutAlign="start center">
+        <button mat-icon-button class="sidebar-toggle" fxHide.gt-md (click)="toggleSidebar('custom-object-sidebar')">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <div class="search" flex fxLayout="row" fxLayoutAlign="start center">
+          <mat-icon>search</mat-icon>
+          <input [formControl]="searchInput" placeholder="Search for a task" fxFlex>
+        </div>
+      </div>
+    </div>
+    <div class="content-card mat-white-bg">
+      <div class="content" fxFlexAlign="row">
+      </div>
+    </div>
+  </div>
+
+</div>

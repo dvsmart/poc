@@ -51,10 +51,10 @@
           <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm> {{row.icon}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="sortOrder">
-          <mat-header-cell *matHeaderCellDef  fxHide fxShow.gt-sm> Sort Order </mat-header-cell>
-          <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm> {{row.sortOrder}} </mat-cell>
+          <mat-header-cell *matHeaderCellDef> Sort Order </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.sortOrder}} </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="hasChildren" fxHide fxShow.gt-sm>
+        <ng-container matColumnDef="hasChildren">
           <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm> Has Children </mat-header-cell>
           <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
             <mat-checkbox [checked]="row.hasChildren" (click)="$event.stopPropagation()"></mat-checkbox>

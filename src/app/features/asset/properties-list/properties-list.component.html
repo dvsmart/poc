@@ -109,7 +109,7 @@
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
                 <mat-row *matRowDef="let property; columns: displayedColumns;" class="property" matRipple [routerLink]="['/asset/property/', property.id]"
-                    matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                    [@animate]="{value:'*',params:{y:'100%'}}">
                 </mat-row>
             </mat-table>
             <mat-paginator #paginator [length]="resultsLength" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">

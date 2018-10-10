@@ -45,7 +45,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   settings(){
-    this.router.navigate(['settings/checklistManagement']);
+    this.router.navigate(['customObject/setup']);
   }
   
   users(){
