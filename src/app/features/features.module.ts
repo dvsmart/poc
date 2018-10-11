@@ -49,12 +49,8 @@ const routes: Routes = [
         loadChildren: './checklist/checklist.module#ChecklistModule',
       },
       {
-        path: 'settings/checklistManagement',
-        loadChildren: './settings/customEntity/custom-entity.module#CustomEntityModule',
-      },
-      {
         path: 'customObject/setup',
-        loadChildren: './settings/custom-object-management/custom-object-management.module#CustomObjectManagementModule',
+        loadChildren: './settings/customobjectsetup/customobjectsetup.module#CustomobjectsetupModule',
       },
       {
         path: 'settings/menuManagement',
