@@ -11,3 +11,44 @@
         }
     }
 }
+
+@import "src/@core/scss/fuse";
+
+:host {
+    width: 100%;
+
+    .center {
+
+        .header {
+
+            .search-wrapper {
+                @include mat-elevation(7);
+
+                .sidebar-toggle {
+                    margin: 0;
+                    width: 56px;
+                    height: 56px;
+                    border-radius: 0;
+                    border-right: 1px solid rgba(0, 0, 0, .12);
+                }
+
+                .search {
+                    width: 100%;
+                    height: 56px;
+                    line-height: 56px;
+                    padding: 18px;
+
+                    input {
+                        height: 56px;
+                        padding-left: 16px;
+                        color: rgba(0, 0, 0, 0.54);
+                        border: none;
+                        outline: none;
+                    }
+                }
+            }
+        }
+
+    }
+}
+

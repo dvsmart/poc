@@ -5,7 +5,7 @@ import { ManageTabsComponent } from './components/manage-tabs/manage-tabs.compon
 import { Routes, RouterModule } from '@angular/router';
 import { CoreSharedModule } from '@core/core.module';
 import { CoreSidebarModule } from '@core/components/sidebar/sidebar.module';
-import { MatIconModule, MatListModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule, MatCardModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatToolbarModule, MatProgressSpinnerModule, MatProgressBarModule, MatMenuModule, MatStepperModule } from '@angular/material';
+import { MatIconModule, MatListModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule, MatCardModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatToolbarModule, MatProgressSpinnerModule, MatProgressBarModule, MatMenuModule, MatStepperModule, MatOptionModule, MatSelectModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CdkTableModule } from '@angular/cdk/table';
 import { TemplatesService } from './components/manage-templates/templates.service';
@@ -14,7 +14,6 @@ import { EditTemplateComponent } from './components/edit-template/edit-template.
 import { EditTabComponent } from './components/edit-tab/edit-tab.component';
 import { ManageFieldsComponent } from './components/manage-fields/manage-fields.component';
 import { EditFieldComponent } from './components/edit-field/edit-field.component';
-import { TabService } from './components/manage-tabs/tabs.service';
 import { TemplateSetupService } from './components/template-setup/templatesetup.service';
 
 
@@ -83,6 +82,8 @@ const routes: Routes = [
     MatDialogModule,
     MatProgressBarModule,
     MatStepperModule,
+    MatOptionModule,
+    MatSelectModule,
     RouterModule.forChild(routes),
 
   ],
