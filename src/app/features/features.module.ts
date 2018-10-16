@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '../../../node_modules/@angular/router';
 import { CoreSharedModule } from '../../@core/core.module';
-import { AuthGuard } from '../login/auth.guard';
+import { AuthGuard } from '../_guards/auth.guard';
 
 import { SiteLayoutComponent } from '../layout/site-layout/site-layout.component';
 import { AppLayoutComponent } from '../layout/app-layout/app-layout.component';
@@ -49,16 +49,12 @@ const routes: Routes = [
         loadChildren: './checklist/checklist.module#ChecklistModule',
       },
       {
-        path: 'customObject/setup',
-        loadChildren: './settings/customobjectsetup/customobjectsetup.module#CustomobjectsetupModule',
-      },
-      {
-        path: 'settings/menuManagement',
-        loadChildren: './settings/menu/menu.module#MenuManagementModule',
-      },
-      {
         path: '',
         loadChildren: './users/users.module#UsersModule',
+      },
+      {
+        path: 'admin',
+        loadChildren: '../admin/admin.module#AdminModule',
       }
     ]
   },
@@ -85,6 +81,7 @@ const routes: Routes = [
     path:'**',component:Error404Component
   }
 ];
+
 @NgModule({
   imports: [
     CoreSharedModule,

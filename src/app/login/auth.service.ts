@@ -26,10 +26,6 @@ export class AuthService {
 
   private hasLoggedIn() {
     var userInfo = JSON.parse(localStorage.getItem('currentUser'));
-    if(userInfo){
-      var isValid = new Date(userInfo.expires) >= new Date();
-      return isValid
-    }
     return !!userInfo;
   }
 

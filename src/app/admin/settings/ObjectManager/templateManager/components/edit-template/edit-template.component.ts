@@ -24,6 +24,7 @@ export class EditTemplateComponent implements OnInit {
       postalCode: {},
       country: {}
     };
+    this._unsubscribeAll = new Subject();
   }
 
   ngOnInit() {

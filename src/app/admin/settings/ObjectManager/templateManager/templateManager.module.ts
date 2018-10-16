@@ -89,4 +89,4 @@ const routes: Routes = [
   ],
   declarations: [ManageTemplatesComponent, TemplateSidebarComponent, ManageTabsComponent, TemplateSetupComponent, EditTemplateComponent, EditTabComponent, ManageFieldsComponent, EditFieldComponent]
 })
-export class CustomtemplatesetupModule { }
+export class TemplateManagerModule { }

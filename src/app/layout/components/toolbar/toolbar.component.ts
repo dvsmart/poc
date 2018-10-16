@@ -45,7 +45,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   settings(){
-    this.router.navigate(['customObject/setup']);
+    this.router.navigate(['admin/setup/customObject']);
   }
   
   users(){
@@ -53,7 +53,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   menu(){
-    this.router.navigate(['settings/menuManagement']);
+    this.router.navigate(['admin/setup/menuManagement']);
   }
 
   ngOnInit() {
