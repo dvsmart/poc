@@ -1,8 +1,17 @@
+
 <div id="customTabManager" class="page-layout carded fullwidth inner-scroll">
   <div class="top-bg mat-accent-bg"></div>
   <div class="center">
     <div class="header mat-accent-bg" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
       fxLayoutAlign.gt-xs="space-between center">
+      <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+        <span class="logo-text h1" [routerLink]="['/customObject/setup']">
+          Tabs
+        </span>
+        <div class="subtitle secondary-text">
+          <span>Template Tabs Setup</span>
+        </div>
+      </div>
       <div class="search-input-wrapper mx-24 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
         <label for="search" class="mr-8">
           <mat-icon class="secondary-text">search</mat-icon>
@@ -19,7 +28,7 @@
       <div class="example-loading-shade" *ngIf="isLoading">
         <mat-spinner *ngIf="isLoading"></mat-spinner>
       </div>
-      <mat-table class="customObjects-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'10'}">
+      <mat-table class="tabs-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'10'}">
         <ng-container cdkColumnDef="caption">
           <mat-header-cell *cdkHeaderCellDef> Tab Name </mat-header-cell>
           <mat-cell *cdkCellDef="let row"> {{row.caption}} </mat-cell>
