@@ -8,11 +8,9 @@
 
 <div class="tab-content" *ngIf="tab">
   <form [formGroup]="tabForm" (submit)="addTab()">
-
     <mat-form-field class="title mt-8" floatLabel="never" fxFill>
-      <input matInput name="caption" formControlName="caption" placeholder="Tab Name" required/>
+      <input matInput name="caption" formControlName="caption" placeholder="Tab Name" required />
     </mat-form-field>
-
     <button *ngIf="formType === 'new'" mat-raised-button class="mat-accent" [disabled]="tabForm.invalid">SAVE
     </button>
   </form>

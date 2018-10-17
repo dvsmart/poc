@@ -17,6 +17,7 @@ import { TemplateSetupService } from './components/template-setup/templatesetup.
 import { TabListComponent } from './components/tab-list/tab-list.component';
 import { ManageTabsComponent } from './components/manage-tabs/manage-tabs.component';
 import { TabListItemComponent } from './components/tab-list/tab-list-item/tab-list-item.component';
+import { FieldsService } from './components/manage-fields/fields.service';
 
 
 const routes: Routes = [
