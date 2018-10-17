@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { ManageTemplatesComponent } from './components/manage-templates/manage-templates.component';
 import { TemplateSidebarComponent } from './components/template-sidebar/template-sidebar.component';
-import { ManageTabsComponent } from './components/manage-tabs/manage-tabs.component';
 import { Routes, RouterModule } from '@angular/router';
 import { CoreSharedModule } from '@core/core.module';
 import { CoreSidebarModule } from '@core/components/sidebar/sidebar.module';
-import { MatIconModule, MatListModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule, MatCardModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatToolbarModule, MatProgressSpinnerModule, MatProgressBarModule, MatMenuModule, MatStepperModule, MatOptionModule, MatSelectModule } from '@angular/material';
+import { MatIconModule, MatListModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule, MatCardModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatToolbarModule, MatProgressSpinnerModule, MatProgressBarModule, MatMenuModule, MatStepperModule, MatOptionModule, MatSelectModule, MatDatepickerModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CdkTableModule } from '@angular/cdk/table';
 import { TemplatesService } from './components/manage-templates/templates.service';
@@ -15,6 +14,9 @@ import { EditTabComponent } from './components/edit-tab/edit-tab.component';
 import { ManageFieldsComponent } from './components/manage-fields/manage-fields.component';
 import { EditFieldComponent } from './components/edit-field/edit-field.component';
 import { TemplateSetupService } from './components/template-setup/templatesetup.service';
+import { TabListComponent } from './components/tab-list/tab-list.component';
+import { ManageTabsComponent } from './components/manage-tabs/manage-tabs.component';
+import { TabListItemComponent } from './components/tab-list/tab-list-item/tab-list-item.component';
 
 
 const routes: Routes = [
@@ -50,7 +52,7 @@ const routes: Routes = [
         }]
       }
     ],
-    resolve:{
+    resolve: {
       tabs: TemplateSetupService
     }
   }
@@ -84,9 +86,20 @@ const routes: Routes = [
     MatStepperModule,
     MatOptionModule,
     MatSelectModule,
+    MatDatepickerModule,
     RouterModule.forChild(routes),
 
   ],
-  declarations: [ManageTemplatesComponent, TemplateSidebarComponent, ManageTabsComponent, TemplateSetupComponent, EditTemplateComponent, EditTabComponent, ManageFieldsComponent, EditFieldComponent]
+  declarations: [
+    ManageTemplatesComponent,
+    TemplateSidebarComponent,
+    ManageTabsComponent,
+    TabListItemComponent,
+    TabListComponent,
+    TemplateSetupComponent,
+    EditTemplateComponent,
+    EditTabComponent,
+    ManageFieldsComponent,
+    EditFieldComponent]
 })
 export class TemplateManagerModule { }
