@@ -2,11 +2,6 @@ import { NgModule } from '@angular/core';
 import { ManageTemplatesComponent } from './components/manage-templates/manage-templates.component';
 import { TemplateSidebarComponent } from './components/template-sidebar/template-sidebar.component';
 import { Routes, RouterModule } from '@angular/router';
-import { CoreSharedModule } from '@core/core.module';
-import { CoreSidebarModule } from '@core/components/sidebar/sidebar.module';
-import { MatIconModule, MatListModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule, MatCardModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatToolbarModule, MatProgressSpinnerModule, MatProgressBarModule, MatMenuModule, MatStepperModule, MatOptionModule, MatSelectModule, MatDatepickerModule, MatRadioModule } from '@angular/material';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { CdkTableModule } from '@angular/cdk/table';
 import { TemplatesService } from './components/manage-templates/templates.service';
 import { TemplateSetupComponent } from './components/template-setup/template-setup.component';
 import { EditTemplateComponent } from './components/edit-template/edit-template.component';
@@ -17,23 +12,32 @@ import { TemplateSetupService } from './components/template-setup/templatesetup.
 import { TabListComponent } from './components/tab-list/tab-list.component';
 import { ManageTabsComponent } from './components/manage-tabs/manage-tabs.component';
 import { TabListItemComponent } from './components/tab-list/tab-list-item/tab-list-item.component';
-import { FieldsService } from './components/manage-fields/fields.service';
+import { SharedAdminModule } from 'app/admin/sharedAdmin.module';
+import { ManageCategoriesComponent } from './components/manage-categories/manage-categories.component';
+import { CategoriesService } from './components/manage-categories/categories.service';
 
 
 const routes: Routes = [
   {
-    path: '',
-    component: ManageTemplatesComponent,
-    resolve: {
-      categories: TemplatesService
+    path:'categories',
+    component:ManageCategoriesComponent,
+    resolve:{
+      categories: CategoriesService
     }
   },
   {
-    path: 'manage/:id',
+    path:'templates',
+    component:ManageTemplatesComponent,
+    resolve:{
+      templates: TemplatesService
+    }
+  },
+  {
+    path: 'templates/:id',
     component: TemplateSetupComponent,
     children: [
       {
-        path: 'details',
+        path: '',
         component: EditTemplateComponent
       },
       {
@@ -61,38 +65,12 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    CoreSharedModule,
-    CoreSidebarModule,
-    CdkTableModule,
-    MatPaginatorModule,
-    MatMenuModule,
-    MatSortModule,
-    MatIconModule,
-    MatListModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatDialogModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MatCardModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatCheckboxModule,
-    MatToolbarModule,
-    MatRadioModule,
-    MatProgressSpinnerModule,
-    MatDialogModule,
-    MatProgressBarModule,
-    MatStepperModule,
-    MatOptionModule,
-    MatSelectModule,
-    MatDatepickerModule,
+    SharedAdminModule,
     RouterModule.forChild(routes),
 
   ],
   declarations: [
+    ManageCategoriesComponent,
     ManageTemplatesComponent,
     TemplateSidebarComponent,
     ManageTabsComponent,
@@ -102,6 +80,7 @@ const routes: Routes = [
     EditTemplateComponent,
     EditTabComponent,
     ManageFieldsComponent,
-    EditFieldComponent]
+    EditFieldComponent
+    ]
 })
 export class TemplateManagerModule { }

@@ -26,35 +26,43 @@ const routes: Routes = [
       },
       {
         path: 'asset',
-        loadChildren: './asset/asset.module#AssetModule'
+        loadChildren: './asset/asset.module#AssetModule',
+        data: { preload: true, delay: true }
       },
       {
         path: 'assessment',
-        loadChildren: './assessment/assessment.module#AssessmentModule'
+        loadChildren: './assessment/assessment.module#AssessmentModule',
+        data: { preload: true, delay: true }
       },
       {
         path: 'calender',
-        loadChildren: './calendar/calendar.module#CalendarModule'
+        loadChildren: './calendar/calendar.module#CalendarModule',
+        data: { preload: false, delay: true }
       },
       {
         path: 'todo',
-        loadChildren: './todo/todo.module#TodoModule'
+        loadChildren: './todo/todo.module#TodoModule',
+        data: { preload: true, delay: false }
       },
       {
         path: 'task',
-        loadChildren: './task/task.module#TaskModule'
+        loadChildren: './task/task.module#TaskModule',
+        data: { preload: true, delay: true }
       },
       {
         path: 'checklist',
         loadChildren: './checklist/checklist.module#ChecklistModule',
+        data: { preload: true, delay: false }
       },
       {
         path: '',
         loadChildren: './users/users.module#UsersModule',
+        data: { preload: false, delay: true }
       },
       {
         path: 'admin',
         loadChildren: '../admin/admin.module#AdminModule',
+        data: { preload: false, delay: true },
       }
     ]
   },

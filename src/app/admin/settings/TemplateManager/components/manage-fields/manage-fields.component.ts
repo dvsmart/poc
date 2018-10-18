@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FieldsService } from './fields.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { fuseAnimations } from '@core/animations';
-import { Router, ActivatedRoute } from '@angular/router';
 import { FieldResponse, TemplateResponse } from '../../models/template.model';
 import { TemplateSetupService } from '../template-setup/templatesetup.service';
 

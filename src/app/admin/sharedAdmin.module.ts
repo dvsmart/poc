@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CoreSharedModule } from '@core/core.module';
 import { CoreSidebarModule } from '@core/components/sidebar/sidebar.module';
-import { MatIconModule, MatListModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule, MatCardModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatToolbarModule, MatProgressSpinnerModule, MatProgressBarModule, MatMenuModule } from '@angular/material';
+import { MatIconModule, MatListModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule, MatCardModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatToolbarModule, MatProgressSpinnerModule, MatProgressBarModule, MatMenuModule, MatOptionModule, MatSelectModule, MatStepperModule, MatRadioModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CdkTableModule } from '@angular/cdk/table';
 
@@ -29,6 +29,10 @@ import { CdkTableModule } from '@angular/cdk/table';
         MatToolbarModule,
         MatProgressSpinnerModule,
         MatDialogModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatStepperModule,
+        MatRadioModule,
         MatProgressBarModule
     ],
     exports: [
@@ -36,6 +40,8 @@ import { CdkTableModule } from '@angular/cdk/table';
         CoreSidebarModule,
         CdkTableModule,
         MatPaginatorModule,
+        MatRadioModule,
+        MatStepperModule,
         MatMenuModule,
         MatSortModule,
         MatIconModule,
@@ -43,7 +49,9 @@ import { CdkTableModule } from '@angular/cdk/table';
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
+        MatSelectModule,
         MatDialogModule,
+        MatOptionModule,
         ReactiveFormsModule,
         FormsModule,
         MatCardModule,

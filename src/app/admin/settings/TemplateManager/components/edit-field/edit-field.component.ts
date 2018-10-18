@@ -19,7 +19,6 @@ export class EditFieldComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    debugger;
     if(this.formType == 'new'){
       this.firstFormGroup = this._formBuilder.group({
         fieldType: ['', Validators.required]

@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '../../../node_modules/@angular/router';
 import { CoreSharedModule } from '../../@core/core.module';
 import { AdminGuard } from '../_guards/admin.guard';
-import { MatIconModule } from '@angular/material';
-
+import { SharedAdminModule } from './sharedAdmin.module';
 
 const routes: Routes = [
   {
@@ -12,7 +11,7 @@ const routes: Routes = [
     children: [
       {
         path: 'setup/customObject',
-        loadChildren: './settings/ObjectManager/objectManager.module#ObjectManagerModule',
+        loadChildren: './settings/TemplateManager/templateManager.module#TemplateManagerModule',
       },
       {
         path: 'setup/menuManagement',
@@ -24,8 +23,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    CoreSharedModule,
-    MatIconModule,
+    SharedAdminModule,
     RouterModule.forChild(routes),
   ]
 })

@@ -30,8 +30,13 @@ export class ManageTemplatesComponent implements OnInit {
     this.templatesService.customTemplates
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
-        this.categoryName = response.groupName;
-        this.dataSource = new MatTableDataSource(response.customTemplates);
+        if(response ){
+          if(response.groupName){
+            this.categoryName = response.groupName;
+            this.dataSource = new MatTableDataSource(response.customTemplates);
+          }
+          this.dataSource = new MatTableDataSource(response);  
+        }
       });
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

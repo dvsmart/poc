@@ -10,18 +10,9 @@ import { TemplateResponse } from '../../models/template.model';
 })
 export class TemplateSetupService {
   onSelectedTemplateChanged: BehaviorSubject<any>;
-
-
   routeParams: any;
-  customTabs: BehaviorSubject<any>;
-  ontemplateChanged:BehaviorSubject<string>;
-  ontemplateIdChanged:BehaviorSubject<number>;
 
   constructor(private _httpClient: HttpClient) {
-    this.customTabs = new BehaviorSubject<any>(null);
-    this.ontemplateChanged = new BehaviorSubject<string>('');
-    this.ontemplateIdChanged = new BehaviorSubject<number>(0);
-
     this.onSelectedTemplateChanged = new BehaviorSubject<any>({});
   }
 
@@ -39,18 +30,6 @@ export class TemplateSetupService {
     });
   }
 
-  getCustomTabs(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'CustomTabConfig/' + this.routeParams.id)
-        .subscribe((response: any) => {
-          this.ontemplateChanged.next(response.templateName);
-          this.ontemplateIdChanged.next(response.id);
-          this.customTabs.next(response.templateTabs);
-          resolve(response);
-        }, reject);
-    });
-  }
-
   getTemplateDetail(){
     return new Promise((resolve, reject) => {
       this._httpClient.get<TemplateResponse>(environment.apiUrl + 'CustomTemplateConfig/' + this.routeParams.id)
@@ -60,4 +39,6 @@ export class TemplateSetupService {
         }, reject);
     });
   }
+
+  
 }

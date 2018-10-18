@@ -64,9 +64,9 @@
 
                 <button mat-menu-item="mat-menu-item" [matMenuTriggerFor]="objectSetup">
                     <div fxLayout="row" fxLayoutAlign="start center">
-                            <mat-icon>settings</mat-icon>
-                            <span>Object Manager</span>
-                        </div>
+                        <mat-icon>settings</mat-icon>
+                        <span>Object Manager</span>
+                    </div>
                 </button>
 
                 <button mat-menu-item="mat-menu-item" (click)="menu()">
@@ -77,8 +77,8 @@
             </mat-menu>
 
             <mat-menu #objectSetup="matMenu" [overlapTrigger]="false">
-                <button mat-menu-item="mat-menu-item" (click)="settings()">Categories</button>
-                <button mat-menu-item="mat-menu-item">Templates</button>
+                <button mat-menu-item="mat-menu-item" (click)="categories()">Categories</button>
+                <button mat-menu-item="mat-menu-item" (click)="templates()">Templates</button>
             </mat-menu>
 
             <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
