@@ -71,7 +71,7 @@
 <div *ngIf="tabs.length === 0" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
   <span class="no-todos-text hint-text">There are no Tabs!</span>
 </div>
-<div class="todo-list" ngxDroppable (out)="onDrop($event)" [@animateStagger]="{value:'50'}">
+<div class="tab-list" ngxDroppable (out)="onDrop($event)" [@animateStagger]="{value:'50'}">
   <tab-list-item class="tab-list-item has-handle" *ngFor="let taskItem of tabs" 
     [tab]="taskItem" 
     ngxDraggable

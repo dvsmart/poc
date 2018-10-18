@@ -5,11 +5,11 @@ import { fuseAnimations } from '@core/animations';
   selector: 'app-template-sidebar',
   templateUrl: './template-sidebar.component.html',
   styleUrls: ['./template-sidebar.component.scss'],
-  animations : fuseAnimations
+  animations: fuseAnimations
 })
 export class TemplateSidebarComponent implements OnInit {
-
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

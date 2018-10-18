@@ -4,20 +4,20 @@
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Fill out your name</ng-template>
-      <mat-form-field>
-        <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
-      </mat-form-field>
+      <ng-template matStepLabel>Choose a Field Type</ng-template>
       <div>
+        <mat-radio-button formControlName="fieldType" *ngFor="let ft of fieldTypes" [value]="ft">
+          {{ft}}
+        </mat-radio-button>
         <button mat-button matStepperNext>Next</button>
       </div>
     </form>
   </mat-step>
   <mat-step [stepControl]="secondFormGroup">
     <form [formGroup]="secondFormGroup">
-      <ng-template matStepLabel>Fill out your address</ng-template>
+      <ng-template matStepLabel>Fill out Field Information</ng-template>
       <mat-form-field>
-        <input matInput placeholder="Address" formControlName="secondCtrl" required>
+        <input matInput placeholder="Name" formControlName="name" required>
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Back</button>

@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Tab } from '../tab-list/tab.model';
+import { Tab } from '../../models/tab.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { TabService } from '../tab-list/tabs.service';
 import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { fuseAnimations } from '@core/animations';
+import { TabResponse } from '../../models/template.model';
 
 @Component({
   selector: 'tab-detail',
@@ -13,7 +14,7 @@ import { fuseAnimations } from '@core/animations';
   animations: fuseAnimations
 })
 export class EditTabComponent implements OnInit {
-  tab: Tab;
+  tab: TabResponse;
   formType: string;
   tabForm: FormGroup;
 
@@ -53,8 +54,8 @@ export class EditTabComponent implements OnInit {
 
   createTabForm(): FormGroup {
     return this._formBuilder.group({
-      id: [this.tab.id],
-      caption: [this.tab.caption],
+      id: [this.tab.tabId],
+      caption: [this.tab.tabName],
     });
   }
 

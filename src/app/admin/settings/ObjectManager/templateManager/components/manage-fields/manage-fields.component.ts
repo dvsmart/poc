@@ -4,6 +4,9 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { fuseAnimations } from '@core/animations';
+import { Router, ActivatedRoute } from '@angular/router';
+import { FieldResponse, TemplateResponse } from '../../models/template.model';
+import { TemplateSetupService } from '../template-setup/templatesetup.service';
 
 @Component({
   selector: 'app-manage-fields',
@@ -13,24 +16,28 @@ import { fuseAnimations } from '@core/animations';
 })
 export class ManageFieldsComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
-
-  displayedColumns: string[] = ['caption','controlType', 'actions'];
+  field: FieldResponse;
+  displayedColumns: string[] = ['fieldCaption', 'isRequired', 'addedBy', 'addedOn', 'actions'];
   dataSource: MatTableDataSource<any>;
 
   categoryName: string;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private _fieldservice: FieldsService) {
+  constructor(private templateservice: TemplateSetupService) {
     this._unsubscribeAll = new Subject();
   }
 
   ngOnInit() {
-    this._fieldservice.fields
+    this.templateservice.onSelectedTemplateChanged
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(response => {
-        this.dataSource = new MatTableDataSource(response);
+      .subscribe((response: TemplateResponse) => {
+        this.dataSource = new MatTableDataSource(response.fields);
       });
+  }
+
+  editField(field) {
+    this.field = field;
   }
 
 }

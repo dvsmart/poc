@@ -2,7 +2,8 @@ import { Component, OnInit, HostBinding, Input, ViewEncapsulation } from '@angul
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { TabService } from '../tabs.service';
-import { Tab } from '../tab.model';
+import { Tab } from '../../../models/tab.model';
+import { TabResponse } from '../../../models/template.model';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class TabListItemComponent implements OnInit {
     tags: any[];
 
     @Input()
-    tab: Tab;
+    tab: TabResponse;
 
     @HostBinding('class.selected')
     selected: boolean;

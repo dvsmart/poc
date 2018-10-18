@@ -4,7 +4,7 @@ import { TemplateSidebarComponent } from './components/template-sidebar/template
 import { Routes, RouterModule } from '@angular/router';
 import { CoreSharedModule } from '@core/core.module';
 import { CoreSidebarModule } from '@core/components/sidebar/sidebar.module';
-import { MatIconModule, MatListModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule, MatCardModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatToolbarModule, MatProgressSpinnerModule, MatProgressBarModule, MatMenuModule, MatStepperModule, MatOptionModule, MatSelectModule, MatDatepickerModule } from '@angular/material';
+import { MatIconModule, MatListModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule, MatCardModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatToolbarModule, MatProgressSpinnerModule, MatProgressBarModule, MatMenuModule, MatStepperModule, MatOptionModule, MatSelectModule, MatDatepickerModule, MatRadioModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CdkTableModule } from '@angular/cdk/table';
 import { TemplatesService } from './components/manage-templates/templates.service';
@@ -81,6 +81,7 @@ const routes: Routes = [
     MatSortModule,
     MatCheckboxModule,
     MatToolbarModule,
+    MatRadioModule,
     MatProgressSpinnerModule,
     MatDialogModule,
     MatProgressBarModule,

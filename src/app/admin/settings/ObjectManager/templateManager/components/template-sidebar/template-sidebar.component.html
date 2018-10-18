@@ -6,27 +6,32 @@
     <div class="content py-16" fusePerfectScrollbar>
       <div class="nav">
         <div class="nav-item" aria-label="inbox">
-          <a class="nav-link" matRipple [ngClass]="{'active mat-accent-bg':filterBy ==='all'}" routerLink="details">
+          <a class="nav-link" matRipple [routerLinkActive]="['active', 'mat-accent-bg']" routerLink="details">
             <span class="title">Details</span>
           </a>
         </div>
         <div class="nav-item" aria-label="frequently contacted">
-          <a class="nav-link" matRipple [ngClass]="{'active mat-accent-bg':filterBy ==='frequent'}" routerLink="tabs">
+          <a class="nav-link" matRipple [routerLinkActive]="['active', 'mat-accent-bg']" routerLink="tabs">
             <div class="title">Tabs</div>
           </a>
+          <div *ngIf="tabs && showTabs" [@animateStagger]="{value:'50'}" style="margin-left:20%">
+              <mat-nav-list>
+                  <a mat-list-item href="..." *ngFor="let tab of tabs"> {{ tab.caption }} </a>
+               </mat-nav-list>
+          </div>
         </div>
         <div class="nav-item" aria-label="starred">
-          <a class="nav-link" matRipple [ngClass]="{'active mat-accent-bg':filterBy ==='starred'}" routerLink="fields">
+          <a class="nav-link" matRipple [routerLinkActive]="['active', 'mat-accent-bg']" routerLink="fields">
             <div class="title">Fields & Relationships</div>
           </a>
         </div>
         <div class="nav-item" aria-label="inbox">
-          <a class="nav-link" matRipple [ngClass]="{'active mat-accent-bg':filterBy ==='all'}" routerLink="details">
+          <a class="nav-link" matRipple [routerLinkActive]="['active', 'mat-accent-bg']">
             <span class="title">Object Limits</span>
           </a>
         </div>
         <div class="nav-item" aria-label="frequently contacted">
-          <a class="nav-link" matRipple [ngClass]="{'active mat-accent-bg':filterBy ==='frequent'}" routerLink="details">
+          <a class="nav-link" matRipple [routerLinkActive]="['active', 'mat-accent-bg']">
             <div class="title">Validation Rules</div>
           </a>
         </div>

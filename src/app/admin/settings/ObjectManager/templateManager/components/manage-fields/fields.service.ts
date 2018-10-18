@@ -18,7 +18,6 @@ export class FieldsService {
         return new Promise((resolve, reject) => {
             this._httpClient.get<any>(environment.apiUrl + 'CustomFieldConfig/' + tabId)
                 .subscribe((response: any) => {
-                    debugger;
                     this.fields.next(response);
                     resolve(response);
                 }, reject);

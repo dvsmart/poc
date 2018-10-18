@@ -30,7 +30,7 @@ export class TemplatesService {
 
   getTemplates(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'CustomTemplateConfig/' + this.routeParams.id)
+      this._httpClient.get<any>(environment.apiUrl + 'CustomCategoryConfig/' + this.routeParams.id)
         .subscribe((response: any) => {
           this.customTemplates.next(response);
           resolve(response);

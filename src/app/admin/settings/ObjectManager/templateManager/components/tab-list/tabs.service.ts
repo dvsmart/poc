@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { environment } from '@env/environment';
 import { HttpClient } from '@angular/common/http';
-import { Tab } from './tab.model';
+import { Tab } from '../../models/tab.model';
 
 @Injectable({
   providedIn: 'root'

@@ -1,26 +1,36 @@
 @import "src/@core/scss/fuse";
-
 :host {
     width: 100%;
     .center {
         .content-card {
-
             @include media-breakpoint-down(lg) {
-
                 tab-list {
                     border-right: 0;
                 }
-
                 tab-list,
                 tab-detail {
                     flex: 1 0 100%;
                 }
-
                 tab-detail {
                     display: none !important;
                 }
             }
         }
     }
+    .content {
+        flex: 1 1 auto;
+        overflow: auto;
+    }
 }
 
+.toolbar {
+    padding-left: 16px !important;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex: 1 1 auto;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    height: 64px;
+    min-height: 64px;
+    max-height: 64px;
+}

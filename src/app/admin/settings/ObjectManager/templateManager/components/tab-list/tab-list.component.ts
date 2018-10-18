@@ -5,7 +5,8 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { takeUntil } from 'rxjs/operators';
 import { TabService } from './tabs.service';
 import { TemplateSetupService } from '../template-setup/templatesetup.service';
-import { Tab } from './tab.model';
+import { Tab } from '../../models/tab.model';
+import { TabResponse, TemplateResponse } from '../../models/template.model';
 
 @Component({
   selector: 'tab-list',
@@ -15,7 +16,7 @@ import { Tab } from './tab.model';
 })
 export class TabListComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
-  tabs: Tab[];
+  tabs: TabResponse[];
   displayedColumns: string[] = ['caption', 'actions'];
   dataSource: MatTableDataSource<any>;
 
@@ -28,11 +29,16 @@ export class TabListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.templateService.customTabs
+    // this.templateService.customTabs
+    //   .pipe(takeUntil(this._unsubscribeAll))
+    //   .subscribe(response => {
+    //     this.tabs = response;
+    //   });
+      this.templateService.onSelectedTemplateChanged
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(response => {
-        this.tabs = response;
-//        this.dataSource = new MatTableDataSource(response);
+      .subscribe((response : TemplateResponse) => {
+        debugger;
+        this.tabs = response.tabs;
       });
     // this.dataSource.paginator = this.paginator;
     // this.dataSource.sort = this.sort;
