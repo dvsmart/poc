@@ -1,42 +1,31 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { environment } from '@env/environment';
 import { HttpClient } from '@angular/common/http';
-import { Tab } from '../../models/tab.model';
+import { TabResponse } from '../../models/template.model';
+import { TemplateSetupService } from '../template-setup/templatesetup.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TabService {
-  updateTask(data: any): any {
-    throw new Error("Method not implemented.");
-  }
+
   onCurrentTabChanged: BehaviorSubject<any>;
+  onNewTabClicked: Subject<any>;
+
   routeParams: any;
   customTabs: BehaviorSubject<any>;
-  constructor(private _httpClient: HttpClient) {
+
+  constructor(private _httpClient: HttpClient, private templateservice: TemplateSetupService) {
     this.customTabs = new BehaviorSubject<any>(null);
     this.onCurrentTabChanged = new BehaviorSubject<any>({});
+    this.onNewTabClicked = new Subject();
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
-    this.routeParams = route.params;
+  getCustomTabs(templateId): Promise<any> {
     return new Promise((resolve, reject) => {
-      Promise.all([
-        this.getCustomTabs()
-      ]).then(
-        () => {
-          resolve();
-        },
-        reject
-      );
-    });
-  }
-
-  getCustomTabs(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'CustomTabConfig/' + this.routeParams.id)
+      this._httpClient.get<any>(environment.apiUrl + 'CustomTabConfig/' + templateId)
         .subscribe((response: any) => {
           this.customTabs.next(response);
           resolve(response);
@@ -46,5 +35,16 @@ export class TabService {
 
   setCurrentTab(tab): void {
     this.onCurrentTabChanged.next([tab, 'edit']);
+  }
+
+  addTab(tabRequest) {
+    return new Promise((resolve, reject) => {
+      this._httpClient.post(environment.apiUrl + 'CustomTabConfig', { ...tabRequest })
+        .subscribe((response: TabResponse) => {
+          this.onCurrentTabChanged.next([response, 'edit']);
+          this.templateservice.getTemplateDetail();
+          resolve(response);
+        }, reject);
+    });
   }
 }

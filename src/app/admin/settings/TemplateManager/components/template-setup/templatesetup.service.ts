@@ -4,6 +4,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { environment } from '@env/environment';
 import { HttpClient } from '@angular/common/http';
 import { TemplateResponse } from '../../models/template.model';
+import { TabService } from '../tab-list/tabs.service';
 
 @Injectable({
   providedIn: 'root'
@@ -30,15 +31,27 @@ export class TemplateSetupService {
     });
   }
 
-  getTemplateDetail(){
+  getTemplateDetail() {
+    if (this.routeParams.id != 'new') {
+      return new Promise((resolve, reject) => {
+        this._httpClient.get<TemplateResponse>(environment.apiUrl + 'CustomTemplateConfig/' + this.routeParams.id)
+          .subscribe((response: TemplateResponse) => {
+            this.onSelectedTemplateChanged.next(response);
+            resolve(response);
+          }, reject);
+      });
+    }
+  }
+
+  saveTemplate(templateName) {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<TemplateResponse>(environment.apiUrl + 'CustomTemplateConfig/' + this.routeParams.id)
+      this._httpClient.post(environment.apiUrl + 'CustomTemplateConfig', { ...templateName })
         .subscribe((response: TemplateResponse) => {
-          this.onSelectedTemplateChanged.next(response);
+          this.onSelectedTemplateChanged.next([response, 'edit']);
           resolve(response);
         }, reject);
     });
   }
 
-  
+
 }

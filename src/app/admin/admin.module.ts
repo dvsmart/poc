@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '../../../node_modules/@angular/router';
-import { CoreSharedModule } from '../../@core/core.module';
 import { AdminGuard } from '../_guards/admin.guard';
 import { SharedAdminModule } from './sharedAdmin.module';
 
@@ -11,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: 'setup/customObject',
-        loadChildren: './settings/TemplateManager/templateManager.module#TemplateManagerModule',
+        loadChildren: './settings/templateManager/templateManager.module#TemplateManagerModule',
       },
       {
         path: 'setup/menuManagement',

@@ -68,7 +68,7 @@
     </div>
   </div>
 </div> -->
-<div *ngIf="tabs.length === 0" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
+<div *ngIf="!tabs" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
   <span class="no-todos-text hint-text">There are no Tabs!</span>
 </div>
 <div class="tab-list" ngxDroppable (out)="onDrop($event)" [@animateStagger]="{value:'50'}">

@@ -43,7 +43,6 @@ export class TemplatesService {
     return new Promise((resolve, reject) => {
       this._httpClient.get<any>(environment.apiUrl + 'CustomTemplateConfig/')
         .subscribe((response: any) => {
-          debugger;
           this.customTemplates.next(response);
           resolve(response);
         }, reject);

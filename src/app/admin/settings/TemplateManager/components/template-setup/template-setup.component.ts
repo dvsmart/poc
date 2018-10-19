@@ -3,9 +3,10 @@ import { FuseSidebarService } from '@core/components/sidebar/sidebar.service';
 import { fuseAnimations } from '@core/animations';
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { takeUntil, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { TemplateSetupService } from './templatesetup.service';
 import { TemplateResponse } from '../../models/template.model';
+import { Route, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-template-setup',
@@ -19,31 +20,28 @@ export class TemplateSetupComponent implements OnInit {
   templateName:string;
   templateId:number;
 
-  detail: boolean = true;
+  isNew: boolean = false;
 
-  constructor(private _fuseSidebarService: FuseSidebarService,private templateService: TemplateSetupService) {
+  constructor(private _fuseSidebarService: FuseSidebarService,private templateService: TemplateSetupService,private route:ActivatedRoute) {
     this.searchInput = new FormControl('');
-
-    // Set the private defaults
+    
     this._unsubscribeAll = new Subject();
+    
+    
   }
 
   ngOnInit() {
-    // this.templateService.ontemplateChanged
-    // .pipe(takeUntil(this._unsubscribeAll))
-    // .subscribe(response => {
-    //   this.templateName = response;
-    // });
-    // this.templateService.ontemplateIdChanged
-    // .pipe(takeUntil(this._unsubscribeAll))
-    // .subscribe(response => {
-    //   this.templateId = response;
-    // });
+    var param = this.route.snapshot.paramMap.get('id');
+    this.isNew = param === 'new' ? true : false;
+  
     this.templateService.onSelectedTemplateChanged
     .pipe(takeUntil(this._unsubscribeAll))
     .subscribe((res:TemplateResponse)=>{
-      this.templateName = res.templateName;
-      this.templateId  = res.id
+      if(res){
+        this.templateName = res.templateName;
+        this.templateId  = res.id
+        this.isNew = false;
+      }
     })
 
     this.searchInput.valueChanges
@@ -61,7 +59,8 @@ export class TemplateSetupComponent implements OnInit {
     this._fuseSidebarService.getSidebar(name).toggleOpen();
   }
 
-  editTemplate(){
-    this.detail = false;
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 }

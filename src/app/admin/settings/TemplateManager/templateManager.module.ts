@@ -15,20 +15,21 @@ import { TabListItemComponent } from './components/tab-list/tab-list-item/tab-li
 import { SharedAdminModule } from 'app/admin/sharedAdmin.module';
 import { ManageCategoriesComponent } from './components/manage-categories/manage-categories.component';
 import { CategoriesService } from './components/manage-categories/categories.service';
+import { FieldDetailComponent } from './components/field-detail/field-detail.component';
 
 
 const routes: Routes = [
   {
-    path:'categories',
-    component:ManageCategoriesComponent,
-    resolve:{
+    path: 'categories',
+    component: ManageCategoriesComponent,
+    resolve: {
       categories: CategoriesService
     }
   },
   {
-    path:'templates',
-    component:ManageTemplatesComponent,
-    resolve:{
+    path: 'templates',
+    component: ManageTemplatesComponent,
+    resolve: {
       templates: TemplatesService
     }
   },
@@ -53,7 +54,7 @@ const routes: Routes = [
         component: ManageFieldsComponent,
         children: [{
           path: ':id',
-          component: EditFieldComponent
+          component: FieldDetailComponent
         }]
       }
     ],
@@ -80,7 +81,8 @@ const routes: Routes = [
     EditTemplateComponent,
     EditTabComponent,
     ManageFieldsComponent,
-    EditFieldComponent
-    ]
+    EditFieldComponent,
+    FieldDetailComponent
+  ],
 })
 export class TemplateManagerModule { }

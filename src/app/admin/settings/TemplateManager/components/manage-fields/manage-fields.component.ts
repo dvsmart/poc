@@ -3,8 +3,9 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { fuseAnimations } from '@core/animations';
-import { FieldResponse, TemplateResponse } from '../../models/template.model';
+import { FieldResponse, TemplateResponse, CreateFieldRequest } from '../../models/template.model';
 import { TemplateSetupService } from '../template-setup/templatesetup.service';
+import { FieldService } from './fields.service';
 
 @Component({
   selector: 'app-manage-fields',
@@ -17,12 +18,13 @@ export class ManageFieldsComponent implements OnInit {
   field: FieldResponse;
   displayedColumns: string[] = ['fieldCaption', 'isRequired', 'addedBy', 'addedOn', 'actions'];
   dataSource: MatTableDataSource<any>;
-
-  categoryName: string;
+  templateId: number;
+  isEdit:boolean = false;
+  isDetail:boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private templateservice: TemplateSetupService) {
+  constructor(private templateservice: TemplateSetupService, private fieldservice: FieldService) {
     this._unsubscribeAll = new Subject();
   }
 
@@ -30,12 +32,21 @@ export class ManageFieldsComponent implements OnInit {
     this.templateservice.onSelectedTemplateChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((response: TemplateResponse) => {
+        this.templateId = response.id;
         this.dataSource = new MatTableDataSource(response.fields);
+        this.fieldservice.getFieldTypes();
       });
   }
 
   editField(field) {
+    this.isEdit = true;
     this.field = field;
+    this.isDetail = true;
+  }
+
+  addField() {
+    this.isEdit = true;
+    this.fieldservice.onNewFieldAdded.next(['', this.templateId]);
   }
 
 }

@@ -8,7 +8,7 @@
           account_box
         </mat-icon>
         <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-          <span class="logo-text h1" [routerLink]="['/customObject/setup']">
+          <span class="logo-text h1" [routerLink]="['admin/setup/customObject/categories']">
             {{categoryName}}
           </span>
           <div class="subtitle secondary-text">
@@ -24,7 +24,7 @@
           <input id="search" matInput #filter placeholder="Quick Find" (keyup)="applyFilter($event.target.value)">
         </mat-form-field>
       </div>
-      <button mat-raised-button [routerLink]="['/tab/', 'new']" class="add-user-button mat-white-bg my-12 mt-sm-0">
+      <button mat-raised-button [routerLink]="['new']" class="add-user-button mat-white-bg my-12 mt-sm-0">
         <span>CREATE</span>
       </button>
     </div>

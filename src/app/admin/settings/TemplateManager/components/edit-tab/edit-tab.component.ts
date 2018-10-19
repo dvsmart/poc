@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Tab } from '../../models/tab.model';
+import { Component, OnInit,  ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { TabService } from '../tab-list/tabs.service';
@@ -11,7 +10,8 @@ import { TabResponse } from '../../models/template.model';
   selector: 'tab-detail',
   templateUrl: './edit-tab.component.html',
   styleUrls: ['./edit-tab.component.scss'],
-  animations: fuseAnimations
+  encapsulation: ViewEncapsulation.None,
+  animations:fuseAnimations
 })
 export class EditTabComponent implements OnInit {
   tab: TabResponse;
@@ -22,7 +22,7 @@ export class EditTabComponent implements OnInit {
 
   constructor(
     private _tabservice: TabService,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
   ) {
     // Set the private defaults
     this._unsubscribeAll = new Subject();
@@ -33,14 +33,21 @@ export class EditTabComponent implements OnInit {
     this._tabservice.onCurrentTabChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(([tab, formType]) => {
-        if (tab != undefined && tab && formType === 'edit') {
+        if (tab && formType === 'edit') {
+          debugger;
           this.formType = 'edit';
-          this.tab = tab;
+          this.tab = new TabResponse(tab);
           this.tabForm = this.createTabForm();
-        } else {
-          this.formType = 'new';
         }
       });
+    this._tabservice.onNewTabClicked
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(templateId => {
+        this.formType = 'new';
+        this.tab = new TabResponse(templateId);
+        this.tabForm = this.createTabForm();
+      });
+
     this.tabForm.valueChanges
       .pipe(
         takeUntil(this._unsubscribeAll),
@@ -48,18 +55,26 @@ export class EditTabComponent implements OnInit {
         distinctUntilChanged()
       )
       .subscribe(data => {
-        this._tabservice.updateTask(data);
+        this._tabservice.addTab(data);
       });
   }
 
   createTabForm(): FormGroup {
     return this._formBuilder.group({
-      id: [this.tab.tabId],
-      caption: [this.tab.tabName],
+      tabName: [this.tab.tabName],
+      isVisible: [this.tab.isVisible]
     });
   }
 
-  addTab() {
-    this._tabservice.updateTask(this.tabForm.getRawValue());
+  saveTab() {
+    var formData = this.tabForm.getRawValue();
+    this.tab.tabName = formData.tabName;
+    this.tab.isVisible = formData.isVisible;
+    this._tabservice.addTab(this.tab);
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 }

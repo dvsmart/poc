@@ -1,14 +1,13 @@
-<button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
-  {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
-</button>
-<mat-horizontal-stepper [linear]="isLinear" #stepper>
+<mat-horizontal-stepper linear #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Choose a Field Type</ng-template>
       <div>
-        <mat-radio-button formControlName="fieldType" *ngFor="let ft of fieldTypes" [value]="ft">
-          {{ft}}
-        </mat-radio-button>
+        <mat-radio-group formControlName="fieldType">
+          <mat-radio-button *ngFor="let ft of fields" [value]="ft.id">
+            {{ft.caption}}
+          </mat-radio-button>
+        </mat-radio-group>
         <button mat-button matStepperNext>Next</button>
       </div>
     </form>
@@ -31,6 +30,7 @@
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
+      <button mat-button (click)="saveField()">Save</button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>
