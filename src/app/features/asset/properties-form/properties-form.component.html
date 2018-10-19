@@ -1,7 +1,7 @@
 <div id="property" class="page-layout carded fullwidth inner-scroll">
-  <div class="top-bg mat-accent-bg"></div>
+  <div class="top-bg accent"></div>
   <div class="center">
-    <div class="header mat-accent-bg" fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
       <div fxLayout="row" fxLayoutAlign="start center">
         <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/asset/properties'">
           <mat-icon>arrow_back</mat-icon>
@@ -18,16 +18,17 @@
           </div>
         </div>
       </div>
-      <button mat-raised-button class="save-product-button mat-white-bg" [disabled]="propertyForm.invalid" *ngIf="pageType ==='new'"
+      <button mat-raised-button class="save-product-button" [disabled]="propertyForm.invalid" *ngIf="pageType ==='new'"
         (click)="addProperty()">
         <span>ADD</span>
       </button>
-      <button mat-raised-button class="save-product-button mat-white-bg" [disabled]="propertyForm.invalid || propertyForm.pristine"
+
+      <button mat-raised-button class="save-product-button" [disabled]="propertyForm.invalid || propertyForm.pristine"
         *ngIf="pageType ==='edit'" (click)="saveProperty()">
         <span>SAVE</span>
       </button>
     </div>
-    <div class="content-card mat-white-bg">
+    <div class="content-card">
       <div class="content">
         <form name="propertyForm" [formGroup]="propertyForm" class="property w-100-p" fxLayout="column" fxFlex>
           <mat-tab-group>
@@ -39,7 +40,7 @@
                 <mat-form-field class="w-100-p">
                   <input matInput placeholder="Address Line1" formControlName='addressLine1'>
                 </mat-form-field>
-                <mat-form-field  class="w-100-p">
+                <mat-form-field class="w-100-p">
                   <input matInput placeholder="Address Line2" formControlName='addressLine2'>
                 </mat-form-field>
                 <mat-form-field class="w-100-p">

@@ -32,7 +32,6 @@
                 [folded]="config.layout.navbar.folded"
                 lockedOpen="gt-md"
                 *ngIf="!config.layout.navbar.hidden">
-      <navbar [variant]="config.layout.navbar.variant"
-              class="left-navbar" [ngClass]="config.layout.navbar.background"></navbar>
+      <navbar class="left-navbar" [ngClass]="config.layout.navbar.primaryBackground"></navbar>
   </fuse-sidebar>
 </ng-template>

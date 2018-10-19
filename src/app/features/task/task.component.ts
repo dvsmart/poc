@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '../../../../node_modules/@angular/forms';
 import { Subject } from '../../../../node_modules/rxjs';
 import { FuseSidebarService } from '@core/components/sidebar/sidebar.service';
 import { TaskService } from './task.service';
 import { Task } from './task.model';
 import { takeUntil, debounceTime, distinctUntilChanged } from '../../../../node_modules/rxjs/operators';
+import { fuseAnimations } from '@core/animations';
 
 @Component({
-  selector: 'app-task',
+  selector: 'task',
   templateUrl: './task.component.html',
-  styleUrls: ['./task.component.scss']
+  styleUrls: ['./task.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  animations: fuseAnimations
 })
 export class TaskComponent implements OnInit {
 
@@ -88,12 +91,11 @@ export class TaskComponent implements OnInit {
 
   }
 
-  toggleSelectAll(): void
-    {
-        this._taskservice.toggleSelectAll();
-    }
+  toggleSelectAll(): void {
+    this._taskservice.toggleSelectAll();
+  }
 
-    selectTodos(){
-      
-    }
+  selectTodos() {
+
+  }
 }

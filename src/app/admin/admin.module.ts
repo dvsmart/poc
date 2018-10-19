@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: 'setup/customObject',
-        loadChildren: './settings/templateManager/templateManager.module#TemplateManagerModule',
+        loadChildren: './settings/TemplateManager/templateManager.module#TemplateManagerModule',
       },
       {
         path: 'setup/menuManagement',

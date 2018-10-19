@@ -1,16 +1,5 @@
 #property {
     .header {
-        .product-image {
-            overflow: hidden;
-            width: 56px;
-            height: 56px;
-            border: 3px solid rgba(0, 0, 0, 0.12);
-            img {
-                height: 100%;
-                width: auto;
-                max-width: none;
-            }
-        }
         .subtitle {
             margin: 6px 0 0 0;
         }
@@ -27,6 +16,12 @@
         }
         .mat-tab-label {
             height: 64px;
+        } 
+        
+        // Temporary prefix alignment fix
+        .mat-form-field-appearance-outline .mat-form-field-prefix,
+        .mat-form-field-appearance-outline .mat-form-field-suffix {
+            top: 0;
         }
     }
 }

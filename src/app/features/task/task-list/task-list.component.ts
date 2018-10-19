@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { takeUntil } from '../../../../../node_modules/rxjs/operators';
 import { DataSource } from '../../../../../node_modules/@angular/cdk/table';
 import { TaskService } from '../task.service';
@@ -12,6 +12,7 @@ import { Location } from '@angular/common';
   selector: 'task-list',
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
 export class TaskListComponent implements OnInit {

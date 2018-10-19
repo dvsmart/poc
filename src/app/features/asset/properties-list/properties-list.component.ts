@@ -11,7 +11,8 @@ import { FuseUtils } from '@core/utils';
   selector: 'app-properties-list',
   templateUrl: './properties-list.component.html',
   styleUrls: ['./properties-list.component.scss'],
-  animations: fuseAnimations
+  animations: fuseAnimations,
+  encapsulation: ViewEncapsulation.None
 })
 export class PropertiesListComponent implements OnInit {
   dataSource: MatTableDataSource<any> | null;

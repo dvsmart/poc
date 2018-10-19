@@ -11,7 +11,8 @@ import { FuseUtils } from '@core/utils';
   selector: 'app-assessment-list',
   templateUrl: './assessment-list.component.html',
   styleUrls: ['./assessment-list.component.scss'],
-  animations: fuseAnimations
+  animations: fuseAnimations,
+  encapsulation: ViewEncapsulation.None
 })
 
 export class AssessmentListComponent implements OnInit {

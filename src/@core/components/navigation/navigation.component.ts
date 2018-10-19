@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 
 import { fuseAnimations } from '../../animations';
 import { Subject } from '../../../../node_modules/rxjs';
@@ -10,8 +10,9 @@ import { CoreNavigationService } from './navigation.service';
     selector: 'core-navigation',
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    animations: fuseAnimations
+    changeDetection: ChangeDetectionStrategy.Default,
+    animations: fuseAnimations,
+    encapsulation: ViewEncapsulation.None
 })
 export class CoreNavigationComponent {
     @Input()
@@ -21,7 +22,7 @@ export class CoreNavigationComponent {
     navigation: any;
 
     private _unsubscribeAll: Subject<any>;
-    
+
     constructor(private _navigationService: CoreNavigationService) {
         this._unsubscribeAll = new Subject();
         this._navigationService.getMenuItems();
@@ -37,8 +38,7 @@ export class CoreNavigationComponent {
             })
     }
 
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }

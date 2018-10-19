@@ -1,8 +1,8 @@
 <!-- 
 <div id="customTabManager" class="page-layout carded fullwidth inner-scroll">
-  <div class="top-bg mat-accent-bg"></div>
+  <div class="top-bg accent"></div>
   <div class="center">
-    <div class="header mat-accent-bg" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+    <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
       fxLayoutAlign.gt-xs="space-between center">
       <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
         <span class="logo-text h1" [routerLink]="['/customObject/setup']">
@@ -25,7 +25,7 @@
       </button>
     </div>
     <div class="content" fxFlexAlign="row">
-      <div class="content-card mat-white-bg">
+      <div class="content-card">
         <div class="example-loading-shade" *ngIf="isLoading">
           <mat-spinner *ngIf="isLoading"></mat-spinner>
         </div>

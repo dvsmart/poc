@@ -5,7 +5,7 @@
     width: 100%;
     .center {
         .content-card {
-            @include media-breakpoint-down(lg) {
+            @include media-breakpoint(lg) {
                 tab-list {
                     border-right: 0;
                 }

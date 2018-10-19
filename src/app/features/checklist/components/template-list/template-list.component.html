@@ -1,5 +1,5 @@
 <div *ngIf="templateList">
-    <mat-toolbar class="header mat-accent-bg">
+    <mat-toolbar class="header accent">
         <mat-toolbar-row>
             <a href="#!" [routerLink]="['/checklist']">Categories</a>
             <a href="#!" [routerLink]="['/checklist/cat/',templateList.groupId]" class="breadcrumb">{{templateList.groupName}}</a>
@@ -15,7 +15,7 @@
             <div class="content py-16" fusePerfectScrollbar>
                 <div class="nav" [@listStagger]="templateList.templates.length">
                     <div class="nav-item" *ngFor="let template of templateList.templates">
-                        <a class="nav-link" [routerLink]="['/checklist/template/',template.id]" matRipple [ngClass]="{'active mat-accent-bg':filterBy ==='live'}">
+                        <a class="nav-link" [routerLink]="['/checklist/template/',template.id]" matRipple [ngClass]="{'active accent':filterBy ==='live'}">
                             <span class="title">{{template.templateName}}</span>
                         </a>
                     </div>

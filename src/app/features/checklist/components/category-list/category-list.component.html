@@ -8,7 +8,7 @@
             <div class="nav"  [@listStagger]="categories.length" >
                 <div class="nav-item" *ngFor="let category of categories">
                     <a  class="nav-link" [routerLink]="['/checklist/cat/',category.id]" matRipple 
-                    [ngClass]="{'active mat-accent-bg':filterBy ==='live'}">
+                    [ngClass]="{'active accent':filterBy ==='live'}">
                         <span class="title">{{category.categoryName}}</span>
                     </a>
                 </div>
