@@ -2,8 +2,8 @@ import { Component, OnInit, HostBinding, Input, ViewEncapsulation } from '@angul
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { TabService } from '../tabs.service';
-import { Tab } from '../../../models/tab.model';
-import { TabResponse } from '../../../models/template.model';
+import { TabResponse } from '../tab.model';
+
 
 
 @Component({

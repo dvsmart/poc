@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { fuseAnimations } from '@core/animations';
 import { Subject } from 'rxjs';
 import { CategoriesService } from './categories.service';
@@ -9,7 +9,8 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
   selector: 'manage-categories',
   templateUrl: './manage-categories.component.html',
   styleUrls: ['./manage-categories.component.scss'],
-  animations: fuseAnimations
+  animations: fuseAnimations,
+  encapsulation: ViewEncapsulation.None
 })
 export class ManageCategoriesComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;

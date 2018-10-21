@@ -3,8 +3,8 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { environment } from '@env/environment';
 import { HttpClient } from '@angular/common/http';
-import { TabResponse } from '../../models/template.model';
 import { TemplateSetupService } from '../template-setup/templatesetup.service';
+import { TabResponse } from './tab.model';
 
 @Injectable({
   providedIn: 'root'

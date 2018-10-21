@@ -1,23 +1,24 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { TabService } from '../tab-list/tabs.service';
+import { TabService } from './tabs.service';
 import { TemplateSetupService } from '../template-setup/templatesetup.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { TemplateResponse, TabResponse } from '../../models/template.model';
+import { TemplateResponse } from '../../models/template.model';
 import { fuseAnimations } from '@core/animations';
+import { TabResponse } from './tab.model';
 
 
 @Component({
-  selector: 'app-manage-tabs',
-  templateUrl: './manage-tabs.component.html',
-  styleUrls: ['./manage-tabs.component.scss'],
+  selector: 'tab',
+  templateUrl: './tab.component.html',
+  styleUrls: ['./tab.component.scss'],
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
 export class ManageTabsComponent implements OnInit {
   templateId: number;
   private _unsubscribeAll: Subject<any>;
-  currentTodo: TabResponse;
+  currentTab:TabResponse;
   constructor(private _tabservice: TabService, private templateService: TemplateSetupService) {
     this._unsubscribeAll = new Subject();
   }
@@ -30,12 +31,12 @@ export class ManageTabsComponent implements OnInit {
       })
     this._tabservice.onCurrentTabChanged
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(([currentTodo, formType]) => {
-        if (!currentTodo) {
-          this.currentTodo = null;
+      .subscribe(([currentTab, formType]) => {
+        if (!currentTab) {
+          this.currentTab = null;
         }
         else {
-          this.currentTodo = currentTodo;
+          this.currentTab = currentTab;
         }
       });
   }

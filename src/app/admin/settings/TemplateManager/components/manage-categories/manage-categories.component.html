@@ -1,8 +1,7 @@
-<div id="customCategoriesManager" class="page-layout carded fullwidth inner-scroll">
+<div id="gridPageTop" class="page-layout carded fullwidth inner-scroll">
   <div class="top-bg accent"></div>
   <div class="center">
-    <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
-      fxLayoutAlign.gt-xs="space-between center">
+    <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
       <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
         <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
           account_box
@@ -16,23 +15,26 @@
           </div>
         </div>
       </div>
-      <div class="search-input-wrapper mx-24 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
-        <label for="search" class="mr-8">
-          <mat-icon class="secondary-text">search</mat-icon>
-        </label>
-        <mat-form-field floatLabel="never" fxFlex="1 0 auto">
-          <input id="search" matInput #filter placeholder="Quick Find" (keyup)="applyFilter($event.target.value)">
-        </mat-form-field>
+      <!-- SEARCH -->
+      <div class="search-wrapper mx-32 mx-md-0">
+        <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+          <mat-icon>search</mat-icon>
+          <input #filter placeholder="Quick Find" (keyup)="applyFilter($event.target.value)">
+        </div>
       </div>
-      <button mat-raised-button  class="add-user-button mat-white-bg my-12 mt-sm-0">
-        <span>CREATE</span>
+      <!-- / SEARCH -->
+
+      <!-- ADD BUTTON -->
+      <button mat-raised-button [routerLink]="['/assessment/', 'new']" class="add-product-button fuse-white mt-24 mt-md-0">
+        <span>CREATE NEW</span>
       </button>
+
     </div>
     <div class="content-card">
       <div class="example-loading-shade" *ngIf="isLoading">
         <mat-spinner *ngIf="isLoading"></mat-spinner>
       </div>
-      <mat-table class="customObjects-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'10'}">
+      <mat-table class="custom-data-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'10'}">
         <ng-container cdkColumnDef="groupName">
           <mat-header-cell *cdkHeaderCellDef> Group Name </mat-header-cell>
           <mat-cell *cdkCellDef="let row"> {{row.groupName}} </mat-cell>
@@ -62,11 +64,10 @@
           </mat-cell>
         </ng-container>
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *cdkRowDef="let row; columns: displayedColumns;" matRipple class="category" [@animate]="{value:'*',params:{y:'100%'}}"
-        [routerLink]="[row.id]"></mat-row>
+        <mat-row *cdkRowDef="let row; columns: displayedColumns;" matRipple class="custom-data-table-row" [@animate]="{value:'*',params:{y:'100%'}}"
+          [routerLink]="[row.id]"></mat-row>
       </mat-table>
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-
     </div>
   </div>
 </div>

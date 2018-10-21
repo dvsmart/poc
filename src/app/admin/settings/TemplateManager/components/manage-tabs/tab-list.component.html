@@ -1,0 +1,12 @@
+<div *ngIf="!tabs" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
+  <span class="no-todos-text hint-text">There are no Tabs!</span>
+</div>
+<div class="tab-list" ngxDroppable (out)="onDrop($event)" [@animateStagger]="{value:'50'}">
+  <tab-list-item class="tab-list-item has-handle" *ngFor="let taskItem of tabs" 
+    [tab]="taskItem" 
+    ngxDraggable
+    (click)="readTab(taskItem)"
+    matRipple 
+    [@animate]="{value:'*',params:{y:'100%'}}">
+  </tab-list-item>
+</div>

@@ -6,7 +6,7 @@ import { fuseAnimations } from '@core/animations';
 import { TemplatesService } from './templates.service';
 
 @Component({
-  selector: 'app-manage-templates',
+  selector: 'manage-templates',
   templateUrl: './manage-templates.component.html',
   styleUrls: ['./manage-templates.component.scss'],
   animations:fuseAnimations

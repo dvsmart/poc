@@ -1,5 +1,6 @@
 @import "src/@core/scss/fuse";
-app-manage-tabs {
+
+tab {
     width: 100%;
     .center {
         .content-card {
@@ -14,11 +15,12 @@ app-manage-tabs {
                 min-height: 64px;
                 max-height: 64px;
             }
+
             .content {
                 min-height: 300px;
                 max-height: 650px;
                 overflow: scroll;
-                @include media-breakpoint(lg) {
+                @include media-breakpoint('lt-xl') {
                     tab-list {
                         border-right: 0;
                     }

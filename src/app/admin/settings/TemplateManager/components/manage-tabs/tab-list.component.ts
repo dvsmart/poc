@@ -5,7 +5,8 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { takeUntil } from 'rxjs/operators';
 import { TabService } from './tabs.service';
 import { TemplateSetupService } from '../template-setup/templatesetup.service';
-import { TabResponse, TemplateResponse } from '../../models/template.model';
+import { TemplateResponse } from '../../models/template.model';
+import { TabResponse } from './tab.model';
 
 @Component({
   selector: 'tab-list',

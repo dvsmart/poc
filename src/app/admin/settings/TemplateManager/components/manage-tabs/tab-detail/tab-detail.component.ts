@@ -1,19 +1,19 @@
 import { Component, OnInit,  ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { TabService } from '../tab-list/tabs.service';
 import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { fuseAnimations } from '@core/animations';
-import { TabResponse } from '../../models/template.model';
+import { TabService } from '../tabs.service';
+import { TabResponse } from '../tab.model';
 
 @Component({
   selector: 'tab-detail',
-  templateUrl: './edit-tab.component.html',
-  styleUrls: ['./edit-tab.component.scss'],
+  templateUrl: './tab-detail.component.html',
+  styleUrls: ['./tab-detail.component.scss'],
   encapsulation: ViewEncapsulation.None,
   animations:fuseAnimations
 })
-export class EditTabComponent implements OnInit {
+export class TabDetailComponent implements OnInit {
   tab: TabResponse;
   formType: string;
   tabForm: FormGroup;

@@ -4,7 +4,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { environment } from '@env/environment';
 import { HttpClient } from '@angular/common/http';
 import { TemplateResponse } from '../../models/template.model';
-import { TabService } from '../tab-list/tabs.service';
+import { TabService } from '../manage-tabs/tabs.service';
 
 @Injectable({
   providedIn: 'root'
