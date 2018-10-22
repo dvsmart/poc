@@ -72,15 +72,15 @@ export class PropertiesFormComponent implements OnInit {
       .then(x => {
         if (x['saveSuccessful'] === true) {
           data.id = parseInt(x['recordId']);
-          data.assetId =   parseInt(x['savedEntityId']);
+          data.assetId = parseInt(x['savedEntityId']);
           data.dataId = x["savedDataId"];
+          this._propertyservice.onPropertyChanged.next(data);
+          this._matSnackBar.open('Property saved', 'OK', {
+            verticalPosition: 'top',
+            duration: 2000
+          });
+          this._location.go('/asset/property/' + data.id);
         }
-        this._propertyservice.onPropertyChanged.next(x);
-        this._matSnackBar.open('Property saved', 'OK', {
-          verticalPosition: 'top',
-          duration: 2000
-        });
-        this._location.go('/asset/property/' + x.id);
       });
   }
 
@@ -90,15 +90,15 @@ export class PropertiesFormComponent implements OnInit {
       .then(x => {
         if (x['saveSuccessful'] === true) {
           data.id = parseInt(x['recordId']);
-          data.assetId =   parseInt(x['savedEntityId']);
+          data.assetId = parseInt(x['savedEntityId']);
           data.dataId = x["savedDataId"];
+          this._propertyservice.onPropertyChanged.next(data);
+          this._matSnackBar.open('Property added', 'OK', {
+            verticalPosition: 'top',
+            duration: 2000
+          });
+          this._location.go('/asset/property/' + data.id);
         }
-        this._propertyservice.onPropertyChanged.next(x);
-        this._matSnackBar.open('Property added', 'OK', {
-          verticalPosition: 'top',
-          duration: 2000
-        });
-        this._location.go('/asset/property/' + x.id);
       });
   }
 }

@@ -1,4 +1,4 @@
-import { FieldResponse } from "../../models/template.model";
+import { FieldResponse } from "../manage-fields/field.model";
 
 export class TabResponse {
     tabId: number | 0;
@@ -23,6 +23,18 @@ export class TabResponse {
             }else{
                 this.customTemplateId = templateId;
             }
+        }
+    }
+}
+
+export class Tab{
+    id:number;
+    caption: string;
+
+    constructor(data?) {
+        {
+            this.id = data.id;
+            this.caption = data.caption;
         }
     }
 }

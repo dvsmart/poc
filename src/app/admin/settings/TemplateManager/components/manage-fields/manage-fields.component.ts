@@ -3,9 +3,10 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { fuseAnimations } from '@core/animations';
-import { FieldResponse, TemplateResponse, CreateFieldRequest } from '../../models/template.model';
 import { TemplateSetupService } from '../template-setup/templatesetup.service';
 import { FieldService } from './fields.service';
+import { FieldResponse } from './field.model';
+import { TemplateResponse } from '../../models/template.model';
 
 @Component({
   selector: 'app-manage-fields',

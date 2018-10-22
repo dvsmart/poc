@@ -1,4 +1,4 @@
-import { Component, OnInit,  ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { TabResponse } from '../tab.model';
   templateUrl: './tab-detail.component.html',
   styleUrls: ['./tab-detail.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  animations:fuseAnimations
+  animations: fuseAnimations
 })
 export class TabDetailComponent implements OnInit {
   tab: TabResponse;
@@ -33,19 +33,17 @@ export class TabDetailComponent implements OnInit {
     this._tabservice.onCurrentTabChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(([tab, formType]) => {
-        if (tab && formType === 'edit') {
-          debugger;
-          this.formType = 'edit';
-          this.tab = new TabResponse(tab);
-          this.tabForm = this.createTabForm();
+        if(tab){
+          if (formType === 'edit') {
+            this.formType = 'edit';
+            this.tab = new TabResponse(tab);
+            this.tabForm = this.createTabForm();
+          } else {
+            this.formType = 'new';
+            this.tab = new TabResponse(tab);
+            this.tabForm = this.createTabForm();
+          }
         }
-      });
-    this._tabservice.onNewTabClicked
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(templateId => {
-        this.formType = 'new';
-        this.tab = new TabResponse(templateId);
-        this.tabForm = this.createTabForm();
       });
 
     this.tabForm.valueChanges

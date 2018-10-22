@@ -18,7 +18,9 @@ import { TabResponse } from './tab.model';
 export class ManageTabsComponent implements OnInit {
   templateId: number;
   private _unsubscribeAll: Subject<any>;
-  currentTab:TabResponse;
+  currentTab: TabResponse;
+  isNew: boolean;
+
   constructor(private _tabservice: TabService, private templateService: TemplateSetupService) {
     this._unsubscribeAll = new Subject();
   }
@@ -32,22 +34,23 @@ export class ManageTabsComponent implements OnInit {
     this._tabservice.onCurrentTabChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(([currentTab, formType]) => {
-        if (!currentTab) {
-          this.currentTab = null;
-        }
-        else {
-          this.currentTab = currentTab;
+        if (!!currentTab) {
+          if (formType == 'new') {
+            this.currentTab = currentTab;
+          } else if (formType == 'edit') {
+            this.currentTab = currentTab;
+          }
         }
       });
   }
 
-  deselectCurrentTodo(): void
-    {
-        this._tabservice.onCurrentTabChanged.next([null, null]);
-    }
+  deselectCurrentTodo(): void {
+    this.currentTab = null
+  }
 
   AddTab() {
-    this._tabservice.onNewTabClicked.next(this.templateId);
+    var tab = new TabResponse(this.templateId);
+    this._tabservice.onCurrentTabChanged.next([tab, 'new']);
   }
 
 }

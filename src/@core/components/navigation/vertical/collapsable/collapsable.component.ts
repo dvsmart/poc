@@ -1,6 +1,6 @@
-import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, merge } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 import { fuseAnimations } from '../../../../animations';
@@ -33,6 +33,7 @@ export class CoreNavVerticalCollapsableComponent implements OnInit, OnDestroy
      * @param {Router} _router
      */
     constructor(
+        private _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: CoreNavigationService,
         private _router: Router
     )
@@ -110,6 +111,7 @@ export class CoreNavVerticalCollapsableComponent implements OnInit, OnDestroy
         {
             this.collapse();
         }
+        
     }
 
     /**

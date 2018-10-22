@@ -1,16 +1,15 @@
-import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 import { fuseAnimations } from '../../animations';
-import { Subject } from '../../../../node_modules/rxjs';
+import { Subject, merge } from '../../../../node_modules/rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { FuseSidebarService } from '../sidebar/sidebar.service';
 import { CoreNavigationService } from './navigation.service';
 
 @Component({
     selector: 'core-navigation',
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Default,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     animations: fuseAnimations,
     encapsulation: ViewEncapsulation.None
 })
@@ -23,19 +22,31 @@ export class CoreNavigationComponent {
 
     private _unsubscribeAll: Subject<any>;
 
-    constructor(private _navigationService: CoreNavigationService) {
+    constructor(private _navigationService: CoreNavigationService, private _changeDetectorRef: ChangeDetectorRef) {
         this._unsubscribeAll = new Subject();
-        this._navigationService.getMenuItems();
     }
 
     ngOnInit(): void {
-        this._navigationService.onMenuItemsChanged
+        //Subscribe to the current navigation changes
+        this._navigationService.onNavigationChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(menuItems => {
-                if (menuItems) {
-                    this.navigation = menuItems;
-                }
-            })
+            .subscribe(() => {
+                // Load the navigation
+                this.navigation = this._navigationService.getCurrentNavigation();
+
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
+            });
+
+        // merge(
+        //     this._navigationService.onNavigationItemAdded,
+        //     this._navigationService.onNavigationItemUpdated,
+        //     this._navigationService.onNavigationItemRemoved
+        // ).pipe(takeUntil(this._unsubscribeAll))
+        //     .subscribe(() => {
+        //         // Mark for check
+        //         this._changeDetectorRef.markForCheck();
+        //     });
     }
 
     ngOnDestroy(): void {

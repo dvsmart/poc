@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
-import { FieldResponse, FieldType } from '../../models/template.model';
 import { TemplateSetupService } from '../template-setup/templatesetup.service';
+import { FieldType, FieldResponse } from './field.model';
 
 
 @Injectable({

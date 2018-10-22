@@ -8,7 +8,7 @@ export const fuseConfig: Config = {
         style    : 'vertical-layout-2',
         width    : 'fullwidth',
         navbar   : {
-            primaryBackground  : 'fuse-navy-700',
+            primaryBackground  : 'fuse-navy-600',
             secondaryBackground: 'fuse-navy-900',
             folded             : false,
             hidden             : false,

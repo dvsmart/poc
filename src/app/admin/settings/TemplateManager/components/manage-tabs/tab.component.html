@@ -1,16 +1,14 @@
-<div class="center">
-    <div class="content-card" [ngClass]="{'current-todo-selected':currentTodo}">
-        <div class="toolbar px-24 py-8">
-          <button mat-raised-button class="accent" (click)="AddTab()">Create</button>
-          <div *ngIf="currentTodo" fxHide.gt-lg>
-              <button mat-icon-button (click)="deselectCurrentTodo()">
-                  <mat-icon class="secondary-text">arrow_back</mat-icon>
-              </button>
-          </div>
+<div class="content-card" [ngClass]="{'current-todo-selected':currentTab}">
+    <div class="toolbar px-24 py-8">
+        <button mat-raised-button class="accent" (click)="AddTab()">Create</button>
+        <div *ngIf="currentTab" fxHide.gt-lg>
+            <button mat-icon-button (click)="deselectCurrentTodo()">
+                <mat-icon class="secondary-text">arrow_back</mat-icon>
+            </button>
         </div>
-        <div class="content" fxFlexAlign="row">
-          <tab-list fusePerfectScrollbar fxFlex></tab-list>
-          <tab-detail fusePerfectScrollbar fxFlex></tab-detail>
-        </div>
-      </div>
+    </div>
+    <div class="content" fxFlexAlign="row">
+        <tab-list fusePerfectScrollbar fxFlex></tab-list>
+        <tab-detail fusePerfectScrollbar fxFlex></tab-detail>
+    </div>
 </div>

@@ -11,6 +11,7 @@ import { UserIdleService } from './timeout/idle.service';
     selector: 'login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
+    encapsulation:ViewEncapsulation.None,
     animations: fuseAnimations
 })
 export class LoginComponent implements OnInit {

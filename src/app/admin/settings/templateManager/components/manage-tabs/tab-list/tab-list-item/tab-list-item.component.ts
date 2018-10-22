@@ -1,10 +1,8 @@
 import { Component, OnInit, HostBinding, Input, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { TabService } from '../tabs.service';
-import { TabResponse } from '../tab.model';
-
-
+import { TabResponse } from '../../tab.model';
+import { TabService } from '../../tabs.service';
 
 @Component({
     selector: 'tab-list-item',

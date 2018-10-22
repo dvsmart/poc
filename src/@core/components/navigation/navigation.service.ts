@@ -11,20 +11,24 @@ import { environment } from '@env/environment';
 export class CoreNavigationService {
     onItemCollapsed: Subject<any>;
     onItemCollapseToggled: Subject<any>;
-    
+
     // Private
     private _onNavigationChanged: BehaviorSubject<any>;
     private _onNavigationRegistered: BehaviorSubject<any>;
     private _onNavigationUnregistered: BehaviorSubject<any>;
 
+    private _onNavigationItemAdded: BehaviorSubject<any>;
+    private _onNavigationItemUpdated: BehaviorSubject<any>;
+    private _onNavigationItemRemoved: BehaviorSubject<any>;
+
     private _currentNavigationKey: string;
     private _registry: { [key: string]: any } = {};
-    onMenuItemsChanged: BehaviorSubject<any>;
+
     /**
      * Constructor
      */
     constructor(private http: HttpClient) {
-        
+
         this.onItemCollapsed = new Subject();
         this.onItemCollapseToggled = new Subject();
 
@@ -33,14 +37,17 @@ export class CoreNavigationService {
         this._onNavigationChanged = new BehaviorSubject(null);
         this._onNavigationRegistered = new BehaviorSubject(null);
         this._onNavigationUnregistered = new BehaviorSubject(null);
-        this.onMenuItemsChanged = new BehaviorSubject(null);
     }
 
-    getMenuItems() {
-        this.http.get<any>(environment.apiUrl + 'Menu')
-            .subscribe(response => {
-                this.onMenuItemsChanged.next(response);
-            });
+    getNavigationItems(): Promise<any>{
+        return new Promise((resolve, reject) => {
+            this.http.get<any>(environment.apiUrl + 'Menu')
+                .subscribe((response: any) => {
+                    this.register('main', response);
+                    this.setCurrentNavigation('main');
+                    resolve(response);
+                }, reject);
+        });
     }
 
     register(key, navigation): void {
@@ -51,5 +58,160 @@ export class CoreNavigationService {
         this._registry[key] = navigation;
         // Notify the subject
         this._onNavigationRegistered.next([key, navigation]);
+    }
+
+    setCurrentNavigation(key): void {
+        // Check if the sidebar exists
+        if (!this._registry[key]) {
+            console.warn(`The navigation with the key '${key}' doesn't exist in the registry.`);
+
+            return;
+        }
+
+        // Set the current navigation key
+        this._currentNavigationKey = key;
+
+        // Notify the subject
+        this._onNavigationChanged.next(key);
+    }
+
+    addNavigationItem(item, id): void {
+        // Get the current navigation
+        const navigation: any[] = this.getCurrentNavigation();
+
+        // Add to the end of the navigation
+        if (id === 'end') {
+            navigation.push(item);
+
+            return;
+        }
+
+        // Add to the start of the navigation
+        if (id === 'start') {
+            navigation.unshift(item);
+        }
+
+        // Add it to a specific location
+        const parent: any = this.getNavigationItem(id);
+
+        if (parent) {
+            // Check if parent has a children entry,
+            // and add it if it doesn't
+            if (!parent.children) {
+                parent.children = [];
+            }
+
+            // Add the item
+            parent.children.push(item);
+        }
+
+        // Trigger the observable
+        this._onNavigationItemAdded.next(true);
+    }
+
+    getNavigationItem(id, navigation = null): any | boolean {
+        if (!navigation) {
+            navigation = this.getCurrentNavigation();
+        }
+
+        for (const item of navigation) {
+            if (item.id === id) {
+                return item;
+            }
+
+            if (item.children) {
+                const childItem = this.getNavigationItem(id, item.children);
+
+                if (childItem) {
+                    return childItem;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Get the parent of the navigation item
+     * with the id
+     *
+     * @param id
+     * @param {any} navigation
+     * @param parent
+     */
+    getNavigationItemParent(id, navigation = null, parent = null): any {
+        if (!navigation) {
+            navigation = this.getCurrentNavigation();
+            parent = navigation;
+        }
+
+        for (const item of navigation) {
+            if (item.id === id) {
+                return parent;
+            }
+
+            if (item.children) {
+                const childItem = this.getNavigationItemParent(id, item.children, item);
+
+                if (childItem) {
+                    return childItem;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Get onNavigationItemAdded
+     *
+     * @returns {Observable<any>}
+     */
+    get onNavigationItemAdded(): Observable<any> {
+        return this._onNavigationItemAdded.asObservable();
+    }
+
+    /**
+     * Get onNavigationItemUpdated
+     *
+     * @returns {Observable<any>}
+     */
+    get onNavigationItemUpdated(): Observable<any> {
+        return this._onNavigationItemUpdated.asObservable();
+    }
+
+    /**
+     * Get onNavigationItemRemoved
+     *
+     * @returns {Observable<any>}
+     */
+    get onNavigationItemRemoved(): Observable<any> {
+        return this._onNavigationItemRemoved.asObservable();
+    }
+
+    get onNavigationChanged(): Observable<any> {
+        return this._onNavigationChanged.asObservable();
+    }
+
+    getCurrentNavigation(): any {
+        if (!this._currentNavigationKey) {
+            console.warn(`The current navigation is not set.`);
+
+            return;
+        }
+
+        return this.getNavigation(this._currentNavigationKey);
+    }
+
+    getNavigation(key): any {
+        // Check if the navigation exists
+        if (!this._registry[key]) {
+            console.warn(`The navigation with the key '${key}' doesn't exist in the registry.`);
+
+            return;
+        }
+
+        // Return the sidebar
+        return this._registry[key];
     }
 }

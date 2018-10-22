@@ -21,7 +21,7 @@
             <!-- / SEARCH -->
 
             <!-- ADD BUTTON -->
-            <button mat-raised-button [routerLink]="['/asset/property/', 'new']" class="add-product-button fuse-white mt-24 mt-md-0">
+            <button mat-raised-button [routerLink]="['/asset/properties/', 'new']" class="add-product-button fuse-white mt-24 mt-md-0">
                 <span>ADD NEW PROPERTY</span>
             </button>
             
@@ -111,7 +111,7 @@
                     </mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-                <mat-row *matRowDef="let property; columns: displayedColumns;" class="property" matRipple [routerLink]="['/asset/property/', property.id]"
+                <mat-row *matRowDef="let property; columns: displayedColumns;" class="property" matRipple [routerLink]="['/asset/properties/', property.id]"
                     [@animate]="{value:'*',params:{y:'100%'}}">
                 </mat-row>
             </mat-table>

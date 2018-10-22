@@ -8,11 +8,12 @@
 
 <div class="tab-content" *ngIf="tab">
   <form [formGroup]="tabForm" (submit)="saveTab()">
-    <mat-form-field class="title mt-8" floatLabel="never" fxFill>
-      <input matInput name="caption" formControlName="tabName" placeholder="Tab Name" required />
+    <mat-form-field class="title mt-8" floatLabel="never" fxFill appearance="outline">
+      <mat-label>Tab Name</mat-label>
+      <input matInput name="caption" formControlName="tabName" required />
     </mat-form-field>
-    <mat-checkbox formControlName="isVisible">Is Visible</mat-checkbox>
-    <button *ngIf="formType === 'new'" mat-raised-button class="mat-accent" [disabled]="tabForm.invalid">SAVE</button>
-    <button *ngIf="formType === 'edit'" mat-raised-button class="mat-accent" [disabled]="tabForm.invalid">UPDATE</button>
+    <mat-checkbox fxFill fxLayout="row" formControlName="isVisible">Is Visible</mat-checkbox>
+    <button *ngIf="formType === 'new'" mat-raised-button color="accent" [disabled]="tabForm.invalid">SAVE</button>
+    <button *ngIf="formType === 'edit'" mat-raised-button color="accent" [disabled]="tabForm.invalid">UPDATE</button>
   </form>
 </div>

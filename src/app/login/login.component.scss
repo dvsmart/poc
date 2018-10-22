@@ -1,6 +1,6 @@
 @import "src/@core/scss/fuse";
 
-:host {
+login {
 
     #login {
         width: 100%;
@@ -39,7 +39,6 @@
             width: 400px;
             min-width: 400px;
             max-width: 400px;
-            background: #FFFFFF;
             overflow: auto;
             -webkit-overflow-scrolling: touch;
 
@@ -128,7 +127,6 @@
                     overflow: hidden;
                     width: 100px;
                     text-align: center;
-                    color: rgba(0, 0, 0, 0.54);
 
                     .text {
                         display: inline-flex;
@@ -142,7 +140,7 @@
                             width: 30px;
                             position: absolute;
                             top: 10px;
-                            border-top: 1px solid rgba(0, 0, 0, 0.12);
+                            border-top: 1px solid;
                         }
 
                         &:before {
@@ -196,8 +194,4 @@
             }
         }
     }
-}
-
-login{
-    display: flex!important;
 }

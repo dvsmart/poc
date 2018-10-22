@@ -12,7 +12,6 @@ import { TabResponse } from './tab.model';
 export class TabService {
 
   onCurrentTabChanged: BehaviorSubject<any>;
-  onNewTabClicked: Subject<any>;
 
   routeParams: any;
   customTabs: BehaviorSubject<any>;
@@ -20,7 +19,6 @@ export class TabService {
   constructor(private _httpClient: HttpClient, private templateservice: TemplateSetupService) {
     this.customTabs = new BehaviorSubject<any>(null);
     this.onCurrentTabChanged = new BehaviorSubject<any>({});
-    this.onNewTabClicked = new Subject();
   }
 
   getCustomTabs(templateId): Promise<any> {
@@ -41,7 +39,6 @@ export class TabService {
     return new Promise((resolve, reject) => {
       this._httpClient.post(environment.apiUrl + 'CustomTabConfig', { ...tabRequest })
         .subscribe((response: TabResponse) => {
-          this.onCurrentTabChanged.next([response, 'edit']);
           this.templateservice.getTemplateDetail();
           resolve(response);
         }, reject);

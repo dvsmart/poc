@@ -1,17 +1,17 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { FieldResponse, CreateFieldRequest, FieldType } from '../../models/template.model';
-import { FieldService } from '../manage-fields/fields.service';
+
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { Location } from '@angular/common';
+import { FieldService } from '../fields.service';
+import { CreateFieldRequest, FieldType } from '../field.model';
 
 @Component({
-  selector: 'edit-field',
-  templateUrl: './edit-field.component.html',
-  styleUrls: ['./edit-field.component.scss']
+  selector: 'field-detail',
+  templateUrl: './field-detail.component.html',
+  styleUrls: ['./field-detail.component.scss']
 })
-export class EditFieldComponent implements OnInit {
+export class FieldDetailComponent implements OnInit {
   fieldRequest: CreateFieldRequest;
   formType: string;
   fields: FieldType[];

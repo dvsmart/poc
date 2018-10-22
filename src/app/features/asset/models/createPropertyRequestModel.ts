@@ -32,9 +32,9 @@ export class CreateAssetPropertyRequest {
         this.grossInternalSize = data.grossInternalSize;
         this.numberOfFloors = data.numberOfFloors;
         this.numberOfPlantRooms = data.numberOfPlantRooms;
-        this.id = data.id | 0;
-        this.assetId = data.assetId | 0;
-        this.dataId = data.dataId ;
+        this.id = data.id | data.recordId;
+        this.assetId = data.assetId | data.savedEntityId;
+        this.dataId = data.dataId == undefined ? data.savedDataId : data.dataId ;
         this.postcode = data.postcode;
         this.knownAs = data.knownAs;
     }

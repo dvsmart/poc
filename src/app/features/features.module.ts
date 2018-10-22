@@ -27,12 +27,12 @@ const routes: Routes = [
       {
         path: 'asset',
         loadChildren: './asset/asset.module#AssetModule',
-        data: { preload: true, delay: true }
+        data: { preload: false, delay: true }
       },
       {
         path: 'assessment',
         loadChildren: './assessment/assessment.module#AssessmentModule',
-        data: { preload: true, delay: true }
+        data: { preload: false, delay: true }
       },
       {
         path: 'calender',
@@ -42,17 +42,17 @@ const routes: Routes = [
       {
         path: 'todo',
         loadChildren: './todo/todo.module#TodoModule',
-        data: { preload: true, delay: false }
+        data: { preload: false, delay: false }
       },
       {
         path: 'task',
         loadChildren: './task/task.module#TaskModule',
-        data: { preload: true, delay: true }
+        data: { preload: false, delay: true }
       },
       {
         path: 'checklist',
         loadChildren: './checklist/checklist.module#ChecklistModule',
-        data: { preload: true, delay: false }
+        data: { preload: false, delay: false }
       },
       {
         path: '',

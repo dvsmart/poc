@@ -54,9 +54,6 @@
       </mat-table>
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     </div>
-    <div *ngIf="isEdit">
-      <edit-field></edit-field>
-    </div>
     <router-outlet></router-outlet>
   </div>
 </div>

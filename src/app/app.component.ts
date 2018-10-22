@@ -1,13 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '../../node_modules/@angular/platform-browser';
-import { Subject, Observable } from '../../node_modules/rxjs';
+import { Subject } from '../../node_modules/rxjs';
 import { FuseSidebarService } from '../@core/components/sidebar/sidebar.service';
 import { FuseSplashScreenService } from '../@core/services/splash-screen.service';
-import { FuseConfigService } from '@core/services/config.service';
-import { takeUntil, take, map } from '../../node_modules/rxjs/operators';
-import { AuthService } from './login/auth.service';
 import { Router } from '@angular/router';
+import { CoreNavigationService } from '@core/components/navigation/navigation.service';
 
 @Component({
   selector: 'app',
@@ -17,14 +15,14 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'app';
   config: any;
+  navigation: any;
   private _unsubscribeAll: Subject<any>;
-  showMainLayout: boolean = false;
+
   constructor(
     @Inject(DOCUMENT) private document: any,
-    private _fuseSidebarService: FuseSidebarService,
-    private _fuseSplashscreen: FuseSplashScreenService,
     private _platform: Platform,
-    private router: Router
+    private _splashscreen: FuseSplashScreenService,
+    private _navigationservice: CoreNavigationService
   ) {
     // Add is-mobile class to the body if the platform is mobile
     if (this._platform.ANDROID || this._platform.IOS) {
@@ -34,17 +32,8 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    // const timer = JSON.parse(localStorage.getItem('timer'));
-    // if (timer && (Date.now() > timer)) {
-    //   this.router.navigate(['account/lock']);
-    // }else{
-    //   this.router.navigate(['account/login']);
-    // }
+    this._navigationservice.getNavigationItems();
   }
-
-  // toggleSidebarOpen(key): void {
-  //   this._fuseSidebarService.getSidebar(key).toggleOpen();
-  // }
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions

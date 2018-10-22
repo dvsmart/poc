@@ -3,10 +3,9 @@ import { fuseAnimations } from '@core/animations';
 import { Subject } from 'rxjs';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { takeUntil } from 'rxjs/operators';
-import { TabService } from './tabs.service';
-import { TemplateSetupService } from '../template-setup/templatesetup.service';
-import { TemplateResponse } from '../../models/template.model';
-import { TabResponse } from './tab.model';
+import { TabService } from '../tabs.service';
+import { TabResponse } from '../tab.model';
+import { TemplateSetupService } from '../../template-setup/templatesetup.service';
 
 @Component({
   selector: 'tab-list',
@@ -32,7 +31,7 @@ export class TabListComponent implements OnInit {
   ngOnInit() {
       this.templateService.onSelectedTemplateChanged
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((response : TemplateResponse) => {
+      .subscribe((response : any) => {
         this.tabs = response.tabs;
       });
   }

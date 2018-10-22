@@ -3,14 +3,14 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { TemplateSetupService } from '../template-setup/templatesetup.service';
+import { TemplateSetupService } from '../../template-setup/templatesetup.service';
 
 @Component({
-  selector: 'app-edit-template',
-  templateUrl: './edit-template.component.html',
-  styleUrls: ['./edit-template.component.scss']
+  selector: 'template-detail',
+  templateUrl: './template-detail.component.html',
+  styleUrls: ['./template-detail.component.scss']
 })
-export class EditTemplateComponent implements OnInit {
+export class TemplateDetailComponent implements OnInit {
   form: FormGroup;
   formErrors: any;
   template: any;
@@ -33,7 +33,6 @@ export class EditTemplateComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger;
     this.templatesetupservice.onSelectedTemplateChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(([res, formType]) => {

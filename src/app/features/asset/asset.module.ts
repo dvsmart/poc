@@ -7,26 +7,6 @@ import { CoreSharedModule } from '@core/core.module';
 import { PropertiesService } from './properties-list/properties.service';
 import { PropertyService } from './properties-form/property.service';
 
-// const routes: Routes = [
-//   {
-//     path: '',
-//     component: AssetComponent,
-//     children:[
-//       {
-//         path: 'edit/:id',
-//         component: PropertiesFormComponent,
-//       },
-//       {
-//         path: 'new',
-//         component: PropertiesFormComponent,
-//       }
-//     ],
-//     resolve:{
-//       properties: PropertiesService
-//     },
-//   }
-// ];
-
 const propertyRoutes: Routes = [
   {
     path: 'properties',
@@ -36,7 +16,7 @@ const propertyRoutes: Routes = [
     }
   },
   {
-    path: 'property/:id',
+    path: 'properties/:id',
     component: PropertiesFormComponent,
     resolve: {
       property: PropertyService
