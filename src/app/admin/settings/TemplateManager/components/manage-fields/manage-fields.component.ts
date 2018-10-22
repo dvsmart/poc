@@ -33,7 +33,7 @@ export class ManageFieldsComponent implements OnInit {
   ngOnInit() {
     this.templateservice.onSelectedTemplateChanged
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((response: TemplateResponse) => {
+      .subscribe(([response, formType]) => {
         this.templateId = response.id;
         this.fieldsCount = response.fields.length;
         this.dataSource = new MatTableDataSource(response.fields);
