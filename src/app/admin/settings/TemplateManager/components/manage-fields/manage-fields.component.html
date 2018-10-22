@@ -52,8 +52,10 @@
         <mat-row *cdkRowDef="let row; columns: displayedColumns;" matRipple class="field" [@animate]="{value:'*',params:{y:'100%'}}"
           [routerLink]="[row.fieldId]"></mat-row>
       </mat-table>
-      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [length]="fieldsCount"></mat-paginator>
     </div>
-    <router-outlet></router-outlet>
+    <div *ngIf="isEdit">
+        <field-detail></field-detail>
+    </div>
   </div>
 </div>

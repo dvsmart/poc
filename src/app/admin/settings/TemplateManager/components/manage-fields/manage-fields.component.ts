@@ -20,8 +20,9 @@ export class ManageFieldsComponent implements OnInit {
   displayedColumns: string[] = ['fieldCaption', 'isRequired', 'addedBy', 'addedOn', 'actions'];
   dataSource: MatTableDataSource<any>;
   templateId: number;
-  isEdit:boolean = false;
-  isDetail:boolean = false;
+  isEdit: boolean = false;
+  isDetail: boolean = false;
+  fieldsCount: number;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -34,9 +35,19 @@ export class ManageFieldsComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((response: TemplateResponse) => {
         this.templateId = response.id;
+        this.fieldsCount = response.fields.length;
         this.dataSource = new MatTableDataSource(response.fields);
         this.fieldservice.getFieldTypes();
       });
+    this.fieldservice.onNewFieldAdded
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(([tabId, templateId]) => {
+        if (tabId == undefined) {
+          this.isEdit = false;
+        }
+      })
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   editField(field) {

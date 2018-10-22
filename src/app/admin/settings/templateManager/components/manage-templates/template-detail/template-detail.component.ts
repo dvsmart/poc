@@ -39,10 +39,8 @@ export class TemplateDetailComponent implements OnInit {
         if (formType === 'edit') {
           this.template = res;
         }
+        this.form = this.createTemplateForm();
       })
-    this.form = this.createTemplateForm();
-
-
 
     this.form.valueChanges
       .pipe(takeUntil(this._unsubscribeAll))
