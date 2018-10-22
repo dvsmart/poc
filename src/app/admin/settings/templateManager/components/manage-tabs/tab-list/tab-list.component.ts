@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { TabService } from '../tabs.service';
 import { TabResponse } from '../tab.model';
 import { TemplateSetupService } from '../../template-setup/templatesetup.service';
+import { TemplateResponse } from '../../../models/template.model';
 
 @Component({
   selector: 'tab-list',
@@ -24,21 +25,20 @@ export class TabListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private templateService: TemplateSetupService,private _tabservice: TabService) {
+  constructor(private templateService: TemplateSetupService, private _tabservice: TabService) {
     this._unsubscribeAll = new Subject();
   }
 
   ngOnInit() {
-      this.templateService.onSelectedTemplateChanged
+    this.templateService.onSelectedTemplateChanged
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((response : any) => {
+      .subscribe(([response, formtype]) => {
         this.tabs = response.tabs;
       });
   }
 
-  readTab(tab): void
-  {
-      this._tabservice.setCurrentTab(tab);
+  readTab(tab): void {
+    this._tabservice.setCurrentTab(tab);
   }
 
   ngOnDestroy(): void {

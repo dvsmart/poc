@@ -36,7 +36,7 @@ export class TemplateSetupService {
       return new Promise((resolve, reject) => {
         this._httpClient.get<TemplateResponse>(environment.apiUrl + 'CustomTemplateConfig/' + this.routeParams.id)
           .subscribe((response: TemplateResponse) => {
-            this.onSelectedTemplateChanged.next(response);
+            this.onSelectedTemplateChanged.next([response, 'edit']);
             resolve(response);
           }, reject);
       });
