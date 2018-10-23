@@ -4,7 +4,6 @@ import { MessageService } from '@core/services/message.service';
 import { Subject } from 'rxjs';
 import { ToasterComponent } from '../components/toaster/toaster.component';
 import { takeUntil } from 'rxjs/operators';
-import { FuseSidebarService } from '@core/components/sidebar/sidebar.service';
 
 @Component({
   selector: 'app-layout',
