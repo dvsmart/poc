@@ -1,11 +1,11 @@
 
 <div id="main">
-  <div id="container-1" class="container">
+  <div id="container-1" class="container" fusePerfectScrollbar [fusePerfectScrollbarOptions]="{suppressScrollX: true, updateOnRouteChange : true}">
       <ng-container>
           <ng-container *ngTemplateOutlet="leftNavbar"></ng-container>
       </ng-container>
       <div id="container-2" class="container">
-          <div id="container-3" class="container" fusePerfectScrollbar [fusePerfectScrollbarOptions]="{suppressScrollX: true, updateOnRouteChange : true}">
+          <div id="container-3" class="container">
               <ng-container>
                   <ng-container *ngTemplateOutlet="toolbar"></ng-container>
               </ng-container>

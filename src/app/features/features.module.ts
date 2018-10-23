@@ -35,6 +35,11 @@ const routes: Routes = [
         data: { preload: false, delay: true }
       },
       {
+        path: 'risk',
+        loadChildren: './risk/risk.module#RiskModule',
+        data: { preload: false, delay: true }
+      },
+      {
         path: 'calender',
         loadChildren: './calendar/calendar.module#CalendarModule',
         data: { preload: false, delay: true }

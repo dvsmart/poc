@@ -8,6 +8,7 @@ import { FuseDirectivesModule } from './directives/directives';
 import { FusePipesModule } from './pipes/pipes.module';
 import { FUSE_CONFIG } from './services/config.service';
 import { MaterialModule } from './material/customMaterial.module';
+import { GridLayoutModule } from './components/gridLayout/grid-layout.module';
 
 @NgModule({
     imports: [

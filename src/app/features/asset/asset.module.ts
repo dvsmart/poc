@@ -27,23 +27,6 @@ const propertyRoutes: Routes = [
 @NgModule({
   imports: [
     CoreSharedModule,
-    MatButtonModule,
-    MatChipsModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatPaginatorModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatSortModule,
-    MatSnackBarModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatTableModule,
-    MatTabsModule,
-    MatCheckboxModule,
-    MatMenuModule,
-    MatProgressSpinnerModule,
     RouterModule.forChild(propertyRoutes)
   ],
   providers: [PropertiesService, PropertyService],
