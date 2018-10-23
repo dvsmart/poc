@@ -8,13 +8,13 @@ import { ManageFieldsComponent } from './components/manage-fields/manage-fields.
 import { TemplateSetupService } from './components/template-setup/templatesetup.service';
 import { TabListComponent } from './components/manage-tabs/tab-list/tab-list.component';
 import { ManageTabsComponent } from './components/manage-tabs/tab.component';
-import { SharedAdminModule } from 'app/admin/sharedAdmin.module';
 import { ManageCategoriesComponent } from './components/manage-categories/manage-categories.component';
 import { CategoriesService } from './components/manage-categories/categories.service';
 import { TabDetailComponent } from './components/manage-tabs/tab-detail/tab-detail.component';
 import { TemplateDetailComponent } from './components/manage-templates/template-detail/template-detail.component';
 import { FieldDetailComponent } from './components/manage-fields/field-detail/field-detail.component';
 import { TabListItemComponent } from './components/manage-tabs/tab-list/tab-list-item/tab-list-item.component';
+import { CoreSharedModule } from '@core/core.module';
 
 
 const routes: Routes = [
@@ -69,7 +69,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    SharedAdminModule,
+    CoreSharedModule,
     RouterModule.forChild(routes),
 
   ],
@@ -84,7 +84,6 @@ const routes: Routes = [
     TemplateDetailComponent,
     TabDetailComponent,
     ManageFieldsComponent,
-    FieldDetailComponent,
     FieldDetailComponent
   ],
 })

@@ -7,30 +7,26 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FuseDirectivesModule } from './directives/directives';
 import { FusePipesModule } from './pipes/pipes.module';
 import { FUSE_CONFIG } from './services/config.service';
-import { DataTableModule } from './components/data-table/data-table.module';
+import { MaterialModule } from './material/customMaterial.module';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-
         FlexLayoutModule,
-
         FuseDirectivesModule,
         FusePipesModule,
-        DataTableModule
+        MaterialModule
     ],
     exports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-
         FlexLayoutModule,
-
         FuseDirectivesModule,
         FusePipesModule,
-        DataTableModule
+        MaterialModule
     ]
 })
 export class CoreSharedModule {

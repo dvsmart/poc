@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '../../../node_modules/@angular/router';
 import { AdminGuard } from '../_guards/admin.guard';
-import { SharedAdminModule } from './sharedAdmin.module';
+import { CoreSharedModule } from '@core/core.module';
 
 const routes: Routes = [
   {
@@ -22,7 +22,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    SharedAdminModule,
+    CoreSharedModule,
     RouterModule.forChild(routes),
   ]
 })

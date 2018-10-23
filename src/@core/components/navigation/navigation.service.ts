@@ -39,7 +39,7 @@ export class CoreNavigationService {
         this._onNavigationUnregistered = new BehaviorSubject(null);
     }
 
-    getNavigationItems(): Promise<any>{
+    getNavigationItems(): Promise<any> {
         return new Promise((resolve, reject) => {
             this.http.get<any>(environment.apiUrl + 'Menu')
                 .subscribe((response: any) => {
@@ -48,6 +48,21 @@ export class CoreNavigationService {
                     resolve(response);
                 }, reject);
         });
+    }
+
+    addNavItemWithCustomFunction() {
+        // Prepare the new nav item
+        const newNavItem = {
+            id: 'end',
+            title: 'Log Out',
+            type: 'item',
+            function: () => {
+                alert('Custom function!');
+            }
+        };
+
+        // Add the new nav item at the beginning of the navigation
+        this.addNavigationItem(newNavItem, newNavItem.id);
     }
 
     register(key, navigation): void {
@@ -195,8 +210,7 @@ export class CoreNavigationService {
 
     getCurrentNavigation(): any {
         if (!this._currentNavigationKey) {
-            console.warn(`The current navigation is not set.`);
-
+            //console.warn(`The current navigation is not set.`);
             return;
         }
 
@@ -206,7 +220,7 @@ export class CoreNavigationService {
     getNavigation(key): any {
         // Check if the navigation exists
         if (!this._registry[key]) {
-            console.warn(`The navigation with the key '${key}' doesn't exist in the registry.`);
+            //console.warn(`The navigation with the key '${key}' doesn't exist in the registry.`);
 
             return;
         }

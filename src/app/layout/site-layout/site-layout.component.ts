@@ -1,9 +1,5 @@
-import { Component, OnInit, ViewEncapsulation, ComponentFactoryResolver, ViewContainerRef, ViewChild } from '@angular/core';
-import { FuseConfigService } from '@core/services/config.service';
-import { MessageService } from '@core/services/message.service';
+import { Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { Subject } from 'rxjs';
-import { ToasterComponent } from '../components/toaster/toaster.component';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'site-layout',
