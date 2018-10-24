@@ -78,7 +78,6 @@ const routes: Routes = [
         MatMenuModule,
         MatRippleModule,
         MatSelectModule,
-        CoreSharedModule,
         CoreSidebarModule,
         RouterModule.forChild(routes),
     ],

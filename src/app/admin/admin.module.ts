@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '../../../node_modules/@angular/router';
 import { AdminGuard } from '../_guards/admin.guard';
-import { CoreSharedModule } from '@core/core.module';
 
 const routes: Routes = [
   {
@@ -22,7 +21,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    CoreSharedModule,
     RouterModule.forChild(routes),
   ]
 })

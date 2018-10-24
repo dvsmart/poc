@@ -64,17 +64,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    MatButtonModule,
-    MatCheckboxModule,
-    MatDatepickerModule,
-    MatFormFieldModule,
-    MatNativeDateModule, 
-    MatIconModule,
-    MatInputModule,
-    MatMenuModule,
-    MatRippleModule,
-    MatPaginatorModule,
-    MatSelectModule,
     CoreSharedModule,
     CoreSidebarModule,
     RouterModule.forChild(routes),

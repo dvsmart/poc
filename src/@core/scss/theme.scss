@@ -1,6 +1,5 @@
 @import "src/@core/components/search-bar/search-bar.theme";
 @import "src/@core/components/sidebar/sidebar.theme";
-@import "src/@core/components/gridLayout/grid-layout.theme";
 
 
 @mixin fuse-core-theme($theme) {
@@ -15,6 +14,5 @@
     // Theming for Fuse components
     @include fuse-search-bar-theme($theme);
     @include fuse-sidebar-theme($theme);
-    @include grid-layout-theme($theme);
 }
 

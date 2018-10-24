@@ -29,24 +29,6 @@ const menuRoutes: Routes = [
 @NgModule({
   imports: [
     CoreSharedModule,
-    MatButtonModule,
-    MatChipsModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatPaginatorModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatSortModule,
-    MatSnackBarModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatTableModule,
-    MatTabsModule,
-    MatCheckboxModule,
-    MatMenuModule,
-    FormsModule,
-    ReactiveFormsModule,
     RouterModule.forChild(menuRoutes)
   ],
   declarations: [MenuListComponent, MenuComponent]

@@ -71,7 +71,6 @@ const routes: Routes = [
   imports: [
     CoreSharedModule,
     RouterModule.forChild(routes),
-
   ],
   declarations: [
     ManageCategoriesComponent,

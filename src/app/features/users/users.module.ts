@@ -27,18 +27,6 @@ const userRoutes: Routes = [
 @NgModule({
   imports: [
     CoreSharedModule,
-    MatButtonModule,
-    MatChipsModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatPaginatorModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatSortModule,
-    MatSnackBarModule,
-    MatTableModule,
-    MatTabsModule,
     RouterModule.forChild(userRoutes)
   ],
   declarations: [UsersComponent, UserDetailComponent],

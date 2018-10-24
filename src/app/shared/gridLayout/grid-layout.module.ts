@@ -1,23 +1,23 @@
 import { NgModule } from '@angular/core';
 import { GridLayoutComponent } from './grid-layout.component';
 import { MatButtonModule, MatIconModule } from '@angular/material';
-import { CoreSharedModule } from '@core/core.module';
-
+import { FuseDirectivesModule } from '@core/directives/directives';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
-    imports     : [
+    imports: [
         MatButtonModule,
         MatIconModule,
-        CoreSharedModule
+        FuseDirectivesModule,
+        FlexLayoutModule
     ],
     declarations: [
+        GridLayoutComponent,
+    ],
+    exports: [
         GridLayoutComponent
     ],
-    exports     : [
-        GridLayoutComponent
-    ],
-    
+
 })
-export class GridLayoutModule
-{
+export class GridLayoutModule {
 }

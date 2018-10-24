@@ -10,7 +10,6 @@ import { QuickPanelModule } from './components/quick-panel/quick-panel.module';
 import { MessageService } from '@core/services/message.service';
 import { ToasterComponent } from 'app/layout/components/toaster/toaster.component';
 import { ToasterModule } from 'app/layout/components/toaster/toaster.module';
-import { MatSnackBarModule } from '@angular/material';
 import { AppLayoutComponent } from './app-layout/app-layout.component';
 import { SiteLayoutComponent } from './site-layout/site-layout.component';
 import { FuseProgressBarModule } from '@core/components/progress-bar/progress-bar.module';
@@ -20,7 +19,6 @@ import { FuseProgressBarModule } from '@core/components/progress-bar/progress-ba
     RouterModule,
     CoreSharedModule,
     CoreSidebarModule,
-    MatSnackBarModule,
     ContentModule,
     NavbarModule,
     ToolbarModule,

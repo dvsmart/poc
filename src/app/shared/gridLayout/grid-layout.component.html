@@ -8,7 +8,7 @@
                     shopping_basket
                 </mat-icon>
                 <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-                    Products
+                    {{title}}
                 </span>
             </div>
             <div class="search-wrapper mx-32 mx-md-0">
@@ -18,7 +18,7 @@
                 </div>
             </div>
             <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0">
-                <span>ADD NEW PRODUCT</span>
+                <ng-content select="[buttonTitle]"></ng-content>
             </button>
         </div>
         <div class="content-card">

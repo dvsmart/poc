@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { PropertiesListComponent } from './properties-list/properties-list.component';
 import { PropertiesFormComponent } from './properties-form/properties-form.component';
 import { Routes, RouterModule } from '@angular/router';
-import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatPaginatorModule, MatSelectModule, MatNativeDateModule, MatTabsModule, MatSortModule, MatChipsModule, MatSnackBarModule, MatProgressSpinnerModule } from '@angular/material';
 import { CoreSharedModule } from '@core/core.module';
 import { PropertiesService } from './properties-list/properties.service';
 import { PropertyService } from './properties-form/property.service';

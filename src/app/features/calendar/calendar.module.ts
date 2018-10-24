@@ -26,19 +26,8 @@ const routes: Routes = [
         CalendarEventFormDialogComponent
     ],
     imports: [
-        MatButtonModule,
-        MatDatepickerModule,
-        MatDialogModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatSlideToggleModule,
-        MatToolbarModule,
-        MatNativeDateModule,
-        
-        ColorPickerModule,
-
         CoreSharedModule,
+        ColorPickerModule,
         FuseConfirmDialogModule,
         AngularCalendarModule.forRoot({
             provide   : DateAdapter,

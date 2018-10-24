@@ -2,8 +2,11 @@ import { NgModule } from '@angular/core';
 import { LoginComponent } from './login.component';
 import { RouterModule, Routes } from '../../../node_modules/@angular/router';
 import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule } from '../../../node_modules/@angular/material';
-import { CoreSharedModule } from '@core/core.module';
 import { UserIdleModule } from './timeout/idle.module';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FuseDirectivesModule } from '@core/directives/directives';
 
 const routes: Routes = [
   {
@@ -14,11 +17,15 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatCheckboxModule,
     MatFormFieldModule,
     MatInputModule,
-    CoreSharedModule,
+    FlexLayoutModule,
+    FuseDirectivesModule,
     UserIdleModule.forRoot({idle: 600, timeout: 300, ping: 120}),
     RouterModule.forChild(routes),
   ],

@@ -1,13 +1,9 @@
-<fuse-progress-bar></fuse-progress-bar>
-<div id="main">
-    <div id="container-1" class="container">
+<div id="site">
+    <div id="container-1" class="container" fusePerfectScrollbar [fusePerfectScrollbarOptions]="{suppressScrollX: true, updateOnRouteChange : true}">
         <div id="container-2" class="container">
-            <div id="container-3" class="container" fusePerfectScrollbar [fusePerfectScrollbarOptions]="{suppressScrollX: true, updateOnRouteChange : true}">
-                <!-- CONTENT -->
-                <content></content>
-                <!-- / CONTENT -->
+            <div id="container-3" class="container">
+                <content class="site-content"></content>
             </div>
         </div>
     </div>
-  </div>
-  
+</div>

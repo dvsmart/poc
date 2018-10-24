@@ -23,7 +23,6 @@ const routes: Routes = [
   imports: [
     CoreSharedModule,
     CustomControlsModule,
-    CustomMaterialModule,
     RouterModule.forChild(routes)
   ]
 })

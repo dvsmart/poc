@@ -10,17 +10,16 @@ import { fuseAnimations } from '@core/animations';
   encapsulation: ViewEncapsulation.None
 })
 export class RiskListComponent implements OnInit {
-
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-
+  datasource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
+    this.datasource = new MatTableDataSource<any>(ELEMENT_DATA);
+    this.datasource.paginator = this.paginator;
   }
 }
-
 export interface PeriodicElement {
   name: string;
   position: number;

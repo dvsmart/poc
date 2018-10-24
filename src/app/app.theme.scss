@@ -75,13 +75,16 @@ $typography: mat-typography-config(
 
 // Components  Theming
 //-----------------------------------------------------------------------------------------------------
-@import './layout/components/toolbar/toolbar-theme.scss';
-@import './login/login.theme.scss';
-@import './features/asset/properties-list/properties.theme.scss';
-@import './features/assessment/assessment-list/assessments.theme.scss';
-@import './admin/settings/TemplateManager/components/manage-categories/categories.theme.scss';
-@import './admin/settings/TemplateManager/components/manage-templates/templates.theme.scss';
-@import './admin/settings/TemplateManager/components/manage-tabs/tabs.theme.scss';
+@import './layout/components/toolbar/toolbar-theme';
+@import './login/login.theme';
+@import './pages/forgot-password/forgot-password.theme';
+@import './features/asset/properties-list/properties.theme';
+@import './features/assessment/assessment-list/assessments.theme';
+@import './features/calendar/calender.theme';
+@import './admin/settings/TemplateManager/components/manage-categories/categories.theme';
+@import './admin/settings/TemplateManager/components/manage-templates/templates.theme';
+@import './admin/settings/TemplateManager/components/manage-tabs/tabs.theme';
+@import './shared/gridLayout/grid-layout.theme';
 
 @mixin components-theme($theme) {
     @include toolbar-theme($theme);
@@ -91,13 +94,12 @@ $typography: mat-typography-config(
     @include categories-theme($theme);
     @include templates-theme($theme);
     @include tab-theme($theme);
+    @include grid-layout-theme($theme);
+    @include calendar-theme($theme);
+    @include forgot-password-theme($theme);
 }
 
-
-
 //-----------------------------------------------------------------------------------------------------
-
-
 
 // -----------------------------------------------------------------------------------------------------
 // @ Define the default theme

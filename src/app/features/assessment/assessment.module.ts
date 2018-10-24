@@ -28,7 +28,6 @@ const assessmentRoutes: Routes = [
 
 @NgModule({
   imports: [
-    CoreSharedModule,
     FuseConfirmDialogModule,
     CoreSidebarModule,
 

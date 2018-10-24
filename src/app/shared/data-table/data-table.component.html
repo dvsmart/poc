@@ -1,0 +1,40 @@
+<mat-table class="data-table" #table table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}">
+
+  <!-- ID Column -->
+  <ng-container matColumnDef="position">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>ID </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      {{element.position}}
+    </mat-cell>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Name </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <p class="text-truncate">{{element.name}}</p>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="weight">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Weight </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      {{element.weight}}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="symbol">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Symbol </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      {{element.symbol}}
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+
+  <mat-row *matRowDef="let element; columns: displayedColumns;" class="data-row" matRipple>
+  </mat-row>
+
+</mat-table>
+
+<ng-content select="[paginator]"></ng-content>
