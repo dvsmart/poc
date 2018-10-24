@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { GridLayoutComponent } from './grid-layout.component';
-import { MatButtonModule, MatIconModule } from '@angular/material';
-import { FuseDirectivesModule } from '@core/directives/directives';
+import { MatIconModule, MatButtonModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FuseDirectivesModule } from '@core/directives/directives';
 
 @NgModule({
     imports: [
-        MatButtonModule,
         MatIconModule,
-        FuseDirectivesModule,
-        FlexLayoutModule
+        MatButtonModule,
+        FlexLayoutModule,
+        FuseDirectivesModule
     ],
     declarations: [
         GridLayoutComponent,

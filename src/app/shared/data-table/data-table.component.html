@@ -1,6 +1,5 @@
-<mat-table class="data-table" #table table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}">
+<mat-table class="data-table" [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}">
 
-  <!-- ID Column -->
   <ng-container matColumnDef="position">
     <mat-header-cell *matHeaderCellDef mat-sort-header>ID </mat-header-cell>
     <mat-cell *matCellDef="let element">
@@ -8,7 +7,6 @@
     </mat-cell>
   </ng-container>
 
-  <!-- Name Column -->
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Name </mat-header-cell>
     <mat-cell *matCellDef="let element">
@@ -36,5 +34,4 @@
   </mat-row>
 
 </mat-table>
-
-<ng-content select="[paginator]"></ng-content>
+<mat-paginator #paginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="10" showFirstLastButtons></mat-paginator>

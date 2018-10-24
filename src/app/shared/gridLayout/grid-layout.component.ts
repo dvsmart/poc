@@ -1,5 +1,6 @@
 import { ViewEncapsulation, Component, OnInit, OnDestroy, Input } from "@angular/core";
 import { fuseAnimations } from "@core/animations";
+import { MatTableDataSource } from "@angular/material";
 
 @Component({
     selector: 'grid-layout',
@@ -11,6 +12,8 @@ import { fuseAnimations } from "@core/animations";
 export class GridLayoutComponent implements OnInit, OnDestroy {
 
     @Input() title:string;
+
+    @Input() ds: any;
 
     ngOnDestroy(): void {
     }
