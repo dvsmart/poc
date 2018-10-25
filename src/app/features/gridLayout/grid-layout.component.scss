@@ -1,9 +1,9 @@
 @import "src/@core/scss/fuse";
 grid-layout {
-    display: flex;
-    flex: 1 1 auto;
-    width: 100%;
-    height: 100%;
+    // // display: flex;
+    // // flex: 1 1 auto;
+    // width: 100%;
+    // height: 100%;
     #grid {
         .top-bg {
             @include media-breakpoint('lt-md') {
@@ -45,9 +45,14 @@ grid-layout {
                 }
             }
         }
+        .content-card {
+            &.inner-scroll {
+                flex: 1 0 0%;
+            }
+        }
     }
 }
 
-// content {
-//     flex: 1 0 0%;
-// }
+content {
+    flex: 1 0 0%;
+}

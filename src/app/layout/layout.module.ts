@@ -27,9 +27,9 @@ import { FuseProgressBarModule } from '@core/components/progress-bar/progress-ba
     ToasterModule,
     FuseProgressBarModule
   ],
-  exports:[AppLayoutComponent,SiteLayoutComponent],
-  providers:[MessageService],
-  declarations:[AppLayoutComponent,SiteLayoutComponent],
-  entryComponents:[ToasterComponent]
+  exports: [AppLayoutComponent, SiteLayoutComponent],
+  providers: [MessageService],
+  declarations: [AppLayoutComponent, SiteLayoutComponent],
+  entryComponents: [ToasterComponent]
 })
 export class LayoutModule { }

@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RiskListComponent } from './risk-list/risk-list.component';
 import { CoreSharedModule } from '@core/core.module';
 import { Routes, RouterModule } from '@angular/router';
-import { GridLayoutModule } from 'app/shared/gridLayout/grid-layout.module';
-import { DataTableModule } from 'app/shared/data-table/data-table.module';
+import { DataTableModule } from '../data-table/data-table.module';
+import { GridLayoutModule } from '../gridLayout/grid-layout.module';
 
 const riskRoutes: Routes = [
   {
