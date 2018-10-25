@@ -44,15 +44,25 @@ grid-layout {
                     max-height: 192px !important;
                 }
             }
-        }
-        .content-card {
-            &.inner-scroll {
-                flex: 1 0 0%;
+            .data-table {
+                flex: 1 1 auto;
+                border-bottom: 1px solid rgba(0, 0, 0, .12);
+                overflow: auto;
+                -webkit-overflow-scrolling: touch;
+                .mat-header-row {
+                    min-height: 64px;
+                }
+                .data-row {
+                    position: relative;
+                    cursor: pointer;
+                    height: 63px;
+                }
+                .mat-cell {
+                    min-width: 0;
+                    display: flex;
+                    align-items: center;
+                }
             }
         }
     }
-}
-
-content {
-    flex: 1 0 0%;
 }

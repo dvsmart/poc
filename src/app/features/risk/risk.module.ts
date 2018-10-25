@@ -2,23 +2,33 @@ import { NgModule } from '@angular/core';
 import { RiskListComponent } from './risk-list/risk-list.component';
 import { CoreSharedModule } from '@core/core.module';
 import { Routes, RouterModule } from '@angular/router';
-import { DataTableModule } from '../data-table/data-table.module';
-import { GridLayoutModule } from '../gridLayout/grid-layout.module';
+import { RiskDetailComponent } from './risk-detail/risk-detail.component';
+import { RiskService } from './risk-detail/risk.service';
+import { RisksService } from './risk-list/risks.service';
 
 const riskRoutes: Routes = [
   {
     path: '',
     component: RiskListComponent,
+    // resolve:{
+    //   risks: RisksService
+    // }
+  },
+  {
+    path: ':id',
+    component: RiskDetailComponent,
+    resolve: {
+      risk: RiskService
+    }
   }
 ];
 
 @NgModule({
   imports: [
     CoreSharedModule,
-    GridLayoutModule,
-    DataTableModule,
+    
     RouterModule.forChild(riskRoutes)
   ],
-  declarations: [RiskListComponent]
+  declarations: [RiskListComponent, RiskDetailComponent]
 })
 export class RiskModule { }

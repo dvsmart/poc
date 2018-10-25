@@ -27,9 +27,9 @@
         </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
 
-    <mat-row *matRowDef="let element; columns: displayedColumns;" class="table-row" matRipple>
+    <mat-row *matRowDef="let element; columns: displayedColumns;" class="table-row" matRipple [routerLink]="['/risk/',element.position]">
     </mat-row>
 </mat-table>
 <mat-paginator #paginator paginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="5" showFirstLastButtons></mat-paginator>

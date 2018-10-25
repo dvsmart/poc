@@ -17,12 +17,13 @@
                     <input #filter placeholder="Search for a product">
                 </div>
             </div>
-            <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0">
+            <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" (click)="addNewClicked()">
                 <ng-content select="[buttonTitle]"></ng-content>
             </button>
         </div>
         <div class="content-card">
-            <ng-content select="[tableContent]"></ng-content>
+            <ng-content select="[tableContent]" class="data-table"></ng-content>
+            <ng-content select="[paginator]"></ng-content>
         </div>
     </div>
 </div>

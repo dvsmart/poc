@@ -6,7 +6,7 @@ import { fuseAnimations } from '@core/animations';
   selector: 'data-table',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  //encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
 export class DataTableComponent implements OnInit {

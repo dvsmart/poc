@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { fuseAnimations } from '@core/animations';
-import { PeriodicElement } from 'app/features/data-table/data-table.component';
+import { PeriodicElement } from '@core/components/data-table/data-table.component';
 
 @Component({
   selector: 'risks',
   templateUrl: './risk-list.component.html',
   styleUrls: ['./risk-list.component.scss'],
-  encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations,
 })
 export class RiskListComponent implements OnInit {
@@ -17,6 +16,10 @@ export class RiskListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
+  }
+
+  onAddNew($event){
+    alert("new button clicked");
   }
 }
 

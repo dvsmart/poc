@@ -8,6 +8,8 @@ import { FuseDirectivesModule } from './directives/directives';
 import { FusePipesModule } from './pipes/pipes.module';
 import { FUSE_CONFIG } from './services/config.service';
 import { MaterialModule } from './material/customMaterial.module';
+import { GridLayoutModule } from './components/gridLayout/grid-layout.module';
+import { FormLayoutModule } from './components/form-layout/form-layout.module';
 
 @NgModule({
     imports: [
@@ -17,7 +19,9 @@ import { MaterialModule } from './material/customMaterial.module';
         FlexLayoutModule,
         FuseDirectivesModule,
         FusePipesModule,
-        MaterialModule
+        MaterialModule,
+        GridLayoutModule,
+        FormLayoutModule
     ],
     exports: [
         CommonModule,
@@ -26,7 +30,9 @@ import { MaterialModule } from './material/customMaterial.module';
         FlexLayoutModule,
         FuseDirectivesModule,
         FusePipesModule,
-        MaterialModule
+        MaterialModule,
+        GridLayoutModule,
+        FormLayoutModule
     ]
 })
 export class CoreSharedModule {

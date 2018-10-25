@@ -1,4 +1,4 @@
-import { ViewEncapsulation, Component, OnInit, OnDestroy, Input } from "@angular/core";
+import { ViewEncapsulation, Component, OnInit, OnDestroy, Input, Output, EventEmitter } from "@angular/core";
 import { fuseAnimations } from "@core/animations";
 import { FuseSidebarService } from "@core/components/sidebar/sidebar.service";
 
@@ -10,10 +10,14 @@ import { FuseSidebarService } from "@core/components/sidebar/sidebar.service";
     animations: fuseAnimations
 })
 export class GridLayoutComponent implements OnInit, OnDestroy {
-
+    @Output() addNew: EventEmitter<any> = new EventEmitter();
     constructor(private _fuseSidebarService: FuseSidebarService
     )
     {
+    }
+
+    addNewClicked(){
+        this.addNew.emit(true);
     }
 
     @Input() title:string;

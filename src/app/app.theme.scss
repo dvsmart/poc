@@ -84,7 +84,6 @@ $typography: mat-typography-config(
 @import './admin/settings/TemplateManager/components/manage-categories/categories.theme';
 @import './admin/settings/TemplateManager/components/manage-templates/templates.theme';
 @import './admin/settings/TemplateManager/components/manage-tabs/tabs.theme';
-@import './shared/gridLayout/grid-layout.theme';
 
 @mixin components-theme($theme) {
     @include toolbar-theme($theme);
@@ -96,7 +95,6 @@ $typography: mat-typography-config(
     @include tab-theme($theme);
     @include calendar-theme($theme);
     @include forgot-password-theme($theme);
-    @include grid-layout-theme($theme);
 }
 
 //-----------------------------------------------------------------------------------------------------

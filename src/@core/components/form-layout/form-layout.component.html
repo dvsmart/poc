@@ -1,0 +1,35 @@
+<div id="form-page" class="page-layout carded fullwidth inner-scroll">
+    <div class="top-bg accent"></div>
+    <div class="center">
+      <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="['../']">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+            <div class="h2" *ngIf="pageType ==='edit'">
+              New Sample
+            </div>
+            <div class="h2" *ngIf="pageType ==='new'">
+              New Property
+            </div>
+            <div class="subtitle secondary-text">
+              <span>Property Detail</span>
+            </div>
+          </div>
+        </div>
+        <button mat-raised-button class="save-product-button" *ngIf="true">
+          <span>ADD</span>
+        </button>
+  
+        <button mat-raised-button class="save-product-button" *ngIf="false">
+          <span>SAVE</span>
+        </button>
+      </div>
+      <div class="content-card">
+        <div class="content">
+         <ng-content></ng-content>
+        </div>
+      </div>
+    </div>
+  </div>

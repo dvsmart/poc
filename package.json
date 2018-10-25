@@ -26,7 +26,6 @@
     "@angular/platform-browser-dynamic": "^7.0.0",
     "@angular/pwa": "^0.10.2",
     "@angular/router": "^7.0.0",
-    "@angular/service-worker": "^7.0.0",
     "@swimlane/ngx-charts": "^9.0.0",
     "angular-calendar": "^0.26.3",
     "angular-in-memory-web-api": "^0.6.1",
