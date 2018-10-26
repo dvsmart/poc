@@ -6,6 +6,7 @@ import { TemplatesService } from "./templates.service";
 import { ManageTemplatesComponent } from "./template-list.component";
 import { SetupComponent } from "../setup/setup.component";
 import { SetupService } from "../setup/setup.service";
+import { SetupSidebarComponent } from "../setup/setup-sidebar/setup-sidebar.component";
 
 const routes: Routes = [
   {
@@ -18,7 +19,13 @@ const routes: Routes = [
   {
     path: ':id',
     component: SetupComponent,
-    resolve:{
+    children: [
+      {
+        path: '**',
+        redirectTo: 'details'
+      }
+    ],
+    resolve: {
       setup: SetupService
     }
   }
@@ -32,7 +39,9 @@ const routes: Routes = [
   ],
   declarations: [
     ManageTemplatesComponent,
-    TemplateDetailComponent
+    TemplateDetailComponent,
+    SetupComponent,
+    SetupSidebarComponent
   ],
 })
 export class TemplatesModule { }

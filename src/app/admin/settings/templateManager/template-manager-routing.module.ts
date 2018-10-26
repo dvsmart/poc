@@ -4,11 +4,11 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path:'',
-    loadChildren:'./components/manage-categories/category.module#CategoryModule',
+    loadChildren:'./components/manage-categories/category.module#CategoryModule'
   },
   {
     path:'',
-    loadChildren:'./components/manage-templates/template.module#TemplatesModule',
+    loadChildren:'./components/manage-templates/template.module#TemplatesModule'
   }
 ];
 

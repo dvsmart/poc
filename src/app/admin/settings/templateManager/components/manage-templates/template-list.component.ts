@@ -31,10 +31,6 @@ export class ManageTemplatesComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
         if(response ){
-          if(response.groupName){
-            this.categoryName = response.groupName;
-            this.dataSource = new MatTableDataSource(response.customTemplates);
-          }
           this.dataSource = new MatTableDataSource(response);  
         }
       });
