@@ -9,7 +9,7 @@ const routes: Routes = [
   {
     path: 'cat/:id',
     component: TemplateListComponent,
-    resolve:{
+    resolve: {
       templates: TemplateListService
     }
   }
@@ -17,11 +17,11 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-      CoreSharedModule,
-      CustomMaterialModule,
+    CoreSharedModule,
+    CustomMaterialModule,
     RouterModule.forChild(routes),
   ],
-  exports:[TemplateListComponent],
+  exports: [TemplateListComponent],
   declarations: [TemplateListComponent],
 })
 export class TemplateListModule { }

@@ -1,7 +1,7 @@
 @mixin templates-theme($theme) {
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
-    manage-templates {
+    template-list {
         .header {
             .search-wrapper {
                 background: map-get($background, card);

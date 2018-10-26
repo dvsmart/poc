@@ -81,16 +81,16 @@ $typography: mat-typography-config(
 @import './features/asset/properties-list/properties.theme';
 @import './features/assessment/assessment-list/assessments.theme';
 @import './features/calendar/calender.theme';
-@import './admin/settings/TemplateManager/components/manage-categories/categories.theme';
 @import './admin/settings/TemplateManager/components/manage-templates/templates.theme';
 @import './admin/settings/TemplateManager/components/manage-tabs/tabs.theme';
+@import './admin/settings/templateManager/components/manage-categories/category.theme';
 
 @mixin components-theme($theme) {
     @include toolbar-theme($theme);
     @include login-theme($theme);
     @include properties-theme($theme);
     @include assessments-theme($theme);
-    @include categories-theme($theme);
+    @include category-theme($theme);
     @include templates-theme($theme);
     @include tab-theme($theme);
     @include calendar-theme($theme);

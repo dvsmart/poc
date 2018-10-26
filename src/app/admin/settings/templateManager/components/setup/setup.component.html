@@ -1,0 +1,24 @@
+<div class="page-layout carded left-sidebar inner-scroll">
+  <div class="top-bg accent"></div>
+  <fuse-sidebar class="sidebar" name="setup-sidebar" position="left" lockedOpen="gt-md">
+    <div class="header p-24 accent">
+      <span>Categories</span> / <span> Templates</span>
+    </div>
+    <div class="content p-24" fusePerfectScrollbar>
+      <setup-sidebar></setup-sidebar>
+    </div>
+  </fuse-sidebar>
+  <div class="center">
+    <button mat-icon-button class="sidebar-toggle" fxHide.gt-md (click)="toggleSidebar('setup-sidebar')">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div class="header accent p-24">
+      <h2 class="m-0">Some Template Name</h2>
+    </div>
+    <div class="content-card">
+      <div class="content" fusePerfectScrollbar>
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

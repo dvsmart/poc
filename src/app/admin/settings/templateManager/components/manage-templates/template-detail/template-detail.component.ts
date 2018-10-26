@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { TemplateSetupService } from '../../template-setup/templatesetup.service';
+import { TemplateRequest } from '../template.model';
 
 @Component({
   selector: 'template-detail',
@@ -13,10 +13,10 @@ import { TemplateSetupService } from '../../template-setup/templatesetup.service
 export class TemplateDetailComponent implements OnInit {
   form: FormGroup;
   formErrors: any;
-  template: any;
+  template: TemplateRequest;
 
   private _unsubscribeAll: Subject<any>;
-  constructor(private _formBuilder: FormBuilder, private router: Router, private templatesetupservice: TemplateSetupService) {
+  constructor(private _formBuilder: FormBuilder, private router: Router) {
     this.formErrors = {
       company: {},
       firstName: {},
@@ -33,39 +33,17 @@ export class TemplateDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.templatesetupservice.onSelectedTemplateChanged
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(([res, formType]) => {
-        if (formType === 'edit') {
-          this.template = res;
-        }
-        this.form = this.createTemplateForm();
-      })
-
-    this.form.valueChanges
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(() => {
-        this.onFormValuesChanged();
-      });
+    
   }
 
   createTemplateForm() {
-    if (this.template) {
-      return this._formBuilder.group({
-        templateName: [this.template.templateName, [Validators.required, Validators.maxLength(25)]],
-      });
-    } else {
-      return this._formBuilder.group({
-        templateName: ['', [Validators.required, Validators.maxLength(25)]],
-      });
-    }
+    
   }
 
   saveTemplate() {
     if (this.form.invalid) {
       return;
     }
-    this.templatesetupservice.saveTemplate(this.form.getRawValue());
   }
 
   cancelTemplate() {

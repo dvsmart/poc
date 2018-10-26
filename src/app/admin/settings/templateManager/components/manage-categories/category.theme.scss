@@ -1,7 +1,7 @@
-@mixin categories-theme($theme) {
+@mixin category-theme($theme) {
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
-    manage-categories {
+    category-list {
         .header {
             .search-wrapper {
                 background: map-get($background, card);

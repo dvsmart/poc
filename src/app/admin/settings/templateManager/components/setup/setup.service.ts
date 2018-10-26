@@ -3,15 +3,15 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { environment } from '@env/environment';
 import { HttpClient } from '@angular/common/http';
-import { TemplateResponse } from '../../models/template.model';
-import { TabService } from '../manage-tabs/tabs.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TemplateSetupService {
+export class SetupService {
   onSelectedTemplateChanged: BehaviorSubject<any>;
   routeParams: any;
+
+  fields: any;
 
   constructor(private _httpClient: HttpClient) {
     this.onSelectedTemplateChanged = new BehaviorSubject<any>({});
@@ -34,8 +34,8 @@ export class TemplateSetupService {
   getTemplateDetail() {
     if (this.routeParams.id != 'new') {
       return new Promise((resolve, reject) => {
-        this._httpClient.get<TemplateResponse>(environment.apiUrl + 'CustomTemplateConfig/' + this.routeParams.id)
-          .subscribe((response: TemplateResponse) => {
+        this._httpClient.get<any>(environment.apiUrl + 'CustomTemplateConfig/' + this.routeParams.id)
+          .subscribe((response: any) => {
             this.onSelectedTemplateChanged.next([response, 'edit']);
             resolve(response);
           }, reject);
@@ -46,7 +46,17 @@ export class TemplateSetupService {
   saveTemplate(templateName) {
     return new Promise((resolve, reject) => {
       this._httpClient.post(environment.apiUrl + 'CustomTemplateConfig', { ...templateName })
-        .subscribe((response: TemplateResponse) => {
+        .subscribe((response: any) => {
+          this.onSelectedTemplateChanged.next([response, 'edit']);
+          resolve(response);
+        }, reject);
+    });
+  }
+
+  updateTemplate(templateName) {
+    return new Promise((resolve, reject) => {
+      this._httpClient.put(environment.apiUrl + 'CustomTemplateConfig', { ...templateName })
+        .subscribe((response: any) => {
           this.onSelectedTemplateChanged.next([response, 'edit']);
           resolve(response);
         }, reject);

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CoreSharedModule } from '@core/core.module';
 import { CustomControlsModule } from '@core/components/custom-controls/custom-controls.module';
-import { CustomMaterialModule } from './custom-material.module';
 
 const routes: Routes = [
   {

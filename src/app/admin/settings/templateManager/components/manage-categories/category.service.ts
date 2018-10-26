@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriesService {
+export class CategoryService {
   onCategoriesChanged: BehaviorSubject<any>;
   constructor(private http: HttpClient) {
     this.onCategoriesChanged = new BehaviorSubject<any>({});

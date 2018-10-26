@@ -4,17 +4,15 @@ import { fuseAnimations } from '@core/animations';
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { TemplateSetupService } from './templatesetup.service';
-import { TemplateResponse } from '../../models/template.model';
 import { Route, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-template-setup',
-  templateUrl: './template-setup.component.html',
-  styleUrls: ['./template-setup.component.scss'],
+  selector: 'setup',
+  templateUrl: './setup.component.html',
+  styleUrls: ['./setup.component.scss'],
   animations: fuseAnimations
 })
-export class TemplateSetupComponent implements OnInit {
+export class SetupComponent implements OnInit {
   searchInput: FormControl;
   private _unsubscribeAll: Subject<any>;
   templateName:string;
@@ -22,7 +20,7 @@ export class TemplateSetupComponent implements OnInit {
 
   isNew: boolean = false;
 
-  constructor(private _fuseSidebarService: FuseSidebarService,private templateService: TemplateSetupService,private route:ActivatedRoute) {
+  constructor(private _fuseSidebarService: FuseSidebarService,private route:ActivatedRoute) {
     this.searchInput = new FormControl('');
     
     this._unsubscribeAll = new Subject();
@@ -33,16 +31,6 @@ export class TemplateSetupComponent implements OnInit {
   ngOnInit() {
     var param = this.route.snapshot.paramMap.get('id');
     this.isNew = param === 'new' ? true : false;
-  
-    this.templateService.onSelectedTemplateChanged
-    .pipe(takeUntil(this._unsubscribeAll))
-    .subscribe((res:TemplateResponse)=>{
-      if(res){
-        this.templateName = res.templateName;
-        this.templateId  = res.id
-        this.isNew = false;
-      }
-    })
 
     this.searchInput.valueChanges
       .pipe(

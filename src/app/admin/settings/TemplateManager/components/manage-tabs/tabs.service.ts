@@ -3,7 +3,6 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { environment } from '@env/environment';
 import { HttpClient } from '@angular/common/http';
-import { TemplateSetupService } from '../template-setup/templatesetup.service';
 import { TabResponse } from './tab.model';
 
 @Injectable({
@@ -16,14 +15,28 @@ export class TabService {
   routeParams: any;
   customTabs: BehaviorSubject<any>;
 
-  constructor(private _httpClient: HttpClient, private templateservice: TemplateSetupService) {
+  constructor(private _httpClient: HttpClient) {
     this.customTabs = new BehaviorSubject<any>(null);
     this.onCurrentTabChanged = new BehaviorSubject<any>({});
   }
 
-  getCustomTabs(templateId): Promise<any> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
+    this.routeParams = route.params;
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'CustomTabConfig/' + templateId)
+      Promise.all([
+        this.getCustomTabs()
+      ]).then(
+        () => {
+          resolve();
+        },
+        reject
+      );
+    });
+  }
+
+  getCustomTabs(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._httpClient.get<any>(environment.apiUrl + 'CustomTabConfig/' + this.routeParams.id)
         .subscribe((response: any) => {
           this.customTabs.next(response);
           resolve(response);
@@ -39,7 +52,6 @@ export class TabService {
     return new Promise((resolve, reject) => {
       this._httpClient.post(environment.apiUrl + 'CustomTabConfig', { ...tabRequest })
         .subscribe((response: TabResponse) => {
-          this.templateservice.getTemplateDetail();
           resolve(response);
         }, reject);
     });

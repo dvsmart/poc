@@ -7,7 +7,7 @@
           account_box
         </mat-icon>
         <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-          <span class="logo-text h1" [routerLink]="['admin/setup/customObject/categories']">
+          <span class="logo-text h1">
             {{categoryName}}
           </span>
           <div class="subtitle secondary-text">
@@ -25,7 +25,7 @@
       <!-- / SEARCH -->
 
       <!-- ADD BUTTON -->
-      <button mat-raised-button [routerLink]="['new']" class="add-product-button fuse-white mt-24 mt-md-0">
+      <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0">
         <span>CREATE NEW</span>
       </button>
 
@@ -34,15 +34,15 @@
       <div class="example-loading-shade" *ngIf="isLoading">
         <mat-spinner *ngIf="isLoading"></mat-spinner>
       </div>
-      <mat-table class="custom-data-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'10'}">
+      <mat-table class="templates-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'10'}">
         <ng-container cdkColumnDef="templateName">
           <mat-header-cell *cdkHeaderCellDef> Title </mat-header-cell>
           <mat-cell *cdkCellDef="let row"> {{row.templateName}} </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef></mat-header-cell>
-          <mat-cell *matCellDef="let row">
-            <div fxFlex="row">
+        <ng-container cdkColumnDef="actions">
+          <mat-header-cell *cdkHeaderCellDef></mat-header-cell>
+          <mat-cell *cdkCellDef="let row">
+            <div fxLayout="row" fxLayoutAlign="end">
               <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More" (click)="$event.stopPropagation();">
                 <mat-icon class="secondary-text">more_vert</mat-icon>
               </button>
@@ -64,11 +64,10 @@
           </mat-cell>
         </ng-container>
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *cdkRowDef="let row; columns: displayedColumns;" matRipple class="custom-data-table-row" [@animate]="{value:'*',params:{y:'100%'}}"
-          [routerLink]="[row.id]"></mat-row>
+        <mat-row *cdkRowDef="let row; columns: displayedColumns;" matRipple class="template" [@animate]="{value:'*',params:{y:'100%'}}" 
+        [routerLink]="[row.Id]"></mat-row>
       </mat-table>
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-
     </div>
   </div>
 </div>

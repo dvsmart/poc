@@ -6,9 +6,9 @@ import { fuseAnimations } from '@core/animations';
 import { TemplatesService } from './templates.service';
 
 @Component({
-  selector: 'manage-templates',
-  templateUrl: './manage-templates.component.html',
-  styleUrls: ['./manage-templates.component.scss'],
+  selector: 'template-list',
+  templateUrl: './template-list.component.html',
+  styleUrls: ['./template-list.component.scss'],
   animations:fuseAnimations
 })
 export class ManageTemplatesComponent implements OnInit {

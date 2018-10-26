@@ -3,7 +3,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { FieldService } from '../fields.service';
+import { FieldService } from '../field.service';
 import { CreateFieldRequest, FieldType } from '../field.model';
 
 @Component({

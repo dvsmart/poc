@@ -8,7 +8,7 @@ const routes: Routes = [
     canActivate: [AdminGuard],
     children: [
       {
-        path: 'setup/customObject',
+        path: 'customObject',
         loadChildren: './settings/templateManager/templateManager.module#TemplateManagerModule',
       },
       {

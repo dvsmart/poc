@@ -1,8 +1,32 @@
-<div class="sidebar-content">
-  <div class="card mat-white-bg">
-    <!-- <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">
-      <span class="h5">Template Name</span>
-    </div> -->
+<div class="demo-sidebar">
+  <div class="nav">
+    <div class="nav-item" aria-label="Details">
+      <a class="nav-link" matRipple [routerLinkActive]="['active', 'accent']" routerLink="details">
+        <span class="title">Details</span>
+      </a>
+    </div>
+    <div class="nav-item" aria-label="Tabs">
+      <a class="nav-link" matRipple [routerLinkActive]="['active', 'accent']" routerLink="tabs">
+        <div class="title">Tabs</div>
+      </a>
+    </div>
+    <div class="nav-item" aria-label="Fields & Relationships">
+      <a class="nav-link" matRipple [routerLinkActive]="['active', 'accent']" routerLink="fields">
+        <div class="title">Fields & Relationships</div>
+      </a>
+    </div>
+    <div class="nav-item" aria-label="Object Limits">
+      <a class="nav-link" matRipple [routerLinkActive]="['active', 'accent']">
+        <span class="title">Object Limits</span>
+      </a>
+    </div>
+    <div class="nav-item" aria-label="Validation Rules">
+      <a class="nav-link" matRipple [routerLinkActive]="['active', 'accent']">
+        <div class="title">Validation Rules</div>
+      </a>
+    </div>
+  </div>
+  <!-- <div class="card mat-white-bg">
     <div class="content py-16" fusePerfectScrollbar>
       <div class="nav">
         <div class="nav-item" aria-label="Details">
@@ -32,5 +56,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>

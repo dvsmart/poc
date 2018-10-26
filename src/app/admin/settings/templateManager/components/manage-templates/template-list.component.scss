@@ -1,5 +1,4 @@
 @import "src/@core/scss/fuse";
-
 #gridPageTop {
     .top-bg {
         @include media-breakpoint('lt-md') {
@@ -40,36 +39,39 @@
                 max-height: 192px !important;
             }
         }
-    }
-}
-.example-loading-shade {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 56px;
-    right: 0;
-    background: rgba(0, 0, 0, 0.15);
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.data-custom-table {
-    flex: 1 1 auto;
-    border-bottom: 1px solid rgba(0, 0, 0, .12);
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    .mat-header-row {
-        min-height: 64px;
-    }
-    .data-custom-table-row {
-        position: relative;
-        cursor: pointer;
-        height: 84px;
-    }
-    .mat-cell {
-        min-width: 0;
-        display: flex;
-        align-items: center;
+        .example-loading-shade {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 56px;
+            right: 0;
+            background: rgba(0, 0, 0, 0.15);
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .templates-table {
+            flex: 1 1 auto;
+            border-bottom: 1px solid rgba(0, 0, 0, .12);
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+            .mat-header-row {
+                min-height: 64px;
+            }
+            .template {
+                position: relative;
+                cursor: pointer;
+                height: 80px;
+            }
+            .mat-cell {
+                min-width: 0;
+                display: flex;
+                align-items: center;
+            }
+            .mat-column-actions {
+                justify-content: flex-end;
+            }
+        }
     }
 }

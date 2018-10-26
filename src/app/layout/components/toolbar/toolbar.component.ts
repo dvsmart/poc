@@ -45,11 +45,11 @@ export class ToolbarComponent implements OnInit {
   }
 
   categories(){
-    this.router.navigate(['admin/setup/customObject/categories']);
+    this.router.navigate(['admin/customObject/categoryManagement']);
   }
 
   templates(){
-    this.router.navigate(['admin/setup/customObject/templates']);
+    this.router.navigate(['admin/customObject/templateManagement']);
   }
   
   users(){
