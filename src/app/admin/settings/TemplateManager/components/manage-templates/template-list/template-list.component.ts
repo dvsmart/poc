@@ -3,7 +3,7 @@ import { takeUntil } from 'rxjs/operators';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { Subject } from 'rxjs';
 import { fuseAnimations } from '@core/animations';
-import { TemplatesService } from './templates.service';
+import { TemplatesService } from './templateList.service';
 
 @Component({
   selector: 'template-list',

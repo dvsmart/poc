@@ -3,7 +3,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { TemplateRequest } from '../template.model';
+import { TemplateRequest, TemplateDetail } from '../template.model';
+import { SetupService } from '../setup/setup.service';
+import { TemplateDetailService } from './templateDetail.service';
+
 
 @Component({
   selector: 'template-detail',
@@ -16,28 +19,32 @@ export class TemplateDetailComponent implements OnInit {
   template: TemplateRequest;
 
   private _unsubscribeAll: Subject<any>;
-  constructor(private _formBuilder: FormBuilder, private router: Router) {
-    this.formErrors = {
-      company: {},
-      firstName: {},
-      lastName: {},
-      address: {},
-      address2: {},
-      city: {},
-      state: {},
-      postalCode: {},
-      country: {}
-    };
+  constructor(private _formBuilder: FormBuilder, private router: Router,private templateservies: SetupService) {
     this._unsubscribeAll = new Subject();
     this.form = new FormGroup({});
   }
 
   ngOnInit() {
-    
+    this.templateservies.onSelectedTemplateChanged
+    .pipe(takeUntil(this._unsubscribeAll))
+    .subscribe(([template,formType])=>{
+      if(template && formType == 'edit'){
+        this.template = new TemplateRequest(template);
+      }else if(formType == 'new'){
+        this.template = new TemplateRequest();
+      }
+      this.form = this.createTemplateForm();
+    })
   }
 
   createTemplateForm() {
-    
+    return this._formBuilder.group({
+      templateName: [this.template.templateName,Validators.required],
+      pluralName:[this.template.pluralName],
+      id:[this.template.id],
+      categoryId: [this.template.categoryId],
+      isVisible:[this.template.isVisible]
+    });
   }
 
   saveTemplate() {

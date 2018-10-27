@@ -65,7 +65,8 @@
         </ng-container>
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *cdkRowDef="let row; columns: displayedColumns;" matRipple class="template" [@animate]="{value:'*',params:{y:'100%'}}" 
-        [routerLink]="[row.Id]"></mat-row>
+        [routerLink]="['templateManagement/',row.id]">
+      </mat-row>
       </mat-table>
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     </div>

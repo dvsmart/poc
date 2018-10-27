@@ -100,7 +100,6 @@ export class FilesDataSource extends DataSource<any>
     return merge(...displayDataChanges)
       .pipe(
         map(() => {
-          debugger;
           let data = null;//this.service.fields.slice();
 
           data = this.filterData(data);
