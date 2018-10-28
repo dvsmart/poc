@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { TaskComponent } from './task.component';
 import { TaskFilterComponent } from './task-filter/task-filter.component';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
 import { TaskListComponent } from './task-list/task-list.component';
 import { Routes, RouterModule } from '../../../../node_modules/@angular/router';
 import { TaskService } from './task.service';
-import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatSelectModule, MatNativeDateModule, MatPaginatorModule } from '@angular/material';
 import { CoreSharedModule } from '@core/core.module';
 import { CoreSidebarModule } from '@core/components/sidebar/sidebar.module';
 import { TaskListItemComponent } from './task-list/task-list-item/task-list-item.component';

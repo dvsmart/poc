@@ -7,8 +7,11 @@ import { SetupComponent } from "./setup/setup.component";
 import { SetupService } from "./setup/setup.service";
 import { SetupSidebarComponent } from "./setup/setup-sidebar/setup-sidebar.component";
 import { TemplatesService } from "./template-list/templateList.service";
-import { TemplateDetailService } from "./template-detail/templateDetail.service";
-
+import { TabComponent } from "../manage-tabs/tab.component";
+import { TabListItemComponent } from "../manage-tabs/tab-list/tab-list-item/tab-list-item.component";
+import { TabListComponent } from "../manage-tabs/tab-list/tab-list.component";
+import { TabDetailComponent } from "../manage-tabs/tab-detail/tab-detail.component";
+import { FieldListComponent } from "../manage-fields/field-list.component";
 
 const routes: Routes = [
   {
@@ -30,6 +33,14 @@ const routes: Routes = [
         component: TemplateDetailComponent
       },
       {
+        path: 'tabs',
+        component: TabComponent
+      },
+      {
+        path: 'fields',
+        component: FieldListComponent
+      },
+      {
         path: '**',
         redirectTo: 'details'
       }
@@ -47,7 +58,11 @@ const routes: Routes = [
     ManageTemplatesComponent,
     TemplateDetailComponent,
     SetupComponent,
-    SetupSidebarComponent
+    SetupSidebarComponent,
+    TabListComponent,
+    TabListItemComponent,
+    TabComponent,
+    TabDetailComponent
   ],
 })
 export class TemplatesModule { }

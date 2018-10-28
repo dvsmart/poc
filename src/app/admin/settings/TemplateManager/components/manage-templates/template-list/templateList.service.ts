@@ -16,6 +16,7 @@ export class  TemplatesService{
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
     this.routeParams = route.params;
+    debugger;
     return new Promise((resolve, reject) => {
       Promise.all([
         this.getAllTemplates()
@@ -39,6 +40,7 @@ export class  TemplatesService{
   // }
 
   getAllTemplates(): Promise<any> {
+    debugger;
     return new Promise((resolve, reject) => {
       this._httpClient.get<any>(environment.apiUrl + 'CustomTemplateConfig/')
         .subscribe((response: any) => {

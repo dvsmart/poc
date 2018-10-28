@@ -32,6 +32,7 @@ export class SetupService {
   }
 
   getTemplateDetail() {
+    debugger;
     if (this.routeParams.id != 'new') {
       return new Promise((resolve, reject) => {
         this._httpClient.get<any>(environment.apiUrl + 'CustomTemplateConfig/' + this.routeParams.id)
