@@ -2,7 +2,7 @@ import { Component, OnInit, HostBinding, Input, ViewEncapsulation } from '@angul
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { TabResponse } from '../../tab.model';
-import { TabService } from '../../tabs.service';
+import { SetupService } from '../../../manage-templates/setup.service';
 
 @Component({
     selector: 'tab-list-item',
@@ -29,15 +29,9 @@ export class TabListItemComponent implements OnInit {
     private _unsubscribeAll: Subject<any>;
 
     constructor(
-        private _tabService: TabService,
+        private templateservice: SetupService,
         private _activatedRoute: ActivatedRoute
     ) {
-        // Disable move if path is not /all
-        if (_activatedRoute.snapshot.url[0].path !== 'all') {
-            this.moveDisabled = true;
-        }
-
-        // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
 

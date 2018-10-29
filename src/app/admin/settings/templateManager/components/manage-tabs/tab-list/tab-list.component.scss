@@ -6,16 +6,9 @@ tab-list {
     padding: 0;
     border-right: 1px solid;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    min-height: 600px;
-    .no-todos-text {
+    -webkit-overflow-scrolling: touch;  
+    .no-tabs-text{
         font-size: 14px;
         font-weight: 300;
-    }
-    .tab-list {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        flex: 1;
     }
 }

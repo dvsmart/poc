@@ -10,7 +10,7 @@ export class TemplateDetail {
 export class TemplateRequest {
     id: number | 0;
     categoryId?: number | null;
-    templateName: string;
+    name: string;
     pluralName: string;
     isVisible: boolean | true;
 
@@ -20,6 +20,6 @@ export class TemplateRequest {
         this.categoryId = data.categoryId;
         this.pluralName = data.pluralName;
         this.isVisible = data.isVisible;
-        this.templateName = data.templateName;
+        this.name = data.name;
     }
 }

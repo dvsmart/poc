@@ -1,28 +1,19 @@
-<div>
-    <div class="toolbar px-24 py-8">
-        <button mat-raised-button class="save-product-button mat-white-bg" (click)="saveTemplate()" [disabled]="form.invalid || form.pristine">Save</button>
-        <button mat-raised-button class="save-product-button mat-white-bg" (click)="cancelTemplate()">Cancel</button>
-    </div>
-    <div fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-md="row">
+<div class="toolbar px-24 py-8">
+    <button mat-raised-button class="save-product-button accent mr-16" (click)="saveTemplate()" [disabled]="form.invalid || form.pristine">Update</button>
+    <button mat-raised-button class="save-product-button" (click)="cancelTemplate()">Cancel</button>
+</div>
+<div fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-md="row">
 
-        <form class="p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form"
-            [formGroup]="form">
-
-            <div class="h2 mb-24">Template Definition</div>
-
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-
-                <mat-form-field fxFlex="100" appearance="outline">
-                    <mat-label>Name</mat-label>
-                    <input matInput placeholder="Template Name" formControlName="templateName">
-                </mat-form-field>
-
-                <mat-form-field fxFlex="100" appearance="outline">
-                    <mat-label>Plural Name</mat-label>
-                    <input matInput placeholder="Template Name" formControlName="pluralName">
-                </mat-form-field>
-
-            </div>
-        </form>
-    </div>
+    <form class="p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form" [formGroup]="form">
+        <div fxLayout="column">
+            <mat-form-field fxFlex="100" appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Template Name" formControlName="name">
+            </mat-form-field>
+            <mat-form-field fxFlex="100" appearance="outline">
+                <mat-label>Plural Name</mat-label>
+                <input matInput placeholder="Template Name" formControlName="pluralName">
+            </mat-form-field>
+        </div>
+    </form>
 </div>

@@ -1,12 +1,13 @@
-<div class="content-card" fusePerfectScrollbar>
-  <!-- <div class="toolbar px-24 py-8">
-    <button mat-raised-button class="accent" (click)="addField()">Create</button>
-  </div> -->
+<div class="toolbar px-24 py-8">
+  <button mat-raised-button class="accent">Create</button>
+</div>
+<div class="content p-24" fusePerfectScrollbar>
   <div *ngIf="!isEdit && !isDetail">
     <div class="example-loading-shade" *ngIf="isLoading">
       <mat-spinner *ngIf="isLoading"></mat-spinner>
     </div>
-    <mat-table class="customObjects-table" #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
+    <mat-table class="customObjects-table" #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}"
+      fusePerfectScrollbar>
       <ng-container matColumnDef="fieldCaption">
         <mat-header-cell *matHeaderCellDef> Field Name </mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.fieldCaption}} </mat-cell>

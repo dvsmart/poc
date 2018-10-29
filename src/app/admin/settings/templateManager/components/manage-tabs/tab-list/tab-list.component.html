@@ -1,5 +1,5 @@
 <div *ngIf="!tabs" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
-  <span class="no-todos-text hint-text">There are no Tabs!</span>
+  <span class="no-tabs-text hint-text">There are no Tabs!</span>
 </div>
 <div class="tab-list" [@animateStagger]="{value:'50'}">
   <tab-list-item *ngFor="let taskItem of tabs" [tab]="taskItem" (click)="readTab(taskItem)" matRipple

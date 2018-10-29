@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { fuseAnimations } from '@core/animations';
 import { Subject } from 'rxjs';
+import { SetupService } from '../../setup.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'setup-sidebar',
@@ -11,12 +13,20 @@ import { Subject } from 'rxjs';
 })
 export class SetupSidebarComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
-  constructor() {
+  templateName: any;
+  constructor(private templateservice: SetupService) {
     this._unsubscribeAll = new Subject();
   }
 
   ngOnInit() {
-    
+    this.templateservice.onSelectedTemplateChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(x => {
+        this.templateName = x[0].name;
+      })
   }
-
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
 }

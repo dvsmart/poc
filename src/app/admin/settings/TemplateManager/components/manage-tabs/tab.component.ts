@@ -1,38 +1,40 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { TabService } from './tabs.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { fuseAnimations } from '@core/animations';
 import { TabResponse } from './tab.model';
+import { SetupService } from '../manage-templates/setup.service';
 
 
 @Component({
   selector: 'tab',
   templateUrl: './tab.component.html',
   styleUrls: ['./tab.component.scss'],
-  encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
 export class TabComponent implements OnInit {
-  
+
   private _unsubscribeAll: Subject<any>;
   currentTab: TabResponse;
   isNew: boolean;
-
-  constructor(private _tabservice: TabService) {
+  templateId: number;
+  constructor(private templateService: SetupService) {
     this._unsubscribeAll = new Subject();
   }
 
   ngOnInit() {
-    
   }
 
-  deselectCurrentTodo(): void {
+  deselectCurrentTab(): void {
     this.currentTab = null
   }
 
-  AddTab() {
-
+  addTab() {
+    this.templateService.setCurrentTab();
   }
 
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
 }

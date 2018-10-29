@@ -3,8 +3,8 @@ import { fuseAnimations } from '@core/animations';
 import { Subject } from 'rxjs';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { takeUntil } from 'rxjs/operators';
-import { TabService } from '../tabs.service';
 import { TabResponse } from '../tab.model';
+import { SetupService } from '../../manage-templates/setup.service';
 
 @Component({
   selector: 'tab-list',
@@ -23,16 +23,22 @@ export class TabListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private _tabservice: TabService) {
+  constructor(private templateservice: SetupService) {
     this._unsubscribeAll = new Subject();
   }
 
   ngOnInit() {
-   
+    this.templateservice.customTabs
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(tabs => {
+        if (tabs) {
+          this.tabs = tabs.templateTabs;
+        }
+      })
   }
 
   readTab(tab): void {
-    this._tabservice.setCurrentTab(tab);
+    this.templateservice.setCurrentTab(tab, 'edit');
   }
 
   ngOnDestroy(): void {

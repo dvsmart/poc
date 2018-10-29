@@ -12,9 +12,9 @@ import { fuseConfig } from './config';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { AppRoutingModule } from './app-routing.module';
-import { FeaturesModule } from './features/features.module';
 import { MaintenanceComponent } from './pages/maintenance/maintenance.component';
 import { Error500Component } from './pages/errors/error500/error500.component';
+import { FeaturesModule } from './features/features.module';
 
 @NgModule({
   declarations: [
@@ -29,8 +29,8 @@ import { Error500Component } from './pages/errors/error500/error500.component';
     MatIconModule,
     FuseProgressBarModule,
     CoreSidebarModule,
-    FeaturesModule,
     LayoutModule,
+    FeaturesModule,
     CoreSharedModule.forRoot(fuseConfig),
     AppRoutingModule
   ],

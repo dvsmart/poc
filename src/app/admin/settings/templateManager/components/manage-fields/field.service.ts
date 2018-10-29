@@ -33,7 +33,6 @@ export class FieldService {
         this.routeParams = route.params;
         return new Promise((resolve, reject) => {
             Promise.all([
-                //this.getTemplates(),
                 this.getTemplateFields()
             ]).then(
                 () => {
@@ -68,7 +67,7 @@ export class FieldService {
             this._httpClient.post(environment.apiUrl + 'CustomFieldConfig', { ...req })
                 .subscribe((response: FieldResponse) => {
                     this.onNewFieldAdded.next(response);
-              //      this.templateservice.getTemplateDetail();
+                    //      this.templateservice.getTemplateDetail();
                     resolve(response);
                 }, reject);
         });

@@ -30,7 +30,6 @@ export class ManageTemplatesComponent implements OnInit {
     this.templatesService.customTemplates
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
-        debugger;
         if(response ){
           this.dataSource = new MatTableDataSource(response);  
         }

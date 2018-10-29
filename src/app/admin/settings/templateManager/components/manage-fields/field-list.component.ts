@@ -12,7 +12,6 @@ import { DataSource } from '@angular/cdk/collections';
   selector: 'field-list',
   templateUrl: './field-list.component.html',
   styleUrls: ['./field-list.component.scss'],
-  encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
 export class FieldListComponent implements OnInit {

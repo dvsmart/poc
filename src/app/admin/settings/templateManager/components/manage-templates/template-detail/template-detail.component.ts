@@ -4,9 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { TemplateRequest, TemplateDetail } from '../template.model';
-import { SetupService } from '../setup/setup.service';
-import { TemplateDetailService } from './templateDetail.service';
-
+import { SetupService } from '../setup.service';
 
 @Component({
   selector: 'template-detail',
@@ -39,7 +37,7 @@ export class TemplateDetailComponent implements OnInit {
 
   createTemplateForm() {
     return this._formBuilder.group({
-      templateName: [this.template.templateName,Validators.required],
+      name: [this.template.name,Validators.required],
       pluralName:[this.template.pluralName],
       id:[this.template.id],
       categoryId: [this.template.categoryId],

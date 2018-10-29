@@ -1,30 +1,25 @@
-@import "src/@core/scss/fuse";
-manage-fields {
-    width: 100%;
-    .customObjects-table {
-        flex: 1 1 auto;
-        border-bottom: 1px solid rgba(0, 0, 0, .12);
-        overflow: auto;
-        -webkit-overflow-scrolling: touch;
-        .mat-header-row {
-            min-height: 64px;
-        }
-        .field {
-            position: relative;
-            cursor: pointer;
-            height: 84px;
-        }
-        .mat-cell {
-            min-width: 0;
-            display: flex;
-            align-items: center;
-        }
-        .mat-column-isRequired {
-            justify-content: center;
-        }
+.customObjects-table {
+    flex: 1 1 auto;
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    .mat-header-row {
+        min-height: 64px;
+    }
+    .field {
+        position: relative;
+        cursor: pointer;
+        height: 84px;
+    }
+    .mat-cell {
+        min-width: 0;
+        display: flex;
+        align-items: center;
+    }
+    .mat-column-isRequired {
+        justify-content: center;
     }
 }
-
 .toolbar {
     padding-left: 16px !important;
     display: flex;

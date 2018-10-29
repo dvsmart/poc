@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FuseSidebarService } from '@core/components/sidebar/sidebar.service';
 import { fuseAnimations } from '@core/animations';
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Route, ActivatedRoute } from '@angular/router';
+import { SetupService } from '../setup.service';
 
 @Component({
   selector: 'setup',
@@ -15,22 +16,30 @@ import { Route, ActivatedRoute } from '@angular/router';
 export class SetupComponent implements OnInit {
   searchInput: FormControl;
   private _unsubscribeAll: Subject<any>;
-  templateName:string;
-  templateId:number;
+  templateName: string;
+  templateId: number;
 
   isNew: boolean = false;
 
-  constructor(private _fuseSidebarService: FuseSidebarService,private route:ActivatedRoute) {
+  constructor(private _fuseSidebarService: FuseSidebarService, private route: ActivatedRoute,private templateservice: SetupService) {
     this.searchInput = new FormControl('');
-    
+
     this._unsubscribeAll = new Subject();
-    
-    
+
+
   }
 
   ngOnInit() {
     var param = this.route.snapshot.paramMap.get('id');
     this.isNew = param === 'new' ? true : false;
+
+    this.templateservice.onSelectedTemplateChanged
+    .pipe(takeUntil(this._unsubscribeAll))
+    .subscribe(x=>{
+      this.templateId = x[0].id;
+      this.templateName = x[0].name;
+    })
+
 
     this.searchInput.valueChanges
       .pipe(

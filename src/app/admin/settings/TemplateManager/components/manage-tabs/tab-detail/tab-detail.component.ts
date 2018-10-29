@@ -3,8 +3,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { fuseAnimations } from '@core/animations';
-import { TabService } from '../tabs.service';
 import { TabResponse } from '../tab.model';
+import { SetupService } from '../../manage-templates/setup.service';
 
 @Component({
   selector: 'tab-detail',
@@ -21,8 +21,8 @@ export class TabDetailComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
 
   constructor(
-    private _tabservice: TabService,
     private _formBuilder: FormBuilder,
+    private templateservice: SetupService
   ) {
     // Set the private defaults
     this._unsubscribeAll = new Subject();
@@ -30,10 +30,10 @@ export class TabDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._tabservice.onCurrentTabChanged
+    this.templateservice.onCurrentTabChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(([tab, formType]) => {
-        if(tab){
+        if (tab) {
           if (formType === 'edit') {
             this.formType = 'edit';
             this.tab = new TabResponse(tab);
@@ -53,7 +53,7 @@ export class TabDetailComponent implements OnInit {
         distinctUntilChanged()
       )
       .subscribe(data => {
-        this._tabservice.addTab(data);
+        this.templateservice.addTab(data);
       });
   }
 
@@ -68,7 +68,7 @@ export class TabDetailComponent implements OnInit {
     var formData = this.tabForm.getRawValue();
     this.tab.tabName = formData.tabName;
     this.tab.isVisible = formData.isVisible;
-    this._tabservice.addTab(this.tab);
+    this.templateservice.addTab(this.tab);
   }
 
   ngOnDestroy(): void {
