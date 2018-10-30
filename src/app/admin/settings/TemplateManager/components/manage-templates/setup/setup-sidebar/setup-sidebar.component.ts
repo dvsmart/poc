@@ -8,21 +8,23 @@ import { takeUntil } from 'rxjs/operators';
   selector: 'setup-sidebar',
   templateUrl: './setup-sidebar.component.html',
   styleUrls: ['./setup-sidebar.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  //encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
 export class SetupSidebarComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
   templateName: any;
+  tabs: any;
   constructor(private templateservice: SetupService) {
     this._unsubscribeAll = new Subject();
   }
 
   ngOnInit() {
-    this.templateservice.onSelectedTemplateChanged
+    this.templateservice.customTabs
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(x => {
-        this.templateName = x[0].name;
+      .subscribe(res => {
+        this.templateName = res.templateName
+        this.tabs = res.templateTabs;
       })
   }
   ngOnDestroy(): void {

@@ -32,7 +32,7 @@ import { CdkTableModule } from '@angular/cdk/table';
         MatDatepickerModule,
         MatNativeDateModule,
         MatTabsModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
     ],
     exports: [
         CoreSidebarModule,

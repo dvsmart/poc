@@ -57,11 +57,32 @@ export class SetupService {
   }
 
   getCustomTabs(): Promise<any> {
-    var templateId = this.TemplateId == 0 ? this.routeParams.id : this.TemplateId;
     return new Promise((resolve, reject) => {
+      var templateId = this.TemplateId == 0 ? this.routeParams.id : this.TemplateId;
       this._httpClient.get<any>(environment.apiUrl + 'CustomTabConfig/' + templateId)
         .subscribe((response: any) => {
           this.customTabs.next(response);
+          resolve(response);
+        }, reject);
+    });
+  }
+
+  getTemplateFields() {
+    return new Promise((resolve, reject) => {
+      var templateId = this.TemplateId == 0 ? this.routeParams.id : this.TemplateId;
+      this._httpClient.get<any>(environment.apiUrl + 'CustomTemplateFieldConfig/' + templateId)
+        .subscribe((response: any) => {
+          this.customFields.next(response);
+          resolve(response);
+        }, reject);
+    });
+  }
+
+  getTemplateTabFields() {
+    return new Promise((resolve, reject) => {
+      this._httpClient.get<any>(environment.apiUrl + 'CustomTabFieldConfig/' + 1)
+        .subscribe((response: any) => {
+          this.customFields.next(response);
           resolve(response);
         }, reject);
     });

@@ -13,6 +13,7 @@ import { TabListComponent } from "../manage-tabs/tab-list/tab-list.component";
 import { TabDetailComponent } from "../manage-tabs/tab-detail/tab-detail.component";
 import { FieldListComponent } from "../manage-fields/field-list.component";
 import { FieldDetailComponent } from "../manage-fields/field-detail/field-detail.component";
+import { FieldService } from "../manage-fields/field-detail/field.service";
 
 const routes: Routes = [
   {
@@ -35,11 +36,20 @@ const routes: Routes = [
       },
       {
         path: 'tabs',
-        component: TabComponent
+        component: TabComponent,
       },
       {
-        path: 'fields',
-        component: FieldListComponent
+        path: 'details/:id',
+        component: FieldListComponent,
+        children:[
+          {
+            path:':id',
+            component:FieldDetailComponent,
+          }
+        ],
+        resolve:{
+          fields: FieldService
+        }
       },
       {
         path: '**',

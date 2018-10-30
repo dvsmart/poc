@@ -16,5 +16,15 @@
                 }
             }
         }
+        .content {
+            .sidebar {
+                .sidebar-content {
+                    .card {
+                        background: map-get($background, card);
+                    }
+                }
+                background: map-get($background, card);
+            }
+        }
     }
 }

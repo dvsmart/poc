@@ -1,30 +1,34 @@
 <div class="toolbar px-24 py-8">
   <button mat-raised-button class="accent">Create</button>
 </div>
-<div class="content p-24" fusePerfectScrollbar>
-  <div *ngIf="!isEdit && !isDetail">
+<div class="content-card p-24">
+  <div *ngIf="!isEdit">
     <div class="example-loading-shade" *ngIf="isLoading">
       <mat-spinner *ngIf="isLoading"></mat-spinner>
     </div>
-    <mat-table class="customObjects-table" #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}"
+    <mat-table class="customObjects-table" #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}" matSort
       fusePerfectScrollbar>
-      <ng-container matColumnDef="fieldCaption">
-        <mat-header-cell *matHeaderCellDef> Field Name </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.fieldCaption}} </mat-cell>
+      <ng-container matColumnDef="caption">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.caption}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="controlType">
+        <mat-header-cell *matHeaderCellDef> Control Type </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.controlType}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="tabName">
+        <mat-header-cell *matHeaderCellDef> Tab Name </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.tabName}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="templateName">
+        <mat-header-cell *matHeaderCellDef> Template Name </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.templateName}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="isRequired">
         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-xs> Is Required? </mat-header-cell>
         <mat-cell *matCellDef="let row">
           <mat-checkbox checked="row.isRequired"></mat-checkbox>
         </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="addedBy">
-        <mat-header-cell *matHeaderCellDef> Created By </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.addedBy}} </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="addedOn">
-        <mat-header-cell *matHeaderCellDef> Created On </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.addedOn | date}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
@@ -50,13 +54,11 @@
           </div>
         </mat-cell>
       </ng-container>
-      <mat-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-      <mat-row *cdkRowDef="let row; columns: displayedColumns;" matRipple class="field" [@animate]="{value:'*',params:{y:'100%'}}"
-        [routerLink]="[row.fieldId]"></mat-row>
+      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="field" [@animate]="{value:'*',params:{y:'100%'}}"
+        [routerLink]="[row.id]"></mat-row>
     </mat-table>
-    <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10"
-      [pageSizeOptions]="[5, 10, 25, 100]">
-    </mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   </div>
   <div *ngIf="isEdit">
     <field-detail></field-detail>

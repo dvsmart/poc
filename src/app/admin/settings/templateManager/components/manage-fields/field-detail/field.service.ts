@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
-import { FieldType, FieldResponse } from './field.model';
+import { FieldType, FieldResponse } from '../field.model';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 
@@ -33,7 +33,8 @@ export class FieldService {
         this.routeParams = route.params;
         return new Promise((resolve, reject) => {
             Promise.all([
-                this.getTemplateFields()
+                this.getTemplateFields(),
+                this.getFieldTypes()
             ]).then(
                 () => {
                     resolve();
@@ -45,7 +46,7 @@ export class FieldService {
 
     getTemplateFields() {
         return new Promise((resolve, reject) => {
-            this._httpClient.get<any>(environment.apiUrl + 'CustomFieldConfig/' + this.routeParams.id)
+            this._httpClient.get<any>(environment.apiUrl + 'CustomTabFieldConfig/' + this.routeParams.id)
                 .subscribe((response: any) => {
                     this.onfieldsChanged.next(response);
                     resolve(response);

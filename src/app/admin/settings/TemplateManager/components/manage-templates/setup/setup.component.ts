@@ -11,6 +11,7 @@ import { SetupService } from '../setup.service';
   selector: 'setup',
   templateUrl: './setup.component.html',
   styleUrls: ['./setup.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
 export class SetupComponent implements OnInit {

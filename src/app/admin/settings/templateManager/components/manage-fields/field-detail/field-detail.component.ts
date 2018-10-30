@@ -3,7 +3,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { FieldService } from '../field.service';
+import { FieldService } from './field.service';
 import { CreateFieldRequest, FieldType } from '../field.model';
 
 @Component({
@@ -24,9 +24,11 @@ export class FieldDetailComponent implements OnInit {
   secondFormGroup: FormGroup;
   constructor(private _formBuilder: FormBuilder, private fieldService: FieldService) {
     this._unsubscribeAll = new Subject();
+    this.fieldService.getFieldTypes();
   }
 
   ngOnInit() {
+    debugger;
     this.fieldService.onNewFieldAdded
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(([tabId, templateId]) => {

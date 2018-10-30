@@ -1,7 +1,7 @@
 @import "src/@core/scss/fuse";
 
 fuse-sidebar {
-    display: flex;
+    display: inline-grid;
     flex-direction: column;
     flex: 1 0 auto;
     position: absolute;

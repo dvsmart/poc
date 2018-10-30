@@ -20,6 +20,7 @@
         justify-content: center;
     }
 }
+
 .toolbar {
     padding-left: 16px !important;
     display: flex;
@@ -30,4 +31,11 @@
     height: 64px;
     min-height: 64px;
     max-height: 64px;
+}
+
+.content-card {
+    field-list,
+    field-detail {
+        flex: 1 0 100%;
+    }
 }
