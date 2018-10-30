@@ -30,7 +30,7 @@ const assessmentRoutes: Routes = [
   imports: [
     FuseConfirmDialogModule,
     CoreSidebarModule,
-
+    CoreSharedModule,
     MatButtonModule,
     MatChipsModule,
     MatFormFieldModule,
