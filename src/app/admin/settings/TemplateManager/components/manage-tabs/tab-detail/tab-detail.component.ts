@@ -3,8 +3,10 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { fuseAnimations } from '@core/animations';
-import { TabResponse } from '../tab.model';
+import { TabRequest } from '../tab.model';
 import { SetupService } from '../../manage-templates/setup.service';
+import { TabService } from './tab.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'tab-detail',
@@ -14,7 +16,7 @@ import { SetupService } from '../../manage-templates/setup.service';
   animations: fuseAnimations
 })
 export class TabDetailComponent implements OnInit {
-  tab: TabResponse;
+  tab: TabRequest;
   formType: string;
   tabForm: FormGroup;
 
@@ -22,7 +24,9 @@ export class TabDetailComponent implements OnInit {
 
   constructor(
     private _formBuilder: FormBuilder,
-    private templateservice: SetupService
+    private templateservice: SetupService,
+    private tabservice: TabService,
+    private location: Location
   ) {
     // Set the private defaults
     this._unsubscribeAll = new Subject();
@@ -30,45 +34,44 @@ export class TabDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.templateservice.onCurrentTabChanged
+    this.tabservice.onSelectedTabChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(([tab, formType]) => {
-        if (tab) {
-          if (formType === 'edit') {
-            this.formType = 'edit';
-            this.tab = new TabResponse(tab);
-            this.tabForm = this.createTabForm();
-          } else {
-            this.formType = 'new';
-            this.tab = new TabResponse(tab);
-            this.tabForm = this.createTabForm();
-          }
+        if (tab && formType === 'edit') {
+          this.formType = 'edit';
+          this.tab = this.buildTabRequest(tab);
+        }else{
+          this.formType = 'new';
+          this.tab = this.buildTabRequest(tab);
         }
+        this.tabForm = this.createTabForm();
       });
+  }
 
-    this.tabForm.valueChanges
-      .pipe(
-        takeUntil(this._unsubscribeAll),
-        debounceTime(500),
-        distinctUntilChanged()
-      )
-      .subscribe(data => {
-        this.templateservice.addTab(data);
-      });
+  buildTabRequest(data?) {
+    debugger;
+    const tabReq = new TabRequest();
+    data = data || {};
+    tabReq.customTemplateId = data.templateId;
+    tabReq.tabId = data.id || 0;
+    tabReq.caption = data.caption || '';
+    tabReq.isVisible = data.isVisible || false;
+    return tabReq;
   }
 
   createTabForm(): FormGroup {
     return this._formBuilder.group({
-      tabName: [this.tab.tabName],
+      caption: [this.tab.caption],
       isVisible: [this.tab.isVisible]
     });
   }
 
   saveTab() {
     var formData = this.tabForm.getRawValue();
-    this.tab.tabName = formData.tabName;
+    this.tab.caption = formData.caption;
     this.tab.isVisible = formData.isVisible;
-    this.templateservice.addTab(this.tab);
+    this.tabservice.addTab(this.tab);
+    this.location.go('admin/customObject/templateManagement/2/details/' + this.tab.tabId);
   }
 
   ngOnDestroy(): void {

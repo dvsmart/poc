@@ -3,7 +3,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { environment } from '@env/environment';
 import { HttpClient } from '@angular/common/http';
-import { TabResponse } from '../manage-tabs/tab.model';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +48,7 @@ export class SetupService {
       return new Promise((resolve, reject) => {
         this._httpClient.get<any>(environment.apiUrl + 'CustomTemplateConfig/' + this.routeParams.id)
           .subscribe((response: any) => {
+            this.templateId.next(response.id);
             this.onSelectedTemplateChanged.next([response, 'edit']);
             resolve(response);
           }, reject);
@@ -90,16 +90,6 @@ export class SetupService {
 
   setCurrentTab(tab?, formType?): void {
     this.onCurrentTabChanged.next([tab == undefined ? this.TemplateId : tab, formType == undefined ? 'new' : formType]);
-  }
-
-  addTab(tabRequest) {
-    return new Promise((resolve, reject) => {
-      this._httpClient.post(environment.apiUrl + 'CustomTabConfig', { ...tabRequest })
-        .subscribe((response: TabResponse) => {
-          this.getCustomTabs();
-          resolve(response);
-        }, reject);
-    });
   }
 
   set setSelectedTemplate(template) {

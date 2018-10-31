@@ -1,8 +1,8 @@
 import { Component, OnInit, HostBinding, Input, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { TabResponse } from '../../tab.model';
 import { SetupService } from '../../../manage-templates/setup.service';
+import { TabRequest } from '../../tab.model';
 
 @Component({
     selector: 'tab-list-item',
@@ -14,7 +14,7 @@ export class TabListItemComponent implements OnInit {
     tags: any[];
 
     @Input()
-    tab: TabResponse;
+    tab: TabRequest;
 
     @HostBinding('class.selected')
     selected: boolean;

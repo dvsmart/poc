@@ -23,6 +23,13 @@ export class TabComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.templateService.onCurrentTabChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(([tab, formType]) => {
+        if (tab) {
+          this.currentTab = tab;
+        }
+      });
   }
 
   deselectCurrentTab(): void {

@@ -21,19 +21,9 @@
              min-width: 260px;
              border: none;
          }
+         mat-icon{
+             font-size: 14px;
+             margin-top: 2px;
+         }
      }
  }
-
- #add-contact-button {
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
-    padding: 0;
-    z-index: 99;
-
-    @include media-breakpoint('xs') {
-        position: sticky;
-        top: calc(100vh - 120px);
-        bottom: auto;
-    }
-}

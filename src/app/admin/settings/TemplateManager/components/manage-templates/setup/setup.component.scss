@@ -30,7 +30,7 @@
             &:not(.locked-open) {
                 background: white;
             }
-            min-height: 81vh;
+            min-height: calc(100vh - 180px);
         }
     }
 }

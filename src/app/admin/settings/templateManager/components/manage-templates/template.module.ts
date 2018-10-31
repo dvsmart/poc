@@ -14,6 +14,9 @@ import { TabDetailComponent } from "../manage-tabs/tab-detail/tab-detail.compone
 import { FieldListComponent } from "../manage-fields/field-list.component";
 import { FieldDetailComponent } from "../manage-fields/field-detail/field-detail.component";
 import { FieldService } from "../manage-fields/field-detail/field.service";
+import { TabsComponent } from "../manage-tabs/tabs/tabs.component";
+import { resolve } from "q";
+import { TabService } from "../manage-tabs/tab-detail/tab.service";
 
 const routes: Routes = [
   {
@@ -35,20 +38,10 @@ const routes: Routes = [
         component: TemplateDetailComponent
       },
       {
-        path: 'tabs',
-        component: TabComponent,
-      },
-      {
-        path: 'details/:id',
-        component: FieldListComponent,
-        children:[
-          {
-            path:':id',
-            component:FieldDetailComponent,
-          }
-        ],
+        path:'details/:id',
+        component:TabDetailComponent,
         resolve:{
-          fields: FieldService
+          tab: TabService
         }
       },
       {
@@ -73,6 +66,7 @@ const routes: Routes = [
     TabListComponent,
     TabListItemComponent,
     TabComponent,
+    TabsComponent,
     TabDetailComponent,
     FieldListComponent,
     FieldDetailComponent
