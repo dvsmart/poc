@@ -1,7 +1,10 @@
 <div class="toolbar px-24 py-8">
   <button mat-raised-button class="accent" (click)="addNewField()">Create</button>
 </div>
-<div class="content-card p-24">
+<div *ngIf="dataSource == null">
+  <p>No Fields Found</p>
+</div>
+<div class="content-card p-24" *ngIf="dataSource">
   <div *ngIf="!isEdit">
     <div class="example-loading-shade" *ngIf="isLoading">
       <mat-spinner *ngIf="isLoading"></mat-spinner>
