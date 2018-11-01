@@ -18,7 +18,7 @@ export class SetupSidebarComponent implements OnInit {
   templateName: any;
   id: number;
   tabs: any;
-  constructor(private templateservice: SetupService, private router: Router) {
+  constructor(private templateservice: SetupService, private router: Router, private _location: Location) {
     this._unsubscribeAll = new Subject();
   }
 
@@ -32,11 +32,12 @@ export class SetupSidebarComponent implements OnInit {
       })
   }
   selectChange(e) {
-    if (e.tab.isActive && e.tab.textLabel === 'Main') {
-      this.router.navigate(['admin/customObject/templateManagement/', this.id, '/details']);
+    if (e.tab.textLabel === 'Main') {
+      this.router.navigate(['setup/objectManager/templates/', this.id, '/details']);
+    } else {
+      this._location.go('setup/objectManager/templates/' + this.id + '/tabs');
     }
   }
-
 
 
   ngOnDestroy(): void {

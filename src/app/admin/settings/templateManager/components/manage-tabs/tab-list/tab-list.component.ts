@@ -3,7 +3,7 @@ import { fuseAnimations } from '@core/animations';
 import { Subject } from 'rxjs';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { takeUntil } from 'rxjs/operators';
-import { TabResponse } from '../tab.model';
+import { TabRequest } from '../tab.model';
 import { SetupService } from '../../manage-templates/setup.service';
 
 @Component({
@@ -15,7 +15,7 @@ import { SetupService } from '../../manage-templates/setup.service';
 })
 export class TabListComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
-  tabs: TabResponse[];
+  tabs: TabRequest[];
   displayedColumns: string[] = ['caption', 'actions'];
   dataSource: MatTableDataSource<any>;
 
@@ -45,5 +45,4 @@ export class TabListComponent implements OnInit {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }
-
 }

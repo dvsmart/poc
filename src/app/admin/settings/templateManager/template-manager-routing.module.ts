@@ -3,11 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path:'',
+    path:'categories',
     loadChildren:'./components/manage-categories/category.module#CategoryModule'
   },
   {
-    path:'',
+    path:'templates',
     loadChildren:'./components/manage-templates/template.module#TemplatesModule'
   }
 ];

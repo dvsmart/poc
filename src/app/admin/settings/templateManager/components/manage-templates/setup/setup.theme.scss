@@ -25,6 +25,9 @@
                 }
                 background: map-get($background, card);
             }
+            .tab-button{
+                background: map-get($background, card);
+            }
         }
     }
 }

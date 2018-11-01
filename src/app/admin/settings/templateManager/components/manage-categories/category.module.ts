@@ -6,7 +6,7 @@ import { CategoryService } from "./category.service";
 
 const routes: Routes = [
     {
-      path:'categoryManagement',
+      path:'**',
       component:CategoryListComponent,
       resolve:{
         categories: CategoryService

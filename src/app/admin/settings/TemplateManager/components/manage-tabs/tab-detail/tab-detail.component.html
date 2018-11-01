@@ -1,22 +1,3 @@
-<!-- <div *ngIf="!tab" fxLayout="column" fxLayoutAlign="center center" fxFlex>
-  <mat-icon class="s-120 mb-12 select-todo-icon hint-text" [@animate]="{value:'*',params:{delay:'300ms',scale:'0.2'}}">check_box
-  </mat-icon>
-  <span class="hint-text mat-h1 select-todo-text" [@animate]="{value:'*',params:{delay:'400ms'}}">
-    Select a tab
-  </span>
-</div>
-
-<div class="tab-content" *ngIf="tab">
-  <form [formGroup]="tabForm" (submit)="saveTab()">
-    <mat-form-field class="title mt-8" floatLabel="never" fxFill appearance="outline">
-      <mat-label>Tab Name</mat-label>
-      <input matInput name="caption" formControlName="tabName" required />
-    </mat-form-field>
-    <mat-checkbox fxFill fxLayout="row" formControlName="isVisible">Is Visible</mat-checkbox>
-    <button *ngIf="formType === 'new'" mat-raised-button color="accent" [disabled]="tabForm.invalid">SAVE</button>
-    <button *ngIf="formType === 'edit'" mat-raised-button color="accent" [disabled]="tabForm.invalid">UPDATE</button>
-  </form>
-</div> -->
 <div class="tab-content" *ngIf="tab">
   <form [formGroup]="tabForm" (submit)="saveTab()">
     <mat-form-field class="title mt-8" floatLabel="never" fxFill appearance="outline">
@@ -24,7 +5,8 @@
       <input matInput name="caption" formControlName="caption" required />
     </mat-form-field>
     <mat-checkbox fxFill fxLayout="row" formControlName="isVisible">Is Visible</mat-checkbox>
-    <button *ngIf="formType === 'new'" mat-raised-button color="accent" [disabled]="tabForm.invalid">SAVE</button>
-    <button *ngIf="formType === 'edit'" mat-raised-button color="accent" [disabled]="tabForm.invalid">UPDATE</button>
+    <mat-checkbox fxFill fxLayout="row" formControlName="isOptional">Mark as optional</mat-checkbox>
+    <button *ngIf="!tab.id" mat-raised-button color="accent" [disabled]="tabForm.invalid || tabForm.pristine">SAVE</button>
+    <button *ngIf="tab.id" mat-raised-button color="accent" [disabled]="tabForm.invalid || tabForm.pristine">UPDATE</button>
   </form>
 </div>

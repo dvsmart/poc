@@ -31,9 +31,6 @@ export class SetupComponent implements OnInit {
   }
 
   ngOnInit() {
-    var param = this.route.snapshot.paramMap.get('id');
-    this.isNew = param === 'new' ? true : false;
-
     this.templateservice.onSelectedTemplateChanged
     .pipe(takeUntil(this._unsubscribeAll))
     .subscribe(x=>{

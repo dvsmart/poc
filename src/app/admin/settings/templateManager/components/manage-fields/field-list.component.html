@@ -1,12 +1,12 @@
 <div class="toolbar px-24 py-8">
-  <button mat-raised-button class="accent">Create</button>
+  <button mat-raised-button class="accent" (click)="addNewField()">Create</button>
 </div>
 <div class="content-card p-24">
   <div *ngIf="!isEdit">
     <div class="example-loading-shade" *ngIf="isLoading">
       <mat-spinner *ngIf="isLoading"></mat-spinner>
     </div>
-    <mat-table class="customObjects-table" #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}" matSort
+    <mat-table class="customObjects-table" #table [dataSource]="dataSource" [@animateStagger]="{value:'1'}" matSort
       fusePerfectScrollbar>
       <ng-container matColumnDef="caption">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>

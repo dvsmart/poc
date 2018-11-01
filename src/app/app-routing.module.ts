@@ -87,16 +87,16 @@ const appRoutes: Routes = [
         ]
     },
     {
-        path: 'admin',
+        path: 'setup',
         component: AppLayoutComponent,
         canActivate: [AdminGuard],
         children: [
             {
-                path: 'customObject',
+                path: 'objectManager',
                 loadChildren: './admin/settings/templateManager/templateManager.module#TemplateManagerModule',
             },
             {
-                path: 'setup/menuManagement',
+                path: 'menuManagement',
                 loadChildren: './admin/settings/menu/menu.module#MenuManagementModule',
             }
         ]

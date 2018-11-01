@@ -2,8 +2,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { fuseAnimations } from '@core/animations';
-import { TabResponse } from './tab.model';
+import { TabRequest } from './tab.model';
 import { SetupService } from '../manage-templates/setup.service';
+import { TabService } from './tab-detail/tab.service';
 
 
 @Component({
@@ -15,29 +16,18 @@ import { SetupService } from '../manage-templates/setup.service';
 export class TabComponent implements OnInit {
 
   private _unsubscribeAll: Subject<any>;
-  currentTab: TabResponse;
+  currentTab: TabRequest;
   isNew: boolean;
-  templateId: number;
-  constructor(private templateService: SetupService) {
+  tabId: number;
+  constructor(private tabservice: TabService) {
     this._unsubscribeAll = new Subject();
   }
 
   ngOnInit() {
-    this.templateService.onCurrentTabChanged
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(([tab, formType]) => {
-        if (tab) {
-          this.currentTab = tab;
-        }
-      });
   }
 
   deselectCurrentTab(): void {
     this.currentTab = null
-  }
-
-  addTab() {
-    this.templateService.setCurrentTab();
   }
 
   ngOnDestroy(): void {

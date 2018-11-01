@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
-import { FieldType, FieldResponse } from '../field.model';
+import { FieldType, FieldResponse, CreateTabFieldRequest } from '../field.model';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { SetupService } from '../../manage-templates/setup.service';
 
 
 @Injectable({
@@ -20,7 +21,7 @@ export class FieldService {
 
     onNewFieldAdded: BehaviorSubject<any>;
 
-    constructor(private _httpClient: HttpClient) {
+    constructor(private _httpClient: HttpClient, private templateservice: SetupService) {
         this.customTemplateId = new BehaviorSubject(0);
         this.tabId = new BehaviorSubject(0);
         this.onNewFieldAdded = new BehaviorSubject<any>({});
@@ -33,8 +34,7 @@ export class FieldService {
         this.routeParams = route.params;
         return new Promise((resolve, reject) => {
             Promise.all([
-                this.getTemplateFields(),
-                this.getFieldTypes()
+                this.getTemplateFields()
             ]).then(
                 () => {
                     resolve();
@@ -44,9 +44,24 @@ export class FieldService {
         });
     }
 
-    getTemplateFields() {
+    setTabField(field?: any) {
+        this.getFieldTypes();
+        var fieldreq = {
+            tabId: this.routeParams.id
+        }
+        var fieldRequest = new CreateTabFieldRequest(fieldreq);
+        this.onNewFieldAdded.next(fieldRequest);
+    }
+
+    setTemplateField(field?: any) {
+        this.getFieldTypes();
+        this.onNewFieldAdded.next(this.templateservice.TemplateId);
+    }
+
+    getTemplateFields(tabId?: number) {
+        const id = this.routeParams == undefined ? tabId : this.routeParams.id;
         return new Promise((resolve, reject) => {
-            this._httpClient.get<any>(environment.apiUrl + 'CustomTabFieldConfig/' + this.routeParams.id)
+            this._httpClient.get<any>(environment.apiUrl + 'CustomTabFieldConfig/' + id)
                 .subscribe((response: any) => {
                     this.onfieldsChanged.next(response);
                     resolve(response);
@@ -65,10 +80,10 @@ export class FieldService {
 
     addField(req) {
         return new Promise((resolve, reject) => {
-            this._httpClient.post(environment.apiUrl + 'CustomFieldConfig', { ...req })
+            this._httpClient.post(environment.apiUrl + 'CustomTabFieldConfig', { ...req })
                 .subscribe((response: FieldResponse) => {
                     this.onNewFieldAdded.next(response);
-                    //      this.templateservice.getTemplateDetail();
+                    this.getTemplateFields();
                     resolve(response);
                 }, reject);
         });

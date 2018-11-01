@@ -126,13 +126,14 @@ export class FusePerfectScrollbarDirective implements AfterViewInit, OnDestroy
     ngAfterViewInit(): void
     {
         // Check if scrollbars enabled or not from the main config
-        this._fuseConfigService.config
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(
-                (settings) => {
-                    this.enabled = settings.customScrollbars;
-                }
-            );
+        // this._fuseConfigService.config
+        //     .pipe(takeUntil(this._unsubscribeAll))
+        //     .subscribe(
+        //         (settings) => {
+        //             this.enabled = settings.customScrollbars;
+        //         }
+        //     );
+        this.enabled = true;
 
         // Scroll to the top on every route change
         if ( this.fusePerfectScrollbarOptions.updateOnRouteChange )

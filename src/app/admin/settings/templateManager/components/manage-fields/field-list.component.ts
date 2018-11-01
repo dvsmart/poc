@@ -3,7 +3,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { fuseAnimations } from '@core/animations';
-import { FieldResponse } from './field.model';
+import { FieldResponse, CreateTabFieldRequest, CreateTemplateFieldRequest } from './field.model';
 import { SetupService } from '../manage-templates/setup.service';
 import { FieldService } from './field-detail/field.service';
 
@@ -21,7 +21,7 @@ export class FieldListComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   isEdit: boolean = false;
-  isLoading : boolean;
+  isLoading: boolean;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -35,6 +35,7 @@ export class FieldListComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
         if (response) {
+          debugger;
           this.isLoading = false;
           this.dataSource = new MatTableDataSource(response);
           this.dataSource.paginator = this.paginator;
@@ -48,8 +49,9 @@ export class FieldListComponent implements OnInit {
     this.field = field;
   }
 
-  addField() {
+  addNewField() {
     this.isEdit = true;
+    this.fieldservice.setTabField();
   }
 
   ngOnDestroy(): void {

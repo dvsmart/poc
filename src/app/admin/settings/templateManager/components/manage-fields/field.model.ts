@@ -14,10 +14,25 @@ export interface FieldResponse {
     fieldType: string;
 }
 
-export class CreateFieldRequest {
+export class CreateTabFieldRequest {
     id: number | 0;
     caption: string;
     tabId: number | null;
+    controlTypeId: number;
+    isVisible: boolean | true;
+
+    constructor(data?) {
+        this.id = data.id || 0;
+        this.caption = data.caption || '';
+        this.tabId = data.tabId;
+        this.controlTypeId = data.fieldType;
+        this.isVisible = true;
+    }
+}
+
+export class CreateTemplateFieldRequest {
+    id: number | 0;
+    caption: string;
     templateId: number | null;
     controlTypeId: number;
     isVisible: boolean | true;
@@ -25,7 +40,6 @@ export class CreateFieldRequest {
     constructor(data?) {
         this.id = data.id;
         this.caption = data.caption;
-        this.tabId = data.tabId;
         this.templateId = data.templateId;
         this.controlTypeId = data.fieldType;
         this.isVisible = true;

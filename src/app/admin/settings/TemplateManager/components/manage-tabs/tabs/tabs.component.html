@@ -1,22 +1,17 @@
 <div class="content" fusePerfectScrollbar [@animate]="{value:'*',params:{y:'50px'}}">
-    <div class="pt-16 ">
-        <div class="p-10 mb-24" fxLayoutAlign="center">
-            <button mat-raised-button [routerLink]="['details/new']"
-                    class="mat-accent add-todo-button w-75-p"
-                    aria-label="ADD TAB">
-                ADD TAB
-            </button>
+  <div class="p-12 tab-button" fxLayoutAlign="center">
+    <button mat-raised-button [routerLink]="['tabs/new']" class="mat-accent add-todo-button w-75-p" aria-label="ADD TAB">
+      ADD TAB
+    </button>
+  </div>
+  <div class="nav material2" *ngIf="tabs" fxLayout="column">
+    <div class="nav-item" aria-label="tab.caption" *ngFor="let tab of tabs">
+      <a class="nav-link" matRipple [routerLinkActive]="['active', 'accent']" [routerLink]="['tabs/' + tab.id]">
+        <span class="title">{{tab.caption}}</span>
+        <div fxFlex fxLayoutAlign="end">
+          <mat-icon class="mat-caption p-6">edit</mat-icon>
         </div>
-      <div class="nav material2" *ngIf="tabs" fusePerfectScrollbar fxLayout="column">
-        <div class="nav-item" aria-label="tab.caption" *ngFor="let tab of tabs">
-          <a class="nav-link" matRipple [routerLinkActive]="['active', 'accent']" [routerLink]="['details/',tab.id]">
-            <span class="title">{{tab.caption}}</span>
-            <div fxFlex fxLayoutAlign="end">
-              <mat-icon [routerLink]="['details/',tab.id]">edit</mat-icon>
-              <mat-icon>settings</mat-icon>
-            </div>
-          </a>
-        </div>
-      </div>
+      </a>
     </div>
+  </div>
 </div>

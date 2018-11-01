@@ -17,7 +17,7 @@
                     {{templateName}}
                 </div>
                 <div class="subtitle secondary-text">
-                    <span [routerLink]="['/admin/customObject/templateManagement']">Templates</span>
+                    <span [routerLink]="['/setup/objectManager/templates']">Templates</span>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
 
                 <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon>search</mat-icon>
-                    <input [formControl]="searchInput" placeholder="Search for a contact">
+                    <input [formControl]="searchInput" placeholder="Quick find">
                 </div>
 
             </div>
@@ -41,13 +41,13 @@
     <!-- / HEADER -->
 
     <!-- CONTENT -->
-    <div class="content" fusePerfectScrollbar>
+    <div class="content">
 
         <!-- SIDEBAR -->
         <fuse-sidebar class="sidebar" name="setup-sidebar" position="left" lockedOpen="gt-sm">
 
             <!-- SIDEBAR CONTENT -->
-            <div class="content">
+            <div class="content" fusePerfectScrollbar>
                 <setup-sidebar [@animate]="{value:'*'}"></setup-sidebar>
             </div>
             <!-- / SIDEBAR CONTENT -->
