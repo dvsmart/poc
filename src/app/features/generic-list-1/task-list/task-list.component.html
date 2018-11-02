@@ -1,0 +1,16 @@
+<div *ngIf="tasks.length === 0" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
+  <span class="no-todos-text hint-text">There are no Tasks!</span>
+</div>
+<div class="todo-list" ngxDroppable (out)="onDrop($event)" [@animateStagger]="{value:'50'}">
+  <task-list-item class="task-list-item has-handle" *ngFor="let taskItem of tasks" 
+    [task]="taskItem" 
+    ngxDraggable 
+    (click)="readTask(taskItem.id)"
+    [ngClass]="{'current-todo mat-accent-50-bg':taskItem?.id == currentTask?.id}" 
+    matRipple 
+    [@animate]="{value:'*',params:{y:'100%'}}">
+  </task-list-item>
+  <mat-paginator #paginator (page)="pageEvent($event)" [pageSize]="pageSize" [length]="resultsLength" [pageSizeOptions]="[5, 10, 50, 100]"
+    [showFirstLastButtons]="true">
+  </mat-paginator>
+</div>

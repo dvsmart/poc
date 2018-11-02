@@ -71,7 +71,7 @@
             <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm> {{row.addedDate | date}} </mat-cell>
           </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;" class="menu" matRipple [routerLink]="['/settings/menuManagement/menu/', row.id]"
+        <mat-row *matRowDef="let row; columns: displayedColumns;" class="menu" matRipple [routerLink]="['/admin/setup/menuManagement/menu/', row.id]"
           matRipple [@animate]="{value:'*',params:{y:'100%'}}">
         </mat-row>
       </mat-table>

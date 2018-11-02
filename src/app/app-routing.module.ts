@@ -56,6 +56,11 @@ const appRoutes: Routes = [
                 data: { preload: false, delay: true }
             },
             {
+                path: 'genericlist1',
+                loadChildren: './features/generic-list-1/genericlist1.module#GenericList1Module',
+                data: { preload: false, delay: true }
+            },
+            {
                 path: 'checklist',
                 loadChildren: './features/checklist/checklist.module#ChecklistModule',
                 data: { preload: false, delay: false }
@@ -87,7 +92,7 @@ const appRoutes: Routes = [
         ]
     },
     {
-        path: 'setup',
+        path: 'admin/setup',
         component: AppLayoutComponent,
         canActivate: [AdminGuard],
         children: [
