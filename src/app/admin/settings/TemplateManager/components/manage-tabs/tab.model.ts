@@ -14,3 +14,13 @@ export class TabRequest {
         this.customTemplateId = data.customTemplateId
     }
 }
+
+// export class tabLink{
+//     title: string;
+//     route: string;
+  
+//     constructor(title,route) {
+//       this.title = title;
+//       this.route = route;
+//     }
+//   }

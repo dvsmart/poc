@@ -34,6 +34,7 @@ export class SetupComponent implements OnInit {
     this.templateservice.onSelectedTemplateChanged
     .pipe(takeUntil(this._unsubscribeAll))
     .subscribe(x=>{
+      debugger;
       this.templateId = x[0].id;
       this.templateName = x[0].name;
     })

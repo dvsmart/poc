@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { SetupService } from '../../manage-templates/setup.service';
 import { takeUntil } from 'rxjs/operators';
 import { TabService } from '../tab-detail/tab.service';
+import { TabsService } from './tabs.service';
 
 @Component({
   selector: 'app-tabs',
@@ -15,12 +16,12 @@ export class TabsComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
   tabs: any;
   templateId:number;
-  constructor(private templateservice: SetupService,private tabservice:TabService) {
+  constructor(private tabsservice: TabsService) {
     this._unsubscribeAll = new Subject();
   }
 
   ngOnInit() {
-    this.templateservice.customTabs
+    this.tabsservice.onTabsChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(res => {
         this.templateId = res.id;

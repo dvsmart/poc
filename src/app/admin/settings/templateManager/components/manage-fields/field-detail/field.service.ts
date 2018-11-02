@@ -16,14 +16,12 @@ export class FieldService {
     onfieldsChanged: BehaviorSubject<any>;
 
     customTemplateId: BehaviorSubject<number>;
-    tabId: BehaviorSubject<number>;
+    tabId: number;
     fieldTypes: BehaviorSubject<FieldType[]>;
 
     onNewFieldAdded: BehaviorSubject<any>;
 
     constructor(private _httpClient: HttpClient, private templateservice: SetupService) {
-        this.customTemplateId = new BehaviorSubject(0);
-        this.tabId = new BehaviorSubject(0);
         this.onNewFieldAdded = new BehaviorSubject<any>({});
         this.fieldTypes = new BehaviorSubject<FieldType[]>(null);
         this.onfieldsChanged = new BehaviorSubject<any>({});
@@ -31,7 +29,7 @@ export class FieldService {
 
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
-        this.routeParams = route.params;
+        this.tabId = route.parent.params["id"];
         return new Promise((resolve, reject) => {
             Promise.all([
                 this.getTemplateFields()
@@ -46,8 +44,10 @@ export class FieldService {
 
     setTabField(field?: any) {
         this.getFieldTypes();
+        field = field || {};
         var fieldreq = {
-            tabId: this.routeParams.id
+            tabId: this.templateservice.TemplateId,
+            id: field.id
         }
         var fieldRequest = new CreateTabFieldRequest(fieldreq);
         this.onNewFieldAdded.next(fieldRequest);
@@ -59,9 +59,8 @@ export class FieldService {
     }
 
     getTemplateFields(tabId?: number) {
-        const id = this.routeParams == undefined ? tabId : this.routeParams.id;
         return new Promise((resolve, reject) => {
-            this._httpClient.get<any>(environment.apiUrl + 'CustomTabFieldConfig/' + id)
+            this._httpClient.get<any>(environment.apiUrl + 'CustomTabFieldConfig/' + this.tabId)
                 .subscribe((response: any) => {
                     this.onfieldsChanged.next(response);
                     resolve(response);
@@ -69,21 +68,23 @@ export class FieldService {
         });
     }
 
-
-    setSelectedTab(tabId) {
-        this.tabId.next(tabId);
+    getTabField(id){
+        return new Promise((resolve, reject) => {
+            this._httpClient.get<any>(environment.apiUrl + 'CustomTabFieldConfig/GetFieldById/' + id)
+                .subscribe((response: any) => {
+                    this.onNewFieldAdded.next(response);
+                    resolve(response);
+                }, reject);
+        });
     }
 
-    setTemplateId(templateId) {
-        this.customTemplateId.next(templateId);
-    }
-
+    
     addField(req) {
         return new Promise((resolve, reject) => {
             this._httpClient.post(environment.apiUrl + 'CustomTabFieldConfig', { ...req })
                 .subscribe((response: FieldResponse) => {
                     this.onNewFieldAdded.next(response);
-                    this.getTemplateFields();
+                    this.getTemplateFields(req.tabId);
                     resolve(response);
                 }, reject);
         });

@@ -20,12 +20,15 @@
          .fuse-card {
              min-width: 260px;
              border: none;
+             .static {
+                 position: sticky;
+                 top: 0;
+                 z-index: 999;
+             }
          }
-         mat-icon{
+         mat-icon {
              font-size: 14px;
              margin-top: 2px;
          }
      }
-
-     
  }

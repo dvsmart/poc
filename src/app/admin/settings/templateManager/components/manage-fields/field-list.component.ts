@@ -35,7 +35,6 @@ export class FieldListComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
         if (response) {
-          debugger;
           this.isLoading = false;
           this.dataSource = new MatTableDataSource(response);
           this.dataSource.paginator = this.paginator;
@@ -46,7 +45,8 @@ export class FieldListComponent implements OnInit {
 
   editField(field) {
     this.isEdit = true;
-    this.field = field;
+    this.fieldservice.getFieldTypes();
+    this.fieldservice.getTabField(field.id);
   }
 
   addNewField() {

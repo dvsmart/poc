@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { fuseAnimations } from '@core/animations';
+import { TaskService } from '../task.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'task-filter',
@@ -12,7 +14,8 @@ export class TaskFilterComponent implements OnInit {
   tags: any[];
   accounts: object;
   selectedAccount: string;
-  constructor() {
+  constructor(private _taskService: TaskService,
+    private _router: Router) {
     this.accounts = {
       'local': 'vj@gmail.com',
       'admin': 'vjdeveloper@gmail.com'
@@ -23,6 +26,10 @@ export class TaskFilterComponent implements OnInit {
   ngOnInit() {
     this.filters = filters;
     this.tags = tags;
+  }
+
+  newTask(): void {
+    this._taskService.onCurrentTaskChanged.next('');
   }
 
 }

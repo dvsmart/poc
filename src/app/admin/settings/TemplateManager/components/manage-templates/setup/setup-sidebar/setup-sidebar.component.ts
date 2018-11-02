@@ -18,7 +18,7 @@ export class SetupSidebarComponent implements OnInit {
   templateName: any;
   id: number;
   tabs: any;
-  constructor(private templateservice: SetupService, private router: Router, private _location: Location) {
+  constructor(private templateservice: SetupService, private _location: Location,private router: Router) {
     this._unsubscribeAll = new Subject();
   }
 
@@ -33,9 +33,9 @@ export class SetupSidebarComponent implements OnInit {
   }
   selectChange(e) {
     if (e.tab.textLabel === 'Main') {
-      this.router.navigate(['setup/objectManager/templates/', this.id, '/details']);
+      this._location.go('setup/objectManager/templates/' + this.id + '/details');
     } else {
-      this._location.go('setup/objectManager/templates/' + this.id + '/tabs');
+      this.router.navigateByUrl('setup/objectManager/templates/' + this.id + '/tabs');
     }
   }
 

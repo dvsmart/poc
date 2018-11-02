@@ -1,22 +1,10 @@
-@import "src/@core/scss/fuse";
-#add-contact-button {
-    position: absolute;
-    bottom: 17px;
-    right: 12px;
-    padding: 0;
-    z-index: 99;
-    @include media-breakpoint('xs') {
-        position: sticky;
-        top: calc(100vh - 120px);
-        bottom: auto;
-    }
-}
-
 .content {
-    max-height: 600px;
     .tab-button {
         position: sticky;
         top: 0;
         z-index: 999;
+    }
+    .material2{
+        max-height: 600px;
     }
 }
