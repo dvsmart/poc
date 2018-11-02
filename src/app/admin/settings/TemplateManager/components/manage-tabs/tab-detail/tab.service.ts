@@ -5,9 +5,7 @@ import { environment } from '@env/environment';
 import { HttpClient } from '@angular/common/http';
 import { SetupService } from '../../manage-templates/setup.service';
 import { Location } from '@angular/common';
-import { MessageService } from '@core/services/message.service';
 import { MatSnackBar } from '@angular/material';
-import { FieldService } from '../../manage-fields/field-detail/field.service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +14,7 @@ import { FieldService } from '../../manage-fields/field-detail/field.service';
 export class TabService {
     routeParams: any;
     onSelectedTabChanged: BehaviorSubject<any>;
-    constructor(private _httpClient: HttpClient, private templateservice: SetupService, private location: Location, private toaster: MatSnackBar,private fieldservice: FieldService) {
+    constructor(private _httpClient: HttpClient, private templateservice: SetupService, private location: Location, private toaster: MatSnackBar) {
         this.onSelectedTabChanged = new BehaviorSubject<any>({});
     }
 
@@ -37,10 +35,9 @@ export class TabService {
     getTabDetail() {
         if (this.routeParams.id != 'new') {
             return new Promise((resolve, reject) => {
-                this._httpClient.get<any>(environment.apiUrl + 'CustomTabConfig/GetById/' + this.routeParams.id)
+                this._httpClient.get<any>(environment.apiUrl + 'CustomTabConfig/GetTabById/' + this.routeParams.id)
                     .subscribe((response: any) => {
                         this.onSelectedTabChanged.next(response);
-                        this.fieldservice.getTemplateFields(this.routeParams.id);
                         resolve(response);
                     }, reject);
             });
@@ -62,6 +59,7 @@ export class TabService {
                 }, reject);
         });
     }
+
 
     buildTabRequest() {
         var tabRequest = {

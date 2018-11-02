@@ -58,8 +58,7 @@
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="field" [@animate]="{value:'*',params:{y:'100%'}}"
-        [routerLink]="[row.id]"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="field" [@animate]="{value:'*',params:{y:'100%'}}" (click)="editField(row)"></mat-row>
     </mat-table>
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   </div>

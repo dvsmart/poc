@@ -33,7 +33,8 @@ export class FieldDetailComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((field) => {
         if (field) {
-          this.tabFieldRequest = new CreateTabFieldRequest(field);
+          debugger;
+          this.tabFieldRequest = field;
         }
         this.createFieldForm();
       })

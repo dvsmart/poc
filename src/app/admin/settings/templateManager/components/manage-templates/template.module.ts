@@ -7,15 +7,14 @@ import { SetupComponent } from "./setup/setup.component";
 import { SetupService } from "./setup.service";
 import { TemplatesService } from "./template-list/templateList.service";
 import { TabComponent } from "../manage-tabs/tab.component";
-import { TabListItemComponent } from "../manage-tabs/tab-list/tab-list-item/tab-list-item.component";
-import { TabListComponent } from "../manage-tabs/tab-list/tab-list.component";
 import { TabDetailComponent } from "../manage-tabs/tab-detail/tab-detail.component";
 import { FieldListComponent } from "../manage-fields/field-list.component";
 import { FieldDetailComponent } from "../manage-fields/field-detail/field-detail.component";
-import { FieldService } from "../manage-fields/field-detail/field.service";
 import { TabsComponent } from "../manage-tabs/tabs/tabs.component";
 import { TabService } from "../manage-tabs/tab-detail/tab.service";
 import { SetupSidebarComponent } from "./setup/setup-sidebar/setup-sidebar.component";
+import { FieldService } from "../manage-fields/field-detail/field.service";
+import { TabsService } from "../manage-tabs/tabs/tabs.service";
 
 const routes: Routes = [
   {
@@ -29,40 +28,27 @@ const routes: Routes = [
     path: ':id',
     component: SetupComponent,
     children: [
+      { path: '', redirectTo: 'details', pathMatch: 'full' },
+      { path: 'details', component: TemplateDetailComponent },
       {
-        path: 'details',
-        component: TemplateDetailComponent,
-      },
-      {
-        path: 'tabs/:id',
+        path: 'tabs',
         component: TabComponent,
+        resolve: {
+          tab: TabsService
+        },
         children: [
           {
-            path: 'details',
+            path: 'edit',
             component: TabDetailComponent,
           },
           {
             path: 'fields',
             component: FieldListComponent,
-            children: [
-              {
-                path: ':id',
-                component: FieldDetailComponent
-              }
-            ]
-          },
-          {
-            path:'**',
-            redirectTo:'details'
+            resolve: {
+              fields: FieldService
+            }
           }
-        ],
-        resolve: {
-          tab: TabService
-        }
-      },
-      {
-        path: '**',
-        redirectTo: 'details'
+        ]
       }
     ],
     resolve: {
@@ -83,8 +69,6 @@ const routes: Routes = [
     TemplateDetailComponent,
     SetupComponent,
     SetupSidebarComponent,
-    TabListComponent,
-    TabListItemComponent,
     TabComponent,
     TabsComponent,
     TabDetailComponent,

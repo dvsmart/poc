@@ -4,7 +4,7 @@
       ADD TAB
     </button>
   </div>
-  <div class="nav material2" *ngIf="tabs" fxLayout="column">
+  <div class="nav material2" fusePerfectScrollbar *ngIf="tabs" fxLayout="column">
     <div class="nav-item" aria-label="tab.caption" *ngFor="let tab of tabs">
       <a class="nav-link" matRipple [routerLinkActive]="['active', 'accent']" [routerLink]="['tabs/' + tab.id]">
         <span class="title">{{tab.caption}}</span>
