@@ -34,12 +34,15 @@ const routes: Routes = [
         path: 'tabs',
         component: TabComponent,
         resolve: {
-          tab: TabsService
+          tabs: TabsService
         }
       },
       {
         path: 'tabs/:id',
         component: TabDetailComponent,
+        resolve: {
+          tab: TabService
+        }
       }
     ],
     resolve: {
