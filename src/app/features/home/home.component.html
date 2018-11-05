@@ -2,5 +2,7 @@
 
   <h2>Home Page</h2>
 
+  <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+    <div class="example-box" *ngFor="let movie of movies" cdkDrag>{{movie}}</div>
+  </div>
 </div>
-

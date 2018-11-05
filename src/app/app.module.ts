@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MaintenanceComponent } from './pages/maintenance/maintenance.component';
 import { Error500Component } from './pages/errors/error500/error500.component';
 import { Error404Component } from './pages/errors/error404/error404.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [

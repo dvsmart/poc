@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { CoreSidebarModule } from '@core/components/sidebar/sidebar.module';
 import { MatIconModule, MatListModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule, MatCardModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatToolbarModule, MatProgressSpinnerModule, MatProgressBarModule, MatMenuModule, MatOptionModule, MatSelectModule, MatStepperModule, MatRadioModule, MatChipsModule, MatRippleModule, MatSnackBarModule, MatDatepickerModule, MatNativeDateModule, MatTabsModule, MatSlideToggleModule } from '@angular/material';
 import { CdkTableModule } from '@angular/cdk/table';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
 @NgModule({
     imports: [
         CoreSidebarModule,
@@ -33,6 +33,7 @@ import { CdkTableModule } from '@angular/cdk/table';
         MatNativeDateModule,
         MatTabsModule,
         MatSlideToggleModule,
+        DragDropModule
     ],
     exports: [
         CoreSidebarModule,
@@ -62,7 +63,8 @@ import { CdkTableModule } from '@angular/cdk/table';
         MatDatepickerModule,
         MatNativeDateModule,
         MatTabsModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        DragDropModule
     ]
 })
 export class MaterialModule { }

@@ -1,3 +1,8 @@
+<div class="toolbar px-24 py-8">
+    <button mat-icon-button>
+        <mat-icon class="secondary-text">arrow_back</mat-icon>
+    </button>
+</div>
 <div class="tab-content" *ngIf="tab">
   <form [formGroup]="tabForm" (submit)="saveTab()">
     <mat-form-field class="title mt-8" floatLabel="never" fxFill appearance="outline">

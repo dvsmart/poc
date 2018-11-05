@@ -1,17 +1,39 @@
-<div class="content" fusePerfectScrollbar [@animate]="{value:'*',params:{y:'50px'}}">
-  <div class="p-12 tab-button" fxLayoutAlign="center">
-    <button mat-raised-button [routerLink]="['tabs/new']" class="mat-accent add-todo-button w-75-p" aria-label="ADD TAB">
-      ADD TAB
-    </button>
-  </div>
-  <div class="nav material2" fusePerfectScrollbar *ngIf="tabs" fxLayout="column">
-    <div class="nav-item" aria-label="tab.caption" *ngFor="let tab of tabs">
-      <a class="nav-link" matRipple [routerLinkActive]="['active', 'accent']" [routerLink]="['tabs/' + tab.id]">
-        <span class="title">{{tab.caption}}</span>
-        <div fxFlex fxLayoutAlign="end">
-          <mat-icon class="mat-caption p-6">edit</mat-icon>
+<!-- <div class="sidebar-content">
+  <div class="card">
+    <div class="card-preview p-12">
+      <div class="fuse-card">
+        <div class="content br-8" fusePerfectScrollbar [@animate]="{value:'*',params:{y:'50px'}}">
+          <div class="p-12 tab-button" fxLayoutAlign="center">
+            <button mat-raised-button [routerLink]="['tabs/new']" class="mat-accent add-todo-button w-75-p" aria-label="ADD TAB">
+              ADD TAB
+            </button>
+          </div>
+          <div class="nav material2" fusePerfectScrollbar *ngIf="tabs" fxLayout="column">
+            <div class="nav-item" aria-label="tab.caption" *ngFor="let tab of tabs">
+              <a class="nav-link" matRipple [routerLinkActive]="['active', 'accent']" [routerLink]="[tab.id]">
+                <span class="title">{{tab.caption}}</span>
+                <div fxFlex fxLayoutAlign="end">
+                  <mat-icon class="mat-caption p-6">edit</mat-icon>
+                </div>
+              </a>
+            </div>
+          </div>
         </div>
-      </a>
+      </div>
     </div>
   </div>
-</div>
+</div> -->
+
+
+<mat-table [dataSource]="dataSource" class="tabs-table">
+
+  <ng-container matColumnDef="caption">
+    <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.caption}} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="tab" [@animate]="{value:'*',params:{y:'100%'}}" [routerLink]="[row.id]"></mat-row>
+</mat-table>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" pageSize="10" showFirstLastButtons></mat-paginator>

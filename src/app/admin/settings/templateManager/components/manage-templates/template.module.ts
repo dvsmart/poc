@@ -35,27 +35,17 @@ const routes: Routes = [
         component: TabComponent,
         resolve: {
           tab: TabsService
-        },
-        children: [
-          {
-            path: 'edit',
-            component: TabDetailComponent,
-          },
-          {
-            path: 'fields',
-            component: FieldListComponent,
-            resolve: {
-              fields: FieldService
-            }
-          }
-        ]
+        }
+      },
+      {
+        path: 'tabs/:id',
+        component: TabDetailComponent,
       }
     ],
     resolve: {
       setup: SetupService,
     }
-  },
-
+  }
 ];
 
 

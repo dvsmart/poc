@@ -33,9 +33,9 @@ export class SetupSidebarComponent implements OnInit {
   }
   selectChange(e) {
     if (e.tab.textLabel === 'Main') {
-      this._location.go('setup/objectManager/templates/' + this.id + '/details');
+      this.router.navigateByUrl('admin/setup/objectManager/templates/' + this.id + '/details');
     } else {
-      this.router.navigateByUrl('setup/objectManager/templates/' + this.id + '/tabs');
+      this.router.navigateByUrl('admin/setup/objectManager/templates/' + this.id + '/tabs');
     }
   }
 

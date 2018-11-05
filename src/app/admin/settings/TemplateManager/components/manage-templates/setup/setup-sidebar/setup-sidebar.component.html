@@ -38,6 +38,11 @@
                     <span class="title">Details</span>
                   </a>
                 </div>
+                <div class="nav-item" aria-label="Tabs">
+                  <a class="nav-link" matRipple [routerLinkActive]="['active', 'accent']" routerLink="tabs">
+                    <span class="title">Tabs</span>
+                  </a>
+                </div>
                 <div class="nav-item" aria-label="Object Limits">
                   <a class="nav-link" matRipple [routerLinkActive]="['active', 'accent']">
                     <span class="title">Object Limits</span>
@@ -51,9 +56,9 @@
               </div>
             </div>
           </mat-tab>
-          <mat-tab label="Tabs">
+          <!-- <mat-tab label="Tabs">
             <app-tabs></app-tabs>
-          </mat-tab>
+          </mat-tab> -->
         </mat-tab-group>
       </div>
 

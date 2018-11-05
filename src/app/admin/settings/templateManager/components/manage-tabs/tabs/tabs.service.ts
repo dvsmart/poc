@@ -19,7 +19,6 @@ export class TabsService {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
-        debugger;
         this.templateId = route.parent.params["id"];
         return new Promise((resolve, reject) => {
             Promise.all([
