@@ -51,20 +51,22 @@
     <!-- CENTER -->
     <div class="center">
         <!-- HEADER -->
-        <div class="header" fxLayout="column" fxLayoutAlign="center center" fxLayoutAlign.gt-sm="space-between center" fxLayout.gt-sm="row">
+        <div class="header" fxLayout="column" fxLayoutAlign="center flex-start" fxLayoutAlign.gt-sm="space-between center"
+            fxLayout.gt-sm="row">
 
             <div class="search-wrapper mx-32 mx-md-0">
-
                 <button mat-icon-button class="sidebar-toggle" fxHide.gt-md (click)="toggleSidebar('setup-sidebar')">
                     <mat-icon>menu</mat-icon>
                 </button>
-
                 <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon>search</mat-icon>
                     <input #filter placeholder="Search for a product">
                 </div>
-
             </div>
+
+            <button mat-raised-button [routerLink]="'/apps/e-commerce/products/new'" class="add-product-button fuse-white mt-24 mt-md-0">
+                <span>ADD NEW PRODUCT</span>
+            </button>
 
         </div>
 

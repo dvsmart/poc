@@ -22,12 +22,15 @@
                     }
                 }
             }
-            .sidebar {
-                .sidebar-content {
-                    .card {
-                        background: map-get($background, card);
+            @include media-breakpoint(gt-sm) {
+                .sidebar {
+                    .content{
+                        .sidebar-content{
+                            .card{
+                                background: map-get($background, card);
+                            }
+                        }
                     }
-                    background: map-get($background, card);
                 }
             }
         }
