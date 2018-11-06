@@ -24,7 +24,6 @@ $typography: mat-typography-config( $font-family: 'Muli, Helvetica Neue, Arial, 
 @import './features/assessment/assessment-list/assessments.theme';
 @import './features/calendar/calender.theme';
 @import './admin/settings/TemplateManager/components/manage-templates/templates.theme';
-@import './admin/settings/TemplateManager/components/manage-tabs/tabs.theme';
 @import './admin/settings/templateManager/components/manage-categories/category.theme';
 @import './admin/settings/templateManager/components/manage-templates/setup/setup.theme.scss';
 @import './features/task/task.theme.scss';
@@ -35,7 +34,6 @@ $typography: mat-typography-config( $font-family: 'Muli, Helvetica Neue, Arial, 
     @include assessments-theme($theme);
     @include category-theme($theme);
     @include templates-theme($theme);
-    @include tab-theme($theme);
     @include calendar-theme($theme);
     @include forgot-password-theme($theme);
     @include setup-theme($theme);

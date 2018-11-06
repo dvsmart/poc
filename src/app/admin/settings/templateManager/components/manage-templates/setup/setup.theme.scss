@@ -1,32 +1,34 @@
 @mixin setup-theme($theme) {
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
-    #setup {
-        .header {
-            .search-wrapper {
-                background: map-get($background, card);
-                .search {
-                    .mat-icon {
-                        color: map-get($foreground, icon);
+    $accent: map-get($theme, accent);
+    $is-dark: map-get($theme, is-dark);
+    setup {
+        .center {
+            .header {
+                .search-wrapper {
+                    background: map-get($background, card);
+                    .sidebar-toggle {
+                        border-right-color: map-get($foreground, divider);
                     }
-                    input {
-                        background: map-get($background, card);
-                        color: map-get($foreground, text);
+                    .search {
+                        .mat-icon {
+                            color: map-get($foreground, icon);
+                        }
+                        input {
+                            background: map-get($background, card);
+                            color: map-get($foreground, text);
+                        }
                     }
                 }
             }
-        }
-        .content {
             .sidebar {
                 .sidebar-content {
                     .card {
                         background: map-get($background, card);
                     }
+                    background: map-get($background, card);
                 }
-                background: map-get($background, card);
-            }
-            .tab-button{
-                background: map-get($background, card);
             }
         }
     }

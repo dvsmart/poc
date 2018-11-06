@@ -6,7 +6,6 @@ import { ManageTemplatesComponent } from "./template-list/template-list.componen
 import { SetupComponent } from "./setup/setup.component";
 import { SetupService } from "./setup.service";
 import { TemplatesService } from "./template-list/templateList.service";
-import { TabComponent } from "../manage-tabs/tab.component";
 import { TabDetailComponent } from "../manage-tabs/tab-detail/tab-detail.component";
 import { FieldListComponent } from "../manage-fields/field-list.component";
 import { FieldDetailComponent } from "../manage-fields/field-detail/field-detail.component";
@@ -32,7 +31,7 @@ const routes: Routes = [
       { path: 'details', component: TemplateDetailComponent },
       {
         path: 'tabs',
-        component: TabComponent,
+        component: TabsComponent,
         resolve: {
           tabs: TabsService
         }
@@ -62,7 +61,6 @@ const routes: Routes = [
     TemplateDetailComponent,
     SetupComponent,
     SetupSidebarComponent,
-    TabComponent,
     TabsComponent,
     TabDetailComponent,
     FieldListComponent,

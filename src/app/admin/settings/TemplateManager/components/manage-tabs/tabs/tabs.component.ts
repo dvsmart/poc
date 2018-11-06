@@ -1,18 +1,15 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { fuseAnimations } from '@core/animations';
 import { Subject } from 'rxjs';
-import { SetupService } from '../../manage-templates/setup.service';
 import { takeUntil } from 'rxjs/operators';
-import { TabService } from '../tab-detail/tab.service';
 import { TabsService } from './tabs.service';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 
 @Component({
-  selector: 'app-tabs',
+  selector: 'tabs',
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.scss'],
-  animations: fuseAnimations,
-  encapsulation: ViewEncapsulation.None
+  animations: fuseAnimations
 })
 export class TabsComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;

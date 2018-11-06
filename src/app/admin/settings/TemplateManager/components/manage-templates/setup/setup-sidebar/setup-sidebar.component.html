@@ -1,67 +1,33 @@
 <div class="sidebar-content">
   <div class="card">
-
-    <!-- PREVIEW -->
-    <div class="card-preview">
-
-      <div class="fuse-card">
-
-        <div class="p-16" fxLayout="row" fxLayoutAlign="space-between center">
-          <div class="pr-16">
-            <div class="h1 font-weight-300"><ng-content></ng-content></div>
-          </div>
-
-          <div>
-            <button mat-icon-button [matMenuTriggerFor]="card22Menu" aria-label="more">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-
-            <mat-menu #card22Menu="matMenu">
-              <button mat-menu-item>
-                <mat-icon>history</mat-icon>
-                <span>History</span>
-              </button>
-              <button mat-menu-item>
-                <mat-icon>notifications_off</mat-icon>
-                <span>Disable alerts</span>
-              </button>
-            </mat-menu>
-          </div>
+    <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">
+      <span class="h5">
+        <ng-content></ng-content>
+      </span>
+    </div>
+    <div class="content py-16" fusePerfectScrollbar>
+      <div class="nav material2">
+        <div class="nav-item" aria-label="Details">
+          <a class="nav-link" matRipple [routerLinkActive]="['active', 'accent']" routerLink="details">
+            <span class="title">Details</span>
+          </a>
         </div>
-
-        <mat-tab-group mat-stretch-tabs (selectedTabChange)="selectChange($event)">
-          <mat-tab label="Main">
-            <div class="pt-16">
-              <div class="nav material2">
-                <div class="nav-item" aria-label="Details">
-                  <a class="nav-link" matRipple [routerLinkActive]="['active', 'accent']" routerLink="details">
-                    <span class="title">Details</span>
-                  </a>
-                </div>
-                <div class="nav-item" aria-label="Tabs">
-                  <a class="nav-link" matRipple [routerLinkActive]="['active', 'accent']" routerLink="tabs">
-                    <span class="title">Tabs</span>
-                  </a>
-                </div>
-                <div class="nav-item" aria-label="Object Limits">
-                  <a class="nav-link" matRipple [routerLinkActive]="['active', 'accent']">
-                    <span class="title">Object Limits</span>
-                  </a>
-                </div>
-                <div class="nav-item" aria-label="Validation Rules">
-                  <a class="nav-link" matRipple [routerLinkActive]="['active', 'accent']">
-                    <div class="title">Validation Rules</div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </mat-tab>
-          <!-- <mat-tab label="Tabs">
-            <app-tabs></app-tabs>
-          </mat-tab> -->
-        </mat-tab-group>
+        <div class="nav-item" aria-label="Tabs">
+          <a class="nav-link" matRipple [routerLinkActive]="['active', 'accent']" routerLink="tabs">
+            <span class="title">Tabs</span>
+          </a>
+        </div>
+        <div class="nav-item" aria-label="Object Limits">
+          <a class="nav-link" matRipple [routerLinkActive]="['active', 'accent']">
+            <span class="title">Object Limits</span>
+          </a>
+        </div>
+        <div class="nav-item" aria-label="Validation Rules">
+          <a class="nav-link" matRipple [routerLinkActive]="['active', 'accent']">
+            <div class="title">Validation Rules</div>
+          </a>
+        </div>
       </div>
-
     </div>
   </div>
 </div>

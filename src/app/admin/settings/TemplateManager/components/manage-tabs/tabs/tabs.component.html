@@ -24,16 +24,15 @@
   </div>
 </div> -->
 
-
-<mat-table [dataSource]="dataSource" class="tabs-table">
-
+<mat-table [dataSource]="dataSource" class="data-table" #table [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
   <ng-container matColumnDef="caption">
     <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.caption}} </mat-cell>
   </ng-container>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="tab" [@animate]="{value:'*',params:{y:'100%'}}" [routerLink]="[row.id]"></mat-row>
+  <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="data-row" [@animate]="{value:'*',params:{y:'100%'}}"
+    [routerLink]="[row.id]"></mat-row>
 </mat-table>
 
 <mat-paginator [pageSizeOptions]="[5, 10, 20]" pageSize="10" showFirstLastButtons></mat-paginator>

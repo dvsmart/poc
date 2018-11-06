@@ -10,7 +10,7 @@ import { Location } from '@angular/common';
   selector: 'setup-sidebar',
   templateUrl: './setup-sidebar.component.html',
   styleUrls: ['./setup-sidebar.component.scss'],
-  //encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
 export class SetupSidebarComponent implements OnInit {
