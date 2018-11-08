@@ -1,74 +1,14 @@
-<!-- <div id="contacts" class="page-layout carded inner-sidebar inner-scroll">
-    <div class="header accent p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-xs="row"
-        fxLayoutAlign.gt-xs="space-between center">
-        <div fxLayout="row" fxLayoutAlign="start center">
-            <button mat-icon-button class="sidebar-toggle mr-12" fxHide.gt-sm (click)="toggleSidebar('setup-sidebar')">
-                <mat-icon>menu</mat-icon>
-            </button>
-            <div class="logo" fxLayout="row" fxLayoutAlign="start center">
-                <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">account_box
-                </mat-icon>
-                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-                    {{templateName}}
-                </span>
-            </div>
-        </div>
-        <div class="ml-sm-32" fxLayout="row" fxLayoutAlign="center center" fxFlex>
-            <div class="search-wrapper mt-16 mt-sm-0">
-                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-icon>search</mat-icon>
-                    <input [formControl]="searchInput" placeholder="Search for a contact">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="content">
-        <fuse-sidebar class="sidebar" name="setup-sidebar" position="left" lockedOpen="gt-sm">
-            <div class="content">
-                <setup-sidebar [@animate]="{value:'*'}">{{templateName}}</setup-sidebar>
-            </div>
-        </fuse-sidebar>
-        <div class="center p-24 pb-56" fusePerfectScrollbar>
-            <div class="content">
-                    <router-outlet></router-outlet>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-
 <div id="setup" class="page-layout carded left-sidebar inner-scroll">
-
-    <!-- TOP BACKGROUND -->
-    <div class="top-bg accent"></div>
-    <!-- / TOP BACKGROUND -->
-
+    <div class="top-bg accent" fxHide.gt-md></div>
     <fuse-sidebar class="sidebar" name="setup-sidebar" position="left" lockedOpen="gt-sm">
         <div class="content">
             <setup-sidebar [@animate]="{value:'*'}">{{templateName}}</setup-sidebar>
         </div>
     </fuse-sidebar>
-    <!-- CENTER -->
-    <div class="center">
-        <!-- HEADER -->
-        <div class="header" fxLayout="column" fxLayoutAlign="center flex-start" fxLayoutAlign.gt-sm="space-between center"
-            fxLayout.gt-sm="row">
-
-            <div class="search-wrapper mx-32 mx-md-0">
-                <button mat-icon-button class="sidebar-toggle" fxHide.gt-md (click)="toggleSidebar('setup-sidebar')">
-                    <mat-icon>menu</mat-icon>
-                </button>
-                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-icon>search</mat-icon>
-                    <input #filter placeholder="Search for a product">
-                </div>
-            </div>
-
-            <button mat-raised-button [routerLink]="'/apps/e-commerce/products/new'" class="add-product-button fuse-white mt-24 mt-md-0">
-                <span>ADD NEW PRODUCT</span>
-            </button>
-
-        </div>
+    <div class="center mr-8">
+        <button mat-icon-button class="sidebar-toggle" fxHide.gt-md (click)="toggleSidebar('setup-sidebar')">
+            <mat-icon>menu</mat-icon>
+        </button>
 
         <div class="content-card">
             <router-outlet></router-outlet>

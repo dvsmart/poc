@@ -20,6 +20,9 @@ export class CreateTabFieldRequest {
     tabId: number | null;
     controlTypeId: number;
     isVisible: boolean | true;
+    controlType:string;
+    templateId:number | null;
+    tabName:string;
 
     constructor(data?) {
         this.id = data.id || 0;
@@ -27,6 +30,8 @@ export class CreateTabFieldRequest {
         this.tabId = data.tabId;
         this.controlTypeId = data.fieldType;
         this.isVisible = true;
+        this.templateId = data.templateId;
+        this.tabName = data.tabName;
     }
 }
 

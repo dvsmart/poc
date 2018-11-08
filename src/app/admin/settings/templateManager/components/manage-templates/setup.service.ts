@@ -32,7 +32,8 @@ export class SetupService {
     this.routeParams = route.params;
     return new Promise((resolve, reject) => {
       Promise.all([
-        this.getTemplateDetail()
+        this.getTemplateDetail(),
+        this.getCustomTabs()
       ]).then(
         () => {
           resolve();

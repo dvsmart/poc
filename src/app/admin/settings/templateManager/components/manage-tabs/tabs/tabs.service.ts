@@ -32,7 +32,7 @@ export class TabsService {
         });
     }
 
-    getCustomTabs(): Promise<any> {
+    getCustomTabs(templateId?: number): Promise<any> {
         return new Promise((resolve, reject) => {
           this._httpClient.get<any>(environment.apiUrl + 'CustomTabConfig/' + this.templateId)
             .subscribe((response: any) => {

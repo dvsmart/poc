@@ -6,6 +6,8 @@ import { Subject } from 'rxjs';
 import { FieldService } from './field.service';
 import { FieldType, CreateTabFieldRequest, CreateTemplateFieldRequest } from '../field.model';
 import { Location } from '@angular/common';
+import { TabsService } from '../../manage-tabs/tabs/tabs.service';
+import { SetupService } from '../../manage-templates/setup.service';
 
 @Component({
   selector: 'field-detail',
@@ -17,22 +19,27 @@ export class FieldDetailComponent implements OnInit {
   templateFieldRequest: CreateTemplateFieldRequest;
   formType: string;
   fields: FieldType[];
+  tabs: any;
+  edit: boolean = false;
+
+  form: FormGroup;
+
 
   private _unsubscribeAll: Subject<any>;
-  fieldTypes: string[] = ['Text Box', 'Text Area', 'Checkbox', 'Select'];
 
   isLinear = false;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-  constructor(private _formBuilder: FormBuilder, private fieldService: FieldService,private _location: Location) {
+  constructor(private _formBuilder: FormBuilder, private fieldService: FieldService, private _location: Location, private templateservice: SetupService) {
     this._unsubscribeAll = new Subject();
   }
 
   ngOnInit() {
     this.fieldService.onNewFieldAdded
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((field) => {
+      .subscribe((field: CreateTabFieldRequest) => {
         if (field) {
+          this.edit = field.id === 0;
           this.tabFieldRequest = field;
         }
         this.createFieldForm();
@@ -43,6 +50,12 @@ export class FieldDetailComponent implements OnInit {
       .subscribe(x => {
         this.fields = x
       });
+
+    this.templateservice.customTabs
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(tab => {
+        this.tabs = tab.templateTabs;
+      })
   }
 
   createFieldForm() {
@@ -50,14 +63,24 @@ export class FieldDetailComponent implements OnInit {
       fieldType: [this.tabFieldRequest.controlTypeId, Validators.required]
     });
     this.secondFormGroup = this._formBuilder.group({
-      name: [this.tabFieldRequest.caption, Validators.required]
+      name: [this.tabFieldRequest.caption, Validators.required],
+      tabId: [this.tabFieldRequest.tabId == undefined ? 0 : this.tabFieldRequest.tabId, Validators.required]
     });
+    this.form = this._formBuilder.group({
+      name: [this.tabFieldRequest.caption, Validators.required],
+      fieldTypeId: [this.tabFieldRequest.controlTypeId],
+      fieldType: [{ value: this.tabFieldRequest.controlType, disabled: true }],
+      tabName: [{ value: this.tabFieldRequest.tabName, disabled: true }]
+    })
   }
 
   saveField() {
     this.tabFieldRequest.caption = this.secondFormGroup.getRawValue().name;
     this.tabFieldRequest.controlTypeId = this.firstFormGroup.getRawValue().fieldType;
-    this.fieldService.addField(this.tabFieldRequest);
+    this.tabFieldRequest.tabId = this.secondFormGroup.getRawValue().tabId;
+    this.fieldService.addField(this.tabFieldRequest).then(() => {
+      this._location.go('admin/setup/objectManager/templates/' + this.tabFieldRequest.templateId + '/fields');
+    });
   }
 
 }

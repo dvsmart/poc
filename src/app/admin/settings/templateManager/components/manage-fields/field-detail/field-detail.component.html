@@ -1,36 +1,87 @@
-<mat-horizontal-stepper linear #stepper>
-  <mat-step [stepControl]="firstFormGroup">
-    <form [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Choose a Field Type</ng-template>
-      <div>
-        <mat-radio-group formControlName="fieldType">
-          <mat-radio-button *ngFor="let ft of fields" [value]="ft.id">
-            {{ft.caption}}
-          </mat-radio-button>
-        </mat-radio-group>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="secondFormGroup">
-    <form [formGroup]="secondFormGroup">
-      <ng-template matStepLabel>Fill out Field Information</ng-template>
-      <mat-form-field>
-        <input matInput placeholder="Name" formControlName="name" required>
+<div class="toolbar px-24 py-8">
+  <button mat-icon-button [routerLink]="['../']" fxFlex style="flex:1;" fxLayout="row">
+    <mat-icon class="secondary-text">arrow_back</mat-icon>
+  </button>
+  <button mat-raised-button class="accent mr-8" *ngIf="!edit" (click)="edit = true">Edit</button>
+  <button mat-raised-button class="accent" *ngIf="edit" (click)="edit = false">Cancel</button>
+</div>
+<div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row" *ngIf="!edit">
+  <form class="p-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form" [formGroup]="form">
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-label>Field Type</mat-label>
+        <input matInput formControlName="fieldType">
+        <mat-icon matSuffix class="disabled-text">domain</mat-icon>
       </mat-form-field>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    You are now done.
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
-      <button mat-button (click)="saveField()">Save</button>
     </div>
-  </mat-step>
-</mat-horizontal-stepper>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-label>Tab / Section</mat-label>
+        <input matInput formControlName="tabName">
+        <mat-icon matSuffix class="disabled-text">domain</mat-icon>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-label>Field Label</mat-label>
+        <input matInput formControlName="name" required>
+        <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+        <mat-error>caption is required!</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+
+<div *ngIf="edit">
+  <mat-horizontal-stepper [linear]="true" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup" fxLayout="column">
+        <ng-template matStepLabel>Choose a Field Type</ng-template>
+        <div fxFlex="1 0 auto" fxLayout="column">
+          <mat-radio-group formControlName="fieldType">
+            <mat-radio-button *ngFor="let ft of fields" [value]="ft.id">
+              {{ft.caption}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <button mat-raised-button matStepperNext type="button" color="accent">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup" fxLayout="column">
+        <ng-template matStepLabel>Fill out Field Information</ng-template>
+        <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field appearance="outline" fxFlex="50">
+            <mat-select placeholder="Select Tab" formControlName="tabId" required [(value)]="tabId">
+              <mat-option *ngFor="let tab of tabs" [value]="tab.id">
+                {{tab.caption}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="1 0 auto" fxLayout="column">
+          <mat-form-field appearance="outline" fxFlex="100">
+            <input matInput placeholder="Name" formControlName="name" required>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <button mat-button matStepperPrevious type="button" color="accent">Back</button>
+          <button mat-raised-button matStepperNext type="button" color="accent">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      You are now done.
+      <div fxLayout="column">
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <button mat-button matStepperPrevious type="button" color="accent">Back</button>
+          <button mat-button matStepperPrevious type="button" color="accent" (click)="stepper.reset()">Reset</button>
+          <button mat-raised-button matStepperNext type="button" color="accent" (click)="saveField()">Save</button>
+        </div>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

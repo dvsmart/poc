@@ -24,13 +24,11 @@ export class SetupComponent implements OnInit {
 
   constructor(private _fuseSidebarService: FuseSidebarService, private route: ActivatedRoute,private templateservice: SetupService) {
     this.searchInput = new FormControl('');
-
     this._unsubscribeAll = new Subject();
-
-
   }
 
   ngOnInit() {
+    this._fuseSidebarService.getSidebar('navbar').toggleOpen();
     this.templateservice.onSelectedTemplateChanged
     .pipe(takeUntil(this._unsubscribeAll))
     .subscribe(x=>{

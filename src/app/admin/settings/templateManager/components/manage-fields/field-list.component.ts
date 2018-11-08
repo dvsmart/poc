@@ -3,12 +3,11 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { fuseAnimations } from '@core/animations';
-import { FieldResponse, CreateTabFieldRequest, CreateTemplateFieldRequest } from './field.model';
-import { SetupService } from '../manage-templates/setup.service';
-import { FieldService } from './field-detail/field.service';
+import { FieldResponse } from './field.model';
+import { FieldsService } from './fields.service';
 
 @Component({
-  selector: 'field-list',
+  selector: 'fields',
   templateUrl: './field-list.component.html',
   styleUrls: ['./field-list.component.scss'],
   animations: fuseAnimations
@@ -17,7 +16,7 @@ export class FieldListComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
   field: FieldResponse;
 
-  displayedColumns: string[] = ['caption', 'controlType', 'tabName', 'templateName', 'isRequired', 'actions'];
+  displayedColumns: string[] = ['caption', 'controlType', 'tabName', 'isRequired', 'actions'];
   dataSource: MatTableDataSource<any>;
 
   isEdit: boolean = false;
@@ -25,7 +24,7 @@ export class FieldListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private fieldservice: FieldService) {
+  constructor(private fieldservice: FieldsService) {
     this._unsubscribeAll = new Subject();
   }
 
@@ -41,17 +40,6 @@ export class FieldListComponent implements OnInit {
           this.dataSource.sort = this.sort;
         }
       });
-  }
-
-  editField(field) {
-    this.isEdit = true;
-    this.fieldservice.getFieldTypes();
-    this.fieldservice.getTabField(field.id);
-  }
-
-  addNewField() {
-    this.isEdit = true;
-    this.fieldservice.setTabField();
   }
 
   ngOnDestroy(): void {

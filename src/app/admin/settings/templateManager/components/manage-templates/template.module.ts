@@ -14,6 +14,7 @@ import { TabService } from "../manage-tabs/tab-detail/tab.service";
 import { SetupSidebarComponent } from "./setup/setup-sidebar/setup-sidebar.component";
 import { FieldService } from "../manage-fields/field-detail/field.service";
 import { TabsService } from "../manage-tabs/tabs/tabs.service";
+import { FieldsService } from "../manage-fields/fields.service";
 
 const routes: Routes = [
   {
@@ -41,6 +42,20 @@ const routes: Routes = [
         component: TabDetailComponent,
         resolve: {
           tab: TabService
+        }
+      },
+      {
+        path: 'fields',
+        component: FieldListComponent,
+        resolve: {
+          tab: FieldsService
+        }
+      },
+      {
+        path: 'fields/:id',
+        component: FieldDetailComponent,
+        resolve: {
+          field: FieldService
         }
       }
     ],

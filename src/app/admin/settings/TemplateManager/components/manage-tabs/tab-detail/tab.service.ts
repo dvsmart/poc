@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { SetupService } from '../../manage-templates/setup.service';
 import { Location } from '@angular/common';
 import { MatSnackBar } from '@angular/material';
+import { TabsService } from '../tabs/tabs.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,7 @@ import { MatSnackBar } from '@angular/material';
 export class TabService {
     routeParams: any;
     onSelectedTabChanged: BehaviorSubject<any>;
-    constructor(private _httpClient: HttpClient, private templateservice: SetupService, private location: Location, private toaster: MatSnackBar) {
+    constructor(private _httpClient: HttpClient, private templateservice: SetupService, private location: Location, private toaster: MatSnackBar,private tabsservice: TabsService) {
         this.onSelectedTabChanged = new BehaviorSubject<any>({});
     }
 
@@ -52,7 +53,7 @@ export class TabService {
             this._httpClient.post(environment.apiUrl + 'CustomTabConfig', { ...tabRequest })
                 .subscribe((response: any) => {
                     this.onSelectedTabChanged.next(response);
-                    this.templateservice.getCustomTabs();
+                    this.tabsservice.getCustomTabs();
                     this.location.go('admin/customObject/templateManagement/' + tabRequest.customTemplateId + '/tabs/' + response.id);
                     this.toaster.open("Added Successfully", 'Done', { duration: 1000 });
                     resolve(response);

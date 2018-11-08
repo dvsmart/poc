@@ -92,12 +92,12 @@ const appRoutes: Routes = [
         ]
     },
     {
-        path: 'admin/setup',
+        path: 'admin',
         component: AppLayoutComponent,
         canActivate: [AdminGuard],
         children: [
             {
-                path: 'objectManager',
+                path: 'formbuilder',
                 loadChildren: './admin/settings/templateManager/templateManager.module#TemplateManagerModule',
             },
             {

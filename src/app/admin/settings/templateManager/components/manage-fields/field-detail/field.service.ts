@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { FieldType, FieldResponse, CreateTabFieldRequest } from '../field.model';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { SetupService } from '../../manage-templates/setup.service';
 
 
@@ -16,12 +16,14 @@ export class FieldService {
     onfieldsChanged: BehaviorSubject<any>;
 
     customTemplateId: BehaviorSubject<number>;
-    tabId: number;
+    fieldId: number;
     fieldTypes: BehaviorSubject<FieldType[]>;
 
     onNewFieldAdded: BehaviorSubject<any>;
 
-    constructor(private _httpClient: HttpClient, private templateservice: SetupService) {
+    edit: boolean;
+
+    constructor(private _httpClient: HttpClient, private templateservice: SetupService, private router: Router) {
         this.onNewFieldAdded = new BehaviorSubject<any>({});
         this.fieldTypes = new BehaviorSubject<FieldType[]>(null);
         this.onfieldsChanged = new BehaviorSubject<any>({});
@@ -29,10 +31,11 @@ export class FieldService {
 
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
-        this.tabId = route.parent.params["id"];
+        this.routeParams = route.params;
         return new Promise((resolve, reject) => {
             Promise.all([
-                this.getTemplateFields()
+                this.getTabField(),
+                this.getFieldTypes()
             ]).then(
                 () => {
                     resolve();
@@ -44,47 +47,39 @@ export class FieldService {
 
     setTabField(field?: any) {
         this.getFieldTypes();
+        this.templateservice.getCustomTabs();
         field = field || {};
         var fieldreq = {
-            tabId: this.templateservice.TemplateId,
-            id: field.id
+            templateId: this.templateservice.TemplateId,
+            id: field.id,
         }
         var fieldRequest = new CreateTabFieldRequest(fieldreq);
         this.onNewFieldAdded.next(fieldRequest);
     }
 
-    setTemplateField(field?: any) {
-        this.getFieldTypes();
-        this.onNewFieldAdded.next(this.templateservice.TemplateId);
-    }
 
-    getTemplateFields(tabId?: number) {
+    getTabField() {
         return new Promise((resolve, reject) => {
-            this._httpClient.get<any>(environment.apiUrl + 'CustomTabFieldConfig/' + this.tabId)
-                .subscribe((response: any) => {
-                    this.onfieldsChanged.next(response);
-                    resolve(response);
-                }, reject);
+            if (this.routeParams.id === 'new') {
+                this.setTabField();
+                resolve(false);
+            }
+            else {
+                this._httpClient.get<any>(environment.apiUrl + 'CustomTabFieldConfig/GetFieldById/' + this.routeParams.id)
+                    .subscribe((response: any) => {
+                        this.onNewFieldAdded.next(response);
+                        resolve(response);
+                    }, reject);
+            }
         });
     }
 
-    getTabField(id){
-        return new Promise((resolve, reject) => {
-            this._httpClient.get<any>(environment.apiUrl + 'CustomTabFieldConfig/GetFieldById/' + id)
-                .subscribe((response: any) => {
-                    this.onNewFieldAdded.next(response);
-                    resolve(response);
-                }, reject);
-        });
-    }
 
-    
     addField(req) {
         return new Promise((resolve, reject) => {
             this._httpClient.post(environment.apiUrl + 'CustomTabFieldConfig', { ...req })
                 .subscribe((response: FieldResponse) => {
                     this.onNewFieldAdded.next(response);
-                    this.getTemplateFields(req.tabId);
                     resolve(response);
                 }, reject);
         });
@@ -99,4 +94,5 @@ export class FieldService {
                 }, reject);
         });
     }
+
 }
