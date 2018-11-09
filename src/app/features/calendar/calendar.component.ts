@@ -9,6 +9,7 @@ import { FuseConfirmDialogComponent } from '@core/components/confirm-dialog/conf
 import { CalendarService } from './calendar.service';
 import { CalendarEventModel, EventModel } from './event.model';
 import { CalendarEventFormDialogComponent } from './event-form/event-form.component';
+import { takeUntil } from 'rxjs/operators';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class CalendarComponent implements OnInit {
     actions: CalendarEventAction[];
     activeDayIsOpen: boolean;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-    dialogRef: any;
+    dialogRef: MatDialogRef<CalendarEventFormDialogComponent>;
     events: CalendarEvent[];
     refresh: Subject<any> = new Subject();
     selectedDay: any;
@@ -55,9 +56,6 @@ export class CalendarComponent implements OnInit {
             }
         ];
 
-        /**
-         * Get events from service/server
-         */
         this.setEvents();
     }
 
@@ -94,13 +92,6 @@ export class CalendarComponent implements OnInit {
         });
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Set events
-     */
     setEvents(): void {
         this.events = this._calendarService.events.map(item => {
             item.actions = this.actions;
@@ -108,12 +99,6 @@ export class CalendarComponent implements OnInit {
         });
     }
 
-    /**
-     * Before View Renderer
-     *
-     * @param {any} header
-     * @param {any} body
-     */
     beforeMonthViewRender({ header, body }): void {
         // console.info('beforeMonthViewRender');
         /**
@@ -182,34 +167,33 @@ export class CalendarComponent implements OnInit {
     }
 
     editEvent(action: string, event: any): void {
-        const eventIndex = this.events.indexOf(event);
-        this.dialogRef = this._matDialog.open(CalendarEventFormDialogComponent, {
-            panelClass: 'event-form-dialog',
-            data: {
-                event: event,
-                action: action
-            }
-        });
-
-        this.dialogRef.afterClosed()
-            .subscribe(response => {
-                if (!response) {
-                    return;
-                }
-                const actionType: string = response[0];
-                const formData: FormGroup = response[1];
-                switch (actionType) {
-                    case 'save':
-                        //this.events[eventIndex] = Object.assign(this.events[eventIndex], formData.getRawValue());
-                        this.event = formData.getRawValue();
-                        this.refresh.next('edit');
-                        break;
-                    case 'delete':
-                        this.deleteEvent(event);
-                        this.refresh.next('delete');
-                        break;
+        this._calendarService.getEvent(event.id).then(event => {
+            this.dialogRef = this._matDialog.open(CalendarEventFormDialogComponent, {
+                panelClass: 'event-form-dialog',
+                data: {
+                    event: event,
+                    action: action
                 }
             });
+            this.dialogRef.afterClosed()
+                .subscribe(response => {
+                    if (!response) {
+                        return;
+                    }
+                    const actionType: string = response[0];
+                    const formData: FormGroup = response[1];
+                    switch (actionType) {
+                        case 'save':
+                            this.event = formData.getRawValue();
+                            this.refresh.next('edit');
+                            break;
+                        case 'delete':
+                            this.deleteEvent(event);
+                            this.refresh.next('delete');
+                            break;
+                    }
+                });
+        })
     }
 
     addEvent(): void {
@@ -226,10 +210,31 @@ export class CalendarComponent implements OnInit {
                     return;
                 }
                 const newEvent = response.getRawValue();
+                var startDate = this.getAsDate(newEvent.startDate, newEvent.startTime);
+                var endDate = this.getAsDate(newEvent.dueDate, newEvent.endTime);
+                newEvent.start = startDate;
+                newEvent.end = endDate;
                 newEvent.actions = this.actions;
                 this.event = newEvent;
                 this.refresh.next('new');
             });
+    }
+
+    getAsDate(day, time) {
+        var hours = Number(time.match(/^(\d+)/)[1]);
+        var minutes = Number(time.match(/:(\d+)/)[1]);
+        var AMPM = time.match(/\s(.*)$/)[1];
+        if (AMPM == "pm" && hours < 12) hours = hours + 12;
+        if (AMPM == "am" && hours == 12) hours = hours - 12;
+        var sHours = hours.toString();
+        var sMinutes = minutes.toString();
+        if (hours < 10) sHours = "0" + sHours;
+        if (minutes < 10) sMinutes = "0" + sMinutes;
+        time = sHours + ":" + sMinutes + ":00";
+        var d = new Date(day);
+        var n = d.toISOString().substring(0, 10);
+        var newDate = new Date(n + "T" + time);
+        return newDate;
     }
 }
 

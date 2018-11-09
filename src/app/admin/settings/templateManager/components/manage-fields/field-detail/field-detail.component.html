@@ -1,9 +1,6 @@
 <div class="toolbar px-24 py-8">
-  <button mat-icon-button [routerLink]="['../']" fxFlex style="flex:1;" fxLayout="row">
-    <mat-icon class="secondary-text">arrow_back</mat-icon>
-  </button>
   <button mat-raised-button class="accent mr-8" *ngIf="!edit" (click)="edit = true">Edit</button>
-  <button mat-raised-button class="accent" *ngIf="edit" (click)="edit = false">Cancel</button>
+  <button mat-raised-button class="accent" [routerLink]="['../']" (click)="edit = false">Cancel</button>
 </div>
 <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row" *ngIf="!edit">
   <form class="p-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form" [formGroup]="form">

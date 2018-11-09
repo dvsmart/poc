@@ -1,17 +1,17 @@
 <div id="setup" class="page-layout carded left-sidebar inner-scroll">
-    <div class="top-bg accent" fxHide.gt-md></div>
-    <fuse-sidebar class="sidebar" name="setup-sidebar" position="left" lockedOpen="gt-sm">
-        <div class="content">
-            <setup-sidebar [@animate]="{value:'*'}">{{templateName}}</setup-sidebar>
-        </div>
-    </fuse-sidebar>
-    <div class="center mr-8">
-        <button mat-icon-button class="sidebar-toggle" fxHide.gt-md (click)="toggleSidebar('setup-sidebar')">
-            <mat-icon>menu</mat-icon>
-        </button>
-
-        <div class="content-card">
-            <router-outlet></router-outlet>
+        <div class="top-bg accent" fxHide.gt-md></div>
+        <fuse-sidebar class="sidebar" name="setup-sidebar" position="left" lockedOpen="gt-sm">
+            <div class="content">
+                <setup-sidebar [@animate]="{value:'*'}">{{templateName}}</setup-sidebar>
+            </div>
+        </fuse-sidebar>
+        <div class="center mr-8">
+            <button mat-icon-button class="sidebar-toggle" fxHide.gt-md (click)="toggleSidebar('setup-sidebar')">
+                <mat-icon>menu</mat-icon>
+            </button>
+    
+            <div class="content-card">
+                <router-outlet></router-outlet>
+            </div>
         </div>
     </div>
-</div>

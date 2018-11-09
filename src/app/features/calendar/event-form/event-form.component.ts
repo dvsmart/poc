@@ -1,7 +1,6 @@
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { CalendarEvent } from 'angular-calendar';
 import { MatColors } from '@core/mat-colors';
 import { CalendarEventModel } from '../event.model';
 
@@ -41,8 +40,8 @@ export class CalendarEventFormDialogComponent {
         else {
             this.dialogTitle = 'New Event';
             this.event = new CalendarEventModel({
-                startDate: _data.date,
-                dueDate: _data.date
+                start: _data.date,
+                end: _data.date,
             });
         }
 
@@ -68,15 +67,10 @@ export class CalendarEventFormDialogComponent {
             isCompleted: new FormControl(false),
             allDayEvent: new FormControl(false),
             recurrenceTypeId: new FormControl(1),
-            color: this._formBuilder.group({
-                primary: new FormControl(this.event.color.primary),
-                secondary: new FormControl(this.event.color.secondary)
-            }),
-            meta:
-                this._formBuilder.group({
-                    location: new FormControl(this.event.meta.location),
-                    notes: new FormControl(this.event.meta.notes)
-                })
+            startTime: new FormControl(new Date(this.event.start).toTimeString()),
+            endTime: new FormControl(new Date(this.event.end).toTimeString()),
+            location: new FormControl(this.event.location),
+            description: new FormControl(this.event.description)
         });
     }
 }

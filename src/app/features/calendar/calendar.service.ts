@@ -1,22 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { Observable,  BehaviorSubject } from 'rxjs';
 import { environment } from 'environments/environment';
-import { EventModel } from './event.model';
+import { EventModel, CalendarEventModel } from './event.model';
 
 @Injectable()
 export class CalendarService implements Resolve<any>
 {
     events: any;
-    onEventsUpdated: Subject<any>;
+    onEventsUpdated: BehaviorSubject<any>;
     constructor(private _httpClient: HttpClient){
-        this.onEventsUpdated = new Subject();
+        this.onEventsUpdated = new BehaviorSubject({});
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
     {
         return new Promise((resolve, reject) => {
@@ -35,11 +32,22 @@ export class CalendarService implements Resolve<any>
     {
         return new Promise((resolve, reject) => {
 
-            this._httpClient.get(environment.apiUrl + 'Event?page=1&pageSize=5')
+            this._httpClient.get(environment.apiUrl + 'Event?page=1&pageSize=50')
                 .subscribe((response: any) => {
+                    debugger;
                     this.events = response.data;
                     this.onEventsUpdated.next(this.events);
                     resolve(this.events);
+                }, reject);
+        });
+    }
+
+    getEvent(id:number): Promise<any>
+    {
+        return new Promise((resolve, reject) => {
+            this._httpClient.get(environment.apiUrl + 'Event/GetEventById/' +  id)
+                .subscribe((response: EventModel) => {
+                    resolve(response);
                 }, reject);
         });
     }

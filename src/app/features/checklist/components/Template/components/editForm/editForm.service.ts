@@ -42,6 +42,7 @@ export class EditFormService {
             if (this.routeParams.id === 'new') {
                 this.templateId.subscribe(id => {
                     this._httpClient.get<any>(environment.apiUrl + 'NewTemplateFormRecord/' + id).subscribe(response => {
+                        debugger;
                         this.record = response;
                         this.onRecordChanged.next(this.record);
                         resolve(false);

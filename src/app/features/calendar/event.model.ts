@@ -1,15 +1,12 @@
 import { CalendarEventAction } from 'angular-calendar';
 import { startOfDay, endOfDay } from 'date-fns';
+import { Time } from '@angular/common';
 
 export class CalendarEventModel {
     id: number;
     start: Date;
     end?: Date;
     title: string;
-    color: {
-        primary: string;
-        secondary: string;
-    };
     actions?: CalendarEventAction[];
     allDay?: boolean;
     cssClass?: string;
@@ -18,42 +15,25 @@ export class CalendarEventModel {
         afterEnd?: boolean;
     };
     draggable?: boolean;
-    meta?: {
-        location: string,
-        notes: string
-    };
+    location:string;
+    description: string;
     isCompleted?: boolean;
     recurrenceTypeId: number;
 
-    /**
-     * Constructor
-     *
-     * @param data
-     */
     constructor(data?) {
         data = data || {};
-        this.start = new Date(data.startDate);
-        this.end = new Date(data.dueDate);
+        this.start = new Date(data.start);
+        this.end = new Date(data.end);
         this.title = data.title || '';
-        this.color = {
-            primary: data.color && data.color.primary || '#1e90ff',
-            secondary: data.color && data.color.secondary || '#D1E8FF'
-        };
         this.draggable = data.draggable || true;
-        this.resizable = {
-            beforeStart: data.resizable && data.resizable.beforeStart || true,
-            afterEnd: data.resizable && data.resizable.afterEnd || true
-        };
         this.actions = data.actions || [];
         this.allDay = data.allDayEvent || false;
         this.cssClass = data.cssClass || '';
-        this.meta = {
-            location: data.location || '',
-            notes: data.description || ''
-        };
         this.id = data.id;
         this.isCompleted = data.isCompleted;
-        this.recurrenceTypeId = data.recurrenceTypeId
+        this.recurrenceTypeId = data.recurrenceTypeId;
+        this.location = data.location;
+        this.description = data.description;
     }
 }
 
@@ -62,8 +42,8 @@ export class EventModel {
     title: string;
     description: string;
     location: string;
-    startDate: Date | string;
-    dueDate: Date | string;
+    start: Date | string;
+    end: Date | string;
     recurrenceTypeId: number;
     allDayEvent: boolean;
     isCompleted: boolean;
@@ -74,13 +54,13 @@ export class EventModel {
 
     constructor(data) {
         this.id = data.id || 0;
-        this.description = data.meta.notes;
+        this.description = data.description;
         this.allDayEvent = data.allDay;
         this.isCompleted = data.isCompleted;
-        this.startDate = data.startDate;
-        this.dueDate = data.dueDate;
+        this.start = data.start;
+        this.end = data.end;
         this.recurrenceTypeId = data.recurrenceTypeId;
-        this.location = data.meta.location;
+        this.location = data.location;
         this.title = data.title;
     }
 }
