@@ -9,7 +9,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
     providedIn: 'root'
 })
 export class CategoryListService {
-    api = environment.apiUrl + 'TemplateCategory';
+    api = environment.apiUrl + 'CustomCategoryConfig';
     onCategories: BehaviorSubject<any>;
 
     constructor(private http: HttpClient) {

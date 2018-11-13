@@ -43,6 +43,7 @@ export class EditFormComponent {
     this.route.params.subscribe(x => {
       let cev = this._recordservice.onRecordChanged.getValue();
       if (x != null && x["id"] != "new") {
+        debugger;
         this.record = new CustomEntityRecord(cev);
         this.pageType = 'edit';
         this.title = "Edit " + cev.templateName + ' - ' + cev.dataId;
@@ -66,7 +67,7 @@ export class EditFormComponent {
       return new FormGroup({});
     }
     this.record.customTabs.forEach(ct => {
-      ct.customFields.forEach(field => {
+      ct.fields.forEach(field => {
         if (field.type === "button") return;
         const control = this._formBuilder.control(
           field.value,

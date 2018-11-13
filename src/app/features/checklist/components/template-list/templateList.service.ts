@@ -11,7 +11,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
     providedIn: 'root'
 })
 export class TemplateListService {
-    api = environment.apiUrl + 'TemplateCategory/';
+    api = environment.apiUrl + 'CustomTemplateConfig/';
     templates: any;
     onTemplatesChanged: BehaviorSubject<any>;
     routeParams: any;
@@ -37,18 +37,11 @@ export class TemplateListService {
 
     getTemplates() {
         return new Promise((resolve, reject) => {
-            if (this.routeParams.id === 'new') {
-                this.onTemplatesChanged.next(false);
-                resolve(false);
-            }
-            else {
-                this._httpClient.get<any>(this.api + this.routeParams.id)
-                    .subscribe((response: any) => {
-                        this.templates = response;
-                        this.onTemplatesChanged.next(this.templates);
-                        resolve(response);
-                    }, reject);
-            }
-        });
+            this._httpClient.get(this.api).subscribe(x => {
+                this.templates = x;
+                this.onTemplatesChanged.next(this.templates);
+                resolve(x);
+            }, reject)
+        })
     }
 }

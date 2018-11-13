@@ -9,7 +9,7 @@
                 <div class="nav-item" *ngFor="let category of categories">
                     <a  class="nav-link" [routerLink]="['/checklist/cat/',category.id]" matRipple 
                     [ngClass]="{'active accent':filterBy ==='live'}">
-                        <span class="title">{{category.categoryName}}</span>
+                        <span class="title">{{category.groupName}}</span>
                     </a>
                 </div>
             </div>

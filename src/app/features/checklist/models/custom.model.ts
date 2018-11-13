@@ -39,7 +39,7 @@ export class CustomTab {
     caption: string;
     sortOrder?: any;
     isVisible: boolean;
-    customFields: FieldConfig[];
+    fields: FieldConfig[];
 }
 
 export class CustomEntityRecord {
@@ -57,7 +57,7 @@ export class CustomEntityRecord {
         this.id = data.id;
         this.dataId = data.dataId;
         this.customEntityId = data.customEntityId;
-        this.customTabs = data.customTabs;
+        this.customTabs = data.tabs;
         this.templateName = data.templateName;
     }
 

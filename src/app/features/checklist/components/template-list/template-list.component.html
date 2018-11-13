@@ -13,8 +13,8 @@
                 <span class="h5">{{templateList.groupName}}</span>
             </div>
             <div class="content py-16" fusePerfectScrollbar>
-                <div class="nav" [@listStagger]="templateList.templates.length">
-                    <div class="nav-item" *ngFor="let template of templateList.templates">
+                <div class="nav">
+                    <div class="nav-item" *ngFor="let template of templateList">
                         <a class="nav-link" [routerLink]="['/checklist/template/',template.id]" matRipple [ngClass]="{'active accent':filterBy ==='live'}">
                             <span class="title">{{template.templateName}}</span>
                         </a>

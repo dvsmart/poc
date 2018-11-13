@@ -52,7 +52,7 @@ export class ListService {
 
     getTemplateInformation(): Promise<any> {
         return new Promise((resolve, reject) => {
-            this._httpClient.get<any>(environment.apiUrl + 'Template/' + this.routeParams.id)
+            this._httpClient.get<any>(environment.apiUrl + 'CustomTemplateConfig/' + this.routeParams.id)
                 .subscribe((response: any) => {
                     let template = new CustomTemplate(response);
                     this.onTemplatechanged.next(template);
