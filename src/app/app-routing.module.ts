@@ -66,7 +66,7 @@ const appRoutes: Routes = [
                 data: { preload: false, delay: false }
             },
             {
-                path: 'forms',
+                path: 'audit',
                 loadChildren: './features/audit/audit.module#AuditModule',
                 data: { preload: false, delay: true }
             },

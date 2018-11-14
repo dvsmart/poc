@@ -1,0 +1,73 @@
+@import "src/@core/scss/fuse";
+.example-loading-shade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 56px;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.example-rate-limit-reached {
+    color: #980000;
+    max-width: 360px;
+    text-align: center;
+}
+
+.h1 {
+    @include media-breakpoint(xs) {
+        font-size: 20px !important;
+    }
+}
+
+:host {
+    #records {
+        .top-bg {
+            @include media-breakpoint(xs) {
+                height: 240px;
+            }
+        }
+        >.center {
+            >.header {
+                .search-input-wrapper {
+                    max-width: 480px;
+                }
+                @include media-breakpoint(xs) {
+                    margin: 8px 0;
+                    height: 192px !important;
+                    min-height: 192px !important;
+                    max-height: 192px !important;
+                }
+            }
+        }
+    }
+    .records-table {
+        flex: 1 1 auto;
+        border-bottom: 1px solid rgba(0, 0, 0, .12);
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        .mat-header-row {
+            min-height: 65px;
+        }
+        .record {
+            position: relative;
+            cursor: pointer;
+            height: 63px;
+        }
+        .mat-cell {
+            min-width: 0;
+            display: flex;
+            align-items: center;
+        }
+        .mat-column-id {
+            flex: 0 1 84px;
+        }
+       
+        .mat-column-buttons {
+            flex: 0 1 80px;
+        }
+    }
+}

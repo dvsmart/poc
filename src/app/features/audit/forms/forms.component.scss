@@ -5,13 +5,13 @@
     .header {
         position: relative;
         flex: 1 0 auto;
-        height: 280px;
-        max-height: 280px;
+        height: 200px;
+        max-height: 200px;
         text-align: center;
         overflow: hidden;
 
         @include media-breakpoint('xs') {
-            height: 240px;
+            height: 180px;
             padding: 16px;
         }
 

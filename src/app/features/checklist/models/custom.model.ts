@@ -57,7 +57,7 @@ export class CustomEntityRecord {
         this.id = data.id;
         this.dataId = data.dataId;
         this.customEntityId = data.customEntityId;
-        this.customTabs = data.tabs;
+        this.customTabs = data.customTabs;
         this.templateName = data.templateName;
     }
 

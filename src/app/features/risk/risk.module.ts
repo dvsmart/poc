@@ -4,7 +4,6 @@ import { CoreSharedModule } from '@core/core.module';
 import { Routes, RouterModule } from '@angular/router';
 import { RiskDetailComponent } from './risk-detail/risk-detail.component';
 import { RiskService } from './risk-detail/risk.service';
-import { RisksService } from './risk-list/risks.service';
 
 const riskRoutes: Routes = [
   {
