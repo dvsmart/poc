@@ -1,5 +1,4 @@
 @import "src/@core/scss/fuse";
-
 :host {
 
     .fuse-search-bar {
@@ -53,8 +52,9 @@
                 display: none;
                 flex: 1 0 auto;
                 min-height: 64px;
-                background-color: transparent;
                 font-size: 16px;
+                background-color: transparent;
+                color: currentColor;
             }
         }
 

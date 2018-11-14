@@ -113,6 +113,7 @@ export class NavbarVerticalStyle2Component implements OnInit, OnDestroy
         //     .subscribe(() => {
         //         this.navigation = this._fuseNavigationService.getCurrentNavigation();
         //     });
+        
     }
 
     /**

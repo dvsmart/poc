@@ -1,0 +1,91 @@
+<div id="audit-courses" class="page-layout simple">
+
+  <!-- HEADER -->
+  <div class="header accent p-16 p-sm-24" fxLayout="column" fxLayoutAlign="center center">
+
+    <div class="hero-text">
+      <mat-icon class="hero-icon">school</mat-icon>
+      <h1 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}">
+        WELCOME TO LIVE FORMS
+      </h1>
+      <h3 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}">
+        Live forms Customisable & Scalable 
+      </h3>
+    </div>
+
+  </div>
+  <!-- / HEADER -->
+
+  <!-- CONTENT -->
+  <div class="content p-24">
+
+    <div fxLayout="column" fxLayoutAlign="center">
+
+      <div class="filters" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+
+        <mat-form-field appearance="outline" floatLabel="always" class="course-search">
+          <mat-label>Search for a form</mat-label>
+          <input matInput placeholder="Enter a keyword..." [(ngModel)]="searchTerm" (input)="filterFormsByTerm()">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="category-selector">
+          <mat-label>Category</mat-label>
+          <mat-select [(ngModel)]="currentCategory" (selectionChange)="filterforms()">
+            <mat-option [value]="'all'">
+              All
+            </mat-option>
+            <mat-option *ngFor="let category of categories" [value]="category.id">
+              {{ category.groupName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+      <div class="courses" fxLayout="row wrap" fxLayoutAlign="center" [@animateStagger]="{value:'50'}">
+
+        <div class="course" *ngFor="let course of filteredForms" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="33"
+          [ngClass]="course.category" [@animate]="{value:'*',params:{y:'100%'}}">
+
+          <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+
+            <div class="header cloud-bg" fxLayout="row" fxLayoutAlign="center center" [ngClass]="android-bg">
+
+              <div class="category" fxFlex>
+                {{course.templateName}}
+              </div>
+
+              <div class="length" fxLayout="row" fxLayoutAlign="center center">
+                <mat-icon class="length-icon s-20">access_time</mat-icon>
+                <div class="min">15 min</div>
+              </div>
+
+            </div>
+
+            <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex="1 1 auto">
+              <div class="h1"><span *ngIf="course.categoryName">{{course.categoryName}} - </span>{{course.templateName}}</div>
+              <div class="updated">{{course.summary}} </div>
+            </div>
+
+            <div class="footer" fxLayout="row" fxLayoutAlign="center center">
+              <button mat-button color="accent">
+                START
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="no-courses" *ngIf="filteredForms.length === 0">
+          No forms found!
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <!-- / CONTENT -->
+
+</div>

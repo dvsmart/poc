@@ -25,8 +25,9 @@ $typography: mat-typography-config( $font-family: 'Muli, Helvetica Neue, Arial, 
 @import './features/calendar/calender.theme';
 @import './admin/settings/TemplateManager/components/manage-templates/templates.theme';
 @import './admin/settings/templateManager/components/manage-categories/category.theme';
-@import './admin/settings/templateManager/components/manage-templates/setup/setup.theme.scss';
-@import './features/task/task.theme.scss';
+@import './admin/settings/templateManager/components/manage-templates/setup/setup.theme';
+@import './features/task/task.theme';
+@import './features/audit/audit.theme';
 @mixin components-theme($theme) {
     @include toolbar-theme($theme);
     @include login-theme($theme);
@@ -38,6 +39,7 @@ $typography: mat-typography-config( $font-family: 'Muli, Helvetica Neue, Arial, 
     @include forgot-password-theme($theme);
     @include setup-theme($theme);
     @include task-theme($theme);
+    @include audit-theme($theme);
 }
 
 //-----------------------------------------------------------------------------------------------------

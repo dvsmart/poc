@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as _ from 'lodash';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -11,7 +11,8 @@ import { Router } from '../../../../../node_modules/@angular/router';
 @Component({
   selector: 'toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss']
+  styleUrls: ['./toolbar.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ToolbarComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
@@ -57,7 +58,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   menu(){
-    this.router.navigate(['admin/setup/menuManagement']);
+    this.router.navigate(['admin/menuManagement']);
   }
 
   ngOnInit() {

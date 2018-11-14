@@ -22,7 +22,9 @@
 </fuse-sidebar>
 
 <ng-template #toolbar>
-    <toolbar *ngIf="!config.layout.toolbar.hidden" [ngClass]="[config.layout.toolbar.position, config.layout.toolbar.background]"></toolbar>
+    <toolbar *ngIf="!config.layout.toolbar.hidden"
+             [ngClass]="config.layout.toolbar.customBackgroundColor === true ? config.layout.toolbar.position + ' ' + config.layout.toolbar.background : config.layout.toolbar.position">
+    </toolbar>
 </ng-template>
 
 <ng-template #leftNavbar>
