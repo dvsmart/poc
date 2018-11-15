@@ -5,8 +5,9 @@ import { FieldConfig } from "../../models/fieldConfig";
 @Component({
   selector: "app-textarea",
   template: `
-<mat-form-field class="demo-full-width" [formGroup]="group">
-<textarea matInput [formControlName]="field.name" [placeholder]="field.caption" [type]="field.inputType"></textarea>
+<mat-form-field class="demo-full-width" fxFlex="100" appearance="outline" [formGroup]="group">
+<mat-label>{{field.caption}}</mat-label>
+<textarea matInput [formControlName]="field.name" [placeholder]="field.caption"></textarea>
 <ng-container *ngFor="let validation of field.validations;" ngProjectAs="mat-error">
 </ng-container>
 </mat-form-field>
@@ -18,6 +19,6 @@ import { FieldConfig } from "../../models/fieldConfig";
 export class TextAreaComponent implements OnInit {
   field: FieldConfig;
   group: FormGroup;
-  constructor() {}
-  ngOnInit() {}
+  constructor() { }
+  ngOnInit() { }
 }

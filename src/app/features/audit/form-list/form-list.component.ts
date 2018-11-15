@@ -86,8 +86,8 @@ export class FormListComponent implements OnInit {
       .subscribe();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }
-
 }

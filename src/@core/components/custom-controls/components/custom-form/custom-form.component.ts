@@ -10,7 +10,6 @@ import {
   FormGroup,
   FormBuilder,
   Validators,
-  FormControl
 } from "@angular/forms";
 import { FieldConfig } from "../../models/fieldConfig";
 
@@ -19,10 +18,12 @@ import { FieldConfig } from "../../models/fieldConfig";
   exportAs: "dynamicForm",
   selector: "dynamic-form",
             template: `
-            <ng-container *ngFor="let field of fields;" dynamicField [field]="field" [group]="form">
+            <ng-container *ngFor="let field of fields;" dynamicField [field]="field" [group]="form" class="mt-12">
             </ng-container>
             `,
-  styles: []
+  styles: [`.mt-12{
+    margin-top: 12px
+  }`]
 })
 export class DynamicFormComponent implements OnInit {
   @Input() fields: FieldConfig[] = [];
@@ -55,7 +56,6 @@ export class DynamicFormComponent implements OnInit {
   createControl() {
     const group = this.fb.group({});
     this.fields.forEach(field => {
-      if (field.type === "button") return;
       const control = this.fb.control(
         field.value,
         this.bindValidations(field.validations || [])

@@ -34,7 +34,6 @@ export class CalendarService implements Resolve<any>
 
             this._httpClient.get(environment.apiUrl + 'Event?page=1&pageSize=50')
                 .subscribe((response: any) => {
-                    debugger;
                     this.events = response.data;
                     this.onEventsUpdated.next(this.events);
                     resolve(this.events);

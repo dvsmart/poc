@@ -45,4 +45,8 @@ export class FieldsService {
                 }, reject);
         });
     }
+
+    delete(id){
+        
+    }
 }

@@ -61,11 +61,6 @@ const appRoutes: Routes = [
                 data: { preload: false, delay: true }
             },
             {
-                path: 'checklist',
-                loadChildren: './features/checklist/checklist.module#ChecklistModule',
-                data: { preload: false, delay: false }
-            },
-            {
                 path: 'audit',
                 loadChildren: './features/audit/audit.module#AuditModule',
                 data: { preload: false, delay: true }

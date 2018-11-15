@@ -5,7 +5,8 @@ import { FieldConfig } from "../../models/fieldConfig";
 @Component({
   selector: "app-date",
   template: `
-<mat-form-field class="demo-full-width margin-top" [formGroup]="group">
+<mat-form-field class="demo-full-width margin-top" fxFlex="100" appearance="outline" [formGroup]="group">
+<mat-label>{{field.caption}}</mat-label>
 <input matInput [matDatepicker]="picker" [formControlName]="field.name" [placeholder]="field.caption">
 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 <mat-datepicker #picker></mat-datepicker>

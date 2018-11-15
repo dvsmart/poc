@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PagedResult } from '../../checklist/models/custom.model';
+import { PagedResult } from '../../audit/custom.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';

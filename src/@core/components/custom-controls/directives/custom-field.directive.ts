@@ -13,19 +13,20 @@ import { RadiobuttonComponent } from "../components/radio/radio.component";
 import { CheckboxComponent } from "../components/checkbox/checkbox.component";
 import { InputComponent } from "../components/textbox/textbox.component";
 import { ButtonComponent } from "../components/button/button.component";
-import { FieldConfig } from "../models/fieldConfig";
 import { TextAreaComponent } from "../components/textarea/textarea.component";
 
 const componentMapper = {
-  text: InputComponent,
+  "Text Box": InputComponent,
   button: ButtonComponent,
-  select: SelectComponent,
-  date: DateComponent,
+  "Select / List": SelectComponent,
+  Calender: DateComponent,
   radiobutton: RadiobuttonComponent,
-  checkbox: CheckboxComponent,
-  textarea: TextAreaComponent,
-  phone:InputComponent,
-  email: InputComponent
+  Checkbox: CheckboxComponent,
+  "Text Area": TextAreaComponent,
+  "Currency Input": InputComponent,
+  "Numerical Input": InputComponent,
+  "EmailAddress Input": InputComponent,
+  "Percentage Input": InputComponent
 };
 @Directive({
   selector: "[dynamicField]"

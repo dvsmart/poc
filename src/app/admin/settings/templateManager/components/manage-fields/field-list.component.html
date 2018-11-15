@@ -39,7 +39,7 @@
             <mat-icon>edit</mat-icon>
             <span>Edit</span>
           </button>
-          <button mat-menu-item aria-label="remove">
+          <button mat-menu-item aria-label="remove" (click)="removeField(row.id)">
             <mat-icon>delete</mat-icon>
             <span>Remove</span>
           </button>

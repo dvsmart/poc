@@ -4,8 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { environment } from 'environments/environment';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
-import { PagedResult } from "app/features/checklist/models/custom.model";
-import { CustomTemplate } from "app/features/checklist/components/Template/model/record.model";
+import { PagedResult } from "app/features/audit/custom.model";
 
 
 @Injectable({

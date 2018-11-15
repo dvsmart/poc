@@ -1,44 +1,44 @@
 <div id="customEntityRecordForm" class="page-layout carded fullwidth inner-scroll">
-  <div class="top-bg accent"></div>
-  <div class="center">
-      <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
-          <div fxLayout="row" fxLayoutAlign="start center">
-              <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'../../'">
-                  <mat-icon>arrow_back</mat-icon>
-              </button>
-              <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-                  <div class="h2" *ngIf="pageType ==='edit'">
-                      {{title}}
-                  </div>
-                  <div class="h2" *ngIf="pageType ==='new'">
-                      {{title}}
-                  </div>
-                  <div class="subtitle secondary-text">
-                      <span>Record Detail</span>
-                  </div>
-              </div>
-          </div>
-          <button mat-raised-button class="save-product-button mat-white-bg" [disabled]="customRecordForm.invalid"
-              *ngIf="pageType ==='new'" (click)="saveRecord()">
-              <span>ADD</span>
-          </button>
-          <button mat-raised-button class="save-product-button mat-white-bg" [disabled]="customRecordForm.invalid || customRecordForm.pristine"
-              *ngIf="pageType ==='edit'" (click)="saveRecord()">
-              <span>SAVE</span>
-          </button>
-      </div>
-      <div class="content-card">
-          <div class="content" [formGroup]="customRecordForm">
-              <ng-container *ngIf="(record) === null">Loading tabs...</ng-container>
-              <form (submit)="saveRecord()">
-                  <mat-tab-group style="min-height: 400px;">
-                      <mat-tab *ngFor="let tab of record.customTabs">
-                          <ng-template mat-tab-label="mat-tab-label">{{tab.tabName}}</ng-template>
-                          <dynamic-form [fields]="tab.fields" [form]="customRecordForm"></dynamic-form>
-                      </mat-tab>
-                  </mat-tab-group>
-              </form>
-          </div>
-      </div>
-  </div>
+    <div class="top-bg accent"></div>
+    <div class="center">
+        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'../../'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div class="h2" *ngIf="pageType ==='edit'">
+                        {{title}}
+                    </div>
+                    <div class="h2" *ngIf="pageType ==='new'">
+                        {{title}}
+                    </div>
+                    <div class="subtitle secondary-text">
+                        <span>Record Detail</span>
+                    </div>
+                </div>
+            </div>
+            <button mat-raised-button class="save-product-button mat-white-bg" [disabled]="customRecordForm.invalid"
+                *ngIf="pageType ==='new'" (click)="saveRecord()">
+                <span>ADD</span>
+            </button>
+            <button mat-raised-button class="save-product-button mat-white-bg" [disabled]="customRecordForm.invalid || customRecordForm.pristine"
+                *ngIf="pageType ==='edit'" (click)="saveRecord()">
+                <span>SAVE</span>
+            </button>
+        </div>
+        <div class="content-card">
+            <div class="content" [formGroup]="customRecordForm">
+                <ng-container *ngIf="record == null">Loading tabs...</ng-container>
+                <form (submit)="saveRecord()" class="p-12">
+                    <mat-tab-group *ngIf="record">
+                        <mat-tab *ngFor="let tab of record.customTabs">
+                            <ng-template mat-tab-label="mat-tab-label">{{tab.caption}}</ng-template>
+                            <dynamic-form [fields]="tab.customFields" [form]="customRecordForm"></dynamic-form>
+                        </mat-tab>
+                    </mat-tab-group>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

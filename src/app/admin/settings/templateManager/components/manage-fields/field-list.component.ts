@@ -42,6 +42,10 @@ export class FieldListComponent implements OnInit {
       });
   }
 
+  removeField(id){
+    this.fieldservice.delete(id);
+  }
+
   ngOnDestroy(): void {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
