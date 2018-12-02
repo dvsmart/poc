@@ -9,7 +9,7 @@ import { GenericList1 } from './genericlist1.model';
 import { GenericList1Service } from './genericlist1.service';
 
 @Component({
-  selector: 'task',
+  selector: 'generic-grid-1',
   templateUrl: './genericlist1.component.html',
   styleUrls: ['./genericlist1.component.scss'],
   encapsulation: ViewEncapsulation.None,
@@ -27,7 +27,7 @@ export class GenericList1Component implements OnInit {
   hasSelectedTasks: boolean;
   constructor(
     private _fuseSidebarService: FuseSidebarService,
-    private _taskservice: GenericList1Service
+    private _genericlist1service: GenericList1Service
   ) {
     // Set the defaults
     this.searchInput = new FormControl('');
@@ -37,7 +37,7 @@ export class GenericList1Component implements OnInit {
   }
 
   ngOnInit() {
-    this._taskservice.onSelectedTasksChanged
+    this._genericlist1service.onSelectedTasksChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(selectedTasks => {
         this.hasSelectedTasks = selectedTasks.length > 0;
@@ -50,7 +50,7 @@ export class GenericList1Component implements OnInit {
         distinctUntilChanged()
       )
       .subscribe(searchText => {
-        this._taskservice.onSearchTextChanged.next(searchText);
+        this._genericlist1service.onSearchTextChanged.next(searchText);
       });
   }
 
@@ -60,14 +60,14 @@ export class GenericList1Component implements OnInit {
     this._unsubscribeAll.complete();
   }
   selectTasks(filterParameter?, filterValue?): void {
-    this._taskservice.selectTasks(filterParameter, filterValue);
+    this._genericlist1service.selectTasks(filterParameter, filterValue);
   }
 
   /**
    * Deselect todos
    */
   deselectTasks(): void {
-    this._taskservice.deselectTasks();
+    this._genericlist1service.deselectTasks();
   }
 
   /**
@@ -76,7 +76,7 @@ export class GenericList1Component implements OnInit {
    * @param tagId
    */
   toggleTagOnSelectedTodos(tagId): void {
-    //this._taskservice.toggleTagOnSelectedTodos(tagId);
+    //this._genericlist1service.toggleTagOnSelectedTodos(tagId);
   }
 
   /**
@@ -93,7 +93,7 @@ export class GenericList1Component implements OnInit {
   }
 
   toggleSelectAll(): void {
-    this._taskservice.toggleSelectAll();
+    this._genericlist1service.toggleSelectAll();
   }
 
   selectTodos() {

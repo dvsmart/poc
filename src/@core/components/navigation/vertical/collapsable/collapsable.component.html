@@ -1,4 +1,4 @@
-<ng-container *ngIf="!item.hidden">
+<ng-container *ngIf="item.isVisible">
     <!-- normal collapse -->
     <a class="nav-link" [ngClass]="item.classes" *ngIf="!item.url && !item.function" (click)="toggleOpen($event)"
         matRipple>

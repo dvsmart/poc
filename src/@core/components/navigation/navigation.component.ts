@@ -32,6 +32,7 @@ export class CoreNavigationComponent {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
                 // Load the navigation
+                debugger;
                 this.navigation = this._navigationService.getCurrentNavigation();
 
                 // Mark for check

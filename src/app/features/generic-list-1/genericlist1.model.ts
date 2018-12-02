@@ -1,3 +1,57 @@
+export class GenericListConfig{
+
+    sideFilterConfig: SideFilterConfig;
+    contentConfig: ContentConfig;
+}
+export class SideFilterConfig{
+
+   title: string;
+   titleIcon: string;
+   filterConfig: FilterConfig;
+    
+}
+export class ContentConfig{
+  
+    searchBoxConfig: SearchBoxConfig;
+    gridToolboxConfig: GridToolboxConfig;
+}
+export class GridToolboxConfig{
+
+    title: string;
+    show: boolean;
+    gridToolboxItems:GridToolboxItemConfig[];   
+}
+export class GridToolboxItemConfig{
+
+    title: string;
+    routeUrl:string;   
+}
+
+export class SearchBoxConfig{
+
+    title: string;
+    show: boolean;
+    routeUrl: string; 
+    placeHolder:string;   
+}
+export class AddNewConfig{
+
+    title: string;
+    show: boolean;
+    routeUrl: string;    
+}
+
+export class FilterConfig{
+    title: string;
+    show: boolean;
+    filterItems: FilterItemConfig[];     
+}
+
+export class FilterItemConfig{
+    title: string;
+    routeUrl: string;         
+}
+
 export class GenericList1
 {
     id: string;

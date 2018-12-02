@@ -1,34 +1,34 @@
-<ng-container *ngIf="!item.hidden">
+<ng-container *ngIf="item.isVisible">
 
     <!-- item.url -->
-    <a class="nav-link" [ngClass]="item.classes" *ngIf="item.url && !item.externalUrl && !item.function" [routerLink]="[item.url]"
+    <a class="nav-link" [ngClass]="item.classes" *ngIf="item.route && !item.externalUrl && !item.function" [routerLink]="[item.route]"
         [routerLinkActive]="['active', 'accent']" [routerLinkActiveOptions]="{exact: item.exactMatch || false}"
         [target]="item.openInNewTab ? '_blank' : '_self'" matRipple>
         <ng-container *ngTemplateOutlet="itemContent"></ng-container>
     </a>
 
     <!-- item.externalUrl -->
-    <a class="nav-link" [ngClass]="item.classes" *ngIf="item.url && item.externalUrl && !item.function" [href]="item.url"
+    <a class="nav-link" [ngClass]="item.classes" *ngIf="item.route && item.externalUrl && !item.function" [href]="item.route"
         [target]="item.openInNewTab ? '_blank' : '_self'" matRipple>
         <ng-container *ngTemplateOutlet="itemContent"></ng-container>
     </a>
 
     <!-- item.function -->
-    <span class="nav-link" [ngClass]="item.classes" *ngIf="!item.url && item.function" (click)="item.function()"
+    <span class="nav-link" [ngClass]="item.classes" *ngIf="!item.route && item.function" (click)="item.function()"
         matRipple>
         <ng-container *ngTemplateOutlet="itemContent"></ng-container>
     </span>
 
     <!-- item.url && item.function -->
-    <a class="nav-link" [ngClass]="item.classes" *ngIf="item.url && !item.externalUrl && item.function" (click)="item.function()"
-        [routerLink]="[item.url]" [routerLinkActive]="['active', 'accent']" [routerLinkActiveOptions]="{exact: item.exactMatch || false}"
+    <a class="nav-link" [ngClass]="item.classes" *ngIf="item.route && !item.externalUrl && item.function" (click)="item.function()"
+        [routerLink]="[item.route]" [routerLinkActive]="['active', 'accent']" [routerLinkActiveOptions]="{exact: item.exactMatch || false}"
         [target]="item.openInNewTab ? '_blank' : '_self'" matRipple>
         <ng-container *ngTemplateOutlet="itemContent"></ng-container>
     </a>
 
     <!-- item.externalUrl && item.function -->
-    <a class="nav-link" [ngClass]="item.classes" *ngIf="item.url && item.externalUrl && item.function" (click)="item.function()"
-        [href]="item.url" [target]="item.openInNewTab ? '_blank' : '_self'" matRipple>
+    <a class="nav-link" [ngClass]="item.classes" *ngIf="item.route && item.externalUrl && item.function" (click)="item.function()"
+        [href]="item.route" [target]="item.openInNewTab ? '_blank' : '_self'" matRipple>
         <ng-container *ngTemplateOutlet="itemContent"></ng-container>
     </a>
 

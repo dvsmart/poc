@@ -9,7 +9,7 @@ import { CalendarEventFormDialogComponent } from './event-form/event-form.compon
 import { CoreSharedModule } from '@core/core.module';
 import { FuseConfirmDialogModule } from '@core/components/confirm-dialog/confirm-dialog.module';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+
 
 const routes: Routes = [
     {
@@ -34,7 +34,6 @@ const routes: Routes = [
             provide   : DateAdapter,
             useFactory: adapterFactory
         }),
-        NgxMaterialTimepickerModule.forRoot(),
         RouterModule.forChild(routes),
     ],
     providers: [
