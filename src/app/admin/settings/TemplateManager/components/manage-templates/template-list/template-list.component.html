@@ -35,9 +35,9 @@
         <mat-spinner *ngIf="isLoading"></mat-spinner>
       </div>
       <mat-table class="templates-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'10'}">
-        <ng-container cdkColumnDef="templateName">
+        <ng-container cdkColumnDef="name">
           <mat-header-cell *cdkHeaderCellDef> Title </mat-header-cell>
-          <mat-cell *cdkCellDef="let row"> {{row.templateName}} </mat-cell>
+          <mat-cell *cdkCellDef="let row"> {{row.name}} </mat-cell>
         </ng-container>
         <ng-container cdkColumnDef="actions">
           <mat-header-cell *cdkHeaderCellDef></mat-header-cell>

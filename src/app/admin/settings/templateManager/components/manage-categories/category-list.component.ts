@@ -15,7 +15,7 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 export class CategoryListComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
 
-  displayedColumns: string[] = ['groupName', 'actions'];
+  displayedColumns: string[] = ['name', 'actions'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

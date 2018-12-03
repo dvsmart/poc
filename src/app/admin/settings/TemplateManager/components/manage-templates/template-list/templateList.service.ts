@@ -9,9 +9,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class  TemplatesService{
   routeParams: any;
-  customTemplates: BehaviorSubject<any>;
+  formTemplates: BehaviorSubject<any>;
   constructor(private _httpClient: HttpClient) {
-    this.customTemplates = new BehaviorSubject<any>(null);
+    this.formTemplates = new BehaviorSubject<any>(null);
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
@@ -30,9 +30,9 @@ export class  TemplatesService{
 
   getAllTemplates(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'CustomTemplateConfig/')
+      this._httpClient.get<any>(environment.apiUrl + 'FormTemplate/Templates')
         .subscribe((response: any) => {
-          this.customTemplates.next(response);
+          this.formTemplates.next(response);
           resolve(response);
         }, reject);
     });

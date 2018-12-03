@@ -14,7 +14,7 @@ import { TemplatesService } from './templateList.service';
 export class ManageTemplatesComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
 
-  displayedColumns: string[] = ['templateName', 'actions'];
+  displayedColumns: string[] = ['name', 'actions'];
   dataSource: MatTableDataSource<any>;
 
   categoryName: string;
@@ -27,7 +27,7 @@ export class ManageTemplatesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.templatesService.customTemplates
+    this.templatesService.formTemplates
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
         if(response ){
