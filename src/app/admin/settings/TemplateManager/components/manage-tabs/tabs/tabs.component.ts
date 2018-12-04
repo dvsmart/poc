@@ -16,7 +16,7 @@ export class TabsComponent implements OnInit {
   tabs: any;
   templateId: number;
 
-  displayedColumns: string[] = ['caption'];
+  displayedColumns: string[] = ['caption','templateName'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -29,7 +29,6 @@ export class TabsComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(res => {
         this.templateId = res.id;
-        //this.tabs = res.templateTabs;
         this.dataSource = new MatTableDataSource(res.templateTabs);
       })
     this.dataSource.paginator = this.paginator;

@@ -9,12 +9,12 @@ import { TemplatesService } from './templateList.service';
   selector: 'template-list',
   templateUrl: './template-list.component.html',
   styleUrls: ['./template-list.component.scss'],
-  animations:fuseAnimations
+  animations: fuseAnimations
 })
 export class ManageTemplatesComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
 
-  displayedColumns: string[] = ['templateName', 'actions'];
+  displayedColumns: string[] = ['name', 'categoryName', 'actions'];
   dataSource: MatTableDataSource<any>;
 
   categoryName: string;
@@ -30,8 +30,8 @@ export class ManageTemplatesComponent implements OnInit {
     this.templatesService.customTemplates
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
-        if(response ){
-          this.dataSource = new MatTableDataSource(response);  
+        if (response) {
+          this.dataSource = new MatTableDataSource(response);
         }
       });
     this.dataSource.paginator = this.paginator;

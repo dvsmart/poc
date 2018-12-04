@@ -34,7 +34,7 @@ export class TabsService {
 
     getCustomTabs(templateId?: number): Promise<any> {
         return new Promise((resolve, reject) => {
-          this._httpClient.get<any>(environment.apiUrl + 'CustomTabConfig/' + this.templateId)
+          this._httpClient.get<any>(environment.apiUrl + 'FormTab/Tabs?templateId=' + this.templateId)
             .subscribe((response: any) => {
               this.onTabsChanged.next(response);
               resolve(response);

@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 export class AuthService {
   
   _isLoggedIn = new BehaviorSubject<boolean>(this.hasLoggedIn());
-  api = environment.apiUrl + 'User/authenticate'
+  api = environment.apiUrl + 'Membership/Authenticate'
   constructor(private http: HttpClient) {
     
   }

@@ -41,7 +41,6 @@ export class CoreNavigationService {
 
     getNavigationItems(): Promise<any> {
         return new Promise((resolve, reject) => {
-            debugger;
             this.http.get<any>(environment.apiUrl + 'Menu')
                 .subscribe((response: any) => {
                     this.register('main', response);

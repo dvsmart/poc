@@ -48,7 +48,6 @@ export class FormService {
     return new Promise((resolve, reject) => {
       this._httpClient.post(environment.apiUrl + 'FormRecord/', data)
         .subscribe((response: any) => {
-          debugger;
           resolve(response);
         }, reject);
     });

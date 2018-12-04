@@ -6,6 +6,10 @@
     <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.caption}} </mat-cell>
   </ng-container>
+  <ng-container matColumnDef="templateName">
+    <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.templateName}} </mat-cell>
+  </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="data-row" [@animate]="{value:'*',params:{y:'100%'}}"
