@@ -46,7 +46,7 @@ export class SetupService {
   getTemplateDetail() {
     if (this.routeParams.id != 'new') {
       return new Promise((resolve, reject) => {
-        this._httpClient.get<any>(environment.apiUrl + 'CustomTemplateConfig/' + this.routeParams.id)
+        this._httpClient.get<any>(environment.apiUrl + 'FormTemplate/Template/' + this.routeParams.id)
           .subscribe((response: any) => {
             this.templateId.next(response.id);
             this.onSelectedTemplateChanged.next([response, 'edit']);
@@ -59,7 +59,7 @@ export class SetupService {
   getCustomTabs(): Promise<any> {
     return new Promise((resolve, reject) => {
       var templateId = this.TemplateId == 0 ? this.routeParams.id : this.TemplateId;
-      this._httpClient.get<any>(environment.apiUrl + 'CustomTabConfig/' + templateId)
+      this._httpClient.get<any>(environment.apiUrl + 'FormTab/Tabs?templateId=' + templateId)
         .subscribe((response: any) => {
           this.customTabs.next(response);
           resolve(response);

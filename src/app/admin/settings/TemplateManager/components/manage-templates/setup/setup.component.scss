@@ -37,9 +37,8 @@ setup {
     #setup {
         .top-bg {
             @include media-breakpoint('lt-md') {
-                height: 100px;
+                height: 122px;
             }
-            height: 60px;
         }
         >.center {
             >.header {

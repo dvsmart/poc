@@ -21,8 +21,7 @@ export class SetupComponent implements OnInit {
   templateId: number;
 
   isNew: boolean = false;
-  links = ['details', 'tabs', 'fields'];
-  activeLink = this.links[0];
+ 
   constructor(private _fuseSidebarService: FuseSidebarService, private route: ActivatedRoute,private templateservice: SetupService) {
     this.searchInput = new FormControl('');
     this._unsubscribeAll = new Subject();

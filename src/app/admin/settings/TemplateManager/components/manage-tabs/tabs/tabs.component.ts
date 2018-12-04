@@ -28,8 +28,7 @@ export class TabsComponent implements OnInit {
     this.tabsservice.onTabsChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(res => {
-        this.templateId = res.id;
-        this.dataSource = new MatTableDataSource(res.templateTabs);
+        this.dataSource = new MatTableDataSource(res);
       })
     this.dataSource.paginator = this.paginator;
   }

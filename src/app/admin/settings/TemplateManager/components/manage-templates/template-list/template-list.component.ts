@@ -14,7 +14,7 @@ import { TemplatesService } from './templateList.service';
 export class ManageTemplatesComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
 
-  displayedColumns: string[] = ['name', 'categoryName', 'actions'];
+  displayedColumns: string[] = ['name', 'totalTabs', 'actions'];
   dataSource: MatTableDataSource<any>;
 
   categoryName: string;

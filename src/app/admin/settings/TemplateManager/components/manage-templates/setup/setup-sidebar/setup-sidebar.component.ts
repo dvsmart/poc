@@ -3,7 +3,7 @@ import { fuseAnimations } from '@core/animations';
 import { Subject } from 'rxjs';
 import { SetupService } from '../../setup.service';
 import { takeUntil } from 'rxjs/operators';
-import { Router, ActivatedRouteSnapshot } from '@angular/router';
+import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
