@@ -8,10 +8,10 @@
         </mat-icon>
         <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
           <span class="logo-text h1">
-            Categories
+            Form Categories
           </span>
           <div class="subtitle secondary-text">
-            <span>Set up Custom Categories </span>
+            <span>Manage Form Categories </span>
           </div>
         </div>
       </div>
@@ -36,7 +36,7 @@
       </div>
       <mat-table class="categories-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'10'}">
         <ng-container cdkColumnDef="name">
-          <mat-header-cell *cdkHeaderCellDef> Group Name </mat-header-cell>
+          <mat-header-cell *cdkHeaderCellDef> Title </mat-header-cell>
           <mat-cell *cdkCellDef="let row"> {{row.name}} </mat-cell>
         </ng-container>
         <ng-container cdkColumnDef="actions">

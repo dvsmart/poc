@@ -7,11 +7,14 @@
           account_box
         </mat-icon>
         <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-          <span class="logo-text h1">
+          <span class="logo-text h1" *ngIf="categoryName">
             {{categoryName}}
           </span>
+          <span class="logo-text h1" *ngIf="!categoryName">
+            Form Templates
+          </span>
           <div class="subtitle secondary-text">
-            <span>Set up Custom Templates</span>
+            <span>Custom Forms Management</span>
           </div>
         </div>
       </div>
@@ -25,7 +28,7 @@
       <!-- / SEARCH -->
 
       <!-- ADD BUTTON -->
-      <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0">
+      <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" [routerLink]="['new']">
         <span>CREATE NEW</span>
       </button>
 
@@ -38,6 +41,10 @@
         <ng-container cdkColumnDef="name">
           <mat-header-cell *cdkHeaderCellDef> Title </mat-header-cell>
           <mat-cell *cdkCellDef="let row"> {{row.name}} </mat-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="totalTabs">
+          <mat-header-cell *cdkHeaderCellDef> No. of Tabs </mat-header-cell>
+          <mat-cell *cdkCellDef="let row"> {{row.totalTabs}} </mat-cell>
         </ng-container>
         <ng-container cdkColumnDef="actions">
           <mat-header-cell *cdkHeaderCellDef></mat-header-cell>

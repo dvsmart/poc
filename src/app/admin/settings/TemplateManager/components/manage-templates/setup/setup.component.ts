@@ -18,11 +18,9 @@ export class SetupComponent implements OnInit {
   searchInput: FormControl;
   private _unsubscribeAll: Subject<any>;
   templateName: string;
-  templateId: number;
 
   isNew: boolean = false;
-  links = ['details', 'tabs', 'fields'];
-  activeLink = this.links[0];
+ 
   constructor(private _fuseSidebarService: FuseSidebarService, private route: ActivatedRoute,private templateservice: SetupService) {
     this.searchInput = new FormControl('');
     this._unsubscribeAll = new Subject();
@@ -33,8 +31,11 @@ export class SetupComponent implements OnInit {
     this.templateservice.onSelectedTemplateChanged
     .pipe(takeUntil(this._unsubscribeAll))
     .subscribe(x=>{
-      this.templateId = x[0].id;
-      this.templateName = x[0].name;
+      if(x[0] != null){
+        this.templateName = x[0].name;
+      }else{
+        this.templateName = 'New Template';
+      }
     })
 
 

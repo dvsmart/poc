@@ -82,7 +82,6 @@ export class FormComponent implements OnInit {
   }
 
   saveRecord(): void {
-    debugger;
     var record = this.populateData();
     this._recordservice.saveRecord(record);
   }
