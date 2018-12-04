@@ -31,6 +31,7 @@ export class SetupService {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
     this.routeParams = route.params;
     return new Promise((resolve, reject) => {
+      debugger;
       Promise.all([
         this.getTemplateDetail(),
         this.getCustomTabs()
@@ -54,17 +55,21 @@ export class SetupService {
           }, reject);
       });
     }
+    this.onSelectedTemplateChanged.next([null, 'new']);
   }
 
   getCustomTabs(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      var templateId = this.TemplateId == 0 ? this.routeParams.id : this.TemplateId;
-      this._httpClient.get<any>(environment.apiUrl + 'FormTab/Tabs?templateId=' + templateId)
-        .subscribe((response: any) => {
-          this.customTabs.next(response);
-          resolve(response);
-        }, reject);
-    });
+    if (this.routeParams.id != 'new') {
+      return new Promise((resolve, reject) => {
+        var templateId = this.TemplateId == 0 ? this.routeParams.id : this.TemplateId;
+        this._httpClient.get<any>(environment.apiUrl + 'FormTab/Tabs?templateId=' + templateId)
+          .subscribe((response: any) => {
+            this.customTabs.next(response);
+            resolve(response);
+          }, reject);
+      });
+    }
+    this.customTabs.next(null);
   }
 
   getTemplateFields() {
