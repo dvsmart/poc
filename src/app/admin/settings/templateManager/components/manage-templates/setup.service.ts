@@ -31,7 +31,6 @@ export class SetupService {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
     this.routeParams = route.params;
     return new Promise((resolve, reject) => {
-      debugger;
       Promise.all([
         this.getTemplateDetail(),
         this.getCustomTabs()

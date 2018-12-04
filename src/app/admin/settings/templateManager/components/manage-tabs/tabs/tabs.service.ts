@@ -33,16 +33,14 @@ export class TabsService {
     }
 
     getCustomTabs(id?: number): Promise<any> {
-        debugger
-        if(this.templateId.toString() !== "new"){
+        if (this.templateId.toString() !== "new") {
             return new Promise((resolve, reject) => {
                 this._httpClient.get<any>(environment.apiUrl + 'FormTab/Tabs?templateId=' + this.templateId)
-                  .subscribe((response: any) => {
-                    this.onTabsChanged.next(response);
-                    resolve(response);
-                  }, reject);
-              });
+                    .subscribe((response: any) => {
+                        this.onTabsChanged.next(response);
+                        resolve(response);
+                    }, reject);
+            });
         }
-        
-      }
+    }
 }

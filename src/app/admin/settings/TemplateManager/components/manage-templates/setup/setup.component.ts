@@ -18,7 +18,6 @@ export class SetupComponent implements OnInit {
   searchInput: FormControl;
   private _unsubscribeAll: Subject<any>;
   templateName: string;
-  templateId: number;
 
   isNew: boolean = false;
  
@@ -33,8 +32,9 @@ export class SetupComponent implements OnInit {
     .pipe(takeUntil(this._unsubscribeAll))
     .subscribe(x=>{
       if(x[0] != null){
-        this.templateId = x[0].id;
         this.templateName = x[0].name;
+      }else{
+        this.templateName = 'New Template';
       }
     })
 

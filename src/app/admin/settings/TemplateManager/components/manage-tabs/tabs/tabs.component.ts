@@ -13,24 +13,25 @@ import { MatTableDataSource, MatPaginator } from '@angular/material';
 })
 export class TabsComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
-  tabs: any;
-  templateId: number;
 
-  displayedColumns: string[] = ['caption','templateName'];
+  displayedColumns: string[] = ['caption', 'templateName'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private tabsservice: TabsService) {
     this._unsubscribeAll = new Subject();
+    this.dataSource = new MatTableDataSource();
   }
 
   ngOnInit() {
     this.tabsservice.onTabsChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(res => {
-        this.dataSource = new MatTableDataSource(res);
+        if (res != null) {
+          this.dataSource = new MatTableDataSource(res);
+          this.dataSource.paginator = this.paginator;
+        }
       })
-    this.dataSource.paginator = this.paginator;
   }
 
   ngOnDestroy(): void {
