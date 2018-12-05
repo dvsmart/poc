@@ -6,9 +6,7 @@ import { AppLayoutComponent } from './layout/app-layout/app-layout.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { SiteLayoutComponent } from './layout/site-layout/site-layout.component';
 import { AdminGuard } from './_guards/admin.guard';
-import { MenuManagementModule } from './admin/settings/menu/menu.module';
 
-MenuManagementModule
 
 const appRoutes: Routes = [
     {
@@ -56,11 +54,6 @@ const appRoutes: Routes = [
                 data: { preload: false, delay: true }
             },
             {
-                path: 'genericlist1',
-                loadChildren: './features/generic-list-1/genericlist1.module#GenericList1Module',
-                data: { preload: false, delay: true }
-            },
-            {
                 path: 'audit',
                 loadChildren: './features/audit/audit.module#AuditModule',
                 data: { preload: false, delay: true }
@@ -97,12 +90,12 @@ const appRoutes: Routes = [
         canActivate: [AdminGuard],
         children: [
             {
-                path: 'formbuilder',
-                loadChildren: './admin/settings/templateManager/templateManager.module#TemplateManagerModule',
+                path: 'menu',
+                loadChildren: './admin/menu/menu.module#MenuModule',
             },
             {
-                path: 'menuManagement',
-                loadChildren: './admin/settings/menu/menu.module#MenuManagementModule',
+                path: 'form',
+                loadChildren: './admin/form/dashboard/dashboard.module#DashboardModule',
             }
         ]
     },

@@ -23,9 +23,6 @@ $typography: mat-typography-config( $font-family: 'Muli, Helvetica Neue, Arial, 
 @import './features/asset/properties-list/properties.theme';
 @import './features/assessment/assessment-list/assessments.theme';
 @import './features/calendar/calender.theme';
-@import './admin/settings/TemplateManager/components/manage-templates/templates.theme';
-@import './admin/settings/templateManager/components/manage-categories/category.theme';
-@import './admin/settings/templateManager/components/manage-templates/setup/setup.theme';
 @import './features/task/task.theme';
 @import './features/audit/audit.theme';
 @mixin components-theme($theme) {
@@ -33,11 +30,8 @@ $typography: mat-typography-config( $font-family: 'Muli, Helvetica Neue, Arial, 
     @include login-theme($theme);
     @include properties-theme($theme);
     @include assessments-theme($theme);
-    @include category-theme($theme);
-    @include templates-theme($theme);
     @include calendar-theme($theme);
     @include forgot-password-theme($theme);
-    @include setup-theme($theme);
     @include task-theme($theme);
     @include audit-theme($theme);
 }
