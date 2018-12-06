@@ -30,7 +30,7 @@ export class FormsService {
 
   getAllTemplates(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'FormTemplate/Templates')
+      this._httpClient.get<any>(environment.apiUrl + 'Forms')
         .subscribe((response: any) => {
           this.forms.next(response);
           resolve(response);

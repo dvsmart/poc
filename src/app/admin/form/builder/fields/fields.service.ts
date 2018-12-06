@@ -30,7 +30,7 @@ export class FieldsService {
 
   getFields(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'FormFields/1')
+      this._httpClient.get<any>(environment.apiUrl + 'Form/Fields/1')
         .subscribe((response: any) => {
           this.fields.next(response);
           resolve(response);

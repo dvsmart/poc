@@ -25,6 +25,8 @@ $typography: mat-typography-config( $font-family: 'Muli, Helvetica Neue, Arial, 
 @import './features/calendar/calender.theme';
 @import './features/task/task.theme';
 @import './features/audit/audit.theme';
+@import './admin/form/builder/builder.theme';
+
 @mixin components-theme($theme) {
     @include toolbar-theme($theme);
     @include login-theme($theme);
@@ -34,6 +36,7 @@ $typography: mat-typography-config( $font-family: 'Muli, Helvetica Neue, Arial, 
     @include forgot-password-theme($theme);
     @include task-theme($theme);
     @include audit-theme($theme);
+    @include form-builder-theme($theme);
 }
 
 //-----------------------------------------------------------------------------------------------------

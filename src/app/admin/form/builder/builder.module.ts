@@ -4,6 +4,7 @@ import { CoreSharedModule } from '@core/core.module';
 import { BuilderComponent } from './builder.component';
 import { FieldsComponent } from './fields/fields.component';
 import { FieldsService } from './fields/fields.service';
+import { FieldComponent } from './field/field.component';
 
 const routes: Routes = [
   {
@@ -11,15 +12,23 @@ const routes: Routes = [
     component:BuilderComponent,
     children:[
       {
-        path:'fields',
+        path:'build',
         component:FieldsComponent,
         resolve:{
           fields: FieldsService
         }
       },
       {
+        path:'build/field',
+        component:FieldComponent,
+      },
+      {
+        path:'settings',
+        loadChildren:'../settings/settings.module#SettingsModule'
+      },
+      {
         path:'**',
-        redirectTo:'fields'
+        redirectTo:'build'
       }
     ]
   }
@@ -30,6 +39,6 @@ const routes: Routes = [
     CoreSharedModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [BuilderComponent, FieldsComponent]
+  declarations: [BuilderComponent, FieldsComponent, FieldComponent]
 })
 export class BuilderModule { }

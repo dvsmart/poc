@@ -29,7 +29,7 @@ export class DashboardService {
 
   getCategories(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.http.get<any>(environment.apiUrl + 'FormCategory/Categories')
+      this.http.get<any>(environment.apiUrl + 'Form/Categories')
         .subscribe((categories: any) => {
           this.onCategoriesChanged.next(categories)
           resolve(categories);

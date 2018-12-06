@@ -1,10 +1,51 @@
-<mat-toolbar class="p-0 mat-elevation-z1">
-  <span>Build</span>
-  <span class="example-fill-remaining-space"></span>
-  <span>Settings</span>
-  <span class="example-fill-remaining-space"></span>
-  <span>Tabs</span>
-</mat-toolbar>
-<div class="content" fxFlex>
-  <router-outlet></router-outlet>
+<div id="builder" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="space-between center">
+
+
+            <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="logo-icon s-32 mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    shopping_basket
+                </mat-icon>
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    - Form Name -
+                </span>
+            </div>
+            <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" routerLink="fields">
+                <span>Build</span>
+            </button>
+            <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" routerLink="settings">
+                <span>Settings</span>
+            </button>
+            <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" routerLink="tabs">
+                <span>Tabs</span>
+            </button>
+
+        </div> -->
+        <div class="toolbar px-24 py-8">
+            <span>Fields</span>
+            <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0 mr-16" routerLink="fields">
+                <span>Build</span>
+            </button>
+            <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" routerLink="settings">
+                <span>Settings</span>
+            </button>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+            <router-outlet></router-outlet>
+        </div>
+        <!-- / CONTENT CARD -->
+    </div>
+    <!-- / CENTER -->
 </div>
