@@ -9,22 +9,32 @@
 
     <!-- SIDEBAR HEADER -->
     <div class="header p-24 accent">
-      <h2 class="m-0">Sidebar header</h2>
+      <h2 class="m-0">Form Builder</h2>
     </div>
     <!-- / SIDEBAR HEADER -->
 
     <!-- SIDEBAR CONTENT -->
-    <div class="content p-24" fusePerfectScrollbar>
-      <p>
-        <mat-nav-list>
-          <a mat-list-item [routerLink]="['folder/',link.id]" *ngFor="let link of categories"> {{ link.name }} </a>
-        </mat-nav-list>
-      </p>
+    <div class="content" fusePerfectScrollbar>
+      <div class="sidebar-content">
+        <div class="card">
+          <div class="content py-16" fusePerfectScrollbar>
+            <div class="nav material2">
+              <div class="nav-item" aria-label="Uncategorised" routerLink="folder/uncategorised">
+                <a class="nav-link" matRipple>
+                  <div class="title">Uncategorised</div>
+                </a>
+              </div>
+              <div class="nav-item" aria-label="inbox" *ngFor="let link of categories" [routerLink]="['folder/',link.id]">
+                <a class="nav-link" matRipple>
+                  <span class="title">{{ link.name }}</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- / SIDEBAR CONTENT -->
-
   </fuse-sidebar>
-  <!-- / SIDEBAR -->
 
   <!-- CENTER -->
   <div class="center">
@@ -37,25 +47,7 @@
 
     <!-- CONTENT CARD -->
     <div class="content-card">
-
-      <!-- CONTENT TOOLBAR -->
-      <div class="toolbar px-24 py-8">
-
-        <button mat-icon-button class="sidebar-toggle" fxHide.gt-md (click)="toggleSidebar('carded-left-sidebar-2')">
-          <mat-icon>menu</mat-icon>
-        </button>
-
-        <span>Content toolbar</span>
-
-      </div>
-      <!-- / CONTENT TOOLBAR -->
-
-      <!-- CONTENT -->
-      <div class="content p-24" fusePerfectScrollbar>
-        <router-outlet></router-outlet>
-      </div>
-      <!-- / CONTENT -->
-
+      <router-outlet></router-outlet>
     </div>
     <!-- / CONTENT CARD -->
 

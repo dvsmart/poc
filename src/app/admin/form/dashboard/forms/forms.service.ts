@@ -18,7 +18,7 @@ export class FormsService {
     this.routeParams = route.params;
     return new Promise((resolve, reject) => {
       Promise.all([
-        this.getAllTemplates()
+        this.getForms()
       ]).then(
         () => {
           resolve();
@@ -28,9 +28,27 @@ export class FormsService {
     });
   }
 
-  getAllTemplates(): Promise<any> {
+  getForms() {
+    if (this.routeParams.id === 'uncategorised') {
+      this.getUncategorisedForms()
+    } else {
+      this.getCategorisedForms(this.routeParams.id);
+    }
+  }
+
+  getUncategorisedForms(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'Forms')
+      this._httpClient.get<any>(environment.apiUrl + 'Form/uncategorised')
+        .subscribe((response: any) => {
+          this.forms.next(response);
+          resolve(response);
+        }, reject);
+    });
+  }
+
+  getCategorisedForms(id): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._httpClient.get<any>(environment.apiUrl + 'Form/Categories/' + id)
         .subscribe((response: any) => {
           this.forms.next(response);
           resolve(response);

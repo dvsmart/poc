@@ -1,5 +1,23 @@
-.mat-tab-links {
-    display: flex;
-    position: relative;
-    flex-direction: column; //can`t change this filed by myself
+.settings-toolbar {
+    // display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 1 1 auto;
+    height: 64px;
+    min-height: 64px;
+    max-height: 64px;
+}
+
+.mat-tab-link {
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    height: 56px;
+}
+
+.mat-tab-link:hover {
+    text-decoration-line: none !important;
+}
+
+.mat-tab-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }

@@ -7,8 +7,7 @@
     <!-- CENTER -->
     <div class="center">
 
-        <!-- <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
-            fxLayoutAlign.gt-sm="space-between center">
+        <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
 
 
             <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
@@ -19,26 +18,23 @@
                     - Form Name -
                 </span>
             </div>
-            <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" routerLink="fields">
-                <span>Build</span>
-            </button>
-            <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" routerLink="settings">
-                <span>Settings</span>
-            </button>
-            <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" routerLink="tabs">
-                <span>Tabs</span>
-            </button>
 
-        </div> -->
-        <div class="toolbar px-24 py-8">
-            <span>Fields</span>
-            <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0 mr-16" routerLink="fields">
-                <span>Build</span>
-            </button>
-            <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" routerLink="settings">
-                <span>Settings</span>
-            </button>
+            <div fxLayout="column" fxLayoutAlign="start center" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="center center">
+                <button mat-raised-button routerLink="fields" class="save-product-button mr-16">
+                    <span>Build</span>
+                </button>
+                 <button mat-raised-button routerLink="settings" class="save-product-button mr-16">
+                    <span>Settings</span>
+                </button>
+                <button mat-raised-button routerLink="settings" class="save-product-button mr-16">
+                    <span>Tabs</span>
+                </button>
+                <button mat-raised-button routerLink="settings" class="save-product-button">
+                    <span>Submissions</span>
+                </button>
+            </div>
         </div>
+
         <!-- / HEADER -->
 
         <!-- CONTENT CARD -->

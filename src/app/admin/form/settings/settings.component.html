@@ -1,9 +1,12 @@
-<div class="content">
+<div class="settings-toolbar py-8">
   <nav mat-tab-nav-bar>
     <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive #rla="routerLinkActive"
       [active]="rla.isActive">
       {{link.label}}
     </a>
   </nav>
+</div>
+
+<div class="content px-24">
   <router-outlet></router-outlet>
 </div>

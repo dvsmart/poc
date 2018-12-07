@@ -11,6 +11,7 @@ import { takeUntil } from 'rxjs/operators';
 export class FormsComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
   forms: any;
+  categoryName: string;
   constructor(private formsService: FormsService) {
     this._unsubscribeAll = new Subject();
   }
@@ -20,7 +21,14 @@ export class FormsComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
         if (response) {
-          this.forms = response;
+          if(response.name == undefined){
+            this.forms = response;
+            this.categoryName = "Uncategorised forms";
+          }else{
+            this.categoryName = response.name;
+            this.forms = response.forms;
+          }
+          
         }
       });
   }

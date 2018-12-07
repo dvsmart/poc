@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FuseSidebarService } from '@core/components/sidebar/sidebar.service';
 import { DashboardService } from './dashboard.service';
 import { Subject } from 'rxjs';
@@ -7,7 +7,8 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  encapsulation : ViewEncapsulation.None
 })
 export class DashboardComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;

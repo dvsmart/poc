@@ -17,6 +17,10 @@ const routes: Routes = [
         resolve: {
           forms: FormsService
         }
+      },
+      {
+        path:'**',
+        redirectTo:'folder/uncategorised'
       }
     ],
     resolve: {

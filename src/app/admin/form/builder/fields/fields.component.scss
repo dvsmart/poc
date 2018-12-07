@@ -1,10 +1,11 @@
-.content-card {
-    background: #424242;
-    border-radius: 8px 8px 0 0;
-    flex: 1 1 auto;
+.toolbar {
     display: flex;
-    flex-direction: column;
-    flex: 1 0 auto;
-    overflow: hidden;
-    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)
+    justify-content: flex-start;
+    align-items: center;
+    flex: 1 1 auto;
+    border-bottom: 1px solid;
+    height: 64px;
+    min-height: 64px;
+    max-height: 64px;
+    border-bottom-color: rgba(0, 0, 0, .12);
 }
