@@ -5,30 +5,34 @@ import { BuilderComponent } from './builder.component';
 import { FieldsComponent } from './fields/fields.component';
 import { FieldsService } from './fields/fields.service';
 import { FieldComponent } from './field/field.component';
+import { FieldService } from './field/field.service';
 
 const routes: Routes = [
   {
     path: ':id',
-    component:BuilderComponent,
-    children:[
+    component: BuilderComponent,
+    children: [
       {
-        path:'build',
-        component:FieldsComponent,
-        resolve:{
+        path: 'build',
+        component: FieldsComponent,
+        resolve: {
           fields: FieldsService
         }
       },
       {
-        path:'build/field',
-        component:FieldComponent,
+        path: 'build/field',
+        component: FieldComponent,
+        resolve: {
+          field: FieldService
+        }
       },
       {
-        path:'settings',
-        loadChildren:'../settings/settings.module#SettingsModule'
+        path: 'settings',
+        loadChildren: '../settings/settings.module#SettingsModule'
       },
       {
-        path:'**',
-        redirectTo:'build'
+        path: '**',
+        redirectTo: 'build'
       }
     ]
   }

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
+import { FieldService } from './field.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-field',
@@ -10,11 +13,24 @@ export class FieldComponent implements OnInit {
   fieldTypeForm: FormGroup;
   fieldGeneralForm: FormGroup;
   fieldSpec: FieldSpecificVisibility;
-  constructor(private _formBuilder: FormBuilder) { }
+
+  private _unsubscribeAll: Subject<any>;
+  fieldTypes: any;
+  constructor(private _formBuilder: FormBuilder, private fieldService: FieldService) {
+    this._unsubscribeAll = new Subject();
+  }
 
   ngOnInit() {
+    this.fieldService.fieldTypes
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(response => {
+        if (response) {
+          this.fieldTypes = response;
+        }
+      });
+
     this.fieldTypeForm = this._formBuilder.group({
-      fieldType: ['', Validators.required]
+      fieldType: new FormControl('', Validators.required)
     });
     this.fieldSpec = new FieldSpecificVisibility();
     this.fieldGeneralForm = this._formBuilder.group({

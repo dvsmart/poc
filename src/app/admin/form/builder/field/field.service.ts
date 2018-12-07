@@ -7,18 +7,20 @@ import { environment } from '@env/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class FieldsService {
-  formId: any;
+export class FieldService {
+  routeParams: any;
   fields: BehaviorSubject<any>;
+  fieldTypes: BehaviorSubject<any>;
   constructor(private _httpClient: HttpClient) {
     this.fields = new BehaviorSubject<any>(null);
+    this.fieldTypes = new BehaviorSubject<any>({});
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
-    this.formId = route.parent.params.id;
+    this.routeParams = route.params;
     return new Promise((resolve, reject) => {
       Promise.all([
-        this.getFields()
+        this.getFieldTypes()
       ]).then(
         () => {
           resolve();
@@ -28,11 +30,21 @@ export class FieldsService {
     });
   }
 
-  getFields(): Promise<any> {
+  getField(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'Form/Fields/' + this.formId)
+      this._httpClient.get<any>(environment.apiUrl + 'Form/Fields/' + this.routeParams.id)
         .subscribe((response: any) => {
           this.fields.next(response);
+          resolve(response);
+        }, reject);
+    });
+  }
+
+  getFieldTypes(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._httpClient.get<any>(environment.apiUrl + 'Form/FieldTypes')
+        .subscribe((response: any) => {
+          this.fieldTypes.next(response);
           resolve(response);
         }, reject);
     });
