@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MatButtonModule, MatDatepickerModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSlideToggleModule, MatToolbarModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material';
+import { MAT_DATE_LOCALE } from '@angular/material';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { CalendarModule as AngularCalendarModule, DateAdapter } from 'angular-calendar';
 import { CalendarComponent } from './calendar.component';

@@ -43,11 +43,23 @@ export class CoreNavigationService {
         return new Promise((resolve, reject) => {
             this.http.get<any>(environment.apiUrl + 'Menu')
                 .subscribe((response: any) => {
+                    localStorage.setItem('menu', JSON.stringify(response));
                     this.register('main', response);
                     this.setCurrentNavigation('main');
                     resolve(response);
                 }, reject);
         });
+    }
+
+    getMenuItems() {
+        debugger;
+        if (localStorage.getItem('menu') == "") {
+            this.getNavigationItems();
+        } else {
+            var menu = localStorage.get('menu');
+            this.register('main', JSON.parse(menu));
+            this.setCurrentNavigation('main');
+        }
     }
 
     addNavItemWithCustomFunction() {

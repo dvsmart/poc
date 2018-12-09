@@ -6,6 +6,7 @@ import { FieldsComponent } from './fields/fields.component';
 import { FieldsService } from './fields/fields.service';
 import { FieldComponent } from './field/field.component';
 import { FieldService } from './field/field.service';
+import { FormService } from './form.service';
 
 const routes: Routes = [
   {

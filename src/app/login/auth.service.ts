@@ -19,7 +19,6 @@ export class AuthService {
     return this.http.post<any>(this.api, loginform).pipe(map(user => {
       if (user && user.token) {
         localStorage.setItem('currentUser', JSON.stringify(user));
-        sessionStorage.setItem('token', user.token);
         this._isLoggedIn.next(true);
       }
     }));
@@ -35,11 +34,8 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.clear();
     localStorage.removeItem('currentUser');
+    localStorage.clear();
     this._isLoggedIn.next(false);
   }
-
-  
-
 }
