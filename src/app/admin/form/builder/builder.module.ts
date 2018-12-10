@@ -32,6 +32,10 @@ const routes: Routes = [
         loadChildren: '../settings/settings.module#SettingsModule'
       },
       {
+        path: 'tabs',
+        loadChildren: '../tabs/tabs.module#TabsModule'
+      },
+      {
         path: '**',
         redirectTo: 'build'
       }

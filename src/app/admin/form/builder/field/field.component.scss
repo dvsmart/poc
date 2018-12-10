@@ -14,3 +14,9 @@
     height: 60px;
     width: 460px;
 }
+
+app-field {
+    flex: 100%;
+    flex-direction: column;
+    display: flex;
+}
