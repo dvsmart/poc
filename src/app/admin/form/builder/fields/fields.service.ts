@@ -15,7 +15,7 @@ export class FieldsService {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
-    this.formId = route.parent.params.id;
+    this.formId = route.parent.params["id"];
     return new Promise((resolve, reject) => {
       Promise.all([
         this.getFields()

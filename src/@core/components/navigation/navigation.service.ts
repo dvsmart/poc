@@ -52,13 +52,11 @@ export class CoreNavigationService {
     }
 
     getMenuItems() {
-        debugger;
-        if (localStorage.getItem('menu') == "") {
-            this.getNavigationItems();
-        } else {
-            var menu = localStorage.get('menu');
-            this.register('main', JSON.parse(menu));
+        if(localStorage.getItem('menu') != null){
+            this.register('main', JSON.parse(localStorage.getItem('menu')));
             this.setCurrentNavigation('main');
+        }else{
+            this.getNavigationItems();
         }
     }
 
