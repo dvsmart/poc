@@ -71,10 +71,12 @@ export class FieldService {
   }
 
   getTabs(): Promise<any> {
+    console.log(this.formId);
     return new Promise((resolve, reject) => {
       this._httpClient.get<any>(environment.apiUrl + 'Form/Tabs/' + this.formId)
         .subscribe((response: any) => {
           this.tabs.next(response);
+          console.log(response);
           resolve(response);
         }, reject);
     });

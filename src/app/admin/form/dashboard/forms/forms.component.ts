@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsService } from './forms.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -6,7 +6,8 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-forms',
   templateUrl: './forms.component.html',
-  styleUrls: ['./forms.component.scss']
+  styleUrls: ['./forms.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class FormsComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
@@ -21,14 +22,14 @@ export class FormsComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
         if (response) {
-          if(response.name == undefined){
-            this.forms = response;
+          if (response.name == undefined) {
+            this.forms = response.Results;
             this.categoryName = "Uncategorised forms";
-          }else{
+          } else {
             this.categoryName = response.name;
             this.forms = response.forms;
           }
-          
+
         }
       });
   }

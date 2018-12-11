@@ -1,35 +1,38 @@
 <div class="toolbar px-24 py-8">
   <span>{{categoryName}}</span>
 </div>
-<div class="content" fusePerfectScrollbar *ngIf="forms">
-    <div fxLayout="row" fxLayoutAlign="start center" class="item" *ngFor="let link of forms">
-        <mat-checkbox [(ngModel)]="selected" (ngModelChange)="onSelectedChange()" class="mr-16" fxFlex="0 1 auto" (click)="$event.stopPropagation()">
-        </mat-checkbox>
-        <div fxLayout="row" fxLayoutAlign="start center" fxFlex [routerLink]="['/admin/form/builder/',link.id]">
-          <div class="info" fxFlex fxFlexLayout="column">
-            <div class="title">
-              {{ link.name }}
-            </div>
-            <div class="notes">
-              Some Template Description
-            </div>
-          </div>
-          <div class="actions" fxLayout="row" fxLayoutAlign="start center">
-            <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More" (click)="$event.stopPropagation()"
-              fxHide.xs>
-              <mat-icon class="secondary-text">more_vert</mat-icon>
-            </button>
-            <mat-menu #moreMenu="matMenu">
-                <button mat-menu-item aria-label="remove">
-                    <mat-icon>delete</mat-icon>
-                    <span>Remove</span>
-                </button>
-                <button mat-menu-item aria-label="archive">
-                    <mat-icon>archive</mat-icon>
-                    <span>Archive</span>
-                </button>
-            </mat-menu>
-          </div>
+<div *ngIf="forms == null">
+  loading...
+</div>
+<ng-container *ngIf="forms">
+  <div fxLayout="row" fxLayoutAlign="start center" class="item" *ngFor="let link of forms" >
+    <mat-checkbox [(ngModel)]="selected" (ngModelChange)="onSelectedChange()" class="mr-16" fxFlex="0 1 auto" (click)="$event.stopPropagation()">
+    </mat-checkbox>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex [routerLink]="['/admin/form/builder/',link.id]">
+      <div class="info" fxFlex fxFlexLayout="column">
+        <div class="title">
+          {{ link.name }}
+        </div>
+        <div class="notes">
+          Some Template Description
         </div>
       </div>
-</div>
+      <div class="actions" fxLayout="row" fxLayoutAlign="start center">
+        <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More" (click)="$event.stopPropagation()"
+          fxHide.xs>
+          <mat-icon class="secondary-text">more_vert</mat-icon>
+        </button>
+        <mat-menu #moreMenu="matMenu">
+          <button mat-menu-item aria-label="remove">
+            <mat-icon>delete</mat-icon>
+            <span>Remove</span>
+          </button>
+          <button mat-menu-item aria-label="archive">
+            <mat-icon>archive</mat-icon>
+            <span>Archive</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -30,15 +30,15 @@ export class FormsService {
 
   getForms() {
     if (this.routeParams.id === 'uncategorised') {
-      this.getUncategorisedForms()
+      this.getUncategorisedForms(1, 10)
     } else {
       this.getCategorisedForms(this.routeParams.id);
     }
   }
 
-  getUncategorisedForms(): Promise<any> {
+  getUncategorisedForms(page, pageSize): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'Form/uncategorised')
+      this._httpClient.get<any>(environment.apiUrl + 'Form/uncategorised?page=' + page + '&pageSize=' + pageSize)
         .subscribe((response: any) => {
           this.forms.next(response);
           resolve(response);
