@@ -1,3 +1,4 @@
+@import "src/@core/scss/fuse";
 .toolbar {
     display: flex;
     justify-content: flex-start;
@@ -13,6 +14,9 @@
 .mat-radio-button{
     height: 60px;
     width: 460px;
+    @include media-breakpoint('lt-xs') {
+        width: 210px;
+    }
 }
 
 app-field {

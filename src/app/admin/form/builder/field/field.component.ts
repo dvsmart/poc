@@ -3,6 +3,7 @@ import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms'
 import { FieldService } from './field.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { FormFieldRequestModel, FieldType, FieldGeneralVisibility, FieldSpecificVisibility, FieldOptionRequestModel, FormFieldSpecificRequestModel } from '../models/field';
 
 @Component({
   selector: 'app-field',
@@ -13,16 +14,24 @@ import { takeUntil } from 'rxjs/operators';
 export class FieldComponent implements OnInit {
   fieldTypeForm: FormGroup;
   fieldGeneralForm: FormGroup;
+  fieldSpecificForm: FormGroup;
   fieldType: FieldType;
   fieldGeneralVisibility: FieldGeneralVisibility;
+  fieldSpecificVisibility: FieldSpecificVisibility;
 
   private _unsubscribeAll: Subject<any>;
   fieldTypes: any;
   tabs: any;
+  fieldOption:any[];
+  option:string = '';
+
   constructor(private _formBuilder: FormBuilder, private fieldService: FieldService) {
     this._unsubscribeAll = new Subject();
     this.fieldType = new FieldType();
     this.fieldGeneralVisibility = new FieldGeneralVisibility();
+    this.fieldSpecificVisibility = new FieldSpecificVisibility();
+    this.fieldSpecificForm = new FormGroup({});
+    this.fieldOption = [];
   }
 
   ngOnInit() {
@@ -40,7 +49,9 @@ export class FieldComponent implements OnInit {
         if (r) {
           this.fieldType = new FieldType(r);
           this.fieldGeneralVisibility = new FieldGeneralVisibility(r.fieldSpecificationVisibilityDto);
+          this.fieldSpecificVisibility = new FieldSpecificVisibility(r.fieldSpecificSpecificationVisibilityDto);
           this.buildFieldGeneralSettingsVisibility();
+          this.buildFieldSpecificAttributesVisibility();
         }
       })
 
@@ -62,21 +73,52 @@ export class FieldComponent implements OnInit {
     });
   }
 
+  addOption(value){
+    this.fieldOption.push(value);
+  }
+
   buildFieldGeneralSettingsVisibility() {
     if (this.fieldGeneralVisibility.hidden) {
-      this.fieldGeneralForm.addControl('hidden', new FormControl('', Validators.required));
+      this.fieldGeneralForm.addControl('hidden', new FormControl(''));
     }
     if (this.fieldGeneralVisibility.isRequired) {
-      this.fieldGeneralForm.addControl('isRequired', new FormControl('', Validators.required));
+      this.fieldGeneralForm.addControl('isRequired', new FormControl(''));
     }
     if (this.fieldGeneralVisibility.showDescription) {
-      this.fieldGeneralForm.addControl('showDescription', new FormControl('', Validators.required));
+      this.fieldGeneralForm.addControl('description', new FormControl(''));
     }
     if (this.fieldGeneralVisibility.placeholder) {
-      this.fieldGeneralForm.addControl('placeholder', new FormControl('', Validators.required));
+      this.fieldGeneralForm.addControl('placeholder', new FormControl(''));
     }
     if (this.fieldGeneralVisibility.readOnly) {
-      this.fieldGeneralForm.addControl('readOnly', new FormControl('', Validators.required));
+      this.fieldGeneralForm.addControl('readOnly', new FormControl(''));
+    }
+  }
+
+  buildFieldSpecificAttributesVisibility(){
+    if(this.fieldSpecificVisibility.minimumValue){
+      this.fieldSpecificForm.addControl('minimumValue', new FormControl(''));
+    }
+    if(this.fieldSpecificVisibility.maximumValue){
+      this.fieldSpecificForm.addControl('maximumValue', new FormControl(''));
+    }
+    if(this.fieldSpecificVisibility.maximumRows){
+      this.fieldSpecificForm.addControl('maximumRows', new FormControl(''));
+    }
+    if(this.fieldSpecificVisibility.defaultValue){
+      this.fieldSpecificForm.addControl('defaultValue', new FormControl(''));
+    }
+    if(this.fieldSpecificVisibility.fileTypes){
+      this.fieldSpecificForm.addControl('fileTypes', new FormControl(''));
+    }
+    if(this.fieldSpecificVisibility.currency){
+      this.fieldSpecificForm.addControl('currency', new FormControl(''));
+    }
+    if(this.fieldSpecificVisibility.fieldOptions){
+      this.fieldSpecificForm.addControl('fieldOptions', new FormControl(''));
+    }
+    if(this.fieldSpecificVisibility.colspan){
+      this.fieldSpecificForm.addControl('colspan', new FormControl(''));
     }
   }
 
@@ -86,67 +128,15 @@ export class FieldComponent implements OnInit {
   }
 
   saveField() {
+    debugger;
     var formFieldData = this.fieldGeneralForm.getRawValue();
-    var data = new CreateFieldRequest(formFieldData,this.fieldTypeForm.getRawValue().fieldType);
+    var data = new FormFieldRequestModel(formFieldData);
+    data.fieldTypeId = this.fieldTypeForm.getRawValue().fieldType;
+    data.formFieldSpecificRequestModel = new FormFieldSpecificRequestModel(this.fieldSpecificForm.getRawValue());
+    this.fieldOption.forEach(element => {
+      var option = new FieldOptionRequestModel(element);
+      data.formFieldSpecificRequestModel.fieldOptions.push(option);
+    });
     this.fieldService.SaveField(data);
-  }
-
-}
-
-
-
-
-export class CreateFieldRequest {
-  id: string;
-  label: string;
-  tabId: number;
-  description: string;
-  isRequired: boolean;
-  hidden: boolean;
-  readonly: boolean;
-  fieldTypeId: number;
-  showDescription: string;
-  placeHolder: string;
-
-  constructor(data?,fieldtype?) {
-    data = data || {};
-    this.id = data.id || 0;
-    this.label = data.label;
-    this.tabId = data.tabId;
-    this.description = data.showDescription;
-    this.hidden = data.hidden;
-    this.readonly = data.readOnly;
-    this.fieldTypeId = fieldtype;
-    this.showDescription = data.showDescription;
-    this.placeHolder = data.placeholder;
-  }
-}
-
-
-export class FieldType {
-  type: string;
-
-  constructor(data?) {
-    data = data || {};
-    this.type = data.type || '';
-  }
-}
-
-
-
-export class FieldGeneralVisibility {
-  isRequired: boolean;
-  hidden: boolean;
-  readOnly: boolean;
-  showDescription: boolean;
-  placeholder: boolean;
-
-  constructor(data?) {
-    data = data || {};
-    this.hidden = data.hidden || false;
-    this.readOnly = data.readOnly || false;
-    this.isRequired = data.isRequired || false;
-    this.placeholder = data.placeHolder || false;
-    this.showDescription = data.showDescription || false;
   }
 }

@@ -5,9 +5,13 @@ form-builder {
             @include media-breakpoint('lt-md') {
                 height: 256px;
             }
+            height: 140px!important;
         }
         >.center {
             >.header {
+                height: 75px !important;
+                min-height: 75px !important;
+                max-height: 75px !important;
                 .search-wrapper {
                     width: 100%;
                     max-width: 480px;

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { TabsComponent } from './tabs.component';
 import { TabComponent } from './tab/tab.component';
 import { Routes, RouterModule } from '@angular/router';
+import { CoreSharedModule } from '@core/core.module';
 
 const routes : Routes = [
   {
@@ -19,6 +20,7 @@ const routes : Routes = [
 
 @NgModule({
   imports: [
+    CoreSharedModule,
     RouterModule.forChild(routes)
   ],
   declarations: [TabsComponent, TabComponent]

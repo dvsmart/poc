@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { environment } from '@env/environment';
+import { FormFieldRequestModel } from '../models/field';
 
 @Injectable({
   providedIn: 'root'
@@ -79,9 +80,10 @@ export class FieldService {
     });
   }
 
-  SaveField(formFieldModel: any) {
+  SaveField(formFieldRequest: FormFieldRequestModel) {
+    debugger;
     return new Promise((resolve, reject) => {
-      this._httpClient.post(environment.apiUrl + 'Form/Fields', { formFieldRequest : formFieldModel })
+      this._httpClient.post(environment.apiUrl + 'Form/Fields', { ...formFieldRequest})
         .subscribe((response: any) => {
           resolve(response);
         }, reject);
