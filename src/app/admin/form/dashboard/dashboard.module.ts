@@ -22,10 +22,7 @@ const routes: Routes = [
         path:'**',
         redirectTo:'folder/uncategorised'
       }
-    ],
-    resolve: {
-      cats: DashboardService
-    }
+    ]
   },
   {
     path: 'builder',

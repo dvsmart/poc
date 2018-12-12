@@ -5,7 +5,7 @@
   <!-- / TOP BACKGROUND -->
 
   <!-- SIDEBAR -->
-  <fuse-sidebar class="sidebar" name="carded-left-sidebar-2" position="left" lockedOpen="gt-md">
+  <fuse-sidebar class="sidebar" name="form-categories-sidebar" position="left" lockedOpen="gt-md">
 
     <!-- SIDEBAR HEADER -->
     <div class="header p-24 accent">
@@ -19,13 +19,14 @@
         <div class="card">
           <div class="content py-16" fusePerfectScrollbar>
             <div class="nav material2">
-              <div class="nav-item" aria-label="Uncategorised" routerLink="folder/uncategorised">
-                <a class="nav-link" matRipple>
+              <div class="nav-item" aria-label="Uncategorised" routerLink="folder/uncategorised" routerLinkActive="active">
+                <a class="nav-link">
                   <div class="title">Uncategorised</div>
                 </a>
               </div>
-              <div class="nav-item" aria-label="inbox" *ngFor="let link of categories" [routerLink]="['folder/',link.id]">
-                <a class="nav-link" matRipple>
+              <div class="nav-item" aria-label="inbox" *ngFor="let link of categories | async" [routerLink]="['folder/',link.id]"
+                routerLinkActive="active">
+                <a class="nav-link">
                   <span class="title">{{ link.name }}</span>
                 </a>
               </div>
@@ -40,14 +41,29 @@
   <div class="center">
 
     <!-- CONTENT HEADER -->
-    <div class="header accent p-24">
+    <!-- <div class="header accent p-24">
       <h2 class="m-0">Left sidebar with inner scroll</h2>
-    </div>
+    </div> -->
     <!-- / CONTENT HEADER -->
+    <div class="header" fxLayout="row" fxLayoutAlign="start center">
+
+      <div class="search-wrapper mat-white-bg" fxFlex fxLayout="row" fxLayoutAlign="start center">
+
+        <button mat-icon-button class="sidebar-toggle" fxHide.gt-md (click)="toggleSidebar('form-categories-sidebar')">
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <div class="search" flex fxLayout="row" fxLayoutAlign="start center">
+          <mat-icon>search</mat-icon>
+          <input [formControl]="searchInput" placeholder="Search for a task" fxFlex>
+        </div>
+      </div>
+
+    </div>
 
     <!-- CONTENT CARD -->
     <div class="content-card" fusePerfectScrollbar>
-        <router-outlet></router-outlet>
+      <router-outlet></router-outlet>
     </div>
     <!-- / CONTENT CARD -->
 

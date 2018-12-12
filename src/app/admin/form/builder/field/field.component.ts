@@ -128,7 +128,6 @@ export class FieldComponent implements OnInit {
   }
 
   saveField() {
-    debugger;
     var formFieldData = this.fieldGeneralForm.getRawValue();
     var data = new FormFieldRequestModel(formFieldData);
     data.fieldTypeId = this.fieldTypeForm.getRawValue().fieldType;
