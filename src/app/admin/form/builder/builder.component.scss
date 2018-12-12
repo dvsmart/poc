@@ -5,13 +5,18 @@ form-builder {
             @include media-breakpoint('lt-md') {
                 height: 256px;
             }
-            height: 140px!important;
+            height: 140px !important;
         }
         >.center {
             >.header {
                 height: 75px !important;
                 min-height: 75px !important;
                 max-height: 75px !important;
+                .active {
+                    border-left-width: 10px;
+                    border-left-color: lightblue;
+                    border-left-style: solid;
+                }
                 .search-wrapper {
                     width: 100%;
                     max-width: 480px;
@@ -44,9 +49,13 @@ form-builder {
                     max-height: 192px !important;
                 }
             }
-
-            .toolbar{
+            .toolbar {
                 height: 90px;
+            }
+            .active {
+                border-left-width: 10px;
+                border-left-color: lightblue;
+                border-left-style: solid;
             }
         }
     }

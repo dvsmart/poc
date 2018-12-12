@@ -42,7 +42,7 @@ export class FieldService {
 
   getField(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'Form/Fields/' + this.routeParams.id)
+      this._httpClient.get<any>(environment.apiUrl + 'FormFields/' + this.routeParams.id)
         .subscribe((response: any) => {
           this.fields.next(response);
           resolve(response);
@@ -52,7 +52,7 @@ export class FieldService {
 
   getFieldTypes(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'Form/FieldTypes')
+      this._httpClient.get<any>(environment.apiUrl + 'FormFieldTypes')
         .subscribe((response: any) => {
           this.fieldTypes.next(response);
           resolve(response);
@@ -62,7 +62,7 @@ export class FieldService {
 
   getFieldType(id): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'Form/FieldTypes/' + id)
+      this._httpClient.get<any>(environment.apiUrl + 'FormFieldTypes/' + id)
         .subscribe((response: any) => {
           this.fieldTypeSpecification.next(response);
           resolve(response);
@@ -73,7 +73,7 @@ export class FieldService {
   getTabs(): Promise<any> {
     console.log(this.formId);
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'Form/Tabs/' + this.formId)
+      this._httpClient.get<any>(environment.apiUrl + 'FormTabs/' + this.formId)
         .subscribe((response: any) => {
           this.tabs.next(response);
           console.log(response);
@@ -84,7 +84,7 @@ export class FieldService {
 
   SaveField(formFieldRequest: FormFieldRequestModel) {
     return new Promise((resolve, reject) => {
-      this._httpClient.post(environment.apiUrl + 'Form/Fields', { ...formFieldRequest})
+      this._httpClient.post(environment.apiUrl + 'FormFields', { ...formFieldRequest})
         .subscribe((response: any) => {
           resolve(response);
         }, reject);

@@ -22,12 +22,17 @@
     </form>
   </mat-step>
   <mat-step [stepControl]="fieldGeneralForm">
-    <form [formGroup]="fieldGeneralForm" fxLayout="column">
-      <div fxLayout="row" fxLayoutAlign="end end" class="mb-8">
-        <button mat-raised-button matStepperNext type="button" color="accent">Next</button>
-      </div>
-      <ng-template matStepLabel>General</ng-template>
-      <div fxLayout="row wrap" fxLayoutAlign="center center" fxFlex="1 0 auto">
+    <ng-template matStepLabel>General</ng-template>
+    <div class="mb-12" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+      <form [formGroup]="fieldGeneralForm" class="mat-card mat-elevation-z4 p-12" fxLayout="column" fxLayoutAlign="start"
+        fxFlex="1 0 auto">
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="1 0 auto">
+          <div class="h2 mb-12">General</div>
+          <div class="h2 mb-12">
+            <button mat-button matStepperPrevious type="button" color="accent" (click)="stepper.reset()">Reset</button>
+            <button mat-raised-button matStepperNext type="button" color="accent">Next</button>
+          </div>
+        </div>
         <mat-form-field appearance="outline" fxFlex="100">
           <mat-label>Field Type</mat-label>
           <input matInput [value]="fieldType.type" disabled>
@@ -43,7 +48,7 @@
           <mat-label>Field Label</mat-label>
           <input matInput placeholder="Field Label" formControlName="label" required>
         </mat-form-field>
-        <div *ngIf="fieldGeneralVisibility">
+        <div *ngIf="fieldGeneralVisibility" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
           <mat-form-field appearance="outline" fxFlex="100" *ngIf="fieldGeneralVisibility.showDescription">
             <mat-label>Description</mat-label>
             <input matInput placeholder="Description" formControlName="description">
@@ -52,15 +57,12 @@
             <mat-label>Placeholder Text</mat-label>
             <input matInput placeholder="Placeholder Text" formControlName="placeholder">
           </mat-form-field>
-          <div fxLayout="row" fxLayoutAlign="space-evenly center">
-            <mat-checkbox fxLayout="column" formControlName="hidden" *ngIf="fieldGeneralVisibility.hidden">Hidden</mat-checkbox>
-            <mat-checkbox fxLayout="column" formControlName="readOnly" *ngIf="fieldGeneralVisibility.readOnly">Read
-              Only</mat-checkbox>
-            <mat-checkbox fxLayout="column" formControlName="isRequired" *ngIf="fieldGeneralVisibility.isRequired">Required</mat-checkbox>
-          </div>
+          <mat-checkbox formControlName="hidden" *ngIf="fieldGeneralVisibility.hidden">Hidden</mat-checkbox>
+          <mat-checkbox formControlName="readOnly" *ngIf="fieldGeneralVisibility.readOnly">Read Only</mat-checkbox>
+          <mat-checkbox formControlName="isRequired" *ngIf="fieldGeneralVisibility.isRequired">Required</mat-checkbox>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </mat-step>
   <mat-step [stepControl]="fieldSpecificForm" fusePerfectScrollbar>
     <ng-template matStepLabel>Specific</ng-template>
@@ -96,7 +98,6 @@
           <mat-label>ColSpan</mat-label>
           <input matInput placeholder="ColSpan" formControlName="colspan">
         </mat-form-field>
-
       </form>
       <div class="mat-card p-24 mat-elevation-z4" *ngIf="fieldSpecificVisibility.fieldOptions">
         <div class="h2 mb-24">Options</div>

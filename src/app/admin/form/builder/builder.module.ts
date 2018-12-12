@@ -6,7 +6,7 @@ import { FieldsComponent } from './fields/fields.component';
 import { FieldsService } from './fields/fields.service';
 import { FieldComponent } from './field/field.component';
 import { FieldService } from './field/field.service';
-import { FormService } from './form.service';
+import { TabsService } from '../tabs/tabs.service';
 
 const routes: Routes = [
   {
@@ -33,7 +33,10 @@ const routes: Routes = [
       },
       {
         path: 'tabs',
-        loadChildren: '../tabs/tabs.module#TabsModule'
+        loadChildren: '../tabs/tabs.module#TabsModule',
+        resolve:{
+          tabs: TabsService
+        }
       },
       {
         path: '**',

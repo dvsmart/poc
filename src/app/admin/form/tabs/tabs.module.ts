@@ -6,11 +6,11 @@ import { CoreSharedModule } from '@core/core.module';
 
 const routes : Routes = [
   {
-    path:'',
+    path:'tabs',
     component: TabsComponent,
     children:[
       {
-        path:':id',
+        path:'tabs/:id',
         component: TabComponent
       }
     ]
