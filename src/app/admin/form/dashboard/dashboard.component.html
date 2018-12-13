@@ -15,6 +15,9 @@
       <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
         Form Builder
       </span>
+      <div fxLayout="column" fxLayoutAlign="end end" fxHide.gt-md>
+        <mat-icon>close</mat-icon>
+      </div>
     </div>
 
     <!-- / SIDEBAR HEADER -->
@@ -27,15 +30,21 @@
             <div class="nav material2">
               <div class="nav-item" aria-label="Uncategorised" routerLink="folder/forms/uncategorised" routerLinkActive="accent">
                 <a class="nav-link">
-                  <div class="title">Uncategorised</div>
+                  <div class="title" >Uncategorised</div>
                 </a>
               </div>
               <div class="nav-item" aria-label="inbox" *ngFor="let link of categories | async" [routerLink]="['folder/' + link.id + '/' + link.name]"
                 routerLinkActive="accent">
                 <a class="nav-link">
-                  <span class="title">{{ link.name }}</span>
+                  <span class="title text-truncate">{{ link.name }}</span>
                 </a>
               </div>
+            </div>
+            <div class="p-12" fxLayout="column" fxLayoutAlign="center stretch">
+              <button mat-raised-button [routerLink]="'/apps/e-commerce/products/new'" class="add-product-button fuse-white mt-24 mt-md-0">
+                <mat-icon class="mr-8">add</mat-icon>
+                <span>ADD NEW CATAGORY</span>
+              </button>
             </div>
           </div>
         </div>

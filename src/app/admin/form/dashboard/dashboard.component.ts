@@ -5,12 +5,14 @@ import { Subject } from 'rxjs';
 import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { FormsService } from './forms/forms.service';
+import { fuseAnimations } from '@core/animations';
 
 @Component({
   selector: 'form-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  animations: fuseAnimations
 })
 export class DashboardComponent implements OnInit {
   categories: any;
