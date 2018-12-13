@@ -3,6 +3,7 @@ import { FormsService } from './forms.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-forms',
@@ -14,11 +15,14 @@ export class FormsComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
   forms: any;
   categoryName: string;
-  constructor(private formsService: FormsService) {
+  constructor(private formsService: FormsService,private route: ActivatedRoute) {
     this._unsubscribeAll = new Subject();
   }
 
   ngOnInit() {
+    this.route.params.subscribe(x=>{
+      this.categoryName = x.slug;
+    })
     this.formsService.forms
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {

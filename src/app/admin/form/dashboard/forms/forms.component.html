@@ -8,7 +8,7 @@
   <div fxLayout="row" fxLayoutAlign="start center" class="item" *ngFor="let link of forms" >
     <mat-checkbox [(ngModel)]="selected" (ngModelChange)="onSelectedChange()" class="mr-16" fxFlex="0 1 auto" (click)="$event.stopPropagation()">
     </mat-checkbox>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex [routerLink]="['/admin/form/builder/',link.id]">
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex [routerLink]="['/admin/form/builder/' + link.id + '/' + link.name]">
       <div class="info" fxFlex fxFlexLayout="column">
         <div class="title">
           {{ link.name }}

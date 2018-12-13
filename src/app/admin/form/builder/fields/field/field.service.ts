@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { environment } from '@env/environment';
-import { FormFieldRequestModel } from '../models/field';
+import { FormFieldRequestModel } from '../field';
 
 @Injectable({
   providedIn: 'root'

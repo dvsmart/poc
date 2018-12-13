@@ -10,12 +10,12 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 export class TabService {
   onTabChanged: BehaviorSubject<any>;
   tabId: any;
-  constructor(private _httpClient: HttpClient) { 
+  constructor(private _httpClient: HttpClient) {
     this.onTabChanged = new BehaviorSubject<any>({});
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
-    this.tabId = route.params;
+    this.tabId = route.params["id"];
     return new Promise((resolve, reject) => {
       Promise.all([
         this.getTabs()
@@ -29,13 +29,16 @@ export class TabService {
   }
 
   getTabs(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'FormTabs/' + this.tabId)
-        .subscribe((response: any) => {
-          debugger;
-          this.onTabChanged.next(response);
-          resolve(response);
-        }, reject);
-    });
+    if (this.tabId != 'new') {
+      return new Promise((resolve, reject) => {
+        this._httpClient.get<any>(environment.apiUrl + 'FormTabs?id=' + this.tabId)
+          .subscribe((response: any) => {
+            this.onTabChanged.next(response);
+            resolve(response);
+          }, reject);
+      });
+    } else {
+      this.onTabChanged.next('');
+    }
   }
 }

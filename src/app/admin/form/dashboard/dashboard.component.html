@@ -1,16 +1,22 @@
-<div class="page-layout carded left-sidebar inner-scroll">
+<div class="page-layout carded left-sidebar inner-scroll" id="dashboard">
 
   <!-- TOP BACKGROUND -->
   <div class="top-bg accent"></div>
   <!-- / TOP BACKGROUND -->
 
   <!-- SIDEBAR -->
-  <fuse-sidebar class="sidebar" name="form-categories-sidebar" position="left" lockedOpen="gt-md">
+  <fuse-sidebar class="sidebar" name="form-dashboard-sidebar" position="left" lockedOpen="gt-md">
 
     <!-- SIDEBAR HEADER -->
     <div class="header p-24 accent">
-      <h2 class="m-0">Form Builder</h2>
+      <mat-icon class="logo-icon s-32 mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+        shopping_basket
+      </mat-icon>
+      <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+        Form Builder
+      </span>
     </div>
+
     <!-- / SIDEBAR HEADER -->
 
     <!-- SIDEBAR CONTENT -->
@@ -19,13 +25,13 @@
         <div class="card">
           <div class="content py-16" fusePerfectScrollbar>
             <div class="nav material2">
-              <div class="nav-item" aria-label="Uncategorised" routerLink="folder/uncategorised" routerLinkActive="active">
+              <div class="nav-item" aria-label="Uncategorised" routerLink="folder/forms/uncategorised" routerLinkActive="accent">
                 <a class="nav-link">
                   <div class="title">Uncategorised</div>
                 </a>
               </div>
-              <div class="nav-item" aria-label="inbox" *ngFor="let link of categories | async" [routerLink]="['folder/',link.id]"
-                routerLinkActive="active">
+              <div class="nav-item" aria-label="inbox" *ngFor="let link of categories | async" [routerLink]="['folder/' + link.id + '/' + link.name]"
+                routerLinkActive="accent">
                 <a class="nav-link">
                   <span class="title">{{ link.name }}</span>
                 </a>
@@ -45,11 +51,11 @@
       <h2 class="m-0">Left sidebar with inner scroll</h2>
     </div> -->
     <!-- / CONTENT HEADER -->
-    <div class="header" fxLayout="row" fxLayoutAlign="start center">
+    <div class="header" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
 
-      <div class="search-wrapper mat-white-bg" fxFlex fxLayout="row" fxLayoutAlign="start center">
+      <div class="search-wrapper mx-32 mx-md-0">
 
-        <button mat-icon-button class="sidebar-toggle" fxHide.gt-md (click)="toggleSidebar('form-categories-sidebar')">
+        <button mat-icon-button class="sidebar-toggle" fxHide.gt-md (click)="toggleSidebar('form-dashboard-sidebar')">
           <mat-icon>menu</mat-icon>
         </button>
 
@@ -58,6 +64,11 @@
           <input [formControl]="searchInput" placeholder="Search for a task" fxFlex>
         </div>
       </div>
+
+      <button mat-raised-button [routerLink]="'/apps/e-commerce/products/new'" class="add-product-button fuse-white mt-24 mt-md-0">
+        <mat-icon class="mr-8">create</mat-icon>
+        <span>ADD NEW FORM</span>
+      </button>
 
     </div>
 

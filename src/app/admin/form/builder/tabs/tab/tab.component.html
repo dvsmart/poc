@@ -1,0 +1,36 @@
+<div class="toolbar px-24 py-8">
+  <button mat-raised-button class="save-product-button" routerLink="../">
+    <span>Cancel</span>
+  </button>
+  <div fxLayout="row" fxLayoutAlign="end center" fxFlex="1 0 auto">
+    <button mat-raised-button class="save-product-button" [disabled]="tabForm.invalid || tabForm.pristine" *ngIf="pageMode == 'edit'">
+      <span>Update</span>
+    </button>
+    <button mat-raised-button class="save-product-button" [disabled]="tabForm.invalid" *ngIf="pageMode == 'new'">
+      <span>Save</span>
+    </button>
+  </div>
+</div>
+<div class="mb-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+  <form class="p-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="tabForm" [formGroup]="tabForm">
+    <div class="h2 mb-24">Tab / Section</div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100">
+        <mat-label>Form Title</mat-label>
+        <input matInput formControlName="templateName">
+        <mat-icon matSuffix class="disabled-text">domain</mat-icon>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100">
+        <mat-label>Caption</mat-label>
+        <input matInput formControlName="caption" required>
+        <mat-error>caption is required!</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="start start">
+      <mat-checkbox formControlName="isHidden">Is Hidden</mat-checkbox>
+      <mat-checkbox formControlName="isOptional">Mark this tab as Optional?</mat-checkbox>
+    </div>
+  </form>
+</div>

@@ -4,13 +4,18 @@ import { CoreSharedModule } from '@core/core.module';
 import { BuilderComponent } from './builder.component';
 import { FieldsComponent } from './fields/fields.component';
 import { FieldsService } from './fields/fields.service';
-import { FieldComponent } from './field/field.component';
-import { FieldService } from './field/field.service';
-import { TabsService } from '../tabs/tabs.service';
+import { FieldComponent } from './fields/field/field.component';
+import { FieldService } from './fields/field/field.service';
+import { TabsService } from './tabs/tabs.service';
+import { TabsComponent } from './tabs/tabs.component';
+import { TabComponent } from './tabs/tab/tab.component';
+import { TabService } from './tabs/tab/tab.service';
+import { FuseConfirmDialogComponent } from '@core/components/confirm-dialog/confirm-dialog.component';
+import { FuseConfirmDialogModule } from '@core/components/confirm-dialog/confirm-dialog.module';
 
 const routes: Routes = [
   {
-    path: ':id',
+    path: ':id/:slug',
     component: BuilderComponent,
     children: [
       {
@@ -33,9 +38,16 @@ const routes: Routes = [
       },
       {
         path: 'tabs',
-        loadChildren: '../tabs/tabs.module#TabsModule',
-        resolve:{
+        component: TabsComponent,
+        resolve: {
           tabs: TabsService
+        }
+      },
+      {
+        path: 'tabs/:id',
+        component: TabComponent,
+        resolve: {
+          tab: TabService
         }
       },
       {
@@ -49,8 +61,10 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CoreSharedModule,
+    FuseConfirmDialogModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [BuilderComponent, FieldsComponent, FieldComponent]
+  declarations: [BuilderComponent, FieldsComponent, FieldComponent, TabsComponent, TabComponent],
+  entryComponents:[FuseConfirmDialogComponent]
 })
 export class BuilderModule { }

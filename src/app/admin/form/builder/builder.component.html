@@ -7,7 +7,8 @@
     <!-- CENTER -->
     <div class="center">
 
-        <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
+        <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="space-between center">
 
 
             <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
@@ -15,7 +16,7 @@
                     shopping_basket
                 </mat-icon>
                 <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-                    - Form Name -
+                    {{formTemplateName}}
                 </span>
             </div>
 
@@ -23,7 +24,7 @@
                 <button mat-raised-button routerLink="build" class="save-product-button mr-16" routerLinkActive="active">
                     <span>Build</span>
                 </button>
-                 <button mat-raised-button routerLink="settings" class="save-product-button mr-16" routerLinkActive="active">
+                <button mat-raised-button routerLink="settings" class="save-product-button mr-16" routerLinkActive="active">
                     <span>Settings</span>
                 </button>
                 <button mat-raised-button routerLink="tabs" class="save-product-button mr-16" routerLinkActive="active">

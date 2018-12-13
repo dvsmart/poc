@@ -9,6 +9,7 @@ import { MatDialogRef } from '@angular/material';
 export class FuseConfirmDialogComponent
 {
     public confirmMessage: string;
+    public confirmTitle:string;
 
     /**
      * Constructor

@@ -37,7 +37,7 @@ export class FormsService {
   }
 
   getForms() {
-    if (this.routeParams.id === 'uncategorised') {
+    if (this.routeParams.id === 'forms') {
       this.getUncategorisedForms(1, 10)
     } else {
       this.getCategorisedForms(this.routeParams.id, 1, 10);

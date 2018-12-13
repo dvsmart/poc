@@ -12,7 +12,7 @@ const routes: Routes = [
     component: DashboardComponent,
     children: [
       {
-        path: 'folder/:id',
+        path: 'folder/:id/:slug',
         component: FormsComponent,
         resolve: {
           forms: FormsService
@@ -20,7 +20,7 @@ const routes: Routes = [
       },
       {
         path:'**',
-        redirectTo:'folder/uncategorised'
+        redirectTo:'folder/forms/uncategorised'
       }
     ]
   },

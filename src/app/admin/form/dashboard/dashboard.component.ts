@@ -7,7 +7,7 @@ import { FormControl } from '@angular/forms';
 import { FormsService } from './forms/forms.service';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'form-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   encapsulation: ViewEncapsulation.None

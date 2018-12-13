@@ -3,7 +3,7 @@ import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms'
 import { FieldService } from './field.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { FormFieldRequestModel, FieldType, FieldGeneralVisibility, FieldSpecificVisibility, FieldOptionRequestModel, FormFieldSpecificRequestModel } from '../models/field';
+import { FieldType, FieldGeneralVisibility, FieldSpecificVisibility, FormFieldRequestModel, FieldOptionRequestModel, FormFieldSpecificRequestModel } from '../field';
 
 @Component({
   selector: 'app-field',
@@ -137,5 +137,10 @@ export class FieldComponent implements OnInit {
       data.formFieldSpecificRequestModel.fieldOptions.push(option);
     });
     this.fieldService.SaveField(data);
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 }

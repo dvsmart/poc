@@ -3,7 +3,7 @@
     <button mat-raised-button class="save-product-button" [routerLink]="['/admin/form/dashboard/folder/uncategorised']">
       <span>Back to Forms</span>
     </button>
-    <button mat-raised-button class="save-product-button" routerLink="tab/new">
+    <button mat-raised-button class="save-product-button" routerLink="new">
       <span>Create</span>
     </button>
   </div>
@@ -35,22 +35,18 @@
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef></mat-header-cell>
     <mat-cell *matCellDef="let row">
-      <div fxFlex="row">
+      <div fxFlex="row" fxLayoutAlign="end">
         <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More" (click)="$event.stopPropagation();">
           <mat-icon class="secondary-text">more_vert</mat-icon>
         </button>
         <mat-menu #moreMenu="matMenu">
-          <button mat-menu-item aria-label="edit">
+          <button mat-menu-item aria-label="edit" [routerLink]="[row.id]">
             <mat-icon>edit</mat-icon>
             <span>Edit</span>
           </button>
-          <button mat-menu-item aria-label="remove" (click)="removeField(row.id)">
+          <button mat-menu-item aria-label="remove" (click)="deleteTab(row)">
             <mat-icon>delete</mat-icon>
             <span>Remove</span>
-          </button>
-          <button mat-menu-item aria-label="archive">
-            <mat-icon>archive</mat-icon>
-            <span>Archive</span>
           </button>
         </mat-menu>
       </div>
@@ -58,6 +54,6 @@
   </ng-container>
   <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="data-row" [@animate]="{value:'*',params:{y:'100%'}}"
-    [routerLink]="['/tabs/', row.id]"></mat-row>
+    [routerLink]="[row.id]"></mat-row>
 </mat-table>
 <mat-paginator [pageSizeOptions]="[5, 10, 20]" pageSize="10" showFirstLastButtons></mat-paginator>

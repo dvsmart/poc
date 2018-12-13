@@ -38,4 +38,14 @@ export class TabsService {
         }, reject);
     });
   }
+
+  deleteTab(tabId: string | number):Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._httpClient.get<any>(environment.apiUrl + 'FormTabs/' + tabId)
+        .subscribe((response: any) => {
+          this.tabs.next(response);
+          resolve(response);
+        }, reject);
+    });
+  }
 }
