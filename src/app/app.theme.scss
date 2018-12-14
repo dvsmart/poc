@@ -23,7 +23,6 @@ $typography: mat-typography-config( $font-family: 'Muli, Helvetica Neue, Arial, 
 @import './features/asset/properties-list/properties.theme';
 @import './features/assessment/assessment-list/assessments.theme';
 @import './features/calendar/calender.theme';
-@import './features/task/task.theme';
 @import './features/audit/audit.theme';
 @import './admin/form/builder/builder.theme';
 @import './admin/form/dashboard/dashboard.theme';
@@ -35,7 +34,6 @@ $typography: mat-typography-config( $font-family: 'Muli, Helvetica Neue, Arial, 
     @include assessments-theme($theme);
     @include calendar-theme($theme);
     @include forgot-password-theme($theme);
-    @include task-theme($theme);
     @include audit-theme($theme);
     @include form-builder-theme($theme);
     @include form-dashboard-theme($theme);

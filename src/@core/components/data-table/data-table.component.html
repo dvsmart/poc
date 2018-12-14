@@ -1,35 +1,20 @@
-<mat-table class="data-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}">
-    <ng-container matColumnDef="position">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>ID </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-            {{element.position}}
-        </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Name </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-            <p class="text-truncate">{{element.name}}</p>
-        </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="weight">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Weight </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-            {{element.weight}}
-        </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="symbol">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Symbol </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-            {{element.symbol}}
+<mat-table class="data-table" #table [dataSource]="dataSource" matSort matSortDirection="asc" [@animateStagger]="{value:'50'}">
+    <ng-container *ngFor="let column of columns; let i = index" matColumnDef="{{ column.name }}" [sticky]="column.sticky === 'start'"
+        [stickyEnd]="column.sticky === 'end'">
+        <mat-header-cell *matHeaderCellDef mat-sort-header="{{ column.name || 'col' + i }}" [disabled]="!column.name">
+            {{ column.title }}
+            <button class="mat-sort-header-button" *ngIf="showFilters && canFilter(column)" (click)="filter(column); $event.stopPropagation();">
+                <mat-icon color="{{ isFiltered(column) ? 'primary' : 'default' }}">filter_list</mat-icon>
+            </button>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+            <mdt-table-cell [row]="row" [column]="column"></mdt-table-cell>
         </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
 
-    <mat-row *matRowDef="let element; columns: displayedColumns;" class="table-row" matRipple [routerLink]="['/risk/',element.position]">
+    <mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row" matRipple (click)="clickRowEvent(row)">
     </mat-row>
 </mat-table>
-<mat-paginator #paginator paginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+<mat-paginator #paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" showFirstLastButtons [length]="length"></mat-paginator>

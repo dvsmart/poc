@@ -11,16 +11,24 @@ import { FuseSidebarService } from "@core/components/sidebar/sidebar.service";
 })
 export class GridLayoutComponent implements OnInit, OnDestroy {
     @Output() addNew: EventEmitter<any> = new EventEmitter();
+    @Output() editRow: EventEmitter<any> = new EventEmitter();
     constructor(private _fuseSidebarService: FuseSidebarService
     )
     {
+        
     }
 
     addNewClicked(){
         this.addNew.emit(true);
     }
 
+    rowClicked($event){
+        this.editRow.emit($event);
+    }
+
     @Input() title:string;
+
+    @Input() icon: string;
 
     @Input() ds: any;
 
@@ -29,7 +37,7 @@ export class GridLayoutComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
     }
 
-    toggleSidebar(name): void
+    toggleSidebar(name: string): void
     {
         this._fuseSidebarService.getSidebar(name).toggleOpen();
     }

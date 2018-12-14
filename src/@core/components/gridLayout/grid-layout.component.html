@@ -5,19 +5,20 @@
             fxLayoutAlign.gt-sm="space-between center">
             <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
                 <mat-icon class="logo-icon s-32 mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
-                    shopping_basket
+                    {{icon}}
                 </mat-icon>
                 <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-                    {{title}}
+                    {{title}}s
                 </span>
             </div>
             <div class="search-wrapper mx-32 mx-md-0">
                 <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon>search</mat-icon>
-                    <input #filter placeholder="Search for a product">
+                    <input #filter placeholder="Search for a {{title}}">
                 </div>
             </div>
             <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" (click)="addNewClicked()">
+                <mat-icon class="mr-8">create</mat-icon>
                 <ng-content select="[buttonTitle]"></ng-content>
             </button>
         </div>

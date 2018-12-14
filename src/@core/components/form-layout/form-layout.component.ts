@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { fuseAnimations } from '@core/animations';
 
 @Component({
@@ -9,6 +9,9 @@ import { fuseAnimations } from '@core/animations';
   encapsulation:ViewEncapsulation.None
 })
 export class FormLayoutComponent implements OnInit {
+
+  @Input() title: string;
+  @Input() pageType: string;
 
   constructor() { }
 

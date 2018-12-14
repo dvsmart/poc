@@ -43,14 +43,14 @@ const appRoutes: Routes = [
                 loadChildren: './features/calendar/calendar.module#CalendarModule',
                 data: { preload: false, delay: true }
             },
-            {
-                path: 'todo',
-                loadChildren: './features/todo/todo.module#TodoModule',
-                data: { preload: false, delay: false }
-            },
+            // {
+            //     path: 'todo',
+            //     loadChildren: './features/todo/todo.module#TodoModule',
+            //     data: { preload: false, delay: false }
+            // },
             {
                 path: 'task',
-                loadChildren: './features/task/task.module#TaskModule',
+                loadChildren: './features/tasks/task.module#TaskModule',
                 data: { preload: false, delay: true }
             },
             {
