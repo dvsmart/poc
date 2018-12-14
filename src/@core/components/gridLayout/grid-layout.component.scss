@@ -49,13 +49,10 @@ grid-layout {
                 border-bottom: 1px solid rgba(0, 0, 0, .12);
                 overflow: auto;
                 -webkit-overflow-scrolling: touch;
-                .mat-header-row {
-                    min-height: 64px;
-                }
                 .data-row {
                     position: relative;
                     cursor: pointer;
-                    height: 63px;
+                    height: 65px;
                 }
                 .mat-cell {
                     min-width: 0;
