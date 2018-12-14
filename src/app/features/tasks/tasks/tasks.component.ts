@@ -24,7 +24,7 @@ export class TasksComponent implements OnInit {
 
 
   columns: Column[] = [{ name: 'name', title: 'Name', type: 'string' }, { type: 'string', name: 'description', title: 'Description' }, { type: 'string', title: 'Status', name: 'status' },
-  { title: 'Priority', name: 'priority', type: 'string' }, { type: 'bool', title: 'Is Completed', name: 'isCompleted' }, { type: 'date', title: 'Created On', name: 'createdOn', options: { dateFormat: 'shortDate' } },
+  { title: 'Priority', name: 'priority', type: 'string' }, { type: 'bool', title: 'Is Completed', name: 'isCompleted' }, { type: 'date', title: 'Created On', name: 'createdOn', options: { dateFormat: 'medium' } },
   { title: 'Created By', name: 'addedBy', type: 'string' }];
 
   ngOnInit() {

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { GridLayoutComponent } from './grid-layout.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -46,7 +46,8 @@ import { checkboxCellComponent } from '../data-table/table-cell/cell-types/check
         checkboxCellComponent
     ],
     providers:[
-        CellService
+        CellService,
+        {provide: LOCALE_ID, useValue: 'en-GB'}
     ]
 
 })
