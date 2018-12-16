@@ -31,8 +31,7 @@ export class CalendarService implements Resolve<any>
     getEvents(): Promise<any>
     {
         return new Promise((resolve, reject) => {
-
-            this._httpClient.get(environment.apiUrl + 'Event?page=1&pageSize=50')
+            this._httpClient.get(environment.apiUrl + 'Events')
                 .subscribe((response: any) => {
                     this.events = response.data;
                     this.onEventsUpdated.next(this.events);

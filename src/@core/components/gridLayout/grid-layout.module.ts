@@ -3,7 +3,7 @@ import { GridLayoutComponent } from './grid-layout.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FuseDirectivesModule } from '@core/directives/directives';
-import { MatIconModule, MatButtonModule, MatRippleModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCheckboxModule } from '@angular/material';
+import { MatIconModule, MatButtonModule, MatRippleModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatMenuModule } from '@angular/material';
 import { DataTableComponent } from '../data-table/data-table.component';
 import { RouterModule } from '@angular/router';
 import { TextCellComponent } from '../data-table/table-cell/cell-types/text-cell.component';
@@ -26,6 +26,7 @@ import { checkboxCellComponent } from '../data-table/table-cell/cell-types/check
         MatPaginatorModule,
         MatSortModule,
         MatCheckboxModule,
+        MatMenuModule,
         RouterModule
     ],
     declarations: [

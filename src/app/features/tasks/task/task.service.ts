@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, forkJoin } from 'rxjs';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
@@ -44,7 +44,13 @@ export class TaskService {
     }
   }
 
-  saveTask(createTaskRequestModel: any){
+  getTaskReferences() {
+    let statuses = this._httpClient.get(environment.apiUrl + 'Tasks/Statuses');
+    let priorities = this._httpClient.get(environment.apiUrl + 'Tasks/Priorities');
+    return forkJoin(statuses, priorities);
+  }
+
+  saveTask(createTaskRequestModel: any) {
     return new Promise((resolve, reject) => {
       this._httpClient.post(environment.apiUrl + 'Tasks/', createTaskRequestModel)
         .subscribe((response: any) => {
@@ -53,4 +59,16 @@ export class TaskService {
         }, reject);
     });
   }
+
+  updateTask(createTaskRequestModel: any) {
+    return new Promise((resolve, reject) => {
+      this._httpClient.put(environment.apiUrl + 'Tasks/' + createTaskRequestModel.id, createTaskRequestModel)
+        .subscribe((response: any) => {
+          this.onTaskChanged.next(response);
+          resolve(response);
+        }, reject);
+    });
+  }
+
+  
 }

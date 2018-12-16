@@ -7,15 +7,15 @@ interface TableSource {
     rowCount: number;
 }
 
-export class source implements TableSource{
-    results: MatTableDataSource<any>;    
+export class source implements TableSource {
+    results: MatTableDataSource<any>;
     currentPage: number;
     pageCount: number;
     pageSize: number;
     rowCount: number;
 
     constructor(data?) {
-        data  = data || {};
+        data = data || {};
         this.results = data.results;
         this.currentPage = data.currentPage || 1;
         this.pageCount = data.pageCount || 0;
@@ -24,11 +24,21 @@ export class source implements TableSource{
     }
 }
 
-export class Column{
+export class Column {
     title: string;
-    hidden?:boolean = false;
-    name:string;
+    hidden?: boolean = false;
+    name: string;
     type: string;
     options?: any;
     sticky?: string;
+}
+
+export class Setting {
+    actions: [
+        {
+            delete: boolean;
+            archive: boolean;
+        }
+    ]
+    enableMultiSelect?: boolean = false;
 }

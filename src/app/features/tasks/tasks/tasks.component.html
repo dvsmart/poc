@@ -1,4 +1,4 @@
 <grid-layout [title]="'Task'" [icon]="'assignment'" class="page-layout carded fullwidth inner-scroll" (addNew)="onAddNewTask($event)" >
     <span buttonTitle>Add New Task</span>
-    <data-table tableContent [source]="tableDataSource" [columns]="columns" [pageSize]="10" (rowClickEvent)="rowClicked($event)"></data-table>
+    <data-table tableContent [source]="tableDataSource" [setting]="tableSetting" [columns]="columns" [pageSize]="10" (rowClickEvent)="rowClicked($event)"></data-table>
 </grid-layout>

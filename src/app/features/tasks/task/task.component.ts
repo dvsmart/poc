@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { TaskService } from './task.service';
 import { taskDetail } from './task';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -20,6 +20,8 @@ export class TaskComponent implements OnInit {
   task: any;
   pageType: string;
   taskForm: FormGroup;
+  statuses: {};
+  priorities: {};
 
   constructor(private _taskService: TaskService, private _formBuilder: FormBuilder, private router: Router) {
     this._unsubscribeAll = new Subject();
@@ -41,6 +43,18 @@ export class TaskComponent implements OnInit {
 
         this.taskForm = this.createTaskForm();
       });
+
+    this._taskService.getTaskReferences().subscribe(x => {
+      this.statuses = x[0];
+      this.priorities = x[1];
+    })
+  }
+
+  compareFn: ((f1: any, f2: any) => boolean) | null = this.compareByValue;
+
+  compareByValue(f1: any, f2: any) {
+    debugger;
+    return f1 && f2 && f1.name === f2.name;
   }
 
   createTaskForm(): FormGroup {
@@ -59,6 +73,14 @@ export class TaskComponent implements OnInit {
   saveTask() {
     var task = this.taskForm.getRawValue();
     this._taskService.saveTask(task).then((x: any) => {
+      this.router.navigate(['/task/' + x.id]);
+    });
+  }
+
+  updateTask() {
+    debugger;
+    var task = this.taskForm.getRawValue();
+    this._taskService.updateTask(task).then((x: any) => {
       this.router.navigate(['/task/' + x.id]);
     });
   }

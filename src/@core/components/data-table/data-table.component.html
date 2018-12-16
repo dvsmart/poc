@@ -11,10 +11,28 @@
             <mdt-table-cell [row]="row" [column]="column"></mdt-table-cell>
         </mat-cell>
     </ng-container>
-
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let row">
+            <div>
+                <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More" (click)="$event.stopPropagation();">
+                    <mat-icon class="secondary-text">more_vert</mat-icon>
+                </button>
+                <mat-menu #moreMenu="matMenu">
+                    <button mat-menu-item aria-label="remove" (click)="clickRowEvent(row,'remove')" *ngIf="canDelete">
+                        <mat-icon>delete</mat-icon>
+                        <span>Remove</span>
+                    </button>
+                    <button mat-menu-item aria-label="archive" (click)="clickRowEvent(row,'archive')" *ngIf="canArchive">
+                        <mat-icon>archive</mat-icon>
+                        <span>Archive</span>
+                    </button>
+                </mat-menu>
+            </div>
+        </mat-cell>
+    </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-
-    <mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row" matRipple (click)="clickRowEvent(row)">
+    <mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row" matRipple (click)="clickRowEvent(row,'edit')">
     </mat-row>
 </mat-table>
 <mat-paginator #paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" showFirstLastButtons [length]="length"></mat-paginator>

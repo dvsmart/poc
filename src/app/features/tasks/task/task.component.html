@@ -37,8 +37,8 @@
             </button>
 
             <button mat-raised-button class="save-product-button" [disabled]="taskForm.invalid || taskForm.pristine"
-                *ngIf="pageType ==='edit'" (click)="saveTask()">
-                <span>SAVE</span>
+                *ngIf="pageType ==='edit'" (click)="updateTask()">
+                <span>UPDATE</span>
             </button>
         </div>
         <!-- / HEADER -->
@@ -57,48 +57,60 @@
 
                             <div class="tab-content p-24" fusePerfectScrollbar>
 
-                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
-                                    <mat-label>Task Name</mat-label>
-                                    <input matInput placeholder="Task Name" name="name" formControlName="name" required>
-                                </mat-form-field>
+                                <div fxLayout="column">
+                                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                        <mat-label>Task Name</mat-label>
+                                        <input matInput placeholder="Task Name" name="name" formControlName="name"
+                                            required>
+                                    </mat-form-field>
 
-                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
-                                    <mat-label>Description</mat-label>
-                                    <textarea matInput placeholder="Description" name="description" formControlName="description"
-                                        rows="5">
-                                        </textarea>
-                                </mat-form-field>
+                                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                        <mat-label>Description</mat-label>
+                                        <textarea matInput placeholder="Description" name="description" formControlName="description"
+                                            rows="5">
+                                            </textarea>
+                                    </mat-form-field>
+                                </div>
 
-                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
 
-                                    <mat-label>Status</mat-label>
-                                    <input matInput placeholder="Status" name="status" formControlName="status"
-                                        required>
+                                <div fxLayout="row" fxLayoutGap="20px">
+                                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                        <mat-label>Status</mat-label>
+                                        <mat-select placeholder="Status" formControlName="status" [(ngModel)]="status">
+                                            <mat-option *ngFor="let status of statuses" [value]="status.id">
+                                                {{status.statusName}}
+                                            </mat-option>
+                                        </mat-select>
 
-                                </mat-form-field>
+                                    </mat-form-field>
 
-                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
-                                    <mat-label>Priority</mat-label>
-                                    <input matInput placeholder="Priority" name="priority" formControlName="priority"
-                                        required>
-                                </mat-form-field>
+                                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                        <mat-label>Priority</mat-label>
+                                        <mat-select placeholder="Priority" formControlName="priority" [compareWith]="compareFn">
+                                            <mat-option *ngFor="let priority of priorities" [value]="priority.id">
+                                                {{priority.priorityName}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
 
-                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
-                                    <mat-label>Start Date</mat-label>
-                                    <input matInput placeholder="Start Date" name="startDate" formControlName="startDate"
-                                        [matDatepicker]="startDatePicker" required>
-                                    <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-                                    <mat-datepicker #startDatePicker></mat-datepicker>
-                                </mat-form-field>
+                                <div fxLayout="row" fxLayoutGap="20px">
+                                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                        <mat-label>Start Date</mat-label>
+                                        <input matInput placeholder="Start Date" name="startDate" formControlName="startDate"
+                                            [matDatepicker]="startDatePicker" required>
+                                        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #startDatePicker></mat-datepicker>
+                                    </mat-form-field>
 
-                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
-                                    <mat-label>Due Date</mat-label>
-                                    <input matInput placeholder="Due Date" name="dueDate" formControlName="dueDate"
-                                        required [matDatepicker]="dueDatePicker">
-                                    <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
-                                    <mat-datepicker #dueDatePicker></mat-datepicker>
-                                </mat-form-field>
-
+                                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                        <mat-label>Due Date</mat-label>
+                                        <input matInput placeholder="Due Date" name="dueDate" formControlName="dueDate"
+                                            required [matDatepicker]="dueDatePicker">
+                                        <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #dueDatePicker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
                             </div>
 
                         </mat-tab>

@@ -3,7 +3,7 @@ import { fuseAnimations } from '@core/animations';
 import { TasksService } from './tasks.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { source, Column } from '@core/components/data-table/dataTableSource';
+import { source, Column, Setting } from '@core/components/data-table/dataTableSource';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,6 +16,8 @@ export class TasksComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
 
   tableDataSource: source;
+  tableSetting: Setting;
+
 
   constructor(private _tasksService: TasksService, private router: Router) {
     this._unsubscribeAll = new Subject();
@@ -27,6 +29,7 @@ export class TasksComponent implements OnInit {
   { title: 'Priority', name: 'priority', type: 'string' }, { type: 'bool', title: 'Is Completed', name: 'isCompleted' }, { type: 'date', title: 'Created On', name: 'createdOn', options: { dateFormat: 'medium' } },
   { title: 'Created By', name: 'addedBy', type: 'string' }];
 
+
   ngOnInit() {
     this._tasksService.tasks
       .pipe(takeUntil(this._unsubscribeAll))
@@ -35,14 +38,45 @@ export class TasksComponent implements OnInit {
           this.tableDataSource = new source(response);
         }
       });
+    this.tableSetting = {
+      actions: [
+        {
+          archive: true,
+          delete: true
+        }
+      ]
+    };
   }
 
-  onAddNewTask($event) {
+  onAddNewTask() {
     this.router.navigate(['task/new']);
   }
 
   rowClicked($event: any) {
-    this.router.navigate(['task/' + $event.id]);
+    if ($event != undefined) {
+      let id = $event[0].id;
+      switch ($event[1]) {
+        case 'edit':
+          this.editTask(id);
+          break;
+        case 'remove':
+          this.removeTask(id);
+        default:
+          break;
+      }
+    }
+  }
+
+  editTask(id: number) {
+    this.router.navigate(['task/' + id]);
+  }
+
+  removeTask(id: number) {
+    let response = this._tasksService.deleteTask(id);
+  }
+
+  archiveTask(id: number) {
+    this._tasksService.deleteTask(id);
   }
 
   ngOnDestroy(): void {

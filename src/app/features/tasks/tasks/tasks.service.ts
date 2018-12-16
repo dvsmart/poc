@@ -38,4 +38,10 @@ export class TasksService {
         }, reject);
     });
   }
+
+  deleteTask(id: any) {
+    this._httpClient.delete(environment.apiUrl + 'Tasks/' + id).subscribe(x => {
+      this.getTasks(1, 10);
+    });
+  }
 }

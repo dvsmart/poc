@@ -16,6 +16,8 @@ import { MaintenanceComponent } from './pages/maintenance/maintenance.component'
 import { Error500Component } from './pages/errors/error500/error500.component';
 import { Error404Component } from './pages/errors/error404/error404.component';
 import { CookieService } from 'ngx-cookie-service';
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { DataService } from './MockData/data.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,7 @@ import { CookieService } from 'ngx-cookie-service';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    CookieService
+    CookieService,
   ],
   bootstrap: [AppComponent]
 })
