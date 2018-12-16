@@ -21,7 +21,7 @@
 
         <div class="toolbar-separator"></div>
 
-        <button mat-button="mat-button" fxHide="fxHide" fxShow.gt-xs="fxShow.gt-xs" class="language-button">
+        <button routerLink="/home" mat-button="mat-button" fxHide="fxHide" fxShow.gt-xs="fxShow.gt-xs" class="language-button">
             <div fxLayout="row" fxLayoutAlign="center center">
                 <mat-icon class="icon">home</mat-icon>
             </div>
@@ -30,7 +30,7 @@
         <div class="toolbar-separator"></div>
 
         <button mat-button="mat-button" fxHide="fxHide" fxShow.gt-xs="fxShow.gt-xs" class="language-button"
-            [routerLink]="['/calender']">
+            routerLink="/calender">
             <div fxLayout="row" fxLayoutAlign="center center">
                 <mat-icon class="icon">event</mat-icon>
             </div>
