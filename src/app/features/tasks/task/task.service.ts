@@ -54,7 +54,6 @@ export class TaskService {
     return new Promise((resolve, reject) => {
       this._httpClient.post(environment.apiUrl + 'Tasks/', createTaskRequestModel)
         .subscribe((response: any) => {
-          this.onTaskChanged.next(response);
           resolve(response);
         }, reject);
     });
@@ -64,7 +63,6 @@ export class TaskService {
     return new Promise((resolve, reject) => {
       this._httpClient.put(environment.apiUrl + 'Tasks/' + createTaskRequestModel.id, createTaskRequestModel)
         .subscribe((response: any) => {
-          this.onTaskChanged.next(response);
           resolve(response);
         }, reject);
     });

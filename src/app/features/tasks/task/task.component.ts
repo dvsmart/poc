@@ -31,7 +31,6 @@ export class TaskComponent implements OnInit {
     this._taskService.onTaskChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(task => {
-
         if (task) {
           this.task = new taskDetail(task);
           this.pageType = 'edit';
@@ -66,8 +65,8 @@ export class TaskComponent implements OnInit {
   saveTask() {
     var task = this.taskForm.value;
     this._taskService.saveTask(task).then((x: any) => {
-      this.toaster.open("Task created successfully", null, { duration: 4000 });
       this.router.navigate(['/task/' + x.id]);
+      this.toaster.open("Task created successfully", null, { duration: 4000 });
     });
   }
 
@@ -75,7 +74,6 @@ export class TaskComponent implements OnInit {
     var task = this.taskForm.value;
     this._taskService.updateTask(task).then((x: any) => {
       this.toaster.open("Task updated successfully", null, { duration: 4000 });
-      this.router.navigate(['/task/' + x.id]);
     });
   }
 

@@ -26,11 +26,16 @@
                 <mat-icon class="icon">home</mat-icon>
             </div>
         </button>
+        <div class="toolbar-separator"></div>
+        <button mat-button="mat-button" fxHide="fxHide" fxShow.gt-xs="fxShow.gt-xs" class="language-button" routerLink="/task">
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <mat-icon class="icon">assignment</mat-icon>
+            </div>
+        </button>
 
         <div class="toolbar-separator"></div>
 
-        <button mat-button="mat-button" fxHide="fxHide" fxShow.gt-xs="fxShow.gt-xs" class="language-button"
-            routerLink="/calender">
+        <button mat-button="mat-button" fxHide="fxHide" fxShow.gt-xs="fxShow.gt-xs" class="language-button" routerLink="/calender">
             <div fxLayout="row" fxLayoutAlign="center center">
                 <mat-icon class="icon">event</mat-icon>
             </div>
