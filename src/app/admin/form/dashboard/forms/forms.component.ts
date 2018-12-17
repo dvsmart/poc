@@ -33,7 +33,7 @@ export class FormsComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
         if (response && response.results && response.results.length > 0) {
-          this.forms = response.results;
+          this.forms = response.results; 
         }else{
           this.forms = null;
         }
@@ -55,7 +55,6 @@ export class FormsComponent implements OnInit {
       }
     });
   }
-
   ngOnDestroy(): void {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
