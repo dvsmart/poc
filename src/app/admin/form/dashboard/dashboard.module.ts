@@ -5,6 +5,8 @@ import { CoreSharedModule } from '@core/core.module';
 import { DashboardService } from './dashboard.service';
 import { FormsComponent } from './forms/forms.component';
 import { FormsService } from './forms/forms.service';
+import { CategoryComponent } from './category/category.component';
+import { FormComponent } from './form/form.component';
 
 const routes: Routes = [
   {
@@ -19,8 +21,8 @@ const routes: Routes = [
         }
       },
       {
-        path:'**',
-        redirectTo:'folder/forms/uncategorised'
+        path: '**',
+        redirectTo: 'folder/forms/uncategorised'
       }
     ]
   },
@@ -36,6 +38,7 @@ const routes: Routes = [
     CoreSharedModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DashboardComponent, FormsComponent]
+  declarations: [DashboardComponent, FormsComponent, CategoryComponent, FormComponent],
+  entryComponents: [CategoryComponent,FormComponent]
 })
 export class DashboardModule { }

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { environment } from '@env/environment';
 import { FuseUtils } from '@core/utils';
+import { FormRequestModel } from '../form/FormRequestModel';
 
 @Injectable({
   providedIn: 'root'
@@ -36,11 +37,21 @@ export class FormsService {
     });
   }
 
+  saveForm(formRequestModel: FormRequestModel) {
+    return new Promise((resolve, reject) => {
+      this._httpClient.post(`${environment.apiUrl}Forms`, formRequestModel)
+        .subscribe((response: any) => {
+          this.getForms();
+          resolve(response);
+        }, reject);
+    });
+  }
+
   getForms() {
     if (this.routeParams.id === 'forms') {
-      this.getUncategorisedForms(1, 10)
+      this.getUncategorisedForms(1, 100)
     } else {
-      this.getCategorisedForms(this.routeParams.id, 1, 10);
+      this.getCategorisedForms(this.routeParams.id, 1, 100);
     }
   }
 
@@ -59,7 +70,7 @@ export class FormsService {
     });
   }
 
-  getCategorisedForms(id,page?,pageSize?): Promise<any> {
+  getCategorisedForms(id, page?, pageSize?): Promise<any> {
     return new Promise((resolve, reject) => {
       this._httpClient.get<any>(`${environment.apiUrl}FormCategories/${id}?page=${page}&pageSize=${pageSize}`)
         .subscribe((response: any) => {

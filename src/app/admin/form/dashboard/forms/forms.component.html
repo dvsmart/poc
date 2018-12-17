@@ -1,20 +1,25 @@
 <div class="toolbar px-24 py-8">
-  <span>{{categoryName}}</span>
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="1 0 auto">
+    <span>{{categoryName}}</span>
+    <button mat-raised-button class="save-product-button" (click)="addNewForm()">
+      <span>Create New Form</span>
+    </button>
+  </div>
 </div>
-<div *ngIf="forms == null">
-  loading...
-</div>
-<div class="toolbar px-24 py-8">
-  <mat-checkbox [(ngModel)]="selected" (ngModelChange)="onSelectedChange()" class="mr-16" fxFlex="0 1 auto" (click)="$event.stopPropagation()">
-  </mat-checkbox>
-  <span class="mr-8">Move To</span>
-  <span class="mr-8">|</span>
-  <span class="mr-8">Copy</span>
-  <span class="mr-8">|</span>
-  <span class="mr-8">Delete</span>
-  <span class="mr-8">|</span>
-  <span class="mr-8">Archived</span>
-</div>
+<ng-container *ngIf="forms">
+  <div class="toolbar px-24 py-8">
+    <mat-checkbox [(ngModel)]="selected" (ngModelChange)="onSelectedChange()" class="mr-16" fxFlex="0 1 auto" (click)="$event.stopPropagation()">
+    </mat-checkbox>
+    <span class="mr-8">Move To</span>
+    <span class="mr-8">|</span>
+    <span class="mr-8">Copy</span>
+    <span class="mr-8">|</span>
+    <span class="mr-8">Delete</span>
+    <span class="mr-8">|</span>
+    <span class="mr-8">Archived</span>
+  </div>
+</ng-container>
+
 <ng-container *ngIf="forms">
   <div fxLayout="row" fxLayoutAlign="start center" class="item" *ngFor="let link of forms">
     <mat-checkbox [(ngModel)]="selected" (ngModelChange)="onSelectedChange()" class="mr-16" fxFlex="0 1 auto" (click)="$event.stopPropagation()">
@@ -44,6 +49,16 @@
           </button>
         </mat-menu>
       </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="!forms">
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <p>This category is empty.</p>
+    <div>
+      <button mat-raised-button class="save-product-button" (click)="addNewForm()">
+        <span>Create New Form</span>
+      </button>
     </div>
   </div>
 </ng-container>

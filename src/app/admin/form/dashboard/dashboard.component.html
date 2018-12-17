@@ -30,18 +30,32 @@
             <div class="nav material2">
               <div class="nav-item" aria-label="Uncategorised" routerLink="folder/forms/uncategorised" routerLinkActive="accent">
                 <a class="nav-link">
-                  <div class="title" >Uncategorised</div>
+                  <mat-icon class="mr-8">folder</mat-icon>
+                  <div class="title">Uncategorised</div>
                 </a>
               </div>
               <div class="nav-item" aria-label="inbox" *ngFor="let link of categories | async" [routerLink]="['folder/' + link.id + '/' + link.name]"
                 routerLinkActive="accent">
                 <a class="nav-link">
+                  <mat-icon class="mr-8">web_asset</mat-icon>
                   <span class="title text-truncate">{{ link.name }}</span>
+                </a>
+              </div>
+              <div class="nav-item" aria-label="Uncategorised" routerLink="folder/forms/uncategorised" routerLinkActive="accent">
+                <a class="nav-link">
+                  <mat-icon class="mr-8">archive</mat-icon>
+                  <div class="title">Archived Forms</div>
+                </a>
+              </div>
+              <div class="nav-item" aria-label="Uncategorised" routerLink="folder/forms/uncategorised" routerLinkActive="accent">
+                <a class="nav-link">
+                  <mat-icon class="mr-8">delete</mat-icon>
+                  <div class="title">Deleted Forms</div>
                 </a>
               </div>
             </div>
             <div class="p-12" fxLayout="column" fxLayoutAlign="center stretch">
-              <button mat-raised-button [routerLink]="'/apps/e-commerce/products/new'" class="add-product-button fuse-white mt-24 mt-md-0">
+              <button mat-raised-button (click)="addNewCategory()" class="add-product-button fuse-white mt-24 mt-md-0">
                 <mat-icon class="mr-8">add</mat-icon>
                 <span>ADD NEW CATAGORY</span>
               </button>
@@ -73,12 +87,6 @@
           <input [formControl]="searchInput" placeholder="Search for a task" fxFlex>
         </div>
       </div>
-
-      <button mat-raised-button [routerLink]="'/apps/e-commerce/products/new'" class="add-product-button fuse-white mt-24 mt-md-0">
-        <mat-icon class="mr-8">create</mat-icon>
-        <span>ADD NEW FORM</span>
-      </button>
-
     </div>
 
     <!-- CONTENT CARD -->
