@@ -31,7 +31,7 @@ export class taskDetail{
         this.name = data.name;
         this.description = data.description;
         this.status = data.status;
-        this.startDate = data.startDate;
+        this.startDate = data.startDate == undefined ? new Date() : data.startDate;
         this.dueDate = data.dueDate;
         this.isCompleted = data.isCompleted;
         this.priority = data.priority;

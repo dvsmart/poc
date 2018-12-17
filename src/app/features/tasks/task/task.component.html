@@ -76,7 +76,7 @@
                                 <div fxLayout="row" fxLayoutGap="20px">
                                     <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
                                         <mat-label>Status</mat-label>
-                                        <mat-select placeholder="Status" formControlName="status" [(ngModel)]="status">
+                                        <mat-select placeholder="Status" formControlName="status">
                                             <mat-option *ngFor="let status of statuses" [value]="status.id">
                                                 {{status.statusName}}
                                             </mat-option>
@@ -86,7 +86,7 @@
 
                                     <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
                                         <mat-label>Priority</mat-label>
-                                        <mat-select placeholder="Priority" formControlName="priority" [compareWith]="compareFn">
+                                        <mat-select placeholder="Priority" formControlName="priority">
                                             <mat-option *ngFor="let priority of priorities" [value]="priority.id">
                                                 {{priority.priorityName}}
                                             </mat-option>

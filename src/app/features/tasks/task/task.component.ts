@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 import { TaskService } from './task.service';
 import { taskDetail } from './task';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { fuseAnimations } from '@core/animations';
-import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 
 @Component({
@@ -23,7 +23,7 @@ export class TaskComponent implements OnInit {
   statuses: {};
   priorities: {};
 
-  constructor(private _taskService: TaskService, private _formBuilder: FormBuilder, private router: Router) {
+  constructor(private _taskService: TaskService, private _formBuilder: FormBuilder, private router: Router, private toaster: MatSnackBar) {
     this._unsubscribeAll = new Subject();
   }
 
@@ -50,13 +50,6 @@ export class TaskComponent implements OnInit {
     })
   }
 
-  compareFn: ((f1: any, f2: any) => boolean) | null = this.compareByValue;
-
-  compareByValue(f1: any, f2: any) {
-    debugger;
-    return f1 && f2 && f1.name === f2.name;
-  }
-
   createTaskForm(): FormGroup {
     return this._formBuilder.group({
       id: [this.task.id],
@@ -71,22 +64,22 @@ export class TaskComponent implements OnInit {
   }
 
   saveTask() {
-    var task = this.taskForm.getRawValue();
+    var task = this.taskForm.value;
     this._taskService.saveTask(task).then((x: any) => {
+      this.toaster.open("Task created successfully", null, { duration: 4000 });
       this.router.navigate(['/task/' + x.id]);
     });
   }
 
   updateTask() {
-    debugger;
-    var task = this.taskForm.getRawValue();
+    var task = this.taskForm.value;
     this._taskService.updateTask(task).then((x: any) => {
+      this.toaster.open("Task updated successfully", null, { duration: 4000 });
       this.router.navigate(['/task/' + x.id]);
     });
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe from all subscriptions
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }
