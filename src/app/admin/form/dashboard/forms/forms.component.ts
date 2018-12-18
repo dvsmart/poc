@@ -6,6 +6,9 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { FormComponent } from '../form/form.component';
 import { FormRequestModel } from '../form/FormRequestModel';
+import { CategoryComponent } from '../category/category.component';
+import { DashboardService } from '../dashboard.service';
+import { CategoryRequestModel } from '../category/category';
 
 @Component({
   selector: 'app-forms',
@@ -18,8 +21,10 @@ export class FormsComponent implements OnInit {
   forms: any = null;
   categoryName: string;
   categoryId: number;
-  constructor(private formsService: FormsService, private route: ActivatedRoute, private _dialog: MatDialog,
-    private toaster: MatSnackBar) {
+  constructor(private formsService: FormsService, private route: ActivatedRoute, 
+    private _dialog: MatDialog,
+    private toaster: MatSnackBar,
+    private categoryService: DashboardService) {
     this._unsubscribeAll = new Subject();
     this.forms = null;
   }
@@ -33,8 +38,8 @@ export class FormsComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
         if (response && response.results && response.results.length > 0) {
-          this.forms = response.results; 
-        }else{
+          this.forms = response.results;
+        } else {
           this.forms = null;
         }
       });
@@ -55,6 +60,25 @@ export class FormsComponent implements OnInit {
       }
     });
   }
+
+  editCategory() {
+    const dialog = this._dialog.open(CategoryComponent, {
+      width: '400px',
+      data: { name: this.categoryName }
+    })
+    dialog.afterClosed().subscribe(result => {
+      if (result != undefined && result != "") {
+        let formRequest = new CategoryRequestModel(result, this.categoryId);
+        this.categoryService.updateCategory(formRequest).then(() => {
+          this.toaster.open("Category updated.", null, { duration: 2000, verticalPosition: 'top', horizontalPosition: 'center' });
+        });
+      }
+    });
+
+  }
+
+
+
   ngOnDestroy(): void {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();

@@ -34,6 +34,13 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.categoriesService.categories
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(response => {
+        if (response) {
+          this.categories = response;
+        }
+      });
     this.searchInput.valueChanges
       .pipe(
         takeUntil(this._unsubscribeAll),
@@ -52,16 +59,11 @@ export class DashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined && result!= "") {
+      if (result != undefined && result != "") {
         let categoryRequest = new CategoryRequestModel(result);
         this.categoriesService.saveCategory(categoryRequest);
       }
     });
-  }
-  
-
-  ngAfterViewInit() {
-    this.categories = this.categoriesService.getCategories();
   }
 
   toggleSidebar(name): void {
