@@ -45,14 +45,6 @@ export class ToolbarComponent implements OnInit {
     this.router.navigate(['account/login']);
   }
 
-  categories(){
-    this.router.navigate(['admin/formbuilder/categories']);
-  }
-
-  templates(){
-    this.router.navigate(['admin/formbuilder/templates']);
-  }
-
   form(){
     this.router.navigate(['admin/form/dashboard']);
   }

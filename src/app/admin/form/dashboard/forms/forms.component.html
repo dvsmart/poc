@@ -2,34 +2,57 @@
   <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="1 0 auto">
     <span>{{categoryName}}</span>
     <div>
-      <button mat-raised-button class="save-product-button mr-16" (click)="addNewForm()">
-        <mat-icon>settings</mat-icon>
-        <span>Edit Category</span>
-      </button>
-      <button mat-raised-button class="save-product-button" (click)="addNewForm()">
-        <mat-icon>create</mat-icon>
+      <ng-container *ngIf="canEditCategory">
+        <button mat-icon-button (click)="deleteCategory()">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-raised-button class="toolbar-button mr-8" (click)="editCategory()">
+          <mat-icon class="s-14 mr-8">settings</mat-icon>
+          <span>Edit Category</span>
+        </button>
+      </ng-container>
+
+      <button mat-raised-button class="toolbar-button" (click)="addNewForm()" *ngIf="canAddForms">
+        <mat-icon class="s-14 mr-8">create</mat-icon>
         <span>Create New Form</span>
       </button>
     </div>
   </div>
 </div>
-<ng-container *ngIf="forms">
-  <div class="toolbar px-24 py-8">
-    <mat-checkbox [(ngModel)]="selected" (ngModelChange)="onSelectedChange()" class="mr-16" fxFlex="0 1 auto" (click)="$event.stopPropagation()">
+<ng-container *ngIf="forms && formOptions">
+  <div class="toolbar px-24 py-8" [ngClass]="{disabled : !selection.hasValue()}">
+    <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+      [indeterminate]="selection.hasValue() && !isAllSelected()" class="mr-16" fxFlex="0 1 auto">
     </mat-checkbox>
-    <span class="mr-8">Move To</span>
-    <span class="mr-8">|</span>
-    <span class="mr-8">Copy</span>
-    <span class="mr-8">|</span>
-    <span class="mr-8">Delete</span>
-    <span class="mr-8">|</span>
-    <span class="mr-8">Archived</span>
+    <div *ngIf="restoreOption">
+      <button mat-button (click)="DeleteForms()" [disabled]="!selection.hasValue()">
+        <mat-icon>restore_from_trash</mat-icon><span class="mr-8">Restore</span>
+      </button>
+      <button mat-button (click)="DeleteForms()" [disabled]="!selection.hasValue()"> 
+        <mat-icon>delete_forever</mat-icon><span>Trash</span>
+      </button>
+    </div>
+    <div *ngIf="!restoreOption">
+      <button mat-button (click)="DeleteForms()" class="toolbar-button" [disabled]="!selection.hasValue()">
+        <mat-icon>shuffle</mat-icon><span class="mr-8">Move To</span>
+      </button>
+      <button mat-button (click)="DeleteForms()" class="toolbar-button" [disabled]="!selection.hasValue()">
+        <mat-icon>flip_to_front</mat-icon><span class="mr-8">Copy</span>
+      </button>
+      <button mat-button (click)="DeleteForms()" class="toolbar-button" [disabled]="!selection.hasValue()">
+        <mat-icon>delete</mat-icon><span class="mr-8">Delete</span>
+      </button>
+      <button mat-button (click)="ArchiveForms()" class="toolbar-button" [disabled]="!selection.hasValue()">
+        <mat-icon>archive</mat-icon><span class="mr-8">Archive</span>
+      </button>
+    </div>
   </div>
 </ng-container>
 
 <ng-container *ngIf="forms">
   <div fxLayout="row" fxLayoutAlign="start center" class="item" *ngFor="let link of forms">
-    <mat-checkbox [(ngModel)]="selected" (ngModelChange)="onSelectedChange()" class="mr-16" fxFlex="0 1 auto" (click)="$event.stopPropagation()">
+    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(link) : null" [checked]="selection.isSelected(link)"
+      class="mr-16" fxFlex="0 1 auto">
     </mat-checkbox>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex [routerLink]="['/admin/form/builder/' + link.id + '/' + link.name]">
       <div class="info" fxFlex fxFlexLayout="column">
@@ -59,7 +82,7 @@
     </div>
   </div>
 </ng-container>
-<ng-container *ngIf="!forms">
+<ng-container *ngIf="!forms && canAddForms">
   <div fxLayout="column" fxLayoutAlign="center center" fxFlex="1 0 auto">
     <p>This category is empty.</p>
     <div>

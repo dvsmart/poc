@@ -31,13 +31,14 @@ export class DashboardComponent implements OnInit {
     private _dialog: MatDialog) {
     this.searchInput = new FormControl('');
     this._unsubscribeAll = new Subject();
+    this.categories = null;
   }
 
   ngOnInit() {
     this.categoriesService.categories
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
-        if (response) {
+        if (response != undefined && response.length > 0) {
           this.categories = response;
         }
       });

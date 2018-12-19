@@ -5,7 +5,7 @@
     <input matInput [(ngModel)]="data.name" required>
   </mat-form-field>
 </div>
-<div mat-dialog-actions align="end" fxLayoutAlign="space-between center"> 
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.name" cdkFocusInitial>Ok</button>
+<div mat-dialog-actions align="end" fxLayoutAlign="space-between center">
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-button [mat-dialog-close]="data.name" cdkFocusInitial>Ok</button>
 </div>

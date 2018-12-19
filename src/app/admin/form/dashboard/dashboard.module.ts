@@ -7,6 +7,8 @@ import { FormsComponent } from './forms/forms.component';
 import { FormsService } from './forms/forms.service';
 import { CategoryComponent } from './category/category.component';
 import { FormComponent } from './form/form.component';
+import { FuseConfirmDialogComponent } from '@core/components/confirm-dialog/confirm-dialog.component';
+import { FuseConfirmDialogModule } from '@core/components/confirm-dialog/confirm-dialog.module';
 
 const routes: Routes = [
   {
@@ -24,7 +26,10 @@ const routes: Routes = [
         path: '**',
         redirectTo: 'folder/forms/uncategorised'
       }
-    ]
+    ],
+    resolve: {
+      categories: DashboardService
+    }
   },
   {
     path: 'builder',
@@ -36,9 +41,10 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CoreSharedModule,
+    FuseConfirmDialogModule,
     RouterModule.forChild(routes)
   ],
   declarations: [DashboardComponent, FormsComponent, CategoryComponent, FormComponent],
-  entryComponents: [CategoryComponent,FormComponent]
+  entryComponents: [CategoryComponent, FormComponent, FuseConfirmDialogComponent]
 })
 export class DashboardModule { }

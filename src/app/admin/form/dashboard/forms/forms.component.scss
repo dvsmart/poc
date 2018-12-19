@@ -26,3 +26,17 @@ app-forms {
     flex-shrink: 0;
     border-bottom-color: rgba(0, 0, 0, .12);
 }
+
+.disabled{
+    opacity: 0.5;
+}
+
+.toolbar:not(.disabled){
+    span{
+        cursor: pointer;
+    }
+}
+
+.toolbar-button{
+    font-size: 12px;
+}

@@ -34,20 +34,22 @@
                   <div class="title">Uncategorised</div>
                 </a>
               </div>
-              <div class="nav-item" aria-label="inbox" *ngFor="let link of categories" [routerLink]="['folder/' + link.id + '/' + link.name]"
-                routerLinkActive="accent">
-                <a class="nav-link">
-                  <mat-icon class="mr-8">web_asset</mat-icon>
-                  <span class="title text-truncate">{{ link.name }}</span>
-                </a>
-              </div>
-              <div class="nav-item" aria-label="Uncategorised" routerLink="folder/forms/archived" routerLinkActive="accent">
+              <ng-container *ngIf="categories">
+                <div class="nav-item" aria-label="inbox" *ngFor="let link of categories" [routerLink]="['folder/' + link.id + '/' + link.name]"
+                  routerLinkActive="accent">
+                  <a class="nav-link">
+                    <mat-icon class="mr-8">web_asset</mat-icon>
+                    <span class="title text-truncate">{{ link.name }}</span>
+                  </a>
+                </div>
+              </ng-container>
+              <div class="nav-item" aria-label="Archived" routerLink="folder/forms/archived" routerLinkActive="accent">
                 <a class="nav-link">
                   <mat-icon class="mr-8">archive</mat-icon>
                   <div class="title">Archived Forms</div>
                 </a>
               </div>
-              <div class="nav-item" aria-label="Uncategorised" routerLink="folder/forms/deleted" routerLinkActive="accent">
+              <div class="nav-item" aria-label="Deleted" routerLink="folder/forms/deleted" routerLinkActive="accent">
                 <a class="nav-link">
                   <mat-icon class="mr-8">delete</mat-icon>
                   <div class="title">Deleted Forms</div>
@@ -84,7 +86,7 @@
 
         <div class="search" flex fxLayout="row" fxLayoutAlign="start center">
           <mat-icon>search</mat-icon>
-          <input [formControl]="searchInput" placeholder="Search for a task" fxFlex>
+          <input [formControl]="searchInput" placeholder="Search for a form" fxFlex>
         </div>
       </div>
     </div>

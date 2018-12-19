@@ -31,6 +31,7 @@ form-dashboard {
         max-width: 480px;
         border-radius: 28px;
         overflow: hidden;
+        display: flex;
         @include media-breakpoint('gt-sm') {
             min-width: 300px;
         }
@@ -58,9 +59,9 @@ form-dashboard {
         }
     }
     .sidebar {
-        min-width: 440px !important;
+        min-width: 325px !important;
         @include media-breakpoint('gt-xs') {
-            max-width: 300px!important;
+            max-width: 300px !important;
         }
     }
 }

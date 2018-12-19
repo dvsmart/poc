@@ -48,16 +48,50 @@ export class FormsService {
   }
 
   getForms() {
-    if (this.routeParams.id === 'forms') {
-      this.getUncategorisedForms(1, 100)
+    if (this.routeParams.id === 'forms' && this.routeParams.slug === 'uncategorised') {
+      this.getUncategorisedForms(1, 20)
+    } else if (this.routeParams.id === 'forms' && this.routeParams.slug === 'deleted') {
+      this.getDeletedForms(1, 20);
+    } else if (this.routeParams.id === 'forms' && this.routeParams.slug === 'archived') {
+      this.getArchivedForms(1, 20);
     } else {
-      this.getCategorisedForms(this.routeParams.id, 1, 100);
+      this.getCategorisedForms(this.routeParams.id, 1, 20);
     }
   }
 
   getUncategorisedForms(page, pageSize): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'FormCategories/uncategorised?page=' + page + '&pageSize=' + pageSize)
+      this._httpClient.get<any>(environment.apiUrl + 'Forms/uncategorised?page=' + page + '&pageSize=' + pageSize)
+        .subscribe((response: any) => {
+          if (this.searchText && this.searchText !== '') {
+            response.Results = FuseUtils.filterArrayByString(response.Results, this.searchText);
+            this.forms.next(response);
+          } else {
+            this.forms.next(response);
+          }
+          resolve(response);
+        }, reject);
+    });
+  }
+
+  getDeletedForms(page, pageSize): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._httpClient.get<any>(environment.apiUrl + 'Forms/deleted??page=' + page + '&pageSize=' + pageSize)
+        .subscribe((response: any) => {
+          if (this.searchText && this.searchText !== '') {
+            response.Results = FuseUtils.filterArrayByString(response.Results, this.searchText);
+            this.forms.next(response);
+          } else {
+            this.forms.next(response);
+          }
+          resolve(response);
+        }, reject);
+    });
+  }
+
+  getArchivedForms(page, pageSize): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._httpClient.get<any>(environment.apiUrl + 'Forms/archived?page=' + page + '&pageSize=' + pageSize)
         .subscribe((response: any) => {
           if (this.searchText && this.searchText !== '') {
             response.Results = FuseUtils.filterArrayByString(response.Results, this.searchText);
@@ -72,9 +106,29 @@ export class FormsService {
 
   getCategorisedForms(id, page?, pageSize?): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(`${environment.apiUrl}FormCategories/${id}?page=${page}&pageSize=${pageSize}`)
+      this._httpClient.get<any>(`${environment.apiUrl}Forms/${id}?page=${page}&pageSize=${pageSize}`)
         .subscribe((response: any) => {
           this.forms.next(response);
+          resolve(response);
+        }, reject);
+    });
+  }
+
+  deleteSelectedForms(ids: any) {
+    return new Promise((resolve, reject) => {
+      this._httpClient.post<any>(`${environment.apiUrl}Forms/delete?ids=`, { ids })
+        .subscribe((response: any) => {
+          this.getForms();
+          resolve(response);
+        }, reject);
+    });
+  }
+
+  archiveSelectedForms(ids: any) {
+    return new Promise((resolve, reject) => {
+      this._httpClient.post<any>(`${environment.apiUrl}Forms/archive?ids=`, { ids })
+        .subscribe((response: any) => {
+          this.getForms();
           resolve(response);
         }, reject);
     });
