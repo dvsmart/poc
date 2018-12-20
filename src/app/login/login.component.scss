@@ -70,6 +70,9 @@ login {
                     mat-checkbox {
                         margin: 0;
                     }
+                    .login-field {
+                        opacity: 0.4;
+                    }
                     .remember-forgot-password {
                         font-size: 13px;
                         margin-top: 8px;
@@ -83,7 +86,7 @@ login {
                         }
                     }
                     .submit-button {
-                        width: 100%;
+                        width: 80%;
                         margin: 16px auto;
                         display: block;
                         @include media-breakpoint('xs') {

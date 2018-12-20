@@ -25,15 +25,15 @@ export class MenuItemModel {
     constructor(data?) {
         data = data || {};
         this.id = data.id | 0;
-        this.caption = data.caption;
-        this.iconName = data.iconName;
+        this.caption = data.title;
+        this.iconName = data.icon;
         this.hasChildren = data.hasChildren || false;
         this.sortOrder = data.sortOrder;
-        this.menuGroupId = data.menuGroupId;
+        this.menuGroupId = data.groupId;
         this.parentId = data.parentId;
         this.isVisible = data.isVisible || true;
         this.route = data.route;
-        this.groupName = data.menuGroupName;
+        this.groupName = data.menuGroupName != undefined ? data.menuGroupName : '';
     }
 }
 

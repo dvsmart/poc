@@ -9,7 +9,6 @@ import { MenuItemModel } from '../../model/menu.model';
   providedIn: 'root'
 })
 export class MenuListService {
-  menuList: any[];
   onMenuItemsChanged: BehaviorSubject<any>;
   constructor(private _httpClient: HttpClient) {
     this.onMenuItemsChanged = new BehaviorSubject({});
@@ -30,13 +29,22 @@ export class MenuListService {
 
   getMenuItems(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'MenuItem')
+      this._httpClient.get<any>(`${environment.apiUrl}menu/all`)
         .subscribe(response => {
-          this.menuList = response;
-          this.onMenuItemsChanged.next(this.menuList);
-          resolve(this.menuList);
+          this.onMenuItemsChanged.next(response);
+          resolve(response);
         }, reject);
     }
     );
+  }
+
+  deleteMenuItem(id:number):Promise<any>{
+    return new Promise((resolve, reject) => {
+      this._httpClient.delete(`${environment.apiUrl}menu?id=${id}`)
+        .subscribe(response => {
+          this.getMenuItems();
+          resolve(response);
+        }, reject);
+    });
   }
 }

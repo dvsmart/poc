@@ -54,7 +54,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   menu(){
-    this.router.navigate(['admin/menuManagement']);
+    this.router.navigate(['admin/menu/setup']);
   }
 
   ngOnInit() {

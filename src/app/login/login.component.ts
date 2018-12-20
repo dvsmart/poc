@@ -18,12 +18,9 @@ export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     returnUrl: string;
     error:string;
-    /**
-     * Constructor
-     *
-     * @param {FuseConfigService} _fuseConfigService
-     * @param {FormBuilder} _formBuilder
-     */
+   
+    loading: boolean;
+
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
@@ -48,10 +45,12 @@ export class LoginComponent implements OnInit {
         if (this.loginForm.invalid) {
             return;
         }
+        this.loading = true;
         this.authservice.login(this.loginForm.value)
             .pipe(first())
             .subscribe(
                 data => {
+                    this.loading = false;
                     this.userIdle.startWatching();
                     this.router.navigate([this.returnUrl]);
                 },

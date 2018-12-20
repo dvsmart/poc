@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { MatPaginator, MatSort } from '@angular/material';
-import { Subject, fromEvent, BehaviorSubject, Observable, merge } from 'rxjs';
+import { MatPaginator, MatSort, MatTableDataSource, MatDialog, MatSnackBar } from '@angular/material';
+import { Subject, fromEvent } from 'rxjs';
 import { MenuListService } from './menu-list.service';
-import { takeUntil, debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
-import { DataSource } from '@angular/cdk/table';
-import { FuseUtils } from '@core/utils';
+import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { fuseAnimations } from '@core/animations';
+import { FuseConfirmDialogComponent } from '@core/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-menu-list',
@@ -14,8 +13,8 @@ import { fuseAnimations } from '@core/animations';
   animations: fuseAnimations
 })
 export class MenuListComponent implements OnInit {
-  dataSource: FilesDataSource | null;
-  displayedColumns = ['id','title','url','parentMenuItemName','type','icon','hasChildren','sortOrder','isVisible','addedDate'];
+  dataSource: MatTableDataSource<any>;
+  displayedColumns = ['id','title','route','type','icon','parentName','isVisible','delete'];
 
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
@@ -30,12 +29,22 @@ export class MenuListComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
 
   constructor(
-    private _menuListService: MenuListService
+    private _menuListService: MenuListService,
+    private _dialog: MatDialog,
+    private toaster: MatSnackBar
   ) {
     this._unsubscribeAll = new Subject();
   }
   ngOnInit() {
-    this.dataSource = new FilesDataSource(this._menuListService, this.paginator, this.sort);
+    this._menuListService.onMenuItemsChanged
+    .pipe(takeUntil(this._unsubscribeAll))
+    .subscribe(list=>{
+      debugger;
+      this.dataSource = new MatTableDataSource<any>(list);
+      this.dataSource.paginator = this.paginator;
+    })
+
+    
     fromEvent(this.filter.nativeElement, 'keyup')
       .pipe(
         takeUntil(this._unsubscribeAll),
@@ -49,110 +58,28 @@ export class MenuListComponent implements OnInit {
         this.dataSource.filter = this.filter.nativeElement.value;
       });
   }
-}
 
-export class FilesDataSource extends DataSource<any>
-{
-  private _filterChange = new BehaviorSubject('');
-  private _filteredDataChange = new BehaviorSubject('');
-  private _paginatedData = new BehaviorSubject('');
+  DeleteMenu(item: any){
+    const dialogRef = this._dialog.open(FuseConfirmDialogComponent,{
+      disableClose: false
+    });
 
-  constructor(
-    private _menuListService: MenuListService,
-    private _matPaginator: MatPaginator,
-    private _matSort: MatSort
-  ) {
-    super();
+    dialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete this Menu ' +
+      item.title + '? The menu item will be taken from your navigation menu';
 
-    this.filteredData = this._menuListService.menuList;
-    this.paginatedData = this._menuListService.menuList.length;
-  }
-
-  connect(): Observable<any[]> {
-    const displayDataChanges = [
-      this._matPaginator.page,
-      this._filterChange,
-      this._matSort.sortChange
-    ];
-
-    this._matSort.sortChange.subscribe(() => this._matPaginator.pageIndex = 0)
-    return merge(...displayDataChanges)
-      .pipe(
-        switchMap(() => {
-          return this._menuListService.getMenuItems();
-        }),
-        map(() => {
-          let data = this._menuListService.menuList;
-
-          data = this.filterData(data);
-
-          this.filteredData = [...data];
-
-          data = this.sortData(data);
-
-          // Grab the page's slice of data.
-          return data;
-        }
-        ));
-  }
-
-  get filteredData(): any {
-    return this._filteredDataChange.value;
-  }
-
-  set filteredData(value: any) {
-    this._filteredDataChange.next(value);
-  }
-
-  get paginatedData() {
-    return this._paginatedData.value;
-  }
-
-  set paginatedData(value: any) {
-    this._paginatedData.next(value);
-  }
-
-  // Filter
-  get filter(): string {
-    return this._filterChange.value;
-  }
-
-  set filter(filter: string) {
-    this._filterChange.next(filter);
-  }
-
-  filterData(data): any {
-    if (!this.filter) {
-      return data;
-    }
-    return FuseUtils.filterArrayByString(data, this.filter);
-  }
-
-  sortData(data): any[] {
-    if (!this._matSort.active || this._matSort.direction === '') {
-      return data;
-    }
-
-    return data.sort((a, b) => {
-      let propertyA: number | string = '';
-      let propertyB: number | string = '';
-
-      switch (this._matSort.active) {
-        case 'title':
-          [propertyA, propertyB] = [a.title, b.title];
-          break;
-        case 'url':
-          [propertyA, propertyB] = [a.url, b.url];
-          break;
+    dialogRef.afterClosed().subscribe(result => {
+      if(result && result != undefined){
+        this._menuListService.deleteMenuItem(item.id).then(x=>{
+          this.toaster.open("Menu deleted.", 'Done',
+              { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center' });
+        })
       }
-
-      const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
-      const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
-
-      return (valueA < valueB ? -1 : 1) * (this._matSort.direction === 'asc' ? 1 : -1);
     });
   }
 
-  disconnect(): void {
+
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 }

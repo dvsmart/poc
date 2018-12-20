@@ -58,11 +58,6 @@ export class MenuComponent implements OnInit {
       })
   }
 
-  compareFn: ((f1: any, f2: any) => boolean) | null = this.compareByValue;
-
-  compareByValue(f1: any, f2: any) {
-    return f1 && f2 && f1.value === f2.value;
-  }
 
   createMenuForm(): FormGroup {
     return this._formBuilder.group({
@@ -81,7 +76,7 @@ export class MenuComponent implements OnInit {
 
 
   addMenu() {
-    const data = this.menuForm.getRawValue();
+    const data = this.menuForm.value;
     this._menuservice.addMenu(data)
       .then(x => {
         if (x != null) {
@@ -90,7 +85,7 @@ export class MenuComponent implements OnInit {
             verticalPosition: 'top',
             duration: 2000
           });
-          this._location.go('/settings/menuManagement/menu/' + x.id);
+          this._location.go('/admin/menu/setup/' + x.id);
         }
       });
   }
@@ -108,5 +103,11 @@ export class MenuComponent implements OnInit {
           this._location.go('/settings/menuManagement/menu/' + x.id);
         }
       });
+  }
+
+
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 }

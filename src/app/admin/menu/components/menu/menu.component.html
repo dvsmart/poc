@@ -3,7 +3,7 @@
   <div class="center">
     <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
       <div fxLayout="row" fxLayoutAlign="start center">
-        <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/admin/setup/menuManagement'">
+        <button mat-icon-button class="mr-0 mr-sm-16" routerLink="/admin/menu/setup">
           <mat-icon>arrow_back</mat-icon>
         </button>
         <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
@@ -52,16 +52,16 @@
                     <mat-checkbox formControlName="isVisible">Is Visible</mat-checkbox>
                 </div>
                 <mat-form-field class="w-100-p">
-                  <mat-select placeholder="Menu Groups" formControlName='menuGroupId' [compareWith]="compareFn">
+                  <mat-select placeholder="Menu Groups" formControlName='menuGroupId'>
                     <mat-option *ngFor="let group of menuGroups" [value]="group.id">
                       {{group.name}}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field class="w-100-p">
-                  <mat-select placeholder="Parent Menu" formControlName='parentId' [compareWith]="compareFn">
+                  <mat-select placeholder="Parent Menu" formControlName='parentId'>
                     <mat-option *ngFor="let parentMenuItem of parentMenuItems" [value]="parentMenuItem.id">
-                      {{parentMenuItem.name}}
+                      {{parentMenuItem.title}}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>

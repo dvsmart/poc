@@ -5,17 +5,19 @@ import { MenuListService } from './components/menu-list/menu-list.service';
 import { MenuService } from './components/menu/menu.service';
 import { Routes, RouterModule } from '@angular/router';
 import { CoreSharedModule } from '@core/core.module';
+import { FuseConfirmDialogComponent } from '@core/components/confirm-dialog/confirm-dialog.component';
+import { FuseConfirmDialogModule } from '@core/components/confirm-dialog/confirm-dialog.module';
 
 const menuRoutes: Routes = [
   {
-    path: '',
+    path: 'setup',
     component: MenuListComponent,
     resolve: {
       properties: MenuListService
     }
   },
   {
-    path: 'menu/:id',
+    path: 'setup/:id',
     component: MenuComponent,
     resolve: {
       property: MenuService
@@ -27,8 +29,10 @@ const menuRoutes: Routes = [
 @NgModule({
   imports: [
     CoreSharedModule,
+    FuseConfirmDialogModule,
     RouterModule.forChild(menuRoutes)
   ],
-  declarations: [MenuListComponent, MenuComponent]
+  declarations: [MenuListComponent, MenuComponent],
+  entryComponents: [FuseConfirmDialogComponent]
 })
 export class MenuModule { }

@@ -40,7 +40,7 @@ export class PropertyService {
         resolve(false);
       }
       else {
-        this._httpClient.get<CreateAssetPropertyRequest>(environment.apiUrl + 'AssetProperties/' + this.routeParams.id)
+        this._httpClient.get<CreateAssetPropertyRequest>(environment.apiUrl + 'Properties/' + this.routeParams.id)
           .subscribe((response: CreateAssetPropertyRequest) => {
             this.property = response;
             this.onPropertyChanged.next(this.property);
@@ -53,7 +53,7 @@ export class PropertyService {
 
   updateProperty(propertyModel: CreateAssetPropertyRequest): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.put(environment.apiUrl + 'AssetProperties', { ...propertyModel })
+      this._httpClient.put(environment.apiUrl + 'Properties', { ...propertyModel })
         .subscribe((response: any) => {
           resolve(response);
         }, reject);
@@ -62,7 +62,7 @@ export class PropertyService {
 
   addProperty(propertyModel: CreateAssetPropertyRequest): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.post(environment.apiUrl + 'AssetProperties', { ...propertyModel })
+      this._httpClient.post(environment.apiUrl + 'Properties', { ...propertyModel })
         .subscribe((response: any) => {
           resolve(response);
         }, reject);

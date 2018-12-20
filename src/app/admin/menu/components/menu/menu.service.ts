@@ -44,14 +44,16 @@ export class MenuService {
   }
 
   getMenuGroup() {
-    return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'MenuGroup')
-        .subscribe(response => {
-          this.menuGroupChanged.next(response);
-          resolve(response);
-        }, reject);
-    }
-    );
+    // return new Promise((resolve, reject) => {
+    //   this._httpClient.get<any>(environment.apiUrl + 'MenuGroup')
+    //     .subscribe(response => {
+    //       this.menuGroupChanged.next(response);
+    //       resolve(response);
+    //     }, reject);
+    // }
+    // );
+    let groups = this.getMenuGroups();
+    this.menuGroupChanged.next(groups);
   }
 
   getMenuItem(): Promise<any> {
@@ -73,14 +75,10 @@ export class MenuService {
 
   getParentMenuItems(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'MenuItem')
+      this._httpClient.get<any>(environment.apiUrl + 'Menu/Parents')
         .subscribe(response => {
-          response = response.filter(x=> x.hasChildren === true && x.type === 'collapsable');
-          this.parentMenuItems = response.map(item => {
-            return new MenuItem(item);
-          });
-          this.menuParentChanged.next(this.parentMenuItems);
-          resolve(this.parentMenuItems);
+          this.menuParentChanged.next(response);
+          resolve(response);
         }, reject);
     }
     );
@@ -91,6 +89,7 @@ export class MenuService {
       this._httpClient.put(environment.apiUrl + 'Menu', { ...menuItem })
         .subscribe((response: any) => {
           this.onMenuItemChanged.next(response);
+          localStorage.removeItem("menu");
           resolve(response);
         }, reject);
     });
@@ -101,9 +100,20 @@ export class MenuService {
       this._httpClient.post(environment.apiUrl + 'Menu', { ...menuItem })
         .subscribe((response: any) => {
           this.onMenuItemChanged.next(response);
+          localStorage.removeItem("menu");
           resolve(response);
         }, reject);
     });
+  }
+
+  private getMenuGroups(){
+    return [{
+      id: 1,name:'Group',
+    },{
+      id: 2, name: 'item'
+    },{
+      id: 3, name: 'collapsable'
+    }]
   }
  
 }

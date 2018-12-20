@@ -32,7 +32,7 @@ export class PropertiesService {
 
   getProperties(page?: number, size?: number): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<PagedResult>(environment.apiUrl + 'AssetProperties?page=' + page + '&pageSize=' + size)
+      this._httpClient.get<PagedResult>(environment.apiUrl + 'Properties?page=' + page + '&pageSize=' + size)
         .subscribe((response: PagedResult) => {
           this.propertiesResult = response;
           this.properties = response.data;
