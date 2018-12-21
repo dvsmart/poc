@@ -23,6 +23,8 @@ export class ToolbarComponent implements OnInit {
   selectedLanguage: any;
   languages: any;
 
+  currentUser: string;
+
   constructor(private _fuseSidebarService: FuseSidebarService, private _fuseConfigService: FuseConfigService,
   private authservice: AuthService,private router: Router) {
     this._unsubscribeAll = new Subject();
@@ -38,6 +40,7 @@ export class ToolbarComponent implements OnInit {
         flag: 'tr'
       }
     ];
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
   logout(){

@@ -91,7 +91,6 @@ export class UserIdleService {
    * Start watching for user idle and setup timer and ping.
    */
   startWatching() {
-    debugger;
     if (this.idleSubscription) {
       this.idleSubscription.unsubscribe();
     }
