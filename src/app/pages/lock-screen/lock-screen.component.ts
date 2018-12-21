@@ -4,6 +4,7 @@ import { AuthService } from '../../login/auth.service';
 import { first } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { fuseAnimations } from '@core/animations';
+import { UserIdleService } from 'app/login/timeout/idle.service';
 
 @Component({
     selector: 'app-lock-screen',
@@ -40,14 +41,13 @@ export class LockScreenComponent implements OnInit {
         if (this.lockForm.invalid) {
             return;
         }
-        this.authservice.login(this.lockForm.value)
-            .pipe(first())
-            .subscribe(
-                data => {
-                    this.router.navigate([this.returnUrl]);
-                },
-                error => {
-                    this.error = error;
-                });
+        this.authservice.authenticate(this.lockForm.value).pipe(first())
+        .subscribe(
+            data => {
+                this.router.navigate([this.returnUrl]);
+            },
+            error => {
+                this.error = error;
+            });
     }
 }

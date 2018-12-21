@@ -33,7 +33,6 @@ export class CoreNavigationComponent {
             .subscribe(() => {
                 // Load the navigation
                 this.navigation = this._navigationService.getCurrentNavigation();
-                console.log(this.navigation);
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
             });

@@ -123,15 +123,15 @@ export class FieldComponent implements OnInit {
   }
 
   saveFieldType() {
-    var selectedFieldType = this.fieldTypeForm.getRawValue();
+    var selectedFieldType = this.fieldTypeForm.value;
     this.fieldService.getFieldType(selectedFieldType.fieldType);
   }
 
   saveField() {
-    var formFieldData = this.fieldGeneralForm.getRawValue();
+    var formFieldData = this.fieldGeneralForm.value;
     var data = new FormFieldRequestModel(formFieldData);
-    data.fieldTypeId = this.fieldTypeForm.getRawValue().fieldType;
-    data.formFieldSpecificRequestModel = new FormFieldSpecificRequestModel(this.fieldSpecificForm.getRawValue());
+    data.fieldTypeId = this.fieldTypeForm.value.fieldType;
+    data.formFieldSpecificRequestModel = new FormFieldSpecificRequestModel(this.fieldSpecificForm.value);
     this.fieldOption.forEach(element => {
       var option = new FieldOptionRequestModel(element);
       data.formFieldSpecificRequestModel.fieldOptions.push(option);

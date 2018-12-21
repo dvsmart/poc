@@ -13,16 +13,10 @@ export class AdminGuard implements CanActivate {
     canActivate(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
-        return this.authservice._isLoggedIn.pipe(
-            take(1),
-            map((isLoggedIn: boolean) => {
-                if (!isLoggedIn) {
-                    this.router.navigate(['account/login'], { queryParams: { returnUrl: state.url } });
-                    return false;
-                }
-                return true;
-            })
-        );
+        if(this.authservice.authenticated){
+            return true;
+        }
+        return false;
     }
 
 }

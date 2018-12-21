@@ -23,6 +23,8 @@ import {
   tap
 } from 'rxjs/operators';
 import { UserIdleConfig } from './idle.config';
+import { MatDialog } from '@angular/material';
+import { LockScreenComponent } from 'app/pages/lock-screen/lock-screen.component';
 
 /**
  * User's idle service.
@@ -68,11 +70,12 @@ export class UserIdleService {
 
   protected idleSubscription: Subscription;
 
-  constructor(@Optional() config: UserIdleConfig) {
+  constructor(@Optional() config: UserIdleConfig,private _matDialog: MatDialog) {
     if (config) {
       this.idle = config.idle;
       this.timeout = config.timeout;
       this.ping = config.ping;
+      
     }
 
     this.activityEvents$ = merge(
@@ -88,6 +91,7 @@ export class UserIdleService {
    * Start watching for user idle and setup timer and ping.
    */
   startWatching() {
+    debugger;
     if (this.idleSubscription) {
       this.idleSubscription.unsubscribe();
     }
@@ -103,7 +107,13 @@ export class UserIdleService {
             merge(
               this.activityEvents$,
               timer(this.idle * 1000).pipe(
-                tap(() => this.timerStart$.next(true))
+                tap(() => {
+                  //alert("You have been inactivity for 10 sec");
+                  // this._matDialog.open(LockScreenComponent ,{
+                  //   disableClose:true
+                  // });
+                  this.timerStart$.next(true)
+                })
               )
             )
           ),

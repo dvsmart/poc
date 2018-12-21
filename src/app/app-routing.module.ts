@@ -43,11 +43,6 @@ const appRoutes: Routes = [
                 loadChildren: './features/calendar/calendar.module#CalendarModule',
                 data: { preload: false, delay: true }
             },
-            // {
-            //     path: 'todo',
-            //     loadChildren: './features/todo/todo.module#TodoModule',
-            //     data: { preload: false, delay: false }
-            // },
             {
                 path: 'task',
                 loadChildren: './features/tasks/task.module#TaskModule',
@@ -66,19 +61,19 @@ const appRoutes: Routes = [
         ]
     },
     {
-        path: '',
+        path: 'account',
         component: SiteLayoutComponent,
         children: [
             {
-                path: 'account/login',
+                path: 'login',
                 loadChildren: './login/login.module#LoginModule',
             },
             {
-                path: 'account/forgot-password',
+                path: 'forgot-password',
                 loadChildren: './pages/forgot-password/forgot-password.module#ForgotPasswordModule',
             },
             {
-                path: 'account/lock',
+                path: 'lock',
                 loadChildren: './pages/lock-screen/lock-screen.module#LockModule',
             },
 

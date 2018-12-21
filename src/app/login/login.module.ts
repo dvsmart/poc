@@ -27,7 +27,6 @@ const routes: Routes = [
     MatInputModule,
     FlexLayoutModule,
     FuseDirectivesModule,
-    UserIdleModule.forRoot({idle: 600, timeout: 300, ping: 120}),
     RouterModule.forChild(routes),
   ],
   declarations: [LoginComponent],

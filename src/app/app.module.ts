@@ -18,6 +18,7 @@ import { Error404Component } from './pages/errors/error404/error404.component';
 import { CookieService } from 'ngx-cookie-service';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { DataService } from './MockData/data.service';
+import { UserIdleModule } from './login/timeout/idle.module';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { DataService } from './MockData/data.service';
     CoreSidebarModule,
     LayoutModule,
     CoreSharedModule.forRoot(fuseConfig),
+    UserIdleModule.forRoot({idle: 10, timeout: 15, ping: 120}),
     AppRoutingModule
   ],
   providers: [

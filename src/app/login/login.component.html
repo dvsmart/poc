@@ -26,9 +26,7 @@
             </div>
 
             <div class="title">LOGIN TO YOUR ACCOUNT</div>
-            <div fxLayout="column" fxLayoutAlign="start center" *ngIf="error && loginForm.valid">
-                <span class="text error-message">{{error}}</span>
-            </div>
+
             <form name="loginForm" [formGroup]="loginForm" novalidate (ngSubmit)="onLogin()">
 
                 <div>
@@ -60,11 +58,13 @@
                         Forgot Password?
                     </a>
                 </div>
+                <div fxLayout="column" fxLayoutAlign="start center" class="mat-error" *ngIf="error">
+                    <span class="text error-message">{{error}}</span>
+                </div>
                 <div fxLayout="row" fxLayoutAlign="start center">
                     <mat-spinner mode="indeterminate" *ngIf="loading" [strokeWidth]="3" [diameter]="25"></mat-spinner>
 
-                    <button mat-raised-button color="accent" class="submit-button" aria-label="LOGIN"
-                        [disabled]="loginForm.invalid">
+                    <button mat-raised-button color="accent" class="submit-button" aria-label="LOGIN" [disabled]="loginForm.invalid">
                         LOGIN
                     </button>
                 </div>

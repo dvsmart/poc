@@ -8,11 +8,11 @@ import 'rxjs/add/operator/catch';
 export class JwtInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // add authorization header with jwt token if available
-        let currentUser = localStorage.getItem('currentUser') != null ? JSON.parse(localStorage.getItem('currentUser')) : null;
-        if (currentUser && currentUser.token) {
+        let token = sessionStorage.getItem('token');
+        if (token) {
             request = request.clone({
                 setHeaders: {
-                    Authorization: `Bearer ${currentUser.token}`
+                    Authorization: `Bearer ${token}`
                 }
             });
         }
@@ -20,7 +20,7 @@ export class JwtInterceptor implements HttpInterceptor {
             .catch((error, caught) => {
                 if (error instanceof HttpErrorResponse) {
                     if (error.status === 401) {
-                        //this.router.navigate(['account/login'], { queryParams: { returnUrl: this.state.url } });
+                        location.reload(true);
                     }
                 }
                 return Observable.throw(error);

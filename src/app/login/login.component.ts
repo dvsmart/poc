@@ -4,23 +4,23 @@ import { AuthService } from './auth.service';
 import { FuseConfigService } from '@core/services/config.service';
 import { FormGroup, FormBuilder, Validators } from '../../../node_modules/@angular/forms';
 import { Router, ActivatedRoute } from '../../../node_modules/@angular/router';
-import { first } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { UserIdleService } from './timeout/idle.service';
+import { pipe, Subject } from 'rxjs';
 
 @Component({
     selector: 'login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
-    encapsulation:ViewEncapsulation.None,
+    encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     returnUrl: string;
-    error:string;
-   
+    error: string;
     loading: boolean;
-
+    private _unsubscribeAll: Subject<any>;
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
@@ -29,7 +29,11 @@ export class LoginComponent implements OnInit {
         private route: ActivatedRoute,
         private userIdle: UserIdleService
     ) {
-        
+        this._unsubscribeAll = new Subject();
+        if (this.authservice.authenticated) {
+            this.router.navigate(['/']);
+        }
+
     }
 
     ngOnInit(): void {
@@ -39,24 +43,27 @@ export class LoginComponent implements OnInit {
             username: ['', [Validators.required]],
             password: ['', Validators.required]
         });
+
     }
 
     onLogin() {
         if (this.loginForm.invalid) {
+            this.error = 'Username & password are required.'
             return;
         }
         this.loading = true;
-        this.authservice.login(this.loginForm.value)
-            .pipe(first())
-            .subscribe(
-                data => {
-                    this.loading = false;
-                    this.userIdle.startWatching();
-                    this.router.navigate([this.returnUrl]);
-                },
-                error => {
-                    this.error = error;
-                });
+        this.authservice.authenticate(this.loginForm.value)
+        .pipe(first())
+        .subscribe(
+            data => {
+                this.router.navigate([this.returnUrl]);
+                //this.userIdle.startWatching();
+            },
+            error => {
+                this.error = error;
+                this.loading = false;
+            });
+
     }
 
 }

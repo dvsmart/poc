@@ -8,34 +8,41 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  
-  _isLoggedIn = new BehaviorSubject<boolean>(this.hasLoggedIn());
+
+  isAuthenticated = new BehaviorSubject<boolean>(this.hasLoggedIn());
   api = environment.apiUrl + 'Membership/Authenticate'
   constructor(private http: HttpClient) {
-    
   }
 
-  login(loginform: any) {
-    return this.http.post<any>(this.api, loginform).pipe(map(user => {
-      if (user && user.token) {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this._isLoggedIn.next(true);
-      }
-    }));
+
+  authenticate(loginForm: any) {
+    return this.http.post<any>(this.api, loginForm)
+      .pipe(map(user => {
+        // login successful if there's a jwt token in the response
+        if (user && user.token) {
+          debugger;
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          sessionStorage.setItem('token', user.token);
+          this.isAuthenticated.next(true);
+        }
+
+        return user;
+      }));
   }
 
   private hasLoggedIn() {
-    var userInfo = JSON.parse(localStorage.getItem('currentUser'));
-    return !!userInfo;
+    debugger;
+    return !!sessionStorage.getItem('token');
+  }
+  
+  public get authenticated(): boolean {
+    return this.isAuthenticated.value;
   }
 
-  isLoginSuccessful() {
-    return this._isLoggedIn.asObservable();
-  }
 
   logout() {
-    localStorage.removeItem('currentUser');
-    localStorage.clear();
-    this._isLoggedIn.next(false);
+    sessionStorage.removeItem('token');
+    sessionStorage.clear();
+    this.isAuthenticated.next(null);
   }
 }

@@ -38,14 +38,10 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.authservice._isLoggedIn
-    .pipe(takeUntil(this._unsubscribeAll))
-    .subscribe(x=>{
-      if(x){
-        this.isAuth = x;
-        this._navigationservice.getMenuItems();
-      }
-    })
+    debugger;
+    if(this.authservice.authenticated){
+      this._navigationservice.getMenuItems();
+    }
 
     // this._hubConnection = new HubConnectionBuilder()
     //     .withUrl('http://localhost:50001' + '/notify')
