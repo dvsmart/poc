@@ -95,8 +95,8 @@ export class FilesDataSource extends DataSource<any>
     private _matSort: MatSort
   ) {
     super();
-    this.filteredData = this._userservice.usersResult.data;
-    this.paginatedData = this._userservice.usersResult.totalCount;
+    this.filteredData = this._userservice.usersResult.results;
+    this.paginatedData = this._userservice.usersResult.rowCount;
   }
 
   connect(): Observable<any[]> {

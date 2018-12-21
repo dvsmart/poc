@@ -10,6 +10,8 @@ export class FuseConfirmDialogComponent
 {
     public confirmMessage: string;
     public confirmTitle:string;
+    public extraCondition:boolean;
+    public extraConditionText:string;
 
     /**
      * Constructor
@@ -22,4 +24,8 @@ export class FuseConfirmDialogComponent
     {
     }
 
+
+    onConfirm(){
+        this.dialogRef.close({'confirm':true,'extra':this.extraCondition});
+    }
 }

@@ -7,6 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-properties-form',
@@ -24,7 +25,7 @@ export class PropertiesFormComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _matSnackBar: MatSnackBar,
     private _propertyservice: PropertyService,
-    private _location: Location
+    private _location: Router
   ) {
     // Set the private defaults
     this._unsubscribeAll = new Subject();
@@ -67,38 +68,18 @@ export class PropertiesFormComponent implements OnInit {
   }
 
   saveProperty(): void {
-    const data = this.propertyForm.getRawValue();
+    const data = this.propertyForm.value;
     this._propertyservice.updateProperty(data)
       .then(x => {
-        if (x['saveSuccessful'] === true) {
-          data.id = parseInt(x['recordId']);
-          data.assetId = parseInt(x['savedEntityId']);
-          data.dataId = x["savedDataId"];
-          this._propertyservice.onPropertyChanged.next(data);
-          this._matSnackBar.open('Property saved', 'OK', {
-            verticalPosition: 'top',
-            duration: 2000
-          });
-          this._location.go('/asset/property/' + data.id);
-        }
+        this._location.navigate(['/asset/properties/' + x.id]);
       });
   }
 
   addProperty(): void {
-    const data = this.propertyForm.getRawValue();
+    const data = this.propertyForm.value;
     this._propertyservice.addProperty(data)
       .then(x => {
-        if (x['saveSuccessful'] === true) {
-          data.id = parseInt(x['recordId']);
-          data.assetId = parseInt(x['savedEntityId']);
-          data.dataId = x["savedDataId"];
-          this._propertyservice.onPropertyChanged.next(data);
-          this._matSnackBar.open('Property added', 'OK', {
-            verticalPosition: 'top',
-            duration: 2000
-          });
-          this._location.go('/asset/property/' + data.id);
-        }
+        this._location.navigate(['/asset/properties/' + x.id]);
       });
   }
 }

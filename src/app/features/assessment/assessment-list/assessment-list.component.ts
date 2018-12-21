@@ -65,7 +65,7 @@ export class FilesDataSource extends DataSource<any>
     private _matSort: MatSort
   ) {
     super();
-    this.filteredData = this._assessmentssservice.assessmentsResult ? this._assessmentssservice.assessmentsResult.data : 0;
+    this.filteredData = this._assessmentssservice.assessmentsResult ? this._assessmentssservice.assessmentsResult.rowCount : 0;
   }
 
   connect(): Observable<any[]> {
@@ -85,7 +85,7 @@ export class FilesDataSource extends DataSource<any>
           })
         }),
         map(() => {
-          let data = this._assessmentssservice.assessmentsResult ? this._assessmentssservice.assessmentsResult.data : null;
+          let data = this._assessmentssservice.assessmentsResult ? this._assessmentssservice.assessmentsResult.results : null;
           if (data) {
             data = this.filterData(data);
             this.filteredData = [...data];
@@ -105,7 +105,7 @@ export class FilesDataSource extends DataSource<any>
   }
 
   get getTotal() {
-    return this._assessmentssservice.assessmentsResult.totalCount;
+    return this._assessmentssservice.assessmentsResult.rowCount;
   }
 
   // Filter

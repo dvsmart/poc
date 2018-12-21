@@ -53,7 +53,7 @@ export class PropertyService {
 
   updateProperty(propertyModel: CreateAssetPropertyRequest): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.put(environment.apiUrl + 'Properties', { ...propertyModel })
+      this._httpClient.put(environment.apiUrl + 'Properties/', { ...propertyModel })
         .subscribe((response: any) => {
           resolve(response);
         }, reject);

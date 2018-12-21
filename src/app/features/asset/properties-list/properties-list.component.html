@@ -24,7 +24,7 @@
             <button mat-raised-button [routerLink]="['/asset/properties/', 'new']" class="add-product-button fuse-white mt-24 mt-md-0">
                 <span>ADD NEW PROPERTY</span>
             </button>
-            
+
         </div>
         <div class="content-card">
             <div class="example-loading-shade" *ngIf="isLoading">
@@ -45,11 +45,18 @@
                         <p>{{property.dataId}}</p>
                     </mat-cell>
                 </ng-container>
-
-                <ng-container matColumnDef="propertyReference">
+                <ng-container matColumnDef="name">
+                    <mat-header-cell mat-sort-header *matHeaderCellDef fxHide fxShow.gt-lg>Name</mat-header-cell>
+                    <mat-cell *matCellDef="let property" fxHide fxShow.gt-lg>
+                        <p class="company text-truncate">
+                            {{property.name}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="reference">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Reference</mat-header-cell>
                     <mat-cell *matCellDef="let property">
-                        <p class="text-truncate">{{property.propertyReference}}</p>
+                        <p class="text-truncate">{{property.reference}}</p>
                     </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="addressLine1">
@@ -58,14 +65,7 @@
                         <p class="text-truncate">{{property.addressLine1}}</p>
                     </mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="addressLine2">
-                    <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm mat-sort-header>Address Line 2</mat-header-cell>
-                    <mat-cell *matCellDef="let property" fxHide fxShow.gt-sm>
-                        <p class="email text-truncate">
-                            {{property.addressLine2}}
-                        </p>
-                    </mat-cell>
-                </ng-container>
+
                 <ng-container matColumnDef="postCode">
                     <mat-header-cell mat-sort-header *matHeaderCellDef fxHide fxShow.gt-md>Post code</mat-header-cell>
                     <mat-cell *matCellDef="let property" fxHide fxShow.gt-md>
@@ -74,14 +74,7 @@
                         </p>
                     </mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="city">
-                    <mat-header-cell mat-sort-header *matHeaderCellDef fxHide fxShow.gt-lg>City</mat-header-cell>
-                    <mat-cell *matCellDef="let property" fxHide fxShow.gt-lg>
-                        <p class="job-title text-truncate">
-                            {{property.city}}
-                        </p>
-                    </mat-cell>
-                </ng-container>
+
                 <ng-container matColumnDef="portfolioName">
                     <mat-header-cell mat-sort-header *matHeaderCellDef fxHide fxShow.gt-lg>Portfolio</mat-header-cell>
                     <mat-cell *matCellDef="let property" fxHide fxShow.gt-lg>
@@ -90,6 +83,7 @@
                         </p>
                     </mat-cell>
                 </ng-container>
+
                 <ng-container matColumnDef="buttons">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let property">

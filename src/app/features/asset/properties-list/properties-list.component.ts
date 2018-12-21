@@ -17,7 +17,7 @@ import { FuseUtils } from '@core/utils';
 export class PropertiesListComponent implements OnInit {
   dataSource: MatTableDataSource<any> | null;
   isLoading: boolean;
-  displayedColumns = ['checkbox', 'dataId', 'propertyReference', 'addressLine1', 'addressLine2', 'postCode', 'city', 'portfolioName', 'buttons'];
+  displayedColumns = ['checkbox', 'dataId', 'reference', 'addressLine1', 'name', 'postCode', 'portfolioName', 'buttons'];
 
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
@@ -46,8 +46,8 @@ export class PropertiesListComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.isLoading = false;
-          this.dataSource = res.data;
-          this.resultsLength = res.totalCount;
+          this.dataSource = res.results;
+          this.resultsLength = res.rowCount;
         }
       });
 
@@ -92,8 +92,8 @@ export class FilesDataSource extends DataSource<any>
   ) {
     super();
 
-    this.filteredData = this._propertiesservice.propertiesResult.data;
-    this.paginatedData = this._propertiesservice.propertiesResult.totalCount;
+    this.filteredData = this._propertiesservice.propertiesResult.results;
+    this.paginatedData = this._propertiesservice.propertiesResult.rowCount;
   }
 
   connect(): Observable<any[]> {

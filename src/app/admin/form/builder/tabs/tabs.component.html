@@ -1,9 +1,10 @@
 <div class="toolbar px-24 py-8">
   <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="1 0 auto">
     <button mat-raised-button class="save-product-button" [routerLink]="['/admin/form/dashboard/folder/uncategorised']">
+      <mat-icon class="mr-8">navigate_before</mat-icon>
       <span>Back to Forms</span>
     </button>
-    <button mat-raised-button class="save-product-button" routerLink="new">
+    <button mat-raised-button class="save-product-button" color="accent" routerLink="new">
       <span>Create</span>
     </button>
   </div>
@@ -23,13 +24,13 @@
   <ng-container matColumnDef="hidden">
     <mat-header-cell *matHeaderCellDef> Is Hidden? </mat-header-cell>
     <mat-cell *matCellDef="let row">
-      <mat-checkbox [indeterminate]="row.hidden"></mat-checkbox>
+      <mat-checkbox [checked]="row.hidden" disabled></mat-checkbox>
     </mat-cell>
   </ng-container>
   <ng-container matColumnDef="isOptional">
     <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-xs> Mark as Optional? </mat-header-cell>
     <mat-cell *matCellDef="let row">
-      <mat-checkbox [indeterminate]="row.isOptional"></mat-checkbox>
+      <mat-checkbox [checked]="row.isOptional" disabled></mat-checkbox>
     </mat-cell>
   </ng-container>
   <ng-container matColumnDef="actions">

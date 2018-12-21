@@ -1,19 +1,28 @@
 <div class="toolbar px-24 py-8">
   <button mat-raised-button class="save-product-button" routerLink="../">
-    <span>Cancel</span>
+    <span>Back to Tabs</span>
   </button>
   <div fxLayout="row" fxLayoutAlign="end center" fxFlex="1 0 auto">
-    <button mat-raised-button class="save-product-button" [disabled]="tabForm.invalid || tabForm.pristine" *ngIf="pageMode == 'edit'">
+    <button mat-raised-button (click)="updateTab('update')" class="save-product-button mr-16" [disabled]="tabForm.invalid || tabForm.pristine"
+      *ngIf="pageMode == 'edit'">
       <span>Update</span>
     </button>
-    <button mat-raised-button class="save-product-button" [disabled]="tabForm.invalid" *ngIf="pageMode == 'new'">
+    <button mat-raised-button (click)="addTab('save')" class="save-product-button mr-16" [disabled]="tabForm.invalid"
+      *ngIf="pageMode == 'new'">
       <span>Save</span>
+    </button>
+    <button mat-raised-button (click)="addTab('saveNew')" class="save-product-button" [disabled]="tabForm.invalid"
+      *ngIf="pageMode == 'new'">
+      <span>Save & New</span>
     </button>
   </div>
 </div>
 <div class="mb-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
   <form class="p-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="tabForm" [formGroup]="tabForm">
-    <div class="h2 mb-24">Tab / Section</div>
+    <div class="h2 mb-24">
+      <span *ngIf="pageMode == 'edit'"> Edit {{tab.caption}}</span>
+      <span *ngIf="pageMode == 'new'"> New Form Tab</span>
+      </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
       <mat-form-field appearance="outline" fxFlex="100">
         <mat-label>Form Title</mat-label>
@@ -28,8 +37,10 @@
         <mat-error>caption is required!</mat-error>
       </mat-form-field>
     </div>
-    <div fxLayout="column" fxLayoutAlign="start start">
-      <mat-checkbox formControlName="isHidden">Is Hidden</mat-checkbox>
+    <div fxLayout="column" fxLayoutAlign="start start" class="mb-12">
+      <mat-checkbox formControlName="hidden">Is Hidden</mat-checkbox>
+    </div>
+    <div>
       <mat-checkbox formControlName="isOptional">Mark this tab as Optional?</mat-checkbox>
     </div>
   </form>

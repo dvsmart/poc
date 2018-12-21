@@ -34,10 +34,10 @@ export class UserService {
 
   getUsers(page, pageSize): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<PagedResult>(environment.apiUrl + 'User?page=' + page + '&pageSize=' + pageSize)
-        .subscribe((response: PagedResult) => {
+      this._httpClient.get<any>(environment.apiUrl + 'User?page=' + page + '&pageSize=' + pageSize)
+        .subscribe((response: any) => {
           this.usersResult = response;
-          this.users = response.data;
+          this.users = response.results;
           this.onUsersChanged.next(this.usersResult);
           resolve(response);
         }, reject);

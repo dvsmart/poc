@@ -29,7 +29,7 @@ export class TabsService {
     });
   }
 
-  getTabs(): Promise<any> {
+  async getTabs(): Promise<any> {
     return new Promise((resolve, reject) => {
       this._httpClient.get<any>(environment.apiUrl + 'FormTabs/' + this.formId)
         .subscribe((response: any) => {
@@ -39,11 +39,11 @@ export class TabsService {
     });
   }
 
-  deleteTab(tabId: string | number):Promise<any> {
+  async deleteTab(tabId: string | number):Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'FormTabs/' + tabId)
+      this._httpClient.delete(environment.apiUrl + 'FormTabs?id=' + tabId)
         .subscribe((response: any) => {
-          this.tabs.next(response);
+          this.getTabs();
           resolve(response);
         }, reject);
     });

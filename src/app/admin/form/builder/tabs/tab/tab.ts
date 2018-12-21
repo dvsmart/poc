@@ -14,3 +14,20 @@ export class FormTab{
         this.templateName = data.templateName;
     }
 }
+
+export class TabRequest{
+    id:number;
+    caption:string;
+    formId:number;
+    isOptional:boolean;
+    hidden:boolean;
+
+    constructor(data?) {
+        data = data || {};
+        this.id = data.id;
+        this.formId = data.formId;
+        this.hidden = data.hidden || false;
+        this.caption = data.caption;
+        this.isOptional = data.isOptional || false;
+    }
+}

@@ -90,8 +90,8 @@ export class CustomFieldDto {
 }
 
 export class PagedResult {
-    data: any[];
-    totalCount: number;
+    results: any[];
+    rowCount: number;
     currentPage: number;
     pageSize: number;
 }

@@ -14,7 +14,7 @@ import { FuseConfirmDialogComponent } from '@core/components/confirm-dialog/conf
 })
 export class MenuListComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
-  displayedColumns = ['id','title','route','type','icon','parentName','isVisible','delete'];
+  displayedColumns = ['id', 'title', 'route', 'type', 'icon', 'parentName', 'isVisible', 'delete'];
 
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
@@ -37,14 +37,12 @@ export class MenuListComponent implements OnInit {
   }
   ngOnInit() {
     this._menuListService.onMenuItemsChanged
-    .pipe(takeUntil(this._unsubscribeAll))
-    .subscribe(list=>{
-      debugger;
-      this.dataSource = new MatTableDataSource<any>(list);
-      this.dataSource.paginator = this.paginator;
-    })
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(list => {
+        this.dataSource = new MatTableDataSource<any>(list);
+        this.dataSource.paginator = this.paginator;
+      })
 
-    
     fromEvent(this.filter.nativeElement, 'keyup')
       .pipe(
         takeUntil(this._unsubscribeAll),
@@ -59,8 +57,8 @@ export class MenuListComponent implements OnInit {
       });
   }
 
-  DeleteMenu(item: any){
-    const dialogRef = this._dialog.open(FuseConfirmDialogComponent,{
+  DeleteMenu(item: any) {
+    const dialogRef = this._dialog.open(FuseConfirmDialogComponent, {
       disableClose: false
     });
 
@@ -68,10 +66,10 @@ export class MenuListComponent implements OnInit {
       item.title + '? The menu item will be taken from your navigation menu';
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result && result != undefined){
-        this._menuListService.deleteMenuItem(item.id).then(x=>{
+      if (result && result != undefined) {
+        this._menuListService.deleteMenuItem(item.id).then(x => {
           this.toaster.open("Menu deleted.", 'Done',
-              { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center' });
+            { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center' });
         })
       }
     });
