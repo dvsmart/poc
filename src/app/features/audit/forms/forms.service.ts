@@ -33,7 +33,7 @@ export class FormsService {
 
   getCategories(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get(environment.apiUrl + 'CustomCategoryConfig')
+      this._httpClient.get(environment.apiUrl + 'FormCategories')
         .subscribe((response: any) => {
           this.onCategoriesChanged.next(response);
           resolve(response);
@@ -48,7 +48,7 @@ export class FormsService {
    */
   getForms(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get(environment.apiUrl + 'CustomTemplateConfig')
+      this._httpClient.get(environment.apiUrl + 'Forms/all')
         .subscribe((response: any) => {
           this.onFormsChanged.next(response);
           resolve(response);

@@ -1,0 +1,33 @@
+<input type="file" #file style="display: none" (change)="onFilesAdded()" multiple />
+<div class="container" fxLayout="column">
+  <h1 mat-dialog-title>Upload Files</h1>
+  <div>
+    <span style="float:left;" *ngIf="totalFiles > 0" class="secondary-text">
+      Total: {{totalFiles}}</span>
+    <button mat-raised-button [disabled]="uploading || uploadSuccessful" color="accent" class="add-files-btn" (click)="addFiles()">
+      Add Files
+    </button>
+  </div>
+  <!-- This is the content of the dialog, containing a list of the files to upload -->
+  <mat-dialog-content class="upload-table-content">
+    <ng-container *ngIf="totalFiles === 0">
+      <p class="text-center">Please add files to upload!</p>
+    </ng-container>
+    <mat-list>
+      <mat-list-item *ngFor="let file of files">
+        <h4 mat-line>{{file.name}}</h4>
+        <mat-progress-bar *ngIf="progress" mode="determinate" [value]="progress[file.name].progress | async"></mat-progress-bar>
+        <button mat-icon-button (click)="removeFile(file)" [disabled]="!canBeClosed">
+          <mat-icon aria-label="remove the file">delete</mat-icon>
+        </button>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+  </mat-dialog-content>
+
+  <!-- This are the actions of the dialog, containing the primary and the cancel button-->
+  <mat-dialog-actions align="end">
+    <button *ngIf="showCancelButton" mat-button mat-dialog-close>Close</button>
+    <button mat-raised-button color="primary" [disabled]="!canBeClosed" (click)="closeDialog()">{{primaryButtonText}}</button>
+  </mat-dialog-actions>
+</div>

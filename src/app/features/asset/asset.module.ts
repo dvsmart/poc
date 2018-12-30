@@ -5,7 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { CoreSharedModule } from '@core/core.module';
 import { PropertiesService } from './properties-list/properties.service';
 import { PropertyService } from './properties-form/property.service';
-import { UploadModule } from '../upload/upload.module';
+import { UploadModule } from '@core/components/upload/upload.module';
+
 
 const propertyRoutes: Routes = [
   {

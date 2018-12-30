@@ -1,7 +1,9 @@
 @import "src/@core/scss/fuse";
 
-:host {
-
+app-lock-screen{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
     #lock {
         width: 100%;
         background: url('/assets/images/backgrounds/dark-material-bg.jpg') no-repeat;

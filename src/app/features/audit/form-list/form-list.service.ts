@@ -54,7 +54,7 @@ export class FormListService {
 
     getTemplateInformation(): Promise<any> {
         return new Promise((resolve, reject) => {
-            this._httpClient.get<any>(environment.apiUrl + 'CustomTemplateConfig/' + this.routeParams.id)
+            this._httpClient.get<any>(environment.apiUrl + 'Forms/detail?id=' + this.routeParams.id)
                 .subscribe((response: any) => {
                     this.onTemplatechanged.next(response);
                     resolve(response);

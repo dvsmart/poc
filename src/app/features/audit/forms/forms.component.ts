@@ -49,7 +49,7 @@ export class FormsComponent implements OnInit {
     }
     else {
       this.filteredForms = this.formsFilteredByCategory.filter((form) => {
-        return form.templateName.toLowerCase().includes(searchTerm);
+        return form.name.toLowerCase().includes(searchTerm);
       });
     }
   }
@@ -58,6 +58,11 @@ export class FormsComponent implements OnInit {
     if (this.currentCategory === 'all') {
       this.formsFilteredByCategory = this.forms;
       this.filteredForms = this.forms;
+    } else if (this.currentCategory === 'uncategorised') {
+      this.formsFilteredByCategory = this.forms.filter((course) => {
+        return course.categoryId === null;
+      });
+      this.filteredForms = [...this.formsFilteredByCategory];
     }
     else {
       this.formsFilteredByCategory = this.forms.filter((course) => {
@@ -67,7 +72,6 @@ export class FormsComponent implements OnInit {
     }
     this.filterFormsByTerm();
   }
-
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions

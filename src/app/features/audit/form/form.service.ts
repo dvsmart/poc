@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
-import { CustomEntityRecord, CustomEntityValue } from 'app/features/audit/custom.model';
+import { CustomEntityRecord } from 'app/features/audit/custom.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class FormService {
     this.onRecordChanged = new BehaviorSubject({});
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
+  resolve(route: ActivatedRouteSnapshot): Observable<any> | Promise<any> | any {
     this.routeParams = route.params;
     return new Promise((resolve, reject) => {
       Promise.all([

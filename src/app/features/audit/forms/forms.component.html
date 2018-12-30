@@ -9,7 +9,7 @@
         WELCOME TO LIVE FORMS
       </h1>
       <h3 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}">
-        Live forms Customisable & Scalable 
+        All of your Categories & Live forms. Draft - Review - Publish!!!
       </h3>
     </div>
 
@@ -34,8 +34,11 @@
             <mat-option [value]="'all'">
               All
             </mat-option>
+            <mat-option [value]="'uncategorised'">
+              Uncategorised
+            </mat-option>
             <mat-option *ngFor="let category of categories" [value]="category.id">
-              {{ category.groupName }}
+              {{ category.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -52,7 +55,7 @@
             <div class="header cloud-bg" fxLayout="row" fxLayoutAlign="center center" [ngClass]="android-bg">
 
               <div class="category" fxFlex>
-                {{course.templateName}}
+                {{course.name}}
               </div>
 
               <div class="length" fxLayout="row" fxLayoutAlign="center center">
@@ -63,8 +66,8 @@
             </div>
 
             <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex="1 1 auto">
-              <div class="h1"><span *ngIf="course.categoryName">{{course.categoryName}} - </span>{{course.templateName}}</div>
-              <div class="updated">{{course.summary}} </div>
+              <div class="h1"><span *ngIf="course.name">{{course.name}}</span></div>
+              <div class="updated">{{course.description}} </div>
             </div>
 
             <div class="footer" fxLayout="row" fxLayoutAlign="center center">

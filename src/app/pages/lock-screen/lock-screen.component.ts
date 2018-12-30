@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../login/auth.service';
 import { first } from 'rxjs/operators';
@@ -10,7 +10,8 @@ import { UserIdleService } from 'app/login/timeout/idle.service';
     selector: 'app-lock-screen',
     templateUrl: './lock-screen.component.html',
     styleUrls: ['./lock-screen.component.scss'],
-    animations:fuseAnimations
+    animations:fuseAnimations,
+    encapsulation:ViewEncapsulation.None
 })
 export class LockScreenComponent implements OnInit {
     lockForm: FormGroup;
