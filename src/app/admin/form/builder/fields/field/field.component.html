@@ -1,19 +1,23 @@
 <div class="toolbar px-24 py-8">
   <button mat-raised-button class="save-product-button" routerLink="../">
-    <span>Cancel</span>
+    <mat-icon class="mr-2">navigate_before</mat-icon>
+    <span>Back to Control List</span>
   </button>
 </div>
 <mat-horizontal-stepper linear #stepper>
   <mat-step [stepControl]="fieldTypeForm" errorMessage="Field Type is required.">
     <form [formGroup]="fieldTypeForm" fxLayout="column">
-      <div fxLayout="row" fxLayoutAlign="end end" class="mb-8">
-        <button mat-raised-button matStepperNext type="button" (click)="saveFieldType()" color="accent">Next</button>
+      <div fxLayout="row" fxLayoutAlign="end" class="mb-8">
+        <div *ngIf="validationErrorMessage" class="p-8">
+          <mat-error>{{validationErrorMessage}}</mat-error>
+        </div>
+        <button mat-raised-button matStepperNext type="button" (click)="GetFieldTypeSpecification()" color="accent">Next</button>
       </div>
       <ng-template matStepLabel>Choose a Field Type</ng-template>
       <div fxLayout="row" fxLayoutAlign="space-between center">
         <div class="p-24 mat-elevation-z4">
           <mat-radio-group formControlName="fieldType" required>
-            <mat-radio-button *ngFor="let ft of fieldTypes" [value]="ft.id">
+            <mat-radio-button *ngFor="let ft of fieldTypes" [value]="ft.id" (change)="fieldTypeChange($event)">
               {{ft.type}}
             </mat-radio-button>
           </mat-radio-group>
@@ -39,7 +43,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="100">
           <mat-select placeholder="Select Tab" formControlName="tabId" required [(value)]="tabId">
-            <mat-option *ngFor="let tab of tabs" [value]="tab.id">
+            <mat-option *ngFor="let tab of tabs | async" [value]="tab.id">
               {{tab.caption}}
             </mat-option>
           </mat-select>

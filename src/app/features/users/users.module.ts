@@ -4,12 +4,11 @@ import { UserDetailComponent } from './components/user-detail/user-detail.compon
 import { UserService } from './components/users/user.service';
 import { UserDetailService } from './components/user-detail/user-detail.service';
 import { Routes, RouterModule } from '@angular/router';
-import { MatButtonModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatPaginatorModule, MatRippleModule, MatSelectModule, MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule } from '@angular/material';
 import { CoreSharedModule } from '@core/core.module';
 
 const userRoutes: Routes = [
   {
-    path: 'users', 
+    path: '**', 
     component: UsersComponent,
     resolve: {
       users: UserService

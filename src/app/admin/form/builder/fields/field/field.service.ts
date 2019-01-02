@@ -70,6 +70,10 @@ export class FieldService {
     });
   }
 
+  getFieldtypeAsync(id:number){
+    return this._httpClient.get<any>(environment.apiUrl + 'FormFieldTypes/' + id);
+  }
+
   getTabs(): Promise<any> {
     console.log(this.formId);
     return new Promise((resolve, reject) => {
@@ -82,6 +86,10 @@ export class FieldService {
     });
   }
 
+  getTabsAsync(){
+    return this._httpClient.get<any>(environment.apiUrl + 'FormTabs/' + this.formId);
+  }
+
   SaveField(formFieldRequest: FormFieldRequestModel) {
     return new Promise((resolve, reject) => {
       this._httpClient.post(environment.apiUrl + 'FormFields', { ...formFieldRequest})
@@ -89,5 +97,10 @@ export class FieldService {
           resolve(response);
         }, reject);
     });
+  }
+
+  ngOnDestroy(){
+    this.fieldTypeSpecification.next('');
+    this.fieldTypeSpecification.complete();
   }
 }

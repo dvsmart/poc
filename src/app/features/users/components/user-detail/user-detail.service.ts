@@ -34,11 +34,10 @@ export class UserDetailService {
   getUser(): Promise<any> {
     return new Promise((resolve, reject) => {
       if (this.routeParams.id === 'new') {
-        this.onUserChanged.next(false);
-        resolve(false);
+        this.onUserChanged.next('');
       }
       else {
-        this._httpClient.get(environment.apiUrl + 'User/' + this.routeParams.id)
+        this._httpClient.get(environment.apiUrl + 'Users/' + this.routeParams.id)
           .subscribe((response: any) => {
             this.user = response;
             this.onUserChanged.next(this.user);
@@ -49,18 +48,18 @@ export class UserDetailService {
   }
 
 
-  saveUser(product): Promise<any> {
+  saveUser(user): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.post(environment.apiUrl + 'User' + product.id, product)
+      this._httpClient.post(environment.apiUrl + 'Users' + user.id, user)
         .subscribe((response: any) => {
           resolve(response);
         }, reject);
     });
   }
 
-  addUser(product): Promise<any> {
+  addUser(user): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.post(environment.apiUrl + 'User' , product)
+      this._httpClient.post(environment.apiUrl + 'Users' , user)
         .subscribe((response: any) => {
           resolve(response);
         }, reject);

@@ -19,6 +19,8 @@ export class FieldComponent implements OnInit {
   fieldGeneralVisibility: FieldGeneralVisibility;
   fieldSpecificVisibility: FieldSpecificVisibility;
 
+  validationErrorMessage:string;
+
   private _unsubscribeAll: Subject<any>;
   fieldTypes: any;
   tabs: any;
@@ -43,26 +45,6 @@ export class FieldComponent implements OnInit {
         }
       });
 
-    this.fieldService.fieldTypeSpecification
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(r => {
-        if (r) {
-          this.fieldType = new FieldType(r);
-          this.fieldGeneralVisibility = new FieldGeneralVisibility(r.fieldSpecificationVisibilityDto);
-          this.fieldSpecificVisibility = new FieldSpecificVisibility(r.fieldSpecificSpecificationVisibilityDto);
-          this.buildFieldGeneralSettingsVisibility();
-          this.buildFieldSpecificAttributesVisibility();
-        }
-      })
-
-    this.fieldService.tabs
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(r => {
-        if (r) {
-          this.tabs = r;
-        }
-      })
-
     this.fieldTypeForm = this._formBuilder.group({
       fieldType: new FormControl('', Validators.required)
     });
@@ -77,6 +59,23 @@ export class FieldComponent implements OnInit {
     this.fieldOption.push(value);
   }
 
+  fieldTypeChange(e){
+    if(e.value !== null){
+      this.validationErrorMessage = '';
+      this.fieldService.getFieldtypeAsync(e.value)
+      .subscribe(r => {
+        if (r != undefined && r != null && r !== {}) {
+          this.fieldType = new FieldType(r);
+          this.fieldGeneralVisibility = new FieldGeneralVisibility(r.fieldSpecificationVisibilityDto);
+          this.fieldSpecificVisibility = new FieldSpecificVisibility(r.fieldSpecificSpecificationVisibilityDto);
+          this.buildFieldGeneralSettingsVisibility();
+          this.buildFieldSpecificAttributesVisibility();
+          this.tabs = this.fieldService.getTabsAsync();
+        }
+      });
+    }
+  }
+ 
   buildFieldGeneralSettingsVisibility() {
     if (this.fieldGeneralVisibility.hidden) {
       this.fieldGeneralForm.addControl('hidden', new FormControl(''));
@@ -122,9 +121,12 @@ export class FieldComponent implements OnInit {
     }
   }
 
-  saveFieldType() {
+  GetFieldTypeSpecification() {
     var selectedFieldType = this.fieldTypeForm.value;
-    this.fieldService.getFieldType(selectedFieldType.fieldType);
+    if(selectedFieldType.fieldType === '' || selectedFieldType.fieldType === null){
+      this.validationErrorMessage = 'Field Type is required. Please choose a field type.';
+      return;
+    }
   }
 
   saveField() {

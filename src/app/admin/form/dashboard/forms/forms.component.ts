@@ -51,6 +51,8 @@ export class FormsComponent implements OnInit {
         if(this.categoryName !== 'uncategorised'){
           this.canAddForms = false;
           this.formOptions = false;
+        }else{
+          this.canAddForms = true;
         }
       } else {
         this.canEditCategory = true;
@@ -62,6 +64,7 @@ export class FormsComponent implements OnInit {
       }else{
         this.restoreOption = false;
       }
+      this.categoryName = this.categoryName.toUpperCase();
     })
     this.formsService.forms
       .pipe(takeUntil(this._unsubscribeAll))

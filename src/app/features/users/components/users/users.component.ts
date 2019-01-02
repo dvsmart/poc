@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { fuseAnimations } from '@core/animations';
 import { FuseUtils } from '@core/utils';
-import { Observable, merge, BehaviorSubject, Subject, fromEvent, of } from 'rxjs';
-import { map, takeUntil, debounceTime, distinctUntilChanged, startWith, switchMap, catchError, tap } from 'rxjs/operators';
+import { Observable, merge, BehaviorSubject, Subject, fromEvent } from 'rxjs';
+import { map, takeUntil, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { DataSource } from '@angular/cdk/table';
 import { UserService } from './user.service';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { HttpClient } from '@angular/common/http';
-import { promise } from 'protractor';
+
 
 @Component({
   selector: 'app-users',
@@ -18,7 +17,7 @@ import { promise } from 'protractor';
 export class UsersComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
-  displayedColumns = ['id', 'userName', 'emailAddress', 'firstName', 'lastName', 'roleName', 'active'];
+  displayedColumns = ['username', 'email', 'firstName', 'lastName', 'roleType', 'isActive'];
 
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
@@ -42,8 +41,8 @@ export class UsersComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(res => {
         if (res) {
-          this.dataSource = res.data;
-          this.resultsLength = res.totalCount;
+          this.dataSource = res.results;
+          this.resultsLength = res.rowCount;
         }
       });
 
@@ -75,8 +74,7 @@ export class UsersComponent implements OnInit {
 
 export class ExampleHttpDao {
   constructor(private _userservice: UserService,
-    private _matPaginator: MatPaginator,
-    private _matSort: MatSort) { }
+    private _matPaginator: MatPaginator) { }
 
   getData(): Promise<any> {
     return this._userservice.getUsers(this._matPaginator.pageIndex + 1, this._matPaginator.pageSize);

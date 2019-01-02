@@ -24,70 +24,49 @@
         </div>
         <div class="content-card">
             <mat-table class="users-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
-
-                <!-- ID Column -->
-                <ng-container matColumnDef="id">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+                <ng-container matColumnDef="username">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
                     <mat-cell *matCellDef="let user">
-                        <p class="text-truncate">{{user.id}}</p>
+                        <p class="text-truncate">{{user.username}}</p>
                     </mat-cell>
                 </ng-container>
-
-                <!-- Name Column -->
-                <ng-container matColumnDef="userName">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-                    <mat-cell *matCellDef="let user">
-                        <p class="text-truncate">{{user.userName}}</p>
-                    </mat-cell>
-                </ng-container>
-
-                <!-- Category Column -->
-                <ng-container matColumnDef="emailAddress">
+                <ng-container matColumnDef="email">
                     <mat-header-cell *matHeaderCellDef fxHide mat-sort-header fxShow.gt-md>Email</mat-header-cell>
                     <mat-cell *matCellDef="let user" fxHide fxShow.gt-md>
-                        <p class="category text-truncate">
-                            {{user.emailAddress}}
+                        <p class="text-truncate">
+                            {{user.email}}
                         </p>
                     </mat-cell>
                 </ng-container>
 
-                <!-- Price Column -->
                 <ng-container matColumnDef="firstName">
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>firstName</mat-header-cell>
                     <mat-cell *matCellDef="let user" fxHide fxShow.gt-xs>
-                        <p class="price text-truncate">
+                        <p class="text-truncate">
                             {{user.firstName}}
                         </p>
                     </mat-cell>
                 </ng-container>
-
-                <!-- Quantity Column -->
                 <ng-container matColumnDef="lastName">
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>lastName</mat-header-cell>
                     <mat-cell *matCellDef="let user" fxHide fxShow.gt-sm>
-
-                        <span class="quantity-indicator text-truncate" [ngClass]="{'mat-red-500-bg':user.quantity <= 5, 'mat-amber-500-bg':user.quantity > 5 && user.quantity <= 25,'mat-green-600-bg':user.quantity > 25}">
-                        </span>
-                        <span>
                             {{user.lastName}}
-                        </span>
-
                     </mat-cell>
                 </ng-container>
 
-                <ng-container matColumnDef="roleName">
+                <ng-container matColumnDef="roleType">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Role</mat-header-cell>
                     <mat-cell *matCellDef="let user">
-                        <p class="text-truncate">{{user.roleName}}</p>
+                        <p class="text-truncate">{{user.roleType}}</p>
                     </mat-cell>
                 </ng-container>
 
                 <!-- Active Column -->
-                <ng-container matColumnDef="active">
+                <ng-container matColumnDef="isActive">
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Active</mat-header-cell>
                     <mat-cell *matCellDef="let user" fxHide fxShow.gt-xs>
-                        <mat-icon *ngIf="user.active" class="active-icon mat-green-600-bg s-16">check</mat-icon>
-                        <mat-icon *ngIf="!user.active" class="active-icon mat-red-500-bg s-16">close</mat-icon>
+                        <mat-icon *ngIf="user.isActive" class="active-icon mat-green-600-bg s-16">check</mat-icon>
+                        <mat-icon *ngIf="!user.isActive" class="active-icon mat-red-500-bg s-16">close</mat-icon>
                     </mat-cell>
                 </ng-container>
 

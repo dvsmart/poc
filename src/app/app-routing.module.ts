@@ -54,7 +54,7 @@ const appRoutes: Routes = [
                 data: { preload: false, delay: true }
             },
             {
-                path: '',
+                path: 'users',
                 loadChildren: './features/users/users.module#UsersModule',
                 data: { preload: false, delay: true }
             }
