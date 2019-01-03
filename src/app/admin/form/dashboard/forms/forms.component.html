@@ -3,16 +3,16 @@
     <span>{{categoryName}}</span>
     <div>
       <ng-container *ngIf="canEditCategory">
-        <button mat-icon-button (click)="deleteCategory()">
+        <button mat-mini-fab color="warn" class="mr-8" (click)="deleteCategory()">
           <mat-icon>delete</mat-icon>
         </button>
-        <button mat-raised-button class="toolbar-button mr-8" (click)="editCategory()">
+        <button mat-raised-button class="toolbar-button mr-8" (click)="editCategory()" color="accent">
           <mat-icon class="s-14 mr-8">settings</mat-icon>
           <span>Edit Category</span>
         </button>
       </ng-container>
 
-      <button mat-raised-button class="toolbar-button" (click)="addNewForm()" *ngIf="canAddForms">
+      <button mat-raised-button class="toolbar-button" (click)="addNewForm()" color="accent" *ngIf="canAddForms">
         <mat-icon class="s-14 mr-8">create</mat-icon>
         <span>Create New Form</span>
       </button>

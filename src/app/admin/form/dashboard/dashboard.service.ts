@@ -54,7 +54,6 @@ export class DashboardService {
     return new Promise((resolve, reject) => {
       this.http.put(`${environment.apiUrl}FormCategories`, categoryRequestModel )
         .subscribe((response: any) => {
-          this.getCategories();
           resolve(response);
         }, reject);
     });
@@ -64,9 +63,6 @@ export class DashboardService {
     return new Promise((resolve, reject) => {
       this.http.delete(`${environment.apiUrl}FormCategories?id=${id}`)
         .subscribe((response: any) => {
-          if(response){
-            this.getCategories();
-          }
           resolve(response);
         }, reject);
     });

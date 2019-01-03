@@ -9,7 +9,7 @@ import { CoreProgressBarService } from '@core/components/progress-bar/progress-b
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-    constructor(private authenticationService: AuthService, private snackbar: MatSnackBar,private progressBar: CoreProgressBarService) { }
+    constructor(private authenticationService: AuthService, private snackbar: MatSnackBar, private progressBar: CoreProgressBarService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(catchError(err => {
@@ -22,6 +22,12 @@ export class ErrorInterceptor implements HttpInterceptor {
                 this.snackbar.open(err.statusText, null, { duration: 2000 });
                 this.progressBar.hide();
             }
+            if (err.status === 0 && err.statusText === 'Unknown Error') {
+                this.progressBar.hide();
+                this.snackbar.open("Service Unavailable. Please contact the administrator", null, { duration: 5000 });
+                return;
+            }
+            this.snackbar.open(err.statusText, null, { duration: 2000 });
             const error = err.error != null ? err.error.message : err.message || err.statusText;
             return throwError(error);
         }))

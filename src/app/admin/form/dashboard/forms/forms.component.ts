@@ -156,12 +156,14 @@ export class FormsComponent implements OnInit {
     this.confirmDialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.categoryService.deleteCategory(this.categoryId).then(x => {
+          debugger;
           if (!x) {
             this.toaster.open("Category deletion failed.", 'Retry',
               { duration: 4000, verticalPosition: 'top', horizontalPosition: 'center' });
           } else {
             this.toaster.open("Category deleted.", 'Done',
               { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center' });
+            this.categoryService.getCategories();
           }
           this.router.navigate(['/admin/form/dashboard/folder/uncategorised']);
         });

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { FieldService } from './field.service';
 import { Subject } from 'rxjs';
@@ -11,7 +11,7 @@ import { FieldType, FieldGeneralVisibility, FieldSpecificVisibility, FormFieldRe
   styleUrls: ['./field.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class FieldComponent implements OnInit {
+export class FieldComponent {
   fieldTypeForm: FormGroup;
   fieldGeneralForm: FormGroup;
   fieldSpecificForm: FormGroup;
