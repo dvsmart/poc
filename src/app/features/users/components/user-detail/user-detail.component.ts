@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { fuseAnimations } from '@core/animations';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { UserDetailService } from './user-detail.service';
@@ -56,12 +56,19 @@ export class UserDetailComponent implements OnInit {
   createUserForm(): FormGroup {
     return this._formBuilder.group({
       id: [this.user.id],
-      username: [this.user.username],
-      firstname: [this.user.firstname],
-      lastname: [this.user.lastname],
+      username: [this.user.username,Validators.required],
+      firstname: [this.user.firstname,Validators.required],
+      lastname: [this.user.lastname,Validators.required],
       active: [this.user.active],
-      address:[this.user.address],
-      emailAddress:[this.user.emailAddress]
+      addressLine1:[this.user.addressLine1],
+      addressLine2:[this.user.addressLine2],
+      emailAddress:[this.user.email,Validators.required],
+      postcode:[this.user.postcode],
+      phone:[this.user.phoneNumber],
+      city:[this.user.city],
+      dob:[this.user.dob],
+      roleId:[this.user.roleId],
+      country:['']
     });
   }
 

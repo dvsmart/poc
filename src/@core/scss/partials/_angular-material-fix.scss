@@ -59,7 +59,7 @@ button {
 }
 
 .mat-form-field {
-
+    font-weight: 600!important;
     // Fix: "Table-cell and inline-table in mat-select"
     &.mat-form-field-type-mat-select {
 
@@ -81,6 +81,10 @@ button {
                 .mat-select-arrow-wrapper {
                     display: inline-flex;
                 }
+            }
+
+            .mat-select-placeholder{
+                font-weight: 600!important;
             }
         }
     }

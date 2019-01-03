@@ -31,7 +31,7 @@ export class MenuItemModel {
         this.sortOrder = data.sortOrder;
         this.menuGroupId = data.groupId;
         this.parentId = data.parentId;
-        this.isVisible = data.isVisible || true;
+        this.isVisible = data.isVisible;
         this.route = data.route;
         this.groupName = data.menuGroupName != undefined ? data.menuGroupName : '';
     }

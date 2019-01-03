@@ -8,14 +8,14 @@ import { CoreSharedModule } from '@core/core.module';
 
 const userRoutes: Routes = [
   {
-    path: '**', 
+    path: '', 
     component: UsersComponent,
     resolve: {
       users: UserService
     }
   },
   {
-    path: 'user/:id', 
+    path: ':id', 
     component: UserDetailComponent,
     resolve: {
       user: UserDetailService
@@ -28,10 +28,6 @@ const userRoutes: Routes = [
     CoreSharedModule,
     RouterModule.forChild(userRoutes)
   ],
-  declarations: [UsersComponent, UserDetailComponent],
-  providers: [
-    UserService,
-    UserDetailService
-  ]
+  declarations: [UsersComponent, UserDetailComponent]
 })
 export class UsersModule { }

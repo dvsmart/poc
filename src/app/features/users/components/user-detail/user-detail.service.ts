@@ -35,6 +35,7 @@ export class UserDetailService {
     return new Promise((resolve, reject) => {
       if (this.routeParams.id === 'new') {
         this.onUserChanged.next('');
+        resolve();
       }
       else {
         this._httpClient.get(environment.apiUrl + 'Users/' + this.routeParams.id)
@@ -59,7 +60,7 @@ export class UserDetailService {
 
   addUser(user): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.post(environment.apiUrl + 'Users' , user)
+      this._httpClient.post(environment.apiUrl + 'Users', user)
         .subscribe((response: any) => {
           resolve(response);
         }, reject);

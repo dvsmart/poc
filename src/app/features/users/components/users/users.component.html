@@ -1,29 +1,31 @@
 <div id="users" class="page-layout carded fullwidth inner-scroll">
     <div class="top-bg accent"></div>
     <div class="center">
-        <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+        <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+            fxLayoutAlign.gt-xs="space-between center">
             <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
                 <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
-                    shopping_basket
+                    supervisor_account
                 </mat-icon>
                 <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
                     Users
                 </span>
             </div>
-            <div class="search-input-wrapper mx-24 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
-                <label for="search" class="mr-8">
-                    <mat-icon class="secondary-text">search</mat-icon>
-                </label>
-                <mat-form-field floatLabel="never" fxFlex="1 0 auto">
-                    <input id="search" matInput #filter placeholder="Search">
-                </mat-form-field>
+            <!-- SEARCH -->
+            <div class="search-wrapper mx-32 mx-md-0">
+                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon>search</mat-icon>
+                    <input #filter placeholder="Search for a property">
+                </div>
             </div>
-            <button mat-raised-button [routerLink]="['/user/', 'new']" class="add-user-button mat-white-bg my-12 mt-sm-0">
+            <!-- / SEARCH -->
+            <button mat-raised-button [routerLink]="['/users/', 'new']" class="add-user-button mat-white-bg my-12 mt-sm-0">
                 <span>ADD NEW USER</span>
             </button>
         </div>
         <div class="content-card">
-            <mat-table class="users-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
+            <mat-table class="users-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}"
+                fusePerfectScrollbar>
                 <ng-container matColumnDef="username">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
                     <mat-cell *matCellDef="let user">
@@ -50,7 +52,7 @@
                 <ng-container matColumnDef="lastName">
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>lastName</mat-header-cell>
                     <mat-cell *matCellDef="let user" fxHide fxShow.gt-sm>
-                            {{user.lastName}}
+                        {{user.lastName}}
                     </mat-cell>
                 </ng-container>
 
@@ -72,7 +74,7 @@
 
                 <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
 
-                <mat-row *matRowDef="let user; columns: displayedColumns;" class="user" matRipple [routerLink]="['/user/', user.id]">
+                <mat-row *matRowDef="let user; columns: displayedColumns;" class="user" matRipple [routerLink]="['/users/', user.id]">
                 </mat-row>
 
             </mat-table>

@@ -26,6 +26,8 @@ $typography: mat-typography-config( $font-family: 'Muli, Helvetica Neue, Arial, 
 @import './features/audit/audit.theme';
 @import './admin/form/builder/builder.theme';
 @import './admin/form/dashboard/dashboard.theme';
+@import './admin/menu/components/menu-list/menu.theme';
+@import './features/users/users.theme';
 
 @mixin components-theme($theme) {
     @include toolbar-theme($theme);
@@ -37,6 +39,8 @@ $typography: mat-typography-config( $font-family: 'Muli, Helvetica Neue, Arial, 
     @include audit-theme($theme);
     @include form-builder-theme($theme);
     @include form-dashboard-theme($theme);
+    @include menu-setup-theme($theme);
+    @include users-theme($theme);
 }
 
 //-----------------------------------------------------------------------------------------------------

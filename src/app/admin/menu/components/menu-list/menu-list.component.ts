@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource, MatDialog, MatSnackBar } from '@angular/material';
 import { Subject, fromEvent } from 'rxjs';
 import { MenuListService } from './menu-list.service';
@@ -7,14 +7,15 @@ import { fuseAnimations } from '@core/animations';
 import { FuseConfirmDialogComponent } from '@core/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
-  selector: 'app-menu-list',
+  selector: 'menu-list',
   templateUrl: './menu-list.component.html',
   styleUrls: ['./menu-list.component.scss'],
-  animations: fuseAnimations
+  animations: fuseAnimations,
+  encapsulation: ViewEncapsulation.None,
 })
 export class MenuListComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
-  displayedColumns = ['id', 'title', 'route', 'type', 'icon', 'parentName', 'isVisible', 'delete'];
+  displayedColumns = ['title', 'route', 'type', 'icon', 'parentName', 'isVisible', 'actions'];
 
   @ViewChild(MatPaginator)
   paginator: MatPaginator;

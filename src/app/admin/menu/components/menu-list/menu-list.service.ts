@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { environment } from '@env/environment';
-import { MenuItemModel } from '../../model/menu.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +12,7 @@ export class MenuListService {
     this.onMenuItemsChanged = new BehaviorSubject({});
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
+  resolve(): Observable<any> | Promise<any> | any {
     return new Promise((resolve, reject) => {
       Promise.all([
         this.getMenuItems()

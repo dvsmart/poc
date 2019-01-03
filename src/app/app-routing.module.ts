@@ -29,7 +29,7 @@ const appRoutes: Routes = [
                 data: { preload: false, delay: true }
             },
             {
-                path: 'assessment',
+                path: 'assessments',
                 loadChildren: './features/assessment/assessment.module#AssessmentModule',
                 data: { preload: false, delay: true }
             },
@@ -44,7 +44,7 @@ const appRoutes: Routes = [
                 data: { preload: false, delay: true }
             },
             {
-                path: 'task',
+                path: 'tasks',
                 loadChildren: './features/tasks/task.module#TaskModule',
                 data: { preload: false, delay: true }
             },

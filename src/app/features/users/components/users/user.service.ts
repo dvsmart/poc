@@ -34,7 +34,7 @@ export class UserService {
 
   getUsers(page, pageSize): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'Users?page=' + page + '&size=5' + pageSize)
+      this._httpClient.get<any>(environment.apiUrl + 'Users?page=' + page + '&size=' + pageSize)
         .subscribe((response: any) => {
           this.usersResult = response;
           this.users = response.results;

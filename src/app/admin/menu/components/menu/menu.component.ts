@@ -91,7 +91,7 @@ export class MenuComponent implements OnInit {
   }
 
   updateMenu() {
-    const data = this.menuForm.getRawValue();
+    const data = this.menuForm.value;
     this._menuservice.updateMenu(data)
       .then(x => {
         if (x != null) {
@@ -100,7 +100,7 @@ export class MenuComponent implements OnInit {
             verticalPosition: 'top',
             duration: 2000
           });
-          this._location.go('/settings/menuManagement/menu/' + x.id);
+          this._location.go('/admin/menu/setup/' + x.id);
         }
       });
   }

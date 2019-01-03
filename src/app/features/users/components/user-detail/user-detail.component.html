@@ -22,8 +22,8 @@
         (click)="addUser()">
         <span>ADD</span>
       </button>
-      <button mat-raised-button class="save-product-button mat-white-bg" [disabled]="userForm.invalid || userForm.pristine" *ngIf="pageType ==='edit'"
-        (click)="saveUser()">
+      <button mat-raised-button class="save-product-button mat-white-bg" [disabled]="userForm.invalid || userForm.pristine"
+        *ngIf="pageType ==='edit'" (click)="saveUser()">
         <span>SAVE</span>
       </button>
     </div>
@@ -32,22 +32,65 @@
         <form name="userForm" [formGroup]="userForm" class="product w-100-p" fxLayout="column" fxFlex>
           <mat-tab-group>
             <mat-tab label="Basic Info">
-              <div class="tab-content p-24" fusePerfectScrollbar>
-                <mat-form-field class="w-100-p">
-                  <input matInput name="firstname" formControlName="firstname" placeholder="firstname" required>
+              <div class="tab-content p-24" fusePerfectScrollbar fxLayout="column" fxFlex="1 0 auto">
+                <mat-form-field class="w-100-p" appearance="outline">
+                  <mat-label>Username</mat-label>
+                  <input matInput name="username" formControlName="username" placeholder="Username" required>
                 </mat-form-field>
-                <mat-form-field class="w-100-p">
-                  <input matInput name="lastname" formControlName="lastname" placeholder="lastname">
+                <mat-form-field class="w-100-p" appearance="outline">
+                  <mat-label>First Name</mat-label>
+                  <input matInput name="firstname" formControlName="firstname" placeholder="First Name" required>
                 </mat-form-field>
-
-                <mat-form-field class="w-100-p">
-                  <input matInput name="address" formControlName="address" placeholder="Address" type="text">
-                  <span matPrefix>$&nbsp;</span>
+                <mat-form-field class="w-100-p" appearance="outline">
+                  <mat-label>Last Name</mat-label>
+                  <input matInput name="lastname" formControlName="lastname" placeholder="Last Name">
                 </mat-form-field>
-
-                <mat-form-field class="w-100-p">
+                <mat-form-field class="w-100-p" appearance="outline">
+                  <mat-label>Email</mat-label>
                   <input matInput name="emailAddress" formControlName="emailAddress" placeholder="Email" type="email">
-                  <span matPrefix>$&nbsp;</span>
+                </mat-form-field>
+                <div fxLayoutGap="5%" fxLayout="row">
+                  <mat-form-field class="w-50-p" appearance="outline">
+                    <input matInput [matDatepicker]="dob" formControlName="dob" placeholder="Date of Birth">
+                    <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+                    <mat-datepicker #dob></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field class="w-50-p" appearance="outline">
+                      <mat-select placeholder="Role">
+                        <mat-option *ngFor="let food of foods" [value]="food.value">
+                          {{food.viewValue}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                </div>
+
+              </div>
+            </mat-tab>
+            <mat-tab label="Address">
+              <div class="tab-content p-24" fusePerfectScrollbar>
+                <mat-form-field class="w-100-p" appearance="outline">
+                  <mat-label>Address Line 1</mat-label>
+                  <input matInput name="addressLine1" formControlName="addressLine1" placeholder="Address Line 1" type="text">
+                </mat-form-field>
+                <mat-form-field class="w-100-p" appearance="outline">
+                  <mat-label>Address Line 2</mat-label>
+                  <input matInput name="addressLine2" formControlName="addressLine2" placeholder="Address Line 2" type="text">
+                </mat-form-field>
+                <mat-form-field class="w-100-p" appearance="outline">
+                  <mat-label>Phone</mat-label>
+                  <input matInput name="phone" formControlName="phone" placeholder="Phone" type="text">
+                </mat-form-field>
+                <mat-form-field class="w-100-p" appearance="outline">
+                  <mat-label>Postcode</mat-label>
+                  <input matInput name="postcode" formControlName="postcode" placeholder="Postcode" type="text">
+                </mat-form-field>
+                <mat-form-field class="w-100-p" appearance="outline">
+                  <mat-label>City</mat-label>
+                  <input matInput name="city" formControlName="city" placeholder="City" type="text">
+                </mat-form-field>
+                <mat-form-field class="w-100-p" appearance="outline">
+                  <mat-label>Country</mat-label>
+                  <input matInput name="country" formControlName="country" placeholder="Country" type="text">
                 </mat-form-field>
               </div>
             </mat-tab>

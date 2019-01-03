@@ -58,7 +58,6 @@ export class CoreNavVerticalCollapsableComponent implements OnInit, OnDestroy
                 takeUntil(this._unsubscribeAll)
             )
             .subscribe((event: NavigationEnd) => {
-
                 // Check if the url can be found in
                 // one of the children of this item
                 if ( this.isUrlInChildren(this.item, event.urlAfterRedirects) )
@@ -226,7 +225,7 @@ export class CoreNavVerticalCollapsableComponent implements OnInit, OnDestroy
                 }
             }
 
-            if ( parent.children[i].url === url || url.includes(parent.children[i].url) )
+            if ( parent.children[i].route === url || url.includes(parent.children[i].route) )
             {
                 return true;
             }
