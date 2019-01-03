@@ -9,8 +9,6 @@ import { fuseAnimations } from '@core/animations';
 import { MatDialog } from '@angular/material';
 import { CategoryComponent } from './category/category.component';
 import { CategoryRequestModel } from './category/category';
-import { FormComponent } from './form/form.component';
-import { FormRequestModel } from './form/FormRequestModel';
 
 @Component({
   selector: 'form-dashboard',
@@ -40,6 +38,8 @@ export class DashboardComponent implements OnInit {
       .subscribe(response => {
         if (response != undefined && response.length > 0) {
           this.categories = response;
+        }else{
+          this.categories = null;
         }
       });
     this.searchInput.valueChanges
