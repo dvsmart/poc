@@ -38,6 +38,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    debugger;
     if(this.authservice.authenticated){
       this._navigationservice.getMenuItems();
     }

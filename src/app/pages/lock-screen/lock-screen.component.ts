@@ -10,8 +10,8 @@ import { UserIdleService } from 'app/login/timeout/idle.service';
     selector: 'app-lock-screen',
     templateUrl: './lock-screen.component.html',
     styleUrls: ['./lock-screen.component.scss'],
-    animations:fuseAnimations,
-    encapsulation:ViewEncapsulation.None
+    animations: fuseAnimations,
+    encapsulation: ViewEncapsulation.None
 })
 export class LockScreenComponent implements OnInit {
     lockForm: FormGroup;
@@ -33,7 +33,7 @@ export class LockScreenComponent implements OnInit {
         var user = JSON.parse(localStorage.getItem('currentUser'));
         this.name = user != null ? user.username : ''
         this.lockForm = this._formBuilder.group({
-            username: [this.name, Validators.required],
+            username: [this.name, { disabled: true }],
             password: ['', Validators.required]
         });
     }
@@ -43,12 +43,12 @@ export class LockScreenComponent implements OnInit {
             return;
         }
         this.authservice.authenticate(this.lockForm.value).pipe(first())
-        .subscribe(
-            data => {
-                this.router.navigate([this.returnUrl]);
-            },
-            error => {
-                this.error = error;
-            });
+            .subscribe(
+                data => {
+                    this.router.navigate([this.returnUrl]);
+                },
+                error => {
+                    this.error = error;
+                });
     }
 }

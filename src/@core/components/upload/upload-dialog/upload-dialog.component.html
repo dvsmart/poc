@@ -16,7 +16,9 @@
     <mat-list>
       <mat-list-item *ngFor="let file of files">
         <h4 mat-line>{{file.name}}</h4>
-        <mat-progress-bar *ngIf="progress" mode="determinate" [value]="progress[file.name].progress | async"></mat-progress-bar>
+        <mat-progress-bar *ngIf="progress" mode="determinate" class="mr-16" [value]="progress[file.name].progress | async">11</mat-progress-bar>
+        <mat-checkbox *ngIf="!canBeClosed" [checked]="!canBeClosed" disabled="true" class="mr-8"></mat-checkbox>
+
         <button mat-icon-button (click)="removeFile(file)" [disabled]="!canBeClosed">
           <mat-icon aria-label="remove the file">delete</mat-icon>
         </button>
@@ -27,7 +29,7 @@
 
   <!-- This are the actions of the dialog, containing the primary and the cancel button-->
   <mat-dialog-actions align="end">
-    <button *ngIf="showCancelButton" mat-button mat-dialog-close>Close</button>
-    <button mat-raised-button color="primary" [disabled]="!canBeClosed" (click)="closeDialog()">{{primaryButtonText}}</button>
+    <button *ngIf="showCancelButton" mat-raised-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="accent" [disabled]="!canBeClosed" (click)="closeDialog()">{{primaryButtonText}}</button>
   </mat-dialog-actions>
 </div>

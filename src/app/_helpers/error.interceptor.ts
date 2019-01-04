@@ -13,21 +13,23 @@ export class ErrorInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(catchError(err => {
-            if (err.status === 401) {
-                // auto logout if 401 response returned from api
-                this.authenticationService.logout();
-                location.reload(true);
+            debugger;
+            switch (err.status) {
+                case 401:
+                    this.authenticationService.logout();
+                    location.reload(true);
+                    break;
+                case 401:
+                    this.snackbar.open(err.statusText, null, { duration: 2000 });
+                    this.progressBar.hide();
+                    break;
+                case 0:
+                    this.progressBar.hide();
+                    this.snackbar.open("Service Unavailable. Please contact the administrator", null, { duration: 5000 });
+                    break;
+                default:
+                    this.snackbar.open(err.statusText, null, { duration: 2000 });
             }
-            if (err.status === 404) {
-                this.snackbar.open(err.statusText, null, { duration: 2000 });
-                this.progressBar.hide();
-            }
-            if (err.status === 0 && err.statusText === 'Unknown Error') {
-                this.progressBar.hide();
-                this.snackbar.open("Service Unavailable. Please contact the administrator", null, { duration: 5000 });
-                return;
-            }
-            this.snackbar.open(err.statusText, null, { duration: 2000 });
             const error = err.error != null ? err.error.message : err.message || err.statusText;
             return throwError(error);
         }))

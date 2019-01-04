@@ -20,7 +20,7 @@
               </div>
               
           </div>
-          {{error}}
+          
           <form name="lockForm" [formGroup]="lockForm" novalidate (ngSubmit)="unlock()">
 
               <mat-form-field>
@@ -33,7 +33,7 @@
                       Password is required
                   </mat-error>
               </mat-form-field>
-
+              <mat-error *ngIf="error">{{error}}</mat-error>
               <button mat-raised-button class="submit-button" color="accent"
                       aria-label="UNLOCK" [disabled]="lockForm.invalid">
                   UNLOCK

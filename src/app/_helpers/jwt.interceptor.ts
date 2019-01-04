@@ -18,6 +18,7 @@ export class JwtInterceptor implements HttpInterceptor {
         }
         return next.handle(request)
             .catch((error, caught) => {
+                debugger;
                 if (error instanceof HttpErrorResponse) {
                     if (error.status === 401) {
                         location.reload(true);
