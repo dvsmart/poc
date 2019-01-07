@@ -11,6 +11,7 @@ import { DashboardService } from '../dashboard.service';
 import { CategoryRequestModel } from '../category/category';
 import { FuseConfirmDialogComponent } from '@core/components/confirm-dialog/confirm-dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
+import { ResponseModel } from 'app/models/ResponseModel';
 
 @Component({
   selector: 'app-forms',
@@ -159,11 +160,11 @@ export class FormsComponent implements OnInit {
 
     this.confirmDialogRef.afterClosed().subscribe(result => {
       if (result) {
-        debugger;
         if(result.confirm){
-          this.categoryService.deleteCategory(this.categoryId).then(x => {
-            if (!x) {
-              this.toaster.open("Category deletion failed.", 'Retry',
+          this.categoryService.deleteCategoryWithForms(this.categoryId, result.extra).then((res: ResponseModel) => {
+            debugger;
+            if (res.statusCode === 400) {
+              this.toaster.open(res.message, 'Retry',
                 { duration: 4000, verticalPosition: 'top', horizontalPosition: 'center' });
             } else {
               this.toaster.open("Category deleted.", 'Done',

@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CategoryRequestModel } from './category/category';
-import { promise } from 'protractor';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { ResponseModel } from "app/models/ResponseModel";
 
 @Injectable({
   providedIn: 'root'
@@ -62,7 +62,16 @@ export class DashboardService {
   deleteCategory(id:number){
     return new Promise((resolve, reject) => {
       this.http.delete(`${environment.apiUrl}FormCategories?id=${id}`)
-        .subscribe((response: any) => {
+        .subscribe((response: ResponseModel) => {
+          resolve(response);
+        }, reject);
+    });
+  }
+
+  deleteCategoryWithForms(id: number,deleteForms: boolean) {
+    return new Promise((resolve, reject) => {
+      this.http.post(`${environment.apiUrl}FormCategories`, {id: id, deleteForms: deleteForms} )
+        .subscribe((response: ResponseModel) => {
           resolve(response);
         }, reject);
     });

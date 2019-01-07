@@ -30,8 +30,8 @@ export class LockScreenComponent implements OnInit {
 
     ngOnInit() {
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
-        var user = JSON.parse(localStorage.getItem('currentUser'));
-        this.name = user != null ? user.username : ''
+        var user = localStorage.getItem('currentUser');
+        this.name = user != null ? user : ''
         this.lockForm = this._formBuilder.group({
             username: [this.name, { disabled: true }],
             password: ['', Validators.required]
