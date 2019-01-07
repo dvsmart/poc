@@ -1,7 +1,9 @@
-<h1 matDialogTitle>Confirm</h1>
-<div mat-dialog-content>{{confirmMessage}}</div>
-<div fxLayout="column">
-    <mat-checkbox [(ngModel)]="extraCondition">{{extraConditionText}}</mat-checkbox>
+<h1 matDialogTitle>Confirm {{confirmTitle}}</h1>
+<div mat-dialog-content>
+    {{confirmMessage}}
+    <div>
+        <mat-checkbox [(ngModel)]="extraCondition">{{extraConditionText}}</mat-checkbox>
+    </div>
 </div>
 <div mat-dialog-actions class="pt-24" align="end">
     <button mat-button (click)="dialogRef.close(false)">Cancel</button>

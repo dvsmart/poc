@@ -40,7 +40,7 @@ export class ToolbarComponent implements OnInit {
         flag: 'tr'
       }
     ];
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.currentUser = localStorage.getItem('currentUser');
   }
 
   logout(){

@@ -28,7 +28,7 @@ export class FormsComponent implements OnInit {
   formOptions: boolean;
   canEditCategory: boolean;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-  restoreOption:boolean;
+  restoreOption: boolean;
 
   selection = new SelectionModel<any>(true, []);
 
@@ -48,10 +48,10 @@ export class FormsComponent implements OnInit {
       this.selection.clear();
       if (this.categoryId === 'forms') {
         this.canEditCategory = false;
-        if(this.categoryName !== 'uncategorised'){
+        if (this.categoryName !== 'uncategorised') {
           this.canAddForms = false;
           this.formOptions = false;
-        }else{
+        } else {
           this.canAddForms = true;
         }
       } else {
@@ -59,9 +59,9 @@ export class FormsComponent implements OnInit {
         this.canAddForms = true;
         this.formOptions = true;
       }
-      if(this.categoryName === 'archived' || this.categoryName === 'deleted'){
+      if (this.categoryName === 'archived' || this.categoryName === 'deleted') {
         this.restoreOption = true;
-      }else{
+      } else {
         this.restoreOption = false;
       }
       this.categoryName = this.categoryName.toUpperCase();
@@ -111,7 +111,7 @@ export class FormsComponent implements OnInit {
   DeleteForms() {
     if (this.selection.selected.length > 0) {
       let selectedForms = this.selection.selected.map(x => x.id);
-      this.formsService.deleteSelectedForms(selectedForms).then(x=>{
+      this.formsService.deleteSelectedForms(selectedForms).then(x => {
         this.toaster.open("Form deleted", null, { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center' });
         this.selection.clear();
       });
@@ -121,7 +121,7 @@ export class FormsComponent implements OnInit {
   ArchiveForms() {
     if (this.selection.selected.length > 0) {
       let selectedForms = this.selection.selected.map(x => x.id);
-      this.formsService.archiveSelectedForms(selectedForms).then(x=>{
+      this.formsService.archiveSelectedForms(selectedForms).then(x => {
         this.toaster.open("Forms archived", null, { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center' });
         this.selection.clear();
       })
@@ -147,26 +147,32 @@ export class FormsComponent implements OnInit {
 
   deleteCategory(): void {
     this.confirmDialogRef = this._dialog.open(FuseConfirmDialogComponent, {
-      disableClose: false
+      disableClose: true
     });
+    
+    this.confirmDialogRef.componentInstance.confirmMessage = 'Do you sure want to delete this category?';
+    
+    this.confirmDialogRef.componentInstance.confirmTitle = this.categoryName;
+    
+    this.confirmDialogRef.componentInstance.extraConditionText = 'If no, the forms will be moved to uncategorised';
 
-    this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete this category ' +
-      this.categoryName + '? All the forms under this category will also be deleted.';
 
     this.confirmDialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.categoryService.deleteCategory(this.categoryId).then(x => {
-          debugger;
-          if (!x) {
-            this.toaster.open("Category deletion failed.", 'Retry',
-              { duration: 4000, verticalPosition: 'top', horizontalPosition: 'center' });
-          } else {
-            this.toaster.open("Category deleted.", 'Done',
-              { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center' });
-            this.categoryService.getCategories();
-          }
-          this.router.navigate(['/admin/form/dashboard/folder/uncategorised']);
-        });
+        debugger;
+        if(result.confirm){
+          this.categoryService.deleteCategory(this.categoryId).then(x => {
+            if (!x) {
+              this.toaster.open("Category deletion failed.", 'Retry',
+                { duration: 4000, verticalPosition: 'top', horizontalPosition: 'center' });
+            } else {
+              this.toaster.open("Category deleted.", 'Done',
+                { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center' });
+              this.categoryService.getCategories();
+            }
+            this.router.navigate(['/admin/form/dashboard/folder/uncategorised']);
+          });
+        }
       }
       this.confirmDialogRef = null;
     });
