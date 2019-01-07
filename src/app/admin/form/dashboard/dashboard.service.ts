@@ -70,7 +70,7 @@ export class DashboardService {
 
   deleteCategoryWithForms(id: number,deleteForms: boolean) {
     return new Promise((resolve, reject) => {
-      this.http.post(`${environment.apiUrl}FormCategories`, {id: id, deleteForms: deleteForms} )
+      this.http.post(`${environment.apiUrl}FormCategories/`, {id: id, deleteForms: deleteForms} )
         .subscribe((response: ResponseModel) => {
           resolve(response);
         }, reject);
