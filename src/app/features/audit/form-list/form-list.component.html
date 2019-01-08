@@ -19,7 +19,7 @@
                     <input id="search" matInput #filter placeholder="Search">
                 </mat-form-field>
             </div>
-            <button mat-raised-button [routerLink]="['edit/' +'new']" class="add-user-button mat-white-bg my-12 mt-sm-0">
+            <button mat-raised-button [routerLink]="['new']" class="add-user-button mat-white-bg my-12 mt-sm-0">
                 <span>ADD NEW</span>
             </button>
         </div>
@@ -27,29 +27,41 @@
             <mat-table class="records-table" [dataSource]="dataSource" [@animateStagger]="{value:'50'}" matSort
                 matSortActive="dataId" matSormat-cellisableClear matSormat-cellirection="asc">
 
-                <!-- Position Column -->
                 <ng-container matColumnDef="dataId">
                     <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
                     <mat-cell *matCellDef="let element"> {{element.dataId}} </mat-cell>
                 </ng-container>
 
-                <!-- Name Column -->
                 <ng-container matColumnDef="status">
                     <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
                     <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
                 </ng-container>
 
-                <!-- Weight Column -->
-                <ng-container matColumnDef="addedOn">
-                    <mat-header-cell *matHeaderCellDef> Added On </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.addedOn | date }} </mat-cell>
-                </ng-container>
-
-                <!-- Symbol Column -->
                 <ng-container matColumnDef="dueDate">
                     <mat-header-cell *matHeaderCellDef> Due Date </mat-header-cell>
                     <mat-cell *matCellDef="let element"> {{element.dueDate | date}} </mat-cell>
                 </ng-container>
+
+                <ng-container matColumnDef="createdOn">
+                    <mat-header-cell *matHeaderCellDef> Created On </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.createdOn | date }} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="createdBy">
+                    <mat-header-cell *matHeaderCellDef> Created By </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.createdBy}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="modifiedOn">
+                    <mat-header-cell *matHeaderCellDef> Modified On </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.modifiedOn | date }} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="modifiedBy">
+                    <mat-header-cell *matHeaderCellDef> Modified By </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.modifiedBy}} </mat-cell>
+                </ng-container>
+
                 <ng-container matColumnDef="buttons">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let element">
@@ -71,7 +83,7 @@
                     </mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-                <mat-row *matRowDef="let element; columns: displayedColumns;" class="record" matRipple [routerLink]="['edit/' + element.id]"
+                <mat-row *matRowDef="let element; columns: displayedColumns;" class="record" matRipple [routerLink]="[element.id]"
                     matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                 </mat-row>
             </mat-table>

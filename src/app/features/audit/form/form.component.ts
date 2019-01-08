@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomEntityRecord, CustomEntityValue } from 'app/features/audit/custom.model';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { FormService } from './form.service';
-import { MatSnackBar } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { fuseAnimations } from '@core/animations';
+import { LiveFormResponse } from './form';
 
 @Component({
   selector: 'app-form',
@@ -16,47 +15,49 @@ import { fuseAnimations } from '@core/animations';
 })
 export class FormComponent implements OnInit {
   title: string;
-  record: any;
+  record: LiveFormResponse;
   pageType: string;
-  customRecordForm: FormGroup;
+  customRecordForm: FormGroup = new FormGroup({});
 
   customEntityId: number;
 
   private _unsubscribeAll: Subject<any>;
   constructor(
-    private _formBuilder: FormBuilder,
     private _recordservice: FormService,
   ) {
     this._unsubscribeAll = new Subject();
-    this.customRecordForm = new FormGroup({});
   }
   ngOnInit() {
     this._recordservice.onRecordChanged
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(x => {
-        this.record = new CustomEntityRecord(x);
-        this.customEntityId = this.record.customEntityId;
-        this.pageType = 'edit';
-        this.title = "Edit " + x.templateName + ' - ' + x.dataId;
+      .subscribe((x: LiveFormResponse) => {
+        debugger;
+        this.record = x;
+        if (x.id === 0) {
+          this.pageType = 'new';
+          this.title = 'New ' + x.formName;
+        } else {
+          this.pageType = 'edit';
+
+          this.title = 'Edit ' + this.record.formName + ' - ' + x.dataId;
+        }
+        this.customEntityId = this.record.formId;
         this.customRecordForm = this.createRecordForm();
       })
   }
 
   createRecordForm() {
-    const group = this._formBuilder.group({});
-    if (this.record.customTabs == null) {
+    let group: any = {};
+    if (this.record.tabs == null) {
       return new FormGroup({});
     }
-    this.record.customTabs.forEach(ct => {
-      ct.customFields.forEach(field => {
-        const control = this._formBuilder.control(
-          field.value,
-          this.bindValidations(field.validations || [])
-        );
-        group.addControl(field.name, control);
+    this.record.tabs.forEach(ct => {
+      ct.fields.forEach(field => {
+        group[field.name] = field.fieldAttributeDto.isRequired ? new FormControl(field.value || '', Validators.required)
+          : new FormControl(field.value || '');
       });
     })
-    return group;
+    return new FormGroup(group);
   }
 
   bindValidations(validations: any) {
@@ -72,7 +73,7 @@ export class FormComponent implements OnInit {
 
   populateData(): CustomEntityValue {
     let instance = new CustomEntityValue();
-    instance.customEntityId = this.record.customEntityId;
+    instance.customEntityId = this.record.formId;
     var fv = JSON.parse(JSON.stringify(this.customRecordForm.value));
     Object.keys(fv).forEach(function (prop) {
       var id = parseInt(prop.split("_")[1]);

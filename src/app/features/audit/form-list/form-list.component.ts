@@ -14,7 +14,7 @@ import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 })
 export class FormListComponent implements OnInit {
   dataSource: MatTableDataSource<any> | null;
-  displayedColumns: string[] = ['dataId', 'status', 'dueDate', 'addedOn', 'buttons'];
+  displayedColumns: string[] = ['dataId', 'status', 'dueDate', 'createdOn', 'createdBy', 'modifiedOn', 'modifiedBy', 'buttons'];
 
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
@@ -31,6 +31,7 @@ export class FormListComponent implements OnInit {
   groupId: number;
   isLoading: boolean = false;
   resultsLength: number;
+  private sub: any;
 
   // Private
   private _unsubscribeAll: Subject<any>;
@@ -41,6 +42,7 @@ export class FormListComponent implements OnInit {
     this._unsubscribeAll = new Subject();
   }
   ngOnInit() {
+    this.isLoading = true;
     this._cevrecordsservice.onTemplatechanged
       .pipe(takeUntil(this._unsubscribeAll)).subscribe(x => {
         this.groupName = x.categoryName;
@@ -53,8 +55,7 @@ export class FormListComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.isLoading = false;
-          this.dataSource = res.data;
-          this.resultsLength = res.totalCount;
+          this.dataSource = res;
         }
       });
 

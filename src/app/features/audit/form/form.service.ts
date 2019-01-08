@@ -11,6 +11,7 @@ import { CustomEntityRecord } from 'app/features/audit/custom.model';
 export class FormService {
 
   routeParams: any;
+  formId: any;
   onRecordChanged: BehaviorSubject<any>;
 
   constructor(
@@ -20,7 +21,8 @@ export class FormService {
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> | Promise<any> | any {
-    this.routeParams = route.params;
+    this.routeParams = route.params.id;
+    this.formId = route.params.formId;
     return new Promise((resolve, reject) => {
       Promise.all([
         this.getRecord()
@@ -35,13 +37,23 @@ export class FormService {
 
 
   getRecord(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this._httpClient.get<CustomEntityRecord>(environment.apiUrl + 'FormRecord/' + this.routeParams.id)
-        .subscribe((response: any) => {
-          this.onRecordChanged.next(response);
-          resolve(response);
-        }, reject);
-    });
+    if(this.routeParams === "new"){
+      return new Promise((resolve, reject) => {
+        this._httpClient.get<any>(environment.apiUrl + 'LiveForms/new?formId=' + this.formId)
+          .subscribe((response: any) => {
+            this.onRecordChanged.next(response);
+            resolve(response);
+          }, reject);
+      });
+    }else{
+      return new Promise((resolve, reject) => {
+        this._httpClient.get<any>(environment.apiUrl + 'LiveForms/' + this.routeParams)
+          .subscribe((response: any) => {
+            this.onRecordChanged.next(response);
+            resolve(response);
+          }, reject);
+      });
+    }
   }
 
   saveRecord(data){

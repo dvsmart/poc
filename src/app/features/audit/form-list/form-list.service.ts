@@ -41,15 +41,12 @@ export class FormListService {
         return new Promise((resolve, reject) => {
             page = page === undefined ? 1 : page;
             size = size === undefined ? 10 : size;
-            this._httpClient.get<any>(environment.apiUrl + 'TemplateFormRecord?templateId=' + this.routeParams.id + '&page=' + page + '&pageSize=' + size)
+            this._httpClient.get<any>(environment.apiUrl + 'LiveForms/all?formId=' + this.routeParams.id)
                 .subscribe((response: any) => {
-                    this.recordsResult = response;
-                    this.customEntityValues = response.data;
-                    this.onRecordsChanged.next(this.recordsResult);
-                    resolve(this.customEntityValues);
+                    this.onRecordsChanged.next(response);
+                    resolve(response);
                 }, reject);
-        }
-        );
+        });
     }
 
     getTemplateInformation(): Promise<any> {

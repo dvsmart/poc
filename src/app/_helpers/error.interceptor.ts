@@ -18,7 +18,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                     this.authenticationService.logout();
                     location.reload(true);
                     break;
-                case 401:
+                case 404:
                     this.snackbar.open(err.statusText, null, { duration: 2000 });
                     this.progressBar.hide();
                     break;
