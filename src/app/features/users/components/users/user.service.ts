@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { environment } from '@env/environment';
-import { PagedResult } from '../../../audit/custom.model';
-import { User } from '../../model/user.model';
-import { DataSourceRequest } from '@core/types/datasourceRequest';
+import { PagedResult } from 'app/models/ResponseModel';
 
 @Injectable({
   providedIn: 'root'

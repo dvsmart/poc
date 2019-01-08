@@ -4,7 +4,6 @@ import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { environment } from 'environments/environment';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
-import { PagedResult } from "app/features/audit/custom.model";
 
 
 @Injectable({
@@ -12,7 +11,6 @@ import { PagedResult } from "app/features/audit/custom.model";
 })
 export class FormListService {
     routeParams: any;
-    recordsResult: PagedResult;
     customEntityValues: any[];
     onRecordsChanged: BehaviorSubject<any>;
 

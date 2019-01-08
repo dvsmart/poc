@@ -24,7 +24,6 @@ import {
 } from 'rxjs/operators';
 import { UserIdleConfig } from './idle.config';
 import { MatDialog } from '@angular/material';
-import { LockScreenComponent } from 'app/pages/lock-screen/lock-screen.component';
 
 /**
  * User's idle service.

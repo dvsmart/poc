@@ -2,7 +2,7 @@ export interface LiveFormResponse {
     id: number;
     status: number;
     formId: number;
-    formName:string;
+    formName: string;
     dataId?: string;
     tabs: Tab[];
 }
@@ -31,4 +31,15 @@ export interface FieldAttributeDto {
     defaultValue?: any;
     isRequired: boolean;
     readOnly: boolean;
+}
+
+export interface LiveFormRecordRequest {
+    id: number;
+    formId: number;
+    fieldValues: FieldValue[];
+}
+
+export interface FieldValue {
+    fieldKey: string;
+    value: string;
 }

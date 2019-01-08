@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomEntityRecord, CustomEntityValue } from 'app/features/audit/custom.model';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { FormService } from './form.service';
 import { takeUntil } from 'rxjs/operators';
 import { fuseAnimations } from '@core/animations';
-import { LiveFormResponse } from './form';
+import { LiveFormResponse, LiveFormRecordRequest, FieldValue } from './form';
 
 @Component({
   selector: 'app-form',
@@ -31,14 +30,12 @@ export class FormComponent implements OnInit {
     this._recordservice.onRecordChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((x: LiveFormResponse) => {
-        debugger;
         this.record = x;
         if (x.id === 0) {
           this.pageType = 'new';
           this.title = 'New ' + x.formName;
         } else {
           this.pageType = 'edit';
-
           this.title = 'Edit ' + this.record.formName + ' - ' + x.dataId;
         }
         this.customEntityId = this.record.formId;
@@ -60,26 +57,22 @@ export class FormComponent implements OnInit {
     return new FormGroup(group);
   }
 
-  bindValidations(validations: any) {
-    if (validations.length > 0) {
-      const validList = [];
-      validations.forEach(valid => {
-        validList.push(valid.validator);
-      });
-      return Validators.compose(validList);
-    }
-    return null;
-  }
-
-  populateData(): CustomEntityValue {
-    let instance = new CustomEntityValue();
-    instance.customEntityId = this.record.formId;
-    var fv = JSON.parse(JSON.stringify(this.customRecordForm.value));
+  populateData(): LiveFormRecordRequest {
+    debugger;
+    let formValue = this.customRecordForm.value;
+    const fieldValues: FieldValue[] = [];
+    var fv = JSON.parse(JSON.stringify(formValue));
     Object.keys(fv).forEach(function (prop) {
-      var id = parseInt(prop.split("_")[1]);
-      instance.fieldValues.push({ id: id, value: fv[prop] });
+      fieldValues.push({ fieldKey: prop, value: fv[prop] });
     });
-    return instance;
+
+    const formModel : LiveFormRecordRequest = {
+      id: 0,
+      formId: this.record.formId,
+      fieldValues: fieldValues  
+    }
+    
+    return formModel;
   }
 
   saveRecord(): void {

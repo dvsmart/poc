@@ -6,3 +6,11 @@ export class ResponseModel {
         this.message = message;
     }
 }
+
+
+export class PagedResult {
+    results: any[];
+    rowCount: number;
+    currentPage: number;
+    pageSize: number;
+}
