@@ -161,6 +161,7 @@ export class FormsComponent implements OnInit {
     this.confirmDialogRef.afterClosed().subscribe(result => {
       if (result) {
         if(result.confirm){
+          debugger;
           this.categoryService.deleteCategoryWithForms(this.categoryId, result.extra).then((res: ResponseModel) => {
             debugger;
             if (res.statusCode === 400) {

@@ -52,25 +52,26 @@ export class DashboardService {
 
   updateCategory(categoryRequestModel: CategoryRequestModel) {
     return new Promise((resolve, reject) => {
-      this.http.put(`${environment.apiUrl}FormCategories`, categoryRequestModel )
+      this.http.put(`${environment.apiUrl}FormCategories`, categoryRequestModel)
         .subscribe((response: any) => {
           resolve(response);
         }, reject);
     });
   }
 
-  deleteCategory(id:number){
+  deleteCategory(id: number) {
     return new Promise((resolve, reject) => {
       this.http.delete(`${environment.apiUrl}FormCategories?id=${id}`)
         .subscribe((response: ResponseModel) => {
+          debugger;
           resolve(response);
         }, reject);
     });
   }
 
-  deleteCategoryWithForms(id: number,deleteForms: boolean) {
+  deleteCategoryWithForms(id: number, deleteForms: boolean) {
     return new Promise((resolve, reject) => {
-      this.http.post(`${environment.apiUrl}FormCategories/`, {id: id, deleteForms: deleteForms} )
+      this.http.post(`${environment.apiUrl}FormCategories/deleteForms`, { id, deleteForms })
         .subscribe((response: ResponseModel) => {
           resolve(response);
         }, reject);

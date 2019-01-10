@@ -5,6 +5,8 @@ import { FormService } from './form.service';
 import { takeUntil } from 'rxjs/operators';
 import { fuseAnimations } from '@core/animations';
 import { LiveFormResponse, LiveFormRecordRequest, FieldValue } from './form';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form',
@@ -23,6 +25,7 @@ export class FormComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
   constructor(
     private _recordservice: FormService,
+    private _location: Router
   ) {
     this._unsubscribeAll = new Subject();
   }
@@ -50,8 +53,14 @@ export class FormComponent implements OnInit {
     }
     this.record.tabs.forEach(ct => {
       ct.fields.forEach(field => {
-        group[field.name] = field.fieldAttributeDto.isRequired ? new FormControl(field.value || '', Validators.required)
-          : new FormControl(field.value || '');
+        if (field) {
+          if (field.fieldAttributeDto != null) {
+            group[field.name] = field.fieldAttributeDto.isRequired ? new FormControl(field.value || '', Validators.required)
+              : new FormControl(field.value || '');
+          } else {
+            group[field.name] = new FormControl(field.value || '');
+          }
+        }
       });
     })
     return new FormGroup(group);
@@ -66,18 +75,20 @@ export class FormComponent implements OnInit {
       fieldValues.push({ fieldKey: prop, value: fv[prop] });
     });
 
-    const formModel : LiveFormRecordRequest = {
+    const formModel: LiveFormRecordRequest = {
       id: 0,
       formId: this.record.formId,
-      fieldValues: fieldValues  
+      fieldValues: fieldValues
     }
-    
+
     return formModel;
   }
 
   saveRecord(): void {
     var record = this.populateData();
-    this._recordservice.saveRecord(record);
+    this._recordservice.saveRecord(record).then((x: any) => {
+      this._location.navigate(['audit/forms/' + x.formId + '/' + x.id]);
+    });
   }
 
   ngOnDestroy(): void {

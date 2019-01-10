@@ -1,0 +1,13 @@
+<mat-form-field class="demo-full-width margin-top" fxFlex="100" appearance="outline" [formGroup]="group">
+    <mat-label>{{field.caption}}</mat-label>
+    <input matInput [formControlName]="field.name" [placeholder]="field.fieldAttributeDto != null ? field.fieldAttributeDto.placeHolder : field.caption">
+    <button mat-button *ngIf="group.touched" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+        <mat-icon>close</mat-icon>
+    </button>
+    <mat-hint *ngIf="field.fieldAttributeDto != null && (field.fieldAttributeDto.showHint || field.fieldAttributeDto.hint)">
+        {{field.fieldAttributeDto.hint}}</mat-hint>
+    <ng-container *ngIf="field.fieldAttributeDto != null && field.fieldAttributeDto.isRequired && group.invalid"
+        ngProjectAs="mat-error">
+        <mat-error>{{ field.caption }} is required</mat-error>
+    </ng-container>
+</mat-form-field>
