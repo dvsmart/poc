@@ -18,8 +18,10 @@ import { FieldConfig } from "../../models/fieldConfig";
   exportAs: "dynamicForm",
   selector: "dynamic-form",
             template: `
-            <ng-container *ngFor="let field of fields;" dynamicField [field]="field" [group]="form" class="mt-12">
+            <div class="p-24">
+            <ng-container *ngFor="let field of fields;" dynamicField [field]="field" [group]="form">
             </ng-container>
+            </div>
             `,
   styles: [`.mt-12{
     margin-top: 12px

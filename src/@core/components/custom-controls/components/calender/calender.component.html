@@ -1,4 +1,4 @@
-<mat-form-field class="demo-full-width margin-top" fxFlex="100" appearance="outline" [formGroup]="group">
+<mat-form-field style="width:100%;padding-bottom:10px;" fxFlex="100" appearance="outline" [formGroup]="group">
     <mat-label>{{field.caption}}</mat-label>
     <input matInput [matDatepicker]="picker" [formControlName]="field.name" [placeholder]="field.fieldAttributeDto != null ? field.fieldAttributeDto.placeHolder : field.caption">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

@@ -1,7 +1,7 @@
 <h1 matDialogTitle>Confirm {{confirmTitle}}</h1>
 <div mat-dialog-content>
     {{confirmMessage}}
-    <div>
+    <div *ngIf="extraConditionText != ''">
         <mat-checkbox [(ngModel)]="extraCondition">{{extraConditionText}}</mat-checkbox>
     </div>
 </div>

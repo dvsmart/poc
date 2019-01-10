@@ -25,10 +25,10 @@
       [indeterminate]="selection.hasValue() && !isAllSelected()" class="mr-16" fxFlex="0 1 auto">
     </mat-checkbox>
     <div *ngIf="restoreOption">
-      <button mat-button (click)="DeleteForms()" [disabled]="!selection.hasValue()">
+      <button mat-button (click)="RestoreForms()" [disabled]="!selection.hasValue()">
         <mat-icon>restore_from_trash</mat-icon><span class="mr-8">Restore</span>
       </button>
-      <button mat-button (click)="DeleteForms()" [disabled]="!selection.hasValue()"> 
+      <button mat-button (click)="RemoveForms()" [disabled]="!selection.hasValue()"> 
         <mat-icon>delete_forever</mat-icon><span>Trash</span>
       </button>
     </div>

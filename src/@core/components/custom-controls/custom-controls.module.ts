@@ -11,6 +11,7 @@ import { DynamicFieldDirective } from './directives/custom-field.directive';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TextAreaComponent } from './components/textarea/textarea.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { TextAreaComponent } from './components/textarea/textarea.component';
         MatRadioModule,
         ReactiveFormsModule,
         FormsModule,
-        CommonModule
+        CommonModule,
+        FlexLayoutModule
     ],
     providers:[{provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}],
     exports: [

@@ -11,7 +11,7 @@ export class FuseConfirmDialogComponent
     public confirmMessage: string;
     public confirmTitle:string;
     public extraCondition:boolean;
-    public extraConditionText:string;
+    public extraConditionText:string = '';
 
     /**
      * Constructor

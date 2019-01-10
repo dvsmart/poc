@@ -3,12 +3,14 @@ import { MatButtonModule, MatDialogModule, MatCheckboxModule } from '@angular/ma
 
 import { FuseConfirmDialogComponent } from './confirm-dialog.component';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
     declarations: [
         FuseConfirmDialogComponent
     ],
     imports: [
+        CommonModule,
         MatDialogModule,
         MatButtonModule,
         MatCheckboxModule,

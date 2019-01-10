@@ -21,7 +21,7 @@ const componentMapper = {
   "Select / List": SelectComponent,
   Calender: DateComponent,
   radiobutton: RadiobuttonComponent,
-  Checkbox: CheckboxComponent,
+  "Checkbox": CheckboxComponent,
   "Text Area": TextAreaComponent,
   "Currency Input": InputComponent,
   "Numerical Input": InputComponent,

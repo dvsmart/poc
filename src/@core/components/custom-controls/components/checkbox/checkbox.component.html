@@ -1,0 +1,18 @@
+<div fxFlex="100" [formGroup]="group">
+    <div fxLayout="row" fxLayoutGap="25px">
+        <div>
+            <mat-label>{{field.caption}}</mat-label>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+            <ng-container *ngIf="options != null">
+                <mat-checkbox flex='20' *ngFor="let item of options" [formControlName]="field.name">{{item.Value}}</mat-checkbox>
+            </ng-container>
+            <ng-container *ngIf="field.fieldAttributeDto != null && field.fieldAttributeDto.isRequired && group.invalid"
+                ngProjectAs="mat-error">
+                <mat-error>{{ field.caption }} is required</mat-error>
+            </ng-container>
+            <mat-hint *ngIf="field.fieldAttributeDto != null && (field.fieldAttributeDto.showHint || field.fieldAttributeDto.hint)">
+                {{field.fieldAttributeDto.hint}}</mat-hint>
+        </div>
+    </div>
+</div>

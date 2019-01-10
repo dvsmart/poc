@@ -1,0 +1,13 @@
+<mat-form-field fxFlex="100" [formGroup]="group">
+    <ng-container *ngIf="options != null">
+        <mat-select [placeholder]="field.caption" [formControlName]="field.name">
+            <mat-option *ngFor="let item of options" [value]="item.Id">{{item.Value}}</mat-option>
+        </mat-select>
+    </ng-container>
+    <mat-hint *ngIf="field.fieldAttributeDto != null && (field.fieldAttributeDto.showHint || field.fieldAttributeDto.hint)">
+        {{field.fieldAttributeDto.hint}}</mat-hint>
+    <ng-container *ngIf="field.fieldAttributeDto != null && field.fieldAttributeDto.isRequired && group.invalid"
+        ngProjectAs="mat-error">
+        <mat-error>{{ field.caption }} is required</mat-error>
+    </ng-container>
+</mat-form-field>

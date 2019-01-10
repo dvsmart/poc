@@ -54,12 +54,15 @@ export class FormComponent implements OnInit {
     this.record.tabs.forEach(ct => {
       ct.fields.forEach(field => {
         if (field) {
-          if (field.fieldAttributeDto != null) {
-            group[field.name] = field.fieldAttributeDto.isRequired ? new FormControl(field.value || '', Validators.required)
-              : new FormControl(field.value || '');
-          } else {
-            group[field.name] = new FormControl(field.value || '');
+          let fieldAttribute = field.fieldAttributeDto;
+          if (fieldAttribute != null) {
+            if (fieldAttribute.isRequired) {
+              group[field.name] = new FormControl(field.value, Validators.required)
+            } else if (fieldAttribute.readOnly) {
+              group[field.name] = new FormControl({ value: field.value, disabled: field.fieldAttributeDto.readOnly })
+            }
           }
+          group[field.name] = new FormControl(field.value);
         }
       });
     })
@@ -67,7 +70,6 @@ export class FormComponent implements OnInit {
   }
 
   populateData(): LiveFormRecordRequest {
-    debugger;
     let formValue = this.customRecordForm.value;
     const fieldValues: FieldValue[] = [];
     var fv = JSON.parse(JSON.stringify(formValue));

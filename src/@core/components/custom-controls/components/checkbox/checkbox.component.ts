@@ -4,24 +4,17 @@ import { FieldConfig } from "../../models/fieldConfig";
 
 @Component({
   selector: "app-checkbox",
-  template: `
-<div class="demo-full-width margin-top" [formGroup]="group" >
-<mat-checkbox [formControlName]="field.name">{{field.caption}}</mat-checkbox>
-</div>
-`,
-  styles: [
-    `.demo-full-width{
-      width: 100%
-    }
-    .margin-top{
-      
-    }
-    `
-  ]
+  templateUrl:'./checkbox.component.html',
 })
 export class CheckboxComponent implements OnInit {
-  field: FieldConfig;
+  field: any;
   group: FormGroup;
+  options:any[] = null;
   constructor() {}
-  ngOnInit() {}
+  ngOnInit() {
+    this.options = [];
+    if(this.field.liveFormFieldSpecificationDto != null  && this.field.liveFormFieldSpecificationDto.fieldOptions != null){
+      this.options = JSON.parse(this.field.liveFormFieldSpecificationDto.fieldOptions);
+    }
+  }
 }

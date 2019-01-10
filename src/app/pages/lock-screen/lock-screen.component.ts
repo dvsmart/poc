@@ -29,6 +29,7 @@ export class LockScreenComponent implements OnInit {
     }
 
     ngOnInit() {
+        localStorage.removeItem('menu');
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
         var user = localStorage.getItem('currentUser');
         this.name = user != null ? user : ''

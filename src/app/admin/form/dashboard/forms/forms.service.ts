@@ -116,7 +116,17 @@ export class FormsService {
 
   deleteSelectedForms(ids: any) {
     return new Promise((resolve, reject) => {
-      this._httpClient.post<any>(`${environment.apiUrl}Forms/delete?ids=`, { ids })
+      this._httpClient.post<any>(`${environment.apiUrl}Forms/delete`, { ids })
+        .subscribe((response: any) => {
+          this.getForms();
+          resolve(response);
+        }, reject);
+    });
+  }
+
+  removeSelectedForms(ids: any) {
+    return new Promise((resolve, reject) => {
+      this._httpClient.post<any>(`${environment.apiUrl}Forms/remove`, { ids })
         .subscribe((response: any) => {
           this.getForms();
           resolve(response);
@@ -126,7 +136,17 @@ export class FormsService {
 
   archiveSelectedForms(ids: any) {
     return new Promise((resolve, reject) => {
-      this._httpClient.post<any>(`${environment.apiUrl}Forms/archive?ids=`, { ids })
+      this._httpClient.post<any>(`${environment.apiUrl}Forms/archive`, { ids })
+        .subscribe((response: any) => {
+          this.getForms();
+          resolve(response);
+        }, reject);
+    });
+  }
+
+  restoreSelectedForms(ids:any){
+    return new Promise((resolve, reject) => {
+      this._httpClient.post<any>(`${environment.apiUrl}Forms/restore`, { ids })
         .subscribe((response: any) => {
           this.getForms();
           resolve(response);

@@ -113,11 +113,33 @@ export class FormsComponent implements OnInit {
     if (this.selection.selected.length > 0) {
       let selectedForms = this.selection.selected.map(x => x.id);
       this.formsService.deleteSelectedForms(selectedForms).then(x => {
-        this.toaster.open("Form deleted", null, { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center' });
+        this.toaster.open("Forms have been deleted successfully.", null, { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center' });
         this.selection.clear();
       });
     }
   }
+
+  RemoveForms(){
+    if (this.selection.selected.length > 0) {
+      let selectedForms = this.selection.selected.map(x => x.id);
+      this.formsService.removeSelectedForms(selectedForms).then(x => {
+        this.toaster.open("Forms have been removed successfully", null, { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center' });
+        this.selection.clear();
+      });
+    }
+  }
+
+  RestoreForms(){
+    if (this.selection.selected.length > 0) {
+      let selectedForms = this.selection.selected.map(x => x.id);
+      this.formsService.restoreSelectedForms(selectedForms).then(x => {
+        this.toaster.open("Forms have been removed successfully", x ? 'Done' : 'fail', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center' });
+        this.selection.clear();
+      });
+    }
+  }
+
+
 
   ArchiveForms() {
     if (this.selection.selected.length > 0) {
@@ -155,15 +177,14 @@ export class FormsComponent implements OnInit {
     
     this.confirmDialogRef.componentInstance.confirmTitle = this.categoryName;
     
-    this.confirmDialogRef.componentInstance.extraConditionText = 'If no, the forms will be moved to uncategorised';
-
+    if(this.forms != null){
+      this.confirmDialogRef.componentInstance.extraConditionText = 'If no, the forms will be moved to uncategorised';
+    }
 
     this.confirmDialogRef.afterClosed().subscribe(result => {
       if (result) {
         if(result.confirm){
-          debugger;
           this.categoryService.deleteCategoryWithForms(this.categoryId, result.extra).then((res: ResponseModel) => {
-            debugger;
             if (res.statusCode === 400) {
               this.toaster.open(res.message, 'Retry',
                 { duration: 4000, verticalPosition: 'top', horizontalPosition: 'center' });

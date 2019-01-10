@@ -47,10 +47,10 @@
                     <span>Users Management</span>
                 </button>
 
-                <button mat-menu-item="mat-menu-item" [matMenuTriggerFor]="objectSetup">
+                <button mat-menu-item="mat-menu-item" (click)="form()">
                     <div fxLayout="row" fxLayoutAlign="start center">
                         <mat-icon>settings</mat-icon>
-                        <span>Object Manager</span>
+                        <span>Form Builder</span>
                     </div>
                 </button>
 
@@ -59,10 +59,6 @@
 
                     <span>Menu Management</span>
                 </button>
-            </mat-menu>
-
-            <mat-menu #objectSetup="matMenu" [overlapTrigger]="false">
-                <button mat-menu-item="mat-menu-item" (click)="form()">Forms</button>
             </mat-menu>
 
             <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
