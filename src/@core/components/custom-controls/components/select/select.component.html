@@ -1,13 +1,18 @@
-<mat-form-field fxFlex="100" [formGroup]="group">
+<!-- <mat-form-field fxFlex="100" [formGroup]="group">
     <ng-container *ngIf="options != null">
-        <mat-select [placeholder]="field.caption" [formControlName]="field.name">
-            <mat-option *ngFor="let item of options" [value]="item.Id">{{item.Value}}</mat-option>
+        <mat-select [placeholder]="config.label" [formControlName]="config.name">
+            <mat-option matInput *ngFor="let item of options" [value]="item.Id">{{item.Value}}</mat-option>
         </mat-select>
     </ng-container>
-    <mat-hint *ngIf="field.fieldAttributeDto != null && (field.fieldAttributeDto.showHint || field.fieldAttributeDto.hint)">
-        {{field.fieldAttributeDto.hint}}</mat-hint>
-    <ng-container *ngIf="field.fieldAttributeDto != null && field.fieldAttributeDto.isRequired && group.invalid"
-        ngProjectAs="mat-error">
-        <mat-error>{{ field.caption }} is required</mat-error>
-    </ng-container>
-</mat-form-field>
+    <mat-error *ngIf="!isValid">{{ config.label }} is required</mat-error>
+</mat-form-field> -->
+
+<div fxFlex="100" [formGroup]="group">
+    <label>{{ config.label }}</label>
+    <select [formControlName]="config.name">
+        <option value="">{{ config.placeholder }}</option>
+        <option *ngFor="let option of config.options">
+            {{ option.value }}
+        </option>
+    </select>
+</div>

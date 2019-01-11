@@ -7,8 +7,7 @@ import { FormsService } from './forms/forms.service';
 import { FormListComponent } from './form-list/form-list.component';
 import { FormListService } from './form-list/form-list.service';
 import { FormService } from './form/form.service';
-import { CustomControlsModule } from '@core/components/custom-controls/custom-controls.module';
-import { DynamicFormComponent } from '@core/components/custom-controls/components/custom-form/custom-form.component';
+import { CustomControlsModule } from '@core/components/custom-controls/custom-form.module';
 
 const routes: Routes = [
   {
@@ -42,6 +41,5 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [FormsComponent, FormComponent, FormListComponent],
-  entryComponents:[DynamicFormComponent]
 })
 export class AuditModule { }

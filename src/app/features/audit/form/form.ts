@@ -22,6 +22,13 @@ export interface Field {
     fieldType: string;
     value?: any;
     fieldAttributeDto: FieldAttributeDto;
+    fieldSpectificDto: FieldSpecificDto;
+}
+
+export interface FieldSpecificDto{
+    fieldOptions: FieldOptionDto[],
+    minimumValue:number;
+    maximumValue:number;
 }
 
 export interface FieldAttributeDto {
@@ -31,6 +38,11 @@ export interface FieldAttributeDto {
     defaultValue?: any;
     isRequired: boolean;
     readOnly: boolean;
+}
+
+export interface FieldOptionDto {
+    id: number;
+    value: string;
 }
 
 export interface LiveFormRecordRequest {

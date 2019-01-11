@@ -1,9 +1,9 @@
-<mat-form-field style="width:100%;" fxFlex="100" appearance="outline" [formGroup]="group" [hintLabel]="hint">
-    <mat-label>{{field.caption}}</mat-label>
-    <textarea #textarea matInput [formControlName]="field.name" [placeholder]="placeHolder" [required]="required" [errorStateMatcher]="matcher"
+<mat-form-field style="width:100%;" fxFlex="100" appearance="outline" [formGroup]="group" [hintLabel]="config.hint">
+    <mat-label>{{config.label}}</mat-label>
+    <textarea #textarea matInput [formControlName]="config.name" [placeholder]="placeHolder" [required]="required"
         [attr.disabled]="disabled"></textarea>
     <ng-container *ngIf="required" ngProjectAs="mat-error">
-        <mat-error>{{ field.caption }} is required</mat-error>
+        <mat-error>{{ config.label }} is required</mat-error>
     </ng-container>
     <mat-hint align="end">
         {{textarea.value?.length || 0}}/{{maximumLength}}</mat-hint>

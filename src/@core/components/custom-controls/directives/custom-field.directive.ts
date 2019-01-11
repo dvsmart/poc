@@ -14,6 +14,8 @@ import { CheckboxComponent } from "../components/checkbox/checkbox.component";
 import { InputComponent } from "../components/textbox/textbox.component";
 import { ButtonComponent } from "../components/button/button.component";
 import { TextAreaComponent } from "../components/textarea/textarea.component";
+import { Field } from "../models/field.interface";
+import { FieldConfig } from "../models/field.config";
 
 const componentMapper = {
   "Text Box": InputComponent,
@@ -32,19 +34,29 @@ const componentMapper = {
   selector: "[dynamicField]"
 })
 export class DynamicFieldDirective implements OnInit {
-  @Input() field: any;
-  @Input() group: FormGroup;
-  componentRef: any;
+  @Input()
+  config: FieldConfig;
+
+  @Input()
+  group: FormGroup;
+  component: ComponentRef<Field>;
+
+
   constructor(
     private resolver: ComponentFactoryResolver,
     private container: ViewContainerRef
   ) { }
   ngOnInit() {
-    const factory = this.resolver.resolveComponentFactory(
-      componentMapper[this.field.fieldType]
-    );
-    this.componentRef = this.container.createComponent(factory);
-    this.componentRef.instance.field = this.field;
-    this.componentRef.instance.group = this.group;
+    if (!componentMapper[this.config.type]) {
+      const supportedTypes = Object.keys(componentMapper).join(', ');
+      throw new Error(
+        `Trying to use an unsupported type (${this.config.type}).
+        Supported types: ${supportedTypes}`
+      );
+    }
+    const factory = this.resolver.resolveComponentFactory<Field>(componentMapper[this.config.type]);
+    this.component = this.container.createComponent(factory);
+    this.component.instance.config = this.config;
+    this.component.instance.group = this.group;
   }
 }

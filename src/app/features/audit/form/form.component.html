@@ -15,7 +15,7 @@
                     </div>
                 </div>
             </div>
-            <button mat-raised-button class="save-product-button mat-white-bg" [disabled]="customRecordForm.invalid"
+            <button mat-raised-button class="save-product-button mat-white-bg" [disabled]="!customRecordForm.valid"
                 *ngIf="pageType ==='new'" (click)="saveRecord()">
                 <span>ADD</span>
             </button>
@@ -27,14 +27,16 @@
         <div class="content-card">
             <div class="content" [formGroup]="customRecordForm">
                 <ng-container *ngIf="record == null">Loading tabs...</ng-container>
-                <form (submit)="saveRecord()" class="p-12">
-                    <mat-tab-group *ngIf="record">
-                        <mat-tab *ngFor="let tab of record.tabs">
-                            <ng-template mat-tab-label="mat-tab-label">{{tab.caption}}</ng-template>
-                            <dynamic-form [fields]="tab.fields" [form]="customRecordForm"></dynamic-form>
-                        </mat-tab>
-                    </mat-tab-group>
-                </form>
+                <!-- <form (submit)="saveRecord()" class="p-12">
+                    
+                </form> -->
+                <mat-tab-group *ngIf="record">
+                    <mat-tab *ngFor="let tab of record.tabs">
+                        <ng-template mat-tab-label="mat-tab-label">{{tab.caption}}</ng-template>
+                        <dynamic-form [config]="config" #form="dynamicForm" (submit)="submit($event)">
+                        </dynamic-form>
+                    </mat-tab>
+                </mat-tab-group>
             </div>
         </div>
     </div>

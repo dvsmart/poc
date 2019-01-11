@@ -39,7 +39,7 @@ export class FormListService {
         return new Promise((resolve, reject) => {
             page = page === undefined ? 1 : page;
             size = size === undefined ? 10 : size;
-            this._httpClient.get<any>(environment.apiUrl + 'LiveForms/all?formId=' + this.routeParams.id)
+            this._httpClient.get<any>(environment.apiUrl + 'LiveForms/all?formId=' + this.routeParams.id +  '&page=' + page + '&pageSize=' + size)
                 .subscribe((response: any) => {
                     this.onRecordsChanged.next(response);
                     resolve(response);

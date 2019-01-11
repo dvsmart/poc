@@ -1,19 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
+import { Field } from "../../models/field.interface";
+import { FieldConfig } from "../../models/field.config";
 
 @Component({
   selector: "app-select",
   templateUrl:'./select.component.html',
 })
-export class SelectComponent implements OnInit {
-  field: any;
+export class SelectComponent implements Field {
+  config: FieldConfig;
   group: FormGroup;
-  options:any[] = null;
-  constructor() {}
-  ngOnInit() {
-    this.options = [];
-    if(this.field.liveFormFieldSpecificationDto != null  && this.field.liveFormFieldSpecificationDto.fieldOptions != null){
-      this.options = JSON.parse(this.field.liveFormFieldSpecificationDto.fieldOptions);
-    }
-  }
 }

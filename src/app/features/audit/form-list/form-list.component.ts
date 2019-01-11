@@ -52,10 +52,12 @@ export class FormListComponent implements OnInit {
 
     this._cevrecordsservice.onRecordsChanged
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(res => {
-        if (res) {
+      .subscribe(data => {
+        if (data) {
           this.isLoading = false;
-          this.dataSource = res;
+          this.dataSource = data.results;
+          this.resultsLength = data.rowCount;
+          this.dataSource.paginator = this.paginator;
         }
       });
 
@@ -75,7 +77,6 @@ export class FormListComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.paginator.page
       .pipe(
