@@ -5,7 +5,8 @@
         </div>
         <div fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
             <ng-container *ngIf="options != null">
-                <mat-checkbox flex='20' *ngFor="let item of options" [formControlName]="field.name">{{item.Value}}</mat-checkbox>
+                <mat-checkbox #checkboxMultiple flex='20' (change)="selectionChange($event)" [value]="[item, i]"
+                    *ngFor="let item of options; let i = index" [formControlName]="field.name">{{item.Value}}</mat-checkbox>
             </ng-container>
             <ng-container *ngIf="field.fieldAttributeDto != null && field.fieldAttributeDto.isRequired && group.invalid"
                 ngProjectAs="mat-error">

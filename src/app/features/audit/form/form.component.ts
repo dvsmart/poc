@@ -70,6 +70,7 @@ export class FormComponent implements OnInit {
   }
 
   populateData(): LiveFormRecordRequest {
+    debugger;
     let formValue = this.customRecordForm.value;
     const fieldValues: FieldValue[] = [];
     var fv = JSON.parse(JSON.stringify(formValue));
