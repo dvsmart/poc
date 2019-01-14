@@ -1,3 +1,5 @@
+import { FieldConfig } from "@core/components/custom-controls/models/field.config";
+
 export interface LiveFormResponse {
     id: number;
     status: number;
@@ -12,7 +14,7 @@ export interface Tab {
     caption: string;
     hidden: boolean;
     isOptional: boolean;
-    fields: Field[];
+    fields: FieldConfig[];
 }
 
 export interface Field {

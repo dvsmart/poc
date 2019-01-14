@@ -16,19 +16,21 @@ import { ButtonComponent } from "../components/button/button.component";
 import { TextAreaComponent } from "../components/textarea/textarea.component";
 import { Field } from "../models/field.interface";
 import { FieldConfig } from "../models/field.config";
+import { uploaderComponent } from "../components/uploader/uploader.component";
 
 const componentMapper = {
-  "Text Box": InputComponent,
+  "text": InputComponent,
   button: ButtonComponent,
-  "Select / List": SelectComponent,
-  Calender: DateComponent,
-  radiobutton: RadiobuttonComponent,
-  "Checkbox": CheckboxComponent,
-  "Text Area": TextAreaComponent,
-  "Currency Input": InputComponent,
-  "Numerical Input": InputComponent,
-  "EmailAddress Input": InputComponent,
-  "Percentage Input": InputComponent
+  "select": SelectComponent,
+  "date": DateComponent,
+  "radiobutton": RadiobuttonComponent,
+  "checkbox": CheckboxComponent,
+  "textarea": TextAreaComponent,
+  "currency": InputComponent,
+  "numerical": InputComponent,
+  "email": InputComponent,
+  "percent": InputComponent,
+  "image": uploaderComponent
 };
 @Directive({
   selector: "[dynamicField]"

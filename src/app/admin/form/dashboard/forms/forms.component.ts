@@ -12,12 +12,14 @@ import { CategoryRequestModel } from '../category/category';
 import { FuseConfirmDialogComponent } from '@core/components/confirm-dialog/confirm-dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ResponseModel } from 'app/models/ResponseModel';
+import { fuseAnimations } from '@core/animations';
 
 @Component({
   selector: 'app-forms',
   templateUrl: './forms.component.html',
   styleUrls: ['./forms.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  animations: fuseAnimations
 })
 export class FormsComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
@@ -119,7 +121,7 @@ export class FormsComponent implements OnInit {
     }
   }
 
-  RemoveForms(){
+  RemoveForms() {
     if (this.selection.selected.length > 0) {
       let selectedForms = this.selection.selected.map(x => x.id);
       this.formsService.removeSelectedForms(selectedForms).then(x => {
@@ -129,7 +131,7 @@ export class FormsComponent implements OnInit {
     }
   }
 
-  RestoreForms(){
+  RestoreForms() {
     if (this.selection.selected.length > 0) {
       let selectedForms = this.selection.selected.map(x => x.id);
       this.formsService.restoreSelectedForms(selectedForms).then(x => {
@@ -172,18 +174,18 @@ export class FormsComponent implements OnInit {
     this.confirmDialogRef = this._dialog.open(FuseConfirmDialogComponent, {
       disableClose: true
     });
-    
+
     this.confirmDialogRef.componentInstance.confirmMessage = 'Do you sure want to delete this category?';
-    
+
     this.confirmDialogRef.componentInstance.confirmTitle = this.categoryName;
-    
-    if(this.forms != null){
+
+    if (this.forms != null) {
       this.confirmDialogRef.componentInstance.extraConditionText = 'If no, the forms will be moved to uncategorised';
     }
 
     this.confirmDialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if(result.confirm){
+        if (result.confirm) {
           this.categoryService.deleteCategoryWithForms(this.categoryId, result.extra).then((res: ResponseModel) => {
             if (res.statusCode === 400) {
               this.toaster.open(res.message, 'Retry',

@@ -33,6 +33,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'build/field/:id',
+        component: FieldComponent,
+        resolve: {
+          field: FieldService
+        }
+      },
+      {
         path: 'settings',
         loadChildren: '../settings/settings.module#SettingsModule'
       },

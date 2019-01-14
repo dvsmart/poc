@@ -1,12 +1,31 @@
-<mat-form-field style="width:100%;padding-bottom:10px;" fxFlex="100" appearance="outline" [formGroup]="group"
-    [hintLabel]="config.hint">
-    <mat-label>{{config.label}}</mat-label>
-    <input matInput [formControlName]="config.name" #input [placeholder]="placeHolder" [errorStateMatcher]="matcher"
-        [maxlength]="maximumLength" [required]="required">
-    <button mat-button *ngIf="config.name.value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
-        <mat-icon>close</mat-icon>
-    </button>
-    <mat-hint align="end" *ngIf="hint">
-        {{input.value?.length || 0}}/{{maximumLength}}</mat-hint>
-    <mat-error *ngIf="!isValid">{{ config.label }} is required</mat-error>
-</mat-form-field>
+<div [ngSwitch]="config.type" [formGroup]="group">
+    <mat-form-field style="width:100%;padding-bottom:10px;" fxFlex="100" appearance="outline" [hintLabel]="config.hint">
+        <mat-label>{{config.label}}</mat-label>
+        <div>
+            <input matInput type="text" [formControlName]="config.name" #input [placeholder]="placeHolder" [maxlength]="maximumLength"
+                [required]="required">
+        </div>
+        <button mat-button *ngIf="config.name.value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+            <mat-icon>close</mat-icon>
+        </button>
+        <mat-hint align="end" *ngIf="hint">
+            {{input.value?.length || 0}}/{{maximumLength}}</mat-hint>
+        <mat-error *ngIf="!isValid">{{ config.label }} is required</mat-error>
+    </mat-form-field>
+</div>
+
+
+
+
+<!-- <div *ngSwitchCase="'numerical'">
+            <input matInput type="number" [formControlName]="config.name" #input [placeholder]="placeHolder"
+                [maxlength]="maximumLength" [required]="required">
+        </div>
+        <div *ngSwitchCase="'email'">
+            <input matInput type="email" [formControlName]="config.name" #input [placeholder]="placeHolder" [maxlength]="maximumLength"
+                [required]="required">
+        </div>
+        <div *ngSwitchCase="'range'">
+            <input matInput type="email" [formControlName]="config.name" #input [placeholder]="placeHolder" [maxlength]="maximumLength"
+                [required]="required" min="0" max="maximumLength">
+        </div> -->

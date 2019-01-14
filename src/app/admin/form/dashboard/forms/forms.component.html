@@ -50,11 +50,11 @@
 </ng-container>
 
 <ng-container *ngIf="forms">
-  <div fxLayout="row" fxLayoutAlign="start center" class="item" *ngFor="let link of forms">
+  <div fxLayout="row" fxLayoutAlign="start center" class="item" *ngFor="let link of forms" mat-ripple [@animateStagger]="{value:'30'}">
     <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(link) : null" [checked]="selection.isSelected(link)"
       class="mr-16" fxFlex="0 1 auto">
     </mat-checkbox>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex [routerLink]="['/admin/form/builder/' + link.id + '/' + link.name]">
+    <div fxLayout="row"  fxLayoutAlign="start center" fxFlex [routerLink]="['/admin/form/builder/' + link.id + '/' + link.name]">
       <div class="info" fxFlex fxFlexLayout="column">
         <div class="title text-truncate">
           {{ link.name }}

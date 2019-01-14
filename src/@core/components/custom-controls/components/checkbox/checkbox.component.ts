@@ -9,4 +9,9 @@ import { FieldConfig } from "../../models/field.config";
 export class CheckboxComponent {
   config: FieldConfig;
   group: FormGroup;
+
+  ngOnInit(){
+   
+    var field = this.config;
+  }
 }

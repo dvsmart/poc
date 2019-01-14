@@ -7,10 +7,10 @@ import { FieldConfig } from "../../models/field.config";
   templateUrl: './radio.component.html'
 })
 export class RadiobuttonComponent implements OnInit {
-  field: FieldConfig;
+  config: FieldConfig;
   group: FormGroup;
   constructor() {}
   ngOnInit() {
-    debugger;
+    
   }
 }

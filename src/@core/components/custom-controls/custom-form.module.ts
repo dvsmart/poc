@@ -12,6 +12,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TextAreaComponent } from './components/textarea/textarea.component';
+import { uploaderComponent } from './components/uploader/uploader.component';
 
 const fieldComponents = [
     ButtonComponent,
@@ -20,7 +21,8 @@ const fieldComponents = [
     CheckboxComponent,
     DateComponent,
     RadiobuttonComponent,
-    TextAreaComponent
+    TextAreaComponent,
+    uploaderComponent
 ];
 
 

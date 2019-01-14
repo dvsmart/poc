@@ -84,7 +84,6 @@ export class UserIdleService {
     );
 
     this.idle$ = from(this.activityEvents$);
-    debugger;
   }
 
   /**

@@ -24,6 +24,19 @@ export class FormFieldRequestModel {
     }
 }
 
+export class FieldDetail {
+    id: number;
+    caption: string;
+    type: string;
+    tabName: string;
+    fieldTypeId: number;
+    hint: string;
+    hidden: boolean;
+    isRequired: boolean;
+    placeHolder?: any;
+    disabled: boolean;
+}
+
 
 export class FormFieldSpecificRequestModel {
     defaultValue: string;
@@ -34,7 +47,7 @@ export class FormFieldSpecificRequestModel {
     decimalFormat: number;
     currency: number;
     fileTypes: string;
-    dateFormat:string;
+    dateFormat: string;
     fieldOptions: FieldOptionRequestModel[] = [];
     validation: string;
 

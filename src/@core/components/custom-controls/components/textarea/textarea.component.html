@@ -1,10 +1,9 @@
 <mat-form-field style="width:100%;" fxFlex="100" appearance="outline" [formGroup]="group" [hintLabel]="config.hint">
     <mat-label>{{config.label}}</mat-label>
-    <textarea #textarea matInput [formControlName]="config.name" [placeholder]="placeHolder" [required]="required"
-        [attr.disabled]="disabled"></textarea>
+    <textarea #textarea matInput [formControlName]="config.name" [placeholder]="placeHolder"></textarea>
     <ng-container *ngIf="required" ngProjectAs="mat-error">
         <mat-error>{{ config.label }} is required</mat-error>
     </ng-container>
     <mat-hint align="end">
-        {{textarea.value?.length || 0}}/{{maximumLength}}</mat-hint>
+        {{textarea.value?.length || 0}}/{{maximumLength || 500}}</mat-hint>
 </mat-form-field>

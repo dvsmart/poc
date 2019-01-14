@@ -16,12 +16,14 @@ export class FieldService {
 
   tabs: BehaviorSubject<any>;
   formId: number;
+  onfieldChanged: BehaviorSubject<any>;
 
   constructor(private _httpClient: HttpClient) {
     this.fields = new BehaviorSubject<any>(null);
     this.fieldTypes = new BehaviorSubject<any>({});
     this.fieldTypeSpecification = new BehaviorSubject<any>({});
     this.tabs = new BehaviorSubject<any>({});
+    this.onfieldChanged = new BehaviorSubject<any>({});
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
@@ -33,6 +35,9 @@ export class FieldService {
         this.getTabs()
       ]).then(
         () => {
+          if(this.routeParams.id != undefined){
+            this.getField();
+          }
           resolve();
         },
         reject
@@ -42,9 +47,9 @@ export class FieldService {
 
   getField(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'FormFields/' + this.routeParams.id)
+      this._httpClient.get<any>(environment.apiUrl + 'FormFields?id=' + this.routeParams.id)
         .subscribe((response: any) => {
-          this.fields.next(response);
+          this.onfieldChanged.next(response);
           resolve(response);
         }, reject);
     });
@@ -52,7 +57,7 @@ export class FieldService {
 
   getFieldTypes(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'FormFieldTypes')
+      this._httpClient.get<any>(environment.apiUrl + 'FieldTypes')
         .subscribe((response: any) => {
           this.fieldTypes.next(response);
           resolve(response);
@@ -62,7 +67,7 @@ export class FieldService {
 
   getFieldType(id): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'FormFieldTypes/' + id)
+      this._httpClient.get<any>(environment.apiUrl + 'FieldTypes/' + id)
         .subscribe((response: any) => {
           this.fieldTypeSpecification.next(response);
           resolve(response);
@@ -70,7 +75,7 @@ export class FieldService {
     });
   }
 
-  getFieldtypeAsync(id:number){
+  getFieldtypeAsync(id: number) {
     return this._httpClient.get<any>(environment.apiUrl + 'FormFieldTypes/' + id);
   }
 
@@ -86,20 +91,20 @@ export class FieldService {
     });
   }
 
-  getTabsAsync(){
+  getTabsAsync() {
     return this._httpClient.get<any>(environment.apiUrl + 'FormTabs/' + this.formId);
   }
 
   SaveField(formFieldRequest: FormFieldRequestModel) {
     return new Promise((resolve, reject) => {
-      this._httpClient.post(environment.apiUrl + 'FormFields', { ...formFieldRequest})
+      this._httpClient.post(environment.apiUrl + 'FormFields', { ...formFieldRequest })
         .subscribe((response: any) => {
           resolve(response);
         }, reject);
     });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.fieldTypeSpecification.next('');
     this.fieldTypeSpecification.complete();
   }

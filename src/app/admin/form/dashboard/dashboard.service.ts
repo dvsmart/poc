@@ -63,7 +63,6 @@ export class DashboardService {
     return new Promise((resolve, reject) => {
       this.http.delete(`${environment.apiUrl}FormCategories?id=${id}`)
         .subscribe((response: ResponseModel) => {
-          debugger;
           resolve(response);
         }, reject);
     });

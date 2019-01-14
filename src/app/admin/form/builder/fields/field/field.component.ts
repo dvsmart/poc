@@ -3,7 +3,8 @@ import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms'
 import { FieldService } from './field.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { FieldType, FieldGeneralVisibility, FieldSpecificVisibility, FormFieldRequestModel, FieldOptionRequestModel, FormFieldSpecificRequestModel } from '../field';
+import { FieldType, FieldGeneralVisibility, FieldSpecificVisibility, FormFieldRequestModel, FieldOptionRequestModel, FormFieldSpecificRequestModel, FieldDetail } from '../field';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-field',
@@ -19,15 +20,17 @@ export class FieldComponent {
   fieldGeneralVisibility: FieldGeneralVisibility;
   fieldSpecificVisibility: FieldSpecificVisibility;
 
-  validationErrorMessage:string;
+  validationErrorMessage: string;
 
   private _unsubscribeAll: Subject<any>;
   fieldTypes: any;
   tabs: any;
-  fieldOption:any[];
-  option:string = '';
-
-  constructor(private _formBuilder: FormBuilder, private fieldService: FieldService) {
+  fieldOption: any[];
+  option: string = '';
+  editForm: boolean = false;
+  detail: FieldDetail;
+  
+  constructor(private _formBuilder: FormBuilder, private fieldService: FieldService, private route: ActivatedRoute) {
     this._unsubscribeAll = new Subject();
     this.fieldType = new FieldType();
     this.fieldGeneralVisibility = new FieldGeneralVisibility();
@@ -37,6 +40,16 @@ export class FieldComponent {
   }
 
   ngOnInit() {
+    this.route.params.subscribe(x => {
+      if (x.id != null) {
+        this.editForm = true;
+        this.fieldService.onfieldChanged
+          .pipe(takeUntil(this._unsubscribeAll))
+          .subscribe((detail: FieldDetail) => {
+            this.detail = detail;
+          })
+      }
+    })
     this.fieldService.fieldTypes
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
@@ -55,75 +68,81 @@ export class FieldComponent {
     });
   }
 
-  addOption(value){
+  goToEditField() {
+    this.editForm = false;
+    this.fieldTypeChange(this.detail.fieldTypeId);
+  }
+
+  addOption(value) {
     this.fieldOption.push(value);
   }
 
-  fieldTypeChange(e){
-    if(e.value !== null){
+  fieldTypeChange(e) {
+    if (e.value !== null || this.detail.fieldTypeId) {
+      let id = e.value || this.detail.fieldTypeId;
       this.validationErrorMessage = '';
-      this.fieldService.getFieldtypeAsync(e.value)
-      .subscribe(r => {
-        if (r != undefined && r != null && r !== {}) {
-          this.fieldType = new FieldType(r);
-          this.fieldGeneralVisibility = new FieldGeneralVisibility(r.fieldSpecificationVisibilityDto);
-          this.fieldSpecificVisibility = new FieldSpecificVisibility(r.fieldSpecificSpecificationVisibilityDto);
-          this.buildFieldGeneralSettingsVisibility();
-          this.buildFieldSpecificAttributesVisibility();
-          this.tabs = this.fieldService.getTabsAsync();
-        }
-      });
-    }
-  }
- 
-  buildFieldGeneralSettingsVisibility() {
-    if (this.fieldGeneralVisibility.hidden) {
-      this.fieldGeneralForm.addControl('hidden', new FormControl(''));
-    }
-    if (this.fieldGeneralVisibility.isRequired) {
-      this.fieldGeneralForm.addControl('isRequired', new FormControl(''));
-    }
-    if (this.fieldGeneralVisibility.showDescription) {
-      this.fieldGeneralForm.addControl('description', new FormControl(''));
-    }
-    if (this.fieldGeneralVisibility.placeholder) {
-      this.fieldGeneralForm.addControl('placeholder', new FormControl(''));
-    }
-    if (this.fieldGeneralVisibility.readOnly) {
-      this.fieldGeneralForm.addControl('readOnly', new FormControl(''));
+      this.fieldService.getFieldtypeAsync(id)
+        .subscribe(r => {
+          if (r != undefined && r != null && r !== {}) {
+            this.fieldType = new FieldType(r);
+            this.fieldGeneralVisibility = new FieldGeneralVisibility(r.fieldSpecificationVisibilityDto);
+            this.fieldSpecificVisibility = new FieldSpecificVisibility(r.fieldSpecificSpecificationVisibilityDto);
+            this.buildFieldGeneralSettingsVisibility();
+            this.buildFieldSpecificAttributesVisibility();
+            this.tabs = this.fieldService.getTabsAsync();
+          }
+        });
     }
   }
 
-  buildFieldSpecificAttributesVisibility(){
-    if(this.fieldSpecificVisibility.minimumValue){
+  buildFieldGeneralSettingsVisibility() {
+    if (this.fieldGeneralVisibility.hidden) {
+      this.fieldGeneralForm.addControl('hidden', new FormControl(this.detail.hidden || ''));
+    }
+    if (this.fieldGeneralVisibility.isRequired) {
+      this.fieldGeneralForm.addControl('isRequired', new FormControl(this.detail.isRequired || ''));
+    }
+    if (this.fieldGeneralVisibility.showDescription) {
+      this.fieldGeneralForm.addControl('description', new FormControl(this.detail.hint || ''));
+    }
+    if (this.fieldGeneralVisibility.placeholder) {
+      this.fieldGeneralForm.addControl('placeholder', new FormControl(this.detail.placeHolder || ''));
+    }
+    if (this.fieldGeneralVisibility.readOnly) {
+      this.fieldGeneralForm.addControl('readOnly', new FormControl(this.detail.disabled || ''));
+    }
+  }
+
+  buildFieldSpecificAttributesVisibility() {
+    if (this.fieldSpecificVisibility.minimumValue) {
       this.fieldSpecificForm.addControl('minimumValue', new FormControl(''));
     }
-    if(this.fieldSpecificVisibility.maximumValue){
+    if (this.fieldSpecificVisibility.maximumValue) {
       this.fieldSpecificForm.addControl('maximumValue', new FormControl(''));
     }
-    if(this.fieldSpecificVisibility.maximumRows){
+    if (this.fieldSpecificVisibility.maximumRows) {
       this.fieldSpecificForm.addControl('maximumRows', new FormControl(''));
     }
-    if(this.fieldSpecificVisibility.defaultValue){
+    if (this.fieldSpecificVisibility.defaultValue) {
       this.fieldSpecificForm.addControl('defaultValue', new FormControl(''));
     }
-    if(this.fieldSpecificVisibility.fileTypes){
+    if (this.fieldSpecificVisibility.fileTypes) {
       this.fieldSpecificForm.addControl('fileTypes', new FormControl(''));
     }
-    if(this.fieldSpecificVisibility.currency){
+    if (this.fieldSpecificVisibility.currency) {
       this.fieldSpecificForm.addControl('currency', new FormControl(''));
     }
-    if(this.fieldSpecificVisibility.fieldOptions){
+    if (this.fieldSpecificVisibility.fieldOptions) {
       this.fieldSpecificForm.addControl('fieldOptions', new FormControl(''));
     }
-    if(this.fieldSpecificVisibility.colspan){
+    if (this.fieldSpecificVisibility.colspan) {
       this.fieldSpecificForm.addControl('colspan', new FormControl(''));
     }
   }
 
   GetFieldTypeSpecification() {
     var selectedFieldType = this.fieldTypeForm.value;
-    if(selectedFieldType.fieldType === '' || selectedFieldType.fieldType === null){
+    if (selectedFieldType.fieldType === '' || selectedFieldType.fieldType === null) {
       this.validationErrorMessage = 'Field Type is required. Please choose a field type.';
       return;
     }

@@ -1,18 +1,12 @@
-<div fxFlex="100" [formGroup]="group">
+<div fxFlex="100">
     <div fxLayout="row" fxLayoutGap="25px">
         <div>
             <mat-label>{{config.label}}</mat-label>
         </div>
-        <div fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
-            <!-- <ng-container *ngIf="options != null">
-                <div *ngFor="let item of options; let i = index;">
-                    <mat-checkbox flex='20' [required]="required"
-                        [formControlName]="field.name">{{item.Value}}</mat-checkbox>
-                </div>
-            </ng-container> -->
+        <div fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" [formGroup]="group">
             <ng-container [formArrayName]="config.name">
-                <span *ngFor="let option of config.options; let i = index" [formGroupName]="i">
-                    <input type="checkbox" [name]="config.name" formControlName="value" />{{option.Value}}
+                <span *ngFor="let option of config.fieldChoices; let i = index" [formGroupName]="i">
+                    <mat-checkbox type="checkbox" [name]="config.name" formControlName="value">{{option.value}}</mat-checkbox>
                 </span>
             </ng-container>
             <!-- <mat-error *ngIf="!isValid">{{ config.label }} is required</mat-error>

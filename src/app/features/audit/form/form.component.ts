@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormControl, FormBuilder, FormArray } from '@angular/forms';
-import { Subject, config } from 'rxjs';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
 import { FormService } from './form.service';
 import { takeUntil } from 'rxjs/operators';
 import { fuseAnimations } from '@core/animations';
 import { LiveFormResponse, LiveFormRecordRequest, FieldValue } from './form';
-import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { FieldConfig } from '@core/components/custom-controls/models/field.config';
-import { FieldComponent } from 'app/admin/form/builder/fields/field/field.component';
+import { MatSnackBar } from '@angular/material';
+import { ValidationService } from '@core/components/custom-controls/models/validation.service';
+import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
 
 @Component({
   selector: 'app-form',
@@ -20,17 +20,25 @@ export class FormComponent implements OnInit {
   title: string;
   record: LiveFormResponse;
   pageType: string;
-  customRecordForm: FormGroup = new FormGroup({});
+  customRecordForm: FormGroup;
 
   customEntityId: number;
 
+  get changes() { return this.customRecordForm.valueChanges; }
+  get valid() { return this.customRecordForm.valid; }
+  get value() { return this.customRecordForm.value; }
+
+  formErrors: any;
   private _unsubscribeAll: Subject<any>;
   constructor(
     private _recordservice: FormService,
     private _location: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toaster: MatSnackBar,
+    private validationService: ValidationService
   ) {
     this._unsubscribeAll = new Subject();
+    this.customRecordForm = new FormGroup({});
   }
   ngOnInit() {
     this._recordservice.onRecordChanged
@@ -45,94 +53,93 @@ export class FormComponent implements OnInit {
           this.title = 'Edit ' + this.record.formName + ' - ' + x.dataId;
         }
         this.customEntityId = this.record.formId;
-        //this.customRecordForm = this.createRecordForm();
-        this.getFields();
       })
+    this.customRecordForm = this.createGroup();
   }
 
-  config: FieldConfig[];
 
-  getFields() {
-    this.config = [];
+
+  createGroup() {
+    const group = this.fb.group({});
     if (this.record.tabs == null) {
       return;
     }
-    let tabs = this.record.tabs;
-    tabs.forEach(t => {
-      t.fields.forEach((f: any) => {
-        let fieldAttribute = f.fieldAttributeDto;
-        let fieldOptions = (f.liveFormFieldSpecificationDto != null && f.liveFormFieldSpecificationDto.fieldOptions != undefined) ? f.liveFormFieldSpecificationDto.fieldOptions : null;
-        let opts = fieldOptions != "" ? JSON.parse(fieldOptions) : null
-        this.config.push({
-          label: f.caption,
-          name: f.name,
-          type: f.fieldType,
-          disabled: fieldAttribute.readOnly,
-          options: opts,
-          placeholder: fieldAttribute.placeHolder,
-          value: f.value,
-        })
-      });
+    this.record.tabs.forEach(t => {
+      t.fields.forEach(control => group.addControl(control.name, this.createControl(control)))
     })
+    this.customRecordForm.valueChanges.subscribe((data) => {
+      this.formErrors = this.validationService.validateForm(this.customRecordForm, this.formErrors, true)
+    });
+    return group;
+  }
+
+  createControl(config: any) {
+    const { disabled, validation, value } = config;
+    if ((config.type === 'checkbox') && config.fieldChoices != undefined) {
+      return this.fb.array(
+        config.fieldChoices.map(x => {
+          return this.fb.group({
+            name: x,
+            value: value ? value.indexOf(x.id) > - 1 : false
+          })
+        }));
+    }
+
+    return this.fb.control({ disabled, value }, validation);
   }
 
 
-  createRecordForm() {
-    let group: any = {};
-    if (this.record.tabs == null) {
-      return new FormGroup({});
+  setDisabled(name: string, disable: boolean) {
+    if (this.customRecordForm.controls[name]) {
+      const method = disable ? 'disable' : 'enable';
+      this.customRecordForm.controls[name][method]();
+      return;
     }
-    this.record.tabs.forEach(ct => {
-      ct.fields.forEach(field => {
-        if (field) {
+  }
 
-
-          let fieldAttribute = field.fieldAttributeDto;
-          if (fieldAttribute != null) {
-            group[field.name] = fieldAttribute.isRequired ? new FormControl({ value: field.value || '', disabled: fieldAttribute.readOnly }, Validators.required)
-              : new FormControl({ value: field.value || '', disabled: fieldAttribute.readOnly } || '');
-          }
-          if (field.fieldType == "Checkbox" && field.fieldSpectificDto != null && field.fieldSpectificDto.fieldOptions != null) {
-            group[field.name] = this.fb.array(
-              field.fieldSpectificDto.fieldOptions.map(x => {
-                return this.fb.group({
-                  name: x.id,
-                  value: x.value ? x.value.indexOf(x.value) > - 1 : false
-                })
-              }));
-          }
-        }
-      });
-    })
-    return new FormGroup(group);
+  setValue(name: string, value: any) {
+    this.customRecordForm.controls[name].setValue(value, { emitEvent: true });
   }
 
   populateData(): LiveFormRecordRequest {
     debugger;
-    let formValue = this.customRecordForm.value;
-    const fieldValues: FieldValue[] = [];
-    var fv = JSON.parse(JSON.stringify(formValue));
-    Object.keys(fv).forEach(function (prop) {
-      fieldValues.push({ fieldKey: prop, value: fv[prop] });
-    });
+    this.validationService.markFormGroupTouched(this.customRecordForm);
+    if (this.customRecordForm.valid) {
+      const result = { ...this.value };
+      const fieldValues: FieldValue[] = [];
+      Object.keys(result).forEach((key, index) => {
+        if (result[key] != null) {
+          if (typeof (result[key]) === 'object') {
+            result[key] = result[key].filter(x => x.value).map(x => x.name.id).join(",");
+          }
+          fieldValues.push({ fieldKey: key, value: result[key] });
+        }
+        else {
+          return;
+        }
+      })
 
-    const formModel: LiveFormRecordRequest = {
-      id: 0,
-      formId: this.record.formId,
-      fieldValues: fieldValues
+      const formModel: LiveFormRecordRequest = {
+        id: 0,
+        formId: this.record.formId,
+        fieldValues: fieldValues
+      }
+
+      return formModel;
     }
+    else {
+      this.validationService.validateForm(this.customRecordForm, this.formErrors, true);
+      return null;
+    }
+  }
 
-    return formModel;
-  }
-  data: any;
-  submit(event) {
-    this.data = event;
-  }
 
   saveRecord(): void {
     var record = this.populateData();
+    if(record == null) return;
     this._recordservice.saveRecord(record).then((x: any) => {
-      this._location.navigate(['audit/forms/' + x.formId + '/' + x.id]);
+      this._location.navigate(['audit/forms/' + this.customEntityId + '/' + x.id]);
+      this.toaster.open("Record has been created successfully.", "Ok", { duration: 3000 });
     });
   }
 

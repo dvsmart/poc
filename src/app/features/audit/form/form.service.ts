@@ -55,9 +55,9 @@ export class FormService {
     }
   }
 
-  saveRecord(data: LiveFormRecordRequest) {
+  saveRecord(liveFormRecordRequestModel: LiveFormRecordRequest) {
     return new Promise((resolve, reject) => {
-      this._httpClient.post(environment.apiUrl + 'LiveForms/', data)
+      this._httpClient.post(environment.apiUrl + 'LiveForms/', liveFormRecordRequestModel)
         .subscribe((response: any) => {
           this.onRecordChanged.next(response);
           resolve(response);

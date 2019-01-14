@@ -7,12 +7,18 @@
     <mat-error *ngIf="!isValid">{{ config.label }} is required</mat-error>
 </mat-form-field> -->
 
-<div fxFlex="100" [formGroup]="group">
-    <label>{{ config.label }}</label>
-    <select [formControlName]="config.name">
-        <option value="">{{ config.placeholder }}</option>
-        <option *ngFor="let option of config.options">
-            {{ option.value }}
-        </option>
-    </select>
-</div>
+<mat-form-field fxFlex="100" [formGroup]="group">
+    <div fxLayout="row" fxLayoutGap="25px">
+        <div fxLayout="row" fxLayoutGap="25px">
+            <mat-label>{{config.label}}</mat-label>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+            <select matNativeControl [formControlName]="config.name">
+                <option label="--Select Country --"></option>
+                <option *ngFor="let option of config.fieldChoices" [value]="option.id">
+                    {{ option.value }}
+                </option>
+            </select>
+        </div>
+    </div>
+</mat-form-field>
