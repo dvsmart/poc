@@ -12,6 +12,7 @@ import { TabComponent } from './tabs/tab/tab.component';
 import { TabService } from './tabs/tab/tab.service';
 import { FuseConfirmDialogComponent } from '@core/components/confirm-dialog/confirm-dialog.component';
 import { FuseConfirmDialogModule } from '@core/components/confirm-dialog/confirm-dialog.module';
+import { FieldDetailComponent } from './fields/field-detail/field-detail.component';
 
 const routes: Routes = [
   {
@@ -26,7 +27,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'build/field',
+        path: 'build/field/:id',
         component: FieldComponent,
         resolve: {
           field: FieldService
@@ -34,10 +35,7 @@ const routes: Routes = [
       },
       {
         path: 'build/field/:id',
-        component: FieldComponent,
-        resolve: {
-          field: FieldService
-        }
+        component: FieldDetailComponent
       },
       {
         path: 'settings',
@@ -71,7 +69,7 @@ const routes: Routes = [
     FuseConfirmDialogModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [BuilderComponent, FieldsComponent, FieldComponent, TabsComponent, TabComponent],
-  entryComponents:[FuseConfirmDialogComponent]
+  declarations: [BuilderComponent, FieldsComponent, FieldComponent, TabsComponent, TabComponent, FieldDetailComponent],
+  entryComponents: [FuseConfirmDialogComponent]
 })
 export class BuilderModule { }

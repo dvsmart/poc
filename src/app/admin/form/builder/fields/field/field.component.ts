@@ -21,15 +21,13 @@ export class FieldComponent {
   fieldSpecificVisibility: FieldSpecificVisibility;
 
   validationErrorMessage: string;
-
+  detail: FieldDetail;
   private _unsubscribeAll: Subject<any>;
   fieldTypes: any;
   tabs: any;
   fieldOption: any[];
   option: string = '';
-  editForm: boolean = false;
-  detail: FieldDetail;
-  
+
   constructor(private _formBuilder: FormBuilder, private fieldService: FieldService, private route: ActivatedRoute) {
     this._unsubscribeAll = new Subject();
     this.fieldType = new FieldType();
@@ -40,21 +38,19 @@ export class FieldComponent {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(x => {
-      if (x.id != null) {
-        this.editForm = true;
-        this.fieldService.onfieldChanged
-          .pipe(takeUntil(this._unsubscribeAll))
-          .subscribe((detail: FieldDetail) => {
-            this.detail = detail;
-          })
-      }
-    })
     this.fieldService.fieldTypes
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
         if (response) {
           this.fieldTypes = response;
+        }
+      });
+
+    this.fieldService.onfieldChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(response => {
+        if (response) {
+          this.detail = response;
         }
       });
 
@@ -68,18 +64,13 @@ export class FieldComponent {
     });
   }
 
-  goToEditField() {
-    this.editForm = false;
-    this.fieldTypeChange(this.detail.fieldTypeId);
-  }
-
   addOption(value) {
     this.fieldOption.push(value);
   }
 
   fieldTypeChange(e) {
-    if (e.value !== null || this.detail.fieldTypeId) {
-      let id = e.value || this.detail.fieldTypeId;
+    if (e.value !== null) {
+      let id = e.value;
       this.validationErrorMessage = '';
       this.fieldService.getFieldtypeAsync(id)
         .subscribe(r => {
@@ -89,7 +80,13 @@ export class FieldComponent {
             this.fieldSpecificVisibility = new FieldSpecificVisibility(r.fieldSpecificSpecificationVisibilityDto);
             this.buildFieldGeneralSettingsVisibility();
             this.buildFieldSpecificAttributesVisibility();
-            this.tabs = this.fieldService.getTabsAsync();
+            this.fieldService.tabs
+              .pipe(takeUntil(this._unsubscribeAll))
+              .subscribe(response => {
+                if (response) {
+                  this.tabs = response;
+                }
+              });
           }
         });
     }

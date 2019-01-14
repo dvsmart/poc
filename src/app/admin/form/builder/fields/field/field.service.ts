@@ -27,7 +27,6 @@ export class FieldService {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
-    this.routeParams = route.params;
     this.formId = route.parent.params["id"];
     return new Promise((resolve, reject) => {
       Promise.all([
@@ -35,9 +34,6 @@ export class FieldService {
         this.getTabs()
       ]).then(
         () => {
-          if(this.routeParams.id != undefined){
-            this.getField();
-          }
           resolve();
         },
         reject
@@ -45,15 +41,7 @@ export class FieldService {
     });
   }
 
-  getField(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'FormFields?id=' + this.routeParams.id)
-        .subscribe((response: any) => {
-          this.onfieldChanged.next(response);
-          resolve(response);
-        }, reject);
-    });
-  }
+  
 
   getFieldTypes(): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -75,17 +63,25 @@ export class FieldService {
     });
   }
 
+  getField(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._httpClient.get<any>(environment.apiUrl + 'FormFields?id=' + this.routeParams.id)
+        .subscribe((response: any) => {
+          this.onfieldChanged.next(response);
+          resolve(response);
+        }, reject);
+    });
+  }
+
   getFieldtypeAsync(id: number) {
-    return this._httpClient.get<any>(environment.apiUrl + 'FormFieldTypes/' + id);
+    return this._httpClient.get<any>(environment.apiUrl + 'FieldTypes/' + id);
   }
 
   getTabs(): Promise<any> {
-    console.log(this.formId);
     return new Promise((resolve, reject) => {
       this._httpClient.get<any>(environment.apiUrl + 'FormTabs/' + this.formId)
         .subscribe((response: any) => {
           this.tabs.next(response);
-          console.log(response);
           resolve(response);
         }, reject);
     });

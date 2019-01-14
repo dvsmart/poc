@@ -102,7 +102,6 @@ export class FormComponent implements OnInit {
   }
 
   populateData(): LiveFormRecordRequest {
-    debugger;
     this.validationService.markFormGroupTouched(this.customRecordForm);
     if (this.customRecordForm.valid) {
       const result = { ...this.value };
