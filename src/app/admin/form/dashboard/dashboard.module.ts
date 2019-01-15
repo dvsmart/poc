@@ -16,7 +16,7 @@ const routes: Routes = [
     component: DashboardComponent,
     children: [
       {
-        path: 'folder/:id/:slug',
+        path: ':id/:slug',
         component: FormsComponent,
         resolve: {
           forms: FormsService
@@ -24,7 +24,7 @@ const routes: Routes = [
       },
       {
         path: '**',
-        redirectTo: 'folder/forms/uncategorised'
+        redirectTo: 'forms/uncategorised'
       }
     ],
     resolve: {

@@ -35,6 +35,7 @@ export class FieldDetail {
     isRequired: boolean;
     placeHolder?: any;
     disabled: boolean;
+    tabId:number;
 }
 
 

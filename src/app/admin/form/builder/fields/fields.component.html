@@ -1,11 +1,11 @@
 <div class="toolbar px-24 py-8">
     <span>Form Controls</span>
     <div fxLayout="row" fxLayoutAlign="end end" fxFlex="1 0 auto">
-        <button mat-raised-button class="mr-12" routerLink="/admin/form/dashboard/folder/uncategorised">
+        <button mat-raised-button class="mr-12" routerLink="/admin/form/dashboard/forms/uncategorised">
             <mat-icon class="mr-2">navigate_before</mat-icon>
             <span>Back to Forms</span>
         </button>
-        <button mat-raised-button class="save-product-button" color="accent" routerLink="field">
+        <button mat-raised-button class="save-product-button" color="accent" routerLink="new">
             <span>Create</span>
         </button>
     </div>
@@ -52,6 +52,6 @@
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="data-row" [@animate]="{value:'*',params:{y:'100%'}}"
-        [routerLink]="['field/' +row.id]"></mat-row>
+        [routerLink]="[row.id + '/detail']"></mat-row>
 </mat-table>
 <mat-paginator [pageSizeOptions]="[5, 10, 20]" pageSize="10" showFirstLastButtons></mat-paginator>

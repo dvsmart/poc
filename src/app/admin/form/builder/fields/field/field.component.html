@@ -9,14 +9,8 @@
     </button>
   </div>
 </div>
-<div *ngIf="editForm ;else fieldBuildForm">
- 
-</div>
-<ng-template #fieldBuildForm>
-  <mat-spinner style="margin:0 auto;" mode="indeterminate"></mat-spinner>
-</ng-template>
-<mat-horizontal-stepper linear #stepper *ngIf="!editForm">
-  <mat-step [stepControl]="fieldTypeForm" errorMessage="Field Type is required." *ngIf="!editForm">
+<mat-horizontal-stepper linear #stepper>
+  <mat-step [stepControl]="fieldTypeForm" errorMessage="Field Type is required.">
     <form [formGroup]="fieldTypeForm" fxLayout="column">
       <div fxLayout="row" fxLayoutAlign="end" class="mb-8">
         <div *ngIf="validationErrorMessage" class="p-8">
@@ -50,15 +44,23 @@
         </div>
         <mat-form-field appearance="outline" fxFlex="100">
           <mat-label>Field Type</mat-label>
-          <input matInput [value]="fieldType.type" disabled>
+          <input matInput [value]="detail.type" disabled>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="100">
-          <mat-select placeholder="Select Tab" formControlName="tabId" required [(value)]="tabId">
-            <mat-option *ngFor="let tab of tabs | async" [value]="tab.id">
-              {{tab.caption}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div fxLayout="row" fxLayoutAlign="start">
+          <mat-form-field appearance="outline" fxFlex="100">
+            <mat-select placeholder="Select Tab" formControlName="tabId" required [(value)]="tabId">
+              <mat-option *ngFor="let tab of tabs" [value]="tab.id">
+                {{tab.caption}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div *ngIf="tabs == null">
+            <mat-form-field appearance="outline" fxFlex="100">
+              <mat-label>Tab / Section</mat-label>
+              <input matInput placeholder="Tab Caption" formControlName="tabName">
+            </mat-form-field>
+          </div>
+        </div>
         <mat-form-field appearance="outline" fxFlex="100">
           <mat-label>Field Label</mat-label>
           <input matInput placeholder="Field Label" formControlName="label" required>

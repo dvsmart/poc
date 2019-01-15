@@ -1,4 +1,4 @@
-<div class="mb-24" fxLayout="row" fxLayoutAlign="start" fxLayout.gt-md="row">
+<div class="mb-24" fxLayout="row" fxLayoutAlign="start" fxLayout.gt-md="row" *ngIf="detail | async as field">
   <div class="p-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
     <div class="h2 mb-24 sub-header">Field Detail</div>
     <div fxLayout="row" class="mb-24" fxLayoutAlign="end end" fxFlex="1 0 auto">
@@ -6,40 +6,40 @@
         <mat-icon>navigate_before</mat-icon>
         <span>Back to Fields</span>
       </button>
-      <button mat-raised-button color="accent" [routerLink]="['/build/field/' + detail.id ]">
+      <button mat-raised-button color="accent" [routerLink]="['../']">
         <span>Edit</span>
       </button>
     </div>
     <div class="p-24">
-      <div *ngIf="detail != null" fxLayout="column" fxLayoutAlign="flex-start" fxFlex="1 0 auto">
+      <div *ngIf="field != null" fxLayout="column" fxLayoutAlign="flex-start" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="100">
           <mat-label>Label</mat-label>
-          <input matInput [value]="detail.caption" disabled>
+          <input matInput [value]="field.caption" disabled>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="100">
           <mat-label>Form Tab / Section</mat-label>
-          <input matInput [value]="detail.tabName" disabled>
+          <input matInput [value]="field.tabName" disabled>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="100">
           <mat-label>Field Type</mat-label>
-          <input matInput [value]="detail.type" disabled>
+          <input matInput [value]="field.type" disabled>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="100">
           <mat-label>Hint</mat-label>
-          <input matInput [value]="detail.hint" disabled>
+          <input matInput [value]="field.hint" disabled>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="100">
           <mat-label>Placeholder</mat-label>
-          <input matInput [value]="detail.placeHolder" disabled>
+          <input matInput [value]="field.placeHolder" disabled>
         </mat-form-field>
         <div fxLayout="row" class="ml-8" fxLayoutAlign="flex-start" fxLayoutGap="30px" fxFlex="1 0 auto">
           <section>
             <mat-label class="mr-8">Read Only ?</mat-label>
-            <mat-checkbox [checked]="detail.disabled" disabled></mat-checkbox>
+            <mat-checkbox [checked]="field.disabled" disabled></mat-checkbox>
           </section>
           <section>
             <mat-label class="mr-8">Is Required ?</mat-label>
-            <mat-checkbox [checked]="detail.isRequired" disabled></mat-checkbox>
+            <mat-checkbox [checked]="field.isRequired" disabled></mat-checkbox>
           </section>
         </div>
       </div>

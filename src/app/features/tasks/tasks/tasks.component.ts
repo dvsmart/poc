@@ -49,7 +49,7 @@ export class TasksComponent implements OnInit {
   }
 
   onAddNewTask() {
-    this.router.navigate(['task/new']);
+    this.router.navigate(['tasks/new']);
   }
 
   rowClicked($event: any) {

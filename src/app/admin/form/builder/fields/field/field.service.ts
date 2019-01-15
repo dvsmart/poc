@@ -3,13 +3,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { environment } from '@env/environment';
-import { FormFieldRequestModel } from '../field';
+import { FormFieldRequestModel, FieldDetail } from '../field';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FieldService {
-  routeParams: any;
+  fieldId: any;
   fields: BehaviorSubject<any>;
   fieldTypes: BehaviorSubject<any>;
   fieldTypeSpecification: BehaviorSubject<any>;
@@ -27,11 +27,13 @@ export class FieldService {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
+    this.fieldId = route.params.id;
     this.formId = route.parent.params["id"];
     return new Promise((resolve, reject) => {
       Promise.all([
         this.getFieldTypes(),
-        this.getTabs()
+        this.getTabs(),
+        this.getField()
       ]).then(
         () => {
           resolve();
@@ -41,7 +43,9 @@ export class FieldService {
     });
   }
 
-  
+  getfieldtypesAsync() {
+    return this._httpClient.get<any>(environment.apiUrl + 'FieldTypes');
+  }
 
   getFieldTypes(): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -53,9 +57,9 @@ export class FieldService {
     });
   }
 
-  getFieldType(id): Promise<any> {
+  getFieldTypeSpecificationVisibilityByTypeId(typeId: number): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'FieldTypes/' + id)
+      this._httpClient.get<any>(environment.apiUrl + 'FieldTypes/specificationVisibility?fieldTypeId=' + typeId)
         .subscribe((response: any) => {
           this.fieldTypeSpecification.next(response);
           resolve(response);
@@ -64,14 +68,17 @@ export class FieldService {
   }
 
   getField(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(environment.apiUrl + 'FormFields?id=' + this.routeParams.id)
-        .subscribe((response: any) => {
-          this.onfieldChanged.next(response);
-          resolve(response);
-        }, reject);
-    });
+    if (this.fieldId != "new") {
+      return new Promise((resolve, reject) => {
+        this._httpClient.get<any>(environment.apiUrl + 'FormFields?id=' + this.fieldId)
+          .subscribe((response: any) => {
+            this.onfieldChanged.next(response);
+            resolve(response);
+          }, reject);
+      });
+    }
   }
+
 
   getFieldtypeAsync(id: number) {
     return this._httpClient.get<any>(environment.apiUrl + 'FieldTypes/' + id);
@@ -85,10 +92,6 @@ export class FieldService {
           resolve(response);
         }, reject);
     });
-  }
-
-  getTabsAsync() {
-    return this._httpClient.get<any>(environment.apiUrl + 'FormTabs/' + this.formId);
   }
 
   SaveField(formFieldRequest: FormFieldRequestModel) {

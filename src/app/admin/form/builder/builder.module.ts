@@ -20,21 +20,21 @@ const routes: Routes = [
     component: BuilderComponent,
     children: [
       {
-        path: 'build',
+        path: 'fields',
         component: FieldsComponent,
         resolve: {
           fields: FieldsService
         }
       },
       {
-        path: 'build/field/:id',
+        path: 'fields/:id',
         component: FieldComponent,
         resolve: {
           field: FieldService
         }
       },
       {
-        path: 'build/field/:id',
+        path: 'fields/:id/detail',
         component: FieldDetailComponent
       },
       {
@@ -57,7 +57,7 @@ const routes: Routes = [
       },
       {
         path: '**',
-        redirectTo: 'build'
+        redirectTo: 'fields'
       }
     ]
   }

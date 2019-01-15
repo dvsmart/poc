@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { FieldService } from './field.service';
-import { Subject } from 'rxjs';
+import { Subject, Observable, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FieldType, FieldGeneralVisibility, FieldSpecificVisibility, FormFieldRequestModel, FieldOptionRequestModel, FormFieldSpecificRequestModel, FieldDetail } from '../field';
 import { ActivatedRoute } from '@angular/router';
@@ -21,12 +21,14 @@ export class FieldComponent {
   fieldSpecificVisibility: FieldSpecificVisibility;
 
   validationErrorMessage: string;
-  detail: FieldDetail;
+  detail: any;
   private _unsubscribeAll: Subject<any>;
   fieldTypes: any;
-  tabs: any;
+  tabs: any = null;
   fieldOption: any[];
   option: string = '';
+
+  sub: Subscription;
 
   constructor(private _formBuilder: FormBuilder, private fieldService: FieldService, private route: ActivatedRoute) {
     this._unsubscribeAll = new Subject();
@@ -38,6 +40,7 @@ export class FieldComponent {
   }
 
   ngOnInit() {
+
     this.fieldService.fieldTypes
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(response => {
@@ -54,41 +57,51 @@ export class FieldComponent {
         }
       });
 
+    this.fieldService.fieldTypeSpecification
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(r => {
+        debugger;
+        if (r != undefined && r != null && r !== {}) {
+          this.fieldType = new FieldType(r);
+          this.detail.type = r.type;
+          this.fieldGeneralVisibility = new FieldGeneralVisibility(r.fieldSpecificationVisibilityDto);
+          this.fieldSpecificVisibility = new FieldSpecificVisibility(r.fieldSpecificSpecificationVisibilityDto);
+          this.buildFieldGeneralSettingsVisibility();
+          this.buildFieldSpecificAttributesVisibility();
+        }
+      });
+
+
+    this.fieldService.tabs
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(tabs => {
+        this.tabs = tabs;
+      })
+    this.buildForm();
+  }
+
+  buildForm() {
+    console.log(this.detail);
     this.fieldTypeForm = this._formBuilder.group({
-      fieldType: new FormControl('', Validators.required)
+      fieldType: this.detail != undefined ? new FormControl({ value: this.detail.fieldTypeId || '', disabled: this.detail.fieldTypeId != null }, Validators.required) :
+        new FormControl('', Validators.required)
     });
 
     this.fieldGeneralForm = this._formBuilder.group({
-      label: new FormControl('', Validators.required),
-      tabId: new FormControl(''),
+      label: this.detail != undefined ? new FormControl(this.detail.caption || '', Validators.required) : new FormControl('', Validators.required),
+      tabId: new FormControl(this.detail.tabId || ''),
+      tabName: new FormControl('')
     });
   }
 
-  addOption(value) {
+  addOption(value: any) {
     this.fieldOption.push(value);
   }
 
-  fieldTypeChange(e) {
+  fieldTypeChange(e: { value: any; }) {
     if (e.value !== null) {
-      let id = e.value;
+      this.fieldService.getFieldTypeSpecificationVisibilityByTypeId(e.value);
       this.validationErrorMessage = '';
-      this.fieldService.getFieldtypeAsync(id)
-        .subscribe(r => {
-          if (r != undefined && r != null && r !== {}) {
-            this.fieldType = new FieldType(r);
-            this.fieldGeneralVisibility = new FieldGeneralVisibility(r.fieldSpecificationVisibilityDto);
-            this.fieldSpecificVisibility = new FieldSpecificVisibility(r.fieldSpecificSpecificationVisibilityDto);
-            this.buildFieldGeneralSettingsVisibility();
-            this.buildFieldSpecificAttributesVisibility();
-            this.fieldService.tabs
-              .pipe(takeUntil(this._unsubscribeAll))
-              .subscribe(response => {
-                if (response) {
-                  this.tabs = response;
-                }
-              });
-          }
-        });
     }
   }
 
