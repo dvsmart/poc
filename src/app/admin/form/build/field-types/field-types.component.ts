@@ -16,14 +16,22 @@ export class FieldTypesComponent implements OnInit {
   all = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   even = [10];
 
+  // drop(event: CdkDragDrop<string[]>) {
+  //   if (event.previousContainer === event.container) {
+  //     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+  //   } else {
+  //     transferArrayItem(event.previousContainer.data,
+  //       event.container.data,
+  //       event.previousIndex,
+  //       event.currentIndex);
+  //   }
+  // }
   drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
+    if (event.container.id === event.previousContainer.id) {
+      // move inside same list
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      transferArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex);
+      moveItemInArray(this.all, event.previousIndex, event.currentIndex);
     }
   }
 

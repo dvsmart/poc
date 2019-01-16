@@ -2,3 +2,12 @@
   form-layout works!
 </p>
 <app-field-types></app-field-types>
+
+
+<div class="example-container">
+  <h2>Even numbers</h2>
+  <div cdkDropList id="list-2" cdkDropListConnectedTo="list-1" (cdkDropListDropped)="drop($event)" [cdkDropListData]="even">
+    <div *ngFor="let item of even" cdkDrag>{{ item }}</div>
+  </div>
+
+</div>
