@@ -60,7 +60,6 @@ export class FieldComponent {
     this.fieldService.fieldTypeSpecification
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(r => {
-        debugger;
         if (r != undefined && r != null && r !== {}) {
           this.fieldType = new FieldType(r);
           this.detail.type = r.type;

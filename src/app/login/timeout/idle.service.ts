@@ -74,7 +74,6 @@ export class UserIdleService {
       this.idle = config.idle;
       this.timeout = config.timeout;
       this.ping = config.ping;
-      
     }
 
     this.activityEvents$ = merge(

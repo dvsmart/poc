@@ -91,6 +91,10 @@ const appRoutes: Routes = [
             {
                 path: 'form',
                 loadChildren: './admin/form/dashboard/dashboard.module#DashboardModule',
+            },
+            {
+                path: 'setup',
+                loadChildren: './admin/form/setup/setup.module#SetupModule',
             }
         ]
     },
