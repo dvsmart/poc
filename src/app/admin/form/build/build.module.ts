@@ -5,13 +5,18 @@ import { FormLayoutComponent } from './form-layout/form-layout.component';
 import { FieldSpecComponent } from './field-spec/field-spec.component';
 import { Routes, RouterModule } from '@angular/router';
 import { FieldsComponent } from './fields/fields.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   {
     path: '',
     component: BuildComponent,
     children:[
-      
+      {
+        path:'layout',
+        component:FormLayoutComponent
+      }
     ]
   }
 ]
@@ -20,6 +25,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [BuildComponent, FieldTypesComponent, FormLayoutComponent, FieldSpecComponent, FieldsComponent],
   imports: [
+    DragDropModule,
+    CommonModule,
     RouterModule.forChild(routes)
   ]
 })
