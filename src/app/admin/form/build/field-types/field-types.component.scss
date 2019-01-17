@@ -37,11 +37,12 @@
 }
 
 .fieldtypesAccordion {
-    width: 450px;
+    width: 400px;
     .mat-expansion-panel {
         margin-bottom: 5px;
     }
 }
+
 
 li {
     position: relative;
@@ -58,4 +59,11 @@ li:hover {
     color: #607D8B;
     background-color: #DDD;
     left: .1em;
+}
+
+.flex-container {
+    display: flex;
+    height: 600px;
+    flex-wrap: wrap;
+    align-content: center;
 }

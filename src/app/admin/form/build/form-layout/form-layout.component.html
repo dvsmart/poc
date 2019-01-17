@@ -6,9 +6,15 @@
     <div class="pop">
 
     </div>
-    <div cdkDropList id="formList" [cdkDropListData]="formLayoutList" cdkDropListConnectedTo="types"
+    <div cdkDropList id="formList" [cdkDropListData]="formFields" cdkDropListConnectedTo="types"
       (cdkDropListDropped)="drop($event)" style="width: 100%">
-      <div *ngFor="let item of formLayoutList" [cdkDragData]="item" cdkDrag>{{item.type}}</div>
+      <div class="pop" [cdkDragData]="field" cdkDrag>
+        <ul class="row sortable-formbuilder">
+          <li *ngFor="let field of formFields">
+            {{field.Caption}}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

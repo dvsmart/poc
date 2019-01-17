@@ -14,16 +14,16 @@
           Basic Fields
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <ng-container *ngIf="fieldTypes | async as types">
-        <div fxLayout="row" fxLayoutAlign="flex-start start" fxLayout.xs="column" fxLayoutGap="10px">
-          <ul class="example-list" cdkDropList [cdkDropListData]="types" cdkDropListConnectedTo="formList" id="types"
+      <ng-container *ngIf="basicFieldTypes">
+        <div fxLayout="row" fxLayoutAlign="flex-start center" fxLayout.xs="column" fxLayoutGap="10px">
+          <ul class="example-list" cdkDropList [cdkDropListData]="basicFieldTypes" cdkDropListConnectedTo="formList" id="basicFieldTypes"
             (cdkDropListDropped)="drop($event)" style="width: 100%">
-            <li *ngFor="let item of types" cdkDrag [cdkDragData]="item">{{item.type}}</li>
+            <li *ngFor="let item of basicFieldTypes;let i = index;" cdkDrag [cdkDragData]="item">{{item.type}}</li>
           </ul>
-          <ul class="example-list" cdkDropList [cdkDropListData]="types" cdkDropListConnectedTo="formList" id="types"
+          <!-- <ul class="example-list" cdkDropList [cdkDropListData]="basicFieldTypes" cdkDropListConnectedTo="formList" id="types"
             (cdkDropListDropped)="drop($event)" style="width: 100%">
-            <li *ngFor="let item of types" cdkDrag [cdkDragData]="item">{{item.type}}</li>
-          </ul>
+            <li *ngFor="let item of basicFieldTypes" cdkDrag [cdkDragData]="item">{{item.type}}</li>
+          </ul> -->
         </div>
       </ng-container>
     </mat-expansion-panel>
@@ -33,10 +33,10 @@
           Advanced
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <ng-container *ngIf="fieldTypes | async as types">
-        <div class="example-list" cdkDropList [cdkDropListData]="types" cdkDropListConnectedTo="formList" id="types"
+      <ng-container *ngIf="advFieldTypes">
+        <div class="example-list" cdkDropList [cdkDropListData]="advFieldTypes" cdkDropListConnectedTo="formList" id="types"
           (cdkDropListDropped)="drop($event)" style="width: 100%">
-          <div class="example-box" *ngFor="let item of types" cdkDrag [cdkDragData]="item">{{item.type}}</div>
+          <div class="example-box" *ngFor="let item of advFieldTypes" cdkDrag [cdkDragData]="item">{{item.type}}</div>
         </div>
       </ng-container>
     </mat-expansion-panel>

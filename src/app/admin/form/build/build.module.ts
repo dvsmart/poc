@@ -5,19 +5,23 @@ import { FormLayoutComponent } from './form-layout/form-layout.component';
 import { FieldSpecComponent } from './field-spec/field-spec.component';
 import { Routes, RouterModule } from '@angular/router';
 import { FieldsComponent } from './fields/fields.component';
-import {DragDropModule} from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule, MatInputModule, MatButtonModule, MatExpansionModule, MatIconModule, MatDatepickerModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FieldTypeService } from './field-types/fieldType.service';
 
 const routes: Routes = [
   {
     path: '',
     component: BuildComponent,
-    children:[
+    children: [
       {
-        path:'layout',
-        component:FormLayoutComponent
+        path: 'layout',
+        component: FormLayoutComponent,
+        resolve:{
+          types: FieldTypeService
+        }
       }
     ]
   }

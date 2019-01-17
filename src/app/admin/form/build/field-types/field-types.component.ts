@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, copyArrayItem } from '@angular/cdk/drag-drop';
 import { FieldTypeService } from './fieldType.service';
+import { map, filter, toArray, takeUntil } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-field-types',
@@ -8,11 +10,21 @@ import { FieldTypeService } from './fieldType.service';
   styleUrls: ['./field-types.component.scss'],
 })
 export class FieldTypesComponent implements OnInit {
-  fieldTypes: any = [];
-  constructor(private fieldTypeService: FieldTypeService) { }
+  basicFieldTypes: any = [];
+  advFieldTypes: any = [];
+  private _unsubscribeAll: Subject<any>;
+  constructor(private fieldTypeService: FieldTypeService) {
+    this._unsubscribeAll = new Subject();
+  }
+
 
   ngOnInit() {
-    this.fieldTypes = this.fieldTypeService.fieldTypes();
+    this.fieldTypeService.fieldTypes
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(types => {
+        this.basicFieldTypes = types.filter(x => x.level == "Basic");
+        this.advFieldTypes = types.filter(x => x.level == "Advanced");
+      });
   }
 
   drop(event: CdkDragDrop<string[]>) {

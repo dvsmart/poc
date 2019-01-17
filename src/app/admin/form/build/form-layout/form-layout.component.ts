@@ -14,13 +14,22 @@ export class FormLayoutComponent implements OnInit {
     this.formLayoutList = [{}];
   }
 
+  formFields:any[] = [];
+  currentField:{};
+
   drop(event: CdkDragDrop<string[]>) {
     if (event.container.id === event.previousContainer.id) {
       // move inside same list
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      console.log(event.item.data.type);
       copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      this.buildField(event.item.data);
+
     }
+  }
+
+  buildField(type:any) {
+
+    this.formFields.push(type)
   }
 }
