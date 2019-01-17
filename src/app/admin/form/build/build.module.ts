@@ -7,6 +7,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { FieldsComponent } from './fields/fields.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
+import { MatFormFieldModule, MatInputModule, MatButtonModule, MatExpansionModule, MatIconModule, MatDatepickerModule } from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 const routes: Routes = [
   {
@@ -27,6 +29,13 @@ const routes: Routes = [
   imports: [
     DragDropModule,
     CommonModule,
+    MatFormFieldModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatButtonModule,
+    FlexLayoutModule,
     RouterModule.forChild(routes)
   ]
 })

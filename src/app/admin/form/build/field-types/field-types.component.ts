@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, copyArrayItem } from '@angular/cdk/drag-drop';
+import { FieldTypeService } from './fieldType.service';
 
 @Component({
   selector: 'app-field-types',
@@ -7,31 +8,17 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag } from '@angul
   styleUrls: ['./field-types.component.scss']
 })
 export class FieldTypesComponent implements OnInit {
-
-  constructor() { }
+  fieldTypes: any = [];
+  constructor(private fieldTypeService: FieldTypeService) { }
 
   ngOnInit() {
+    this.fieldTypes = this.fieldTypeService.fieldTypes();
   }
 
-  all = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  even = [10];
-
-  // drop(event: CdkDragDrop<string[]>) {
-  //   if (event.previousContainer === event.container) {
-  //     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-  //   } else {
-  //     transferArrayItem(event.previousContainer.data,
-  //       event.container.data,
-  //       event.previousIndex,
-  //       event.currentIndex);
-  //   }
-  // }
   drop(event: CdkDragDrop<string[]>) {
     if (event.container.id === event.previousContainer.id) {
       // move inside same list
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      moveItemInArray(this.all, event.previousIndex, event.currentIndex);
     }
   }
 

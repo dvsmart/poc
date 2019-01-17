@@ -1,0 +1,11 @@
+.toolbar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 1 1 auto;
+    border-bottom: 1px solid;
+    height: 64px;
+    min-height: 64px;
+    max-height: 64px;
+    border-bottom-color: rgba(0, 0, 0, .12);
+}

@@ -1,7 +1,14 @@
-<p>
-  build works!
-</p>
-<button mat-raised-button routerLink="layout" class="save-product-button mr-16" routerLinkActive="active">
-  <span>Layout</span>
-</button>
-<router-outlet></router-outlet>
+<div class="toolbar px-24 py-8">
+  <span>Form Controls</span>
+  <div fxLayout="row" fxLayoutAlign="end end" fxFlex="1 0 auto">
+    <button mat-raised-button routerLink="layout" class="save-product-button mr-16" routerLinkActive="active">
+      <span>Layout</span>
+    </button>
+    <button mat-raised-button class="save-product-button" color="accent" routerLink="new">
+      <span>Create</span>
+    </button>
+  </div>
+</div>
+<div class="p-24">
+  <router-outlet></router-outlet>
+</div>
