@@ -5,7 +5,7 @@ import { FieldTypeService } from './fieldType.service';
 @Component({
   selector: 'app-field-types',
   templateUrl: './field-types.component.html',
-  styleUrls: ['./field-types.component.scss']
+  styleUrls: ['./field-types.component.scss'],
 })
 export class FieldTypesComponent implements OnInit {
   fieldTypes: any = [];
