@@ -29,8 +29,8 @@ export class FieldTypesComponent implements OnInit {
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.container.id === event.previousContainer.id) {
-      // move inside same list
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      //moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      return;
     }
   }
 

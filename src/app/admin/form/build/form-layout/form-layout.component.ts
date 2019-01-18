@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
@@ -6,30 +6,33 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem } from '
   templateUrl: './form-layout.component.html',
   styleUrls: ['./form-layout.component.scss']
 })
-export class FormLayoutComponent implements OnInit {
-  formLayoutList: any[];
-  constructor() { }
+export class FormLayoutComponent {
+  formLayoutList: [];
+  formFields: any[];
+  current_field: any;
+  guid = 1;
 
   ngOnInit() {
-    this.formLayoutList = [{}];
+    this.formLayoutList = [];
+    this.formFields = [];
   }
 
-  formFields:any[] = [];
-  currentField:{};
-
   drop(event: CdkDragDrop<string[]>) {
-    if (event.container.id === event.previousContainer.id) {
-      // move inside same list
+    debugger;
+    if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
-      this.buildField(event.item.data);
-
+      copyArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+      this.buildField(event.item)
     }
   }
 
-  buildField(type:any) {
-
-    this.formFields.push(type)
+  buildField(type: any) {
+    console.log(type.data);
+    //this.formFields.push(type.data);
+    console.log(this.formFields);
   }
 }
