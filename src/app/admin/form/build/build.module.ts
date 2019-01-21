@@ -7,9 +7,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { FieldsComponent } from './fields/fields.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { MatFormFieldModule, MatInputModule, MatButtonModule, MatExpansionModule, MatIconModule, MatDatepickerModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatButtonModule, MatExpansionModule, MatIconModule, MatDatepickerModule, MatCheckboxModule, MatListModule, MatSelectModule, MatOptionModule, MatButtonToggleModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FieldTypeService } from './field-types/fieldType.service';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -19,7 +20,7 @@ const routes: Routes = [
       {
         path: 'layout',
         component: FormLayoutComponent,
-        resolve:{
+        resolve: {
           types: FieldTypeService
         }
       }
@@ -40,6 +41,13 @@ const routes: Routes = [
     MatInputModule,
     MatButtonModule,
     FlexLayoutModule,
+    ReactiveFormsModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatOptionModule,
+    FormsModule,
+    MatListModule,
+    MatButtonToggleModule,
     RouterModule.forChild(routes)
   ]
 })

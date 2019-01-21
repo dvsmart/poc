@@ -7,7 +7,6 @@ import { CoreNavigationService } from '@core/components/navigation/navigation.se
 import { AuthService } from './login/auth.service';
 import { takeUntil } from 'rxjs/operators';
 //import { HubConnection } from '@aspnet/signalr';
-import { MessageService } from '@core/services/message.service';
 
 @Component({
   selector: 'app',

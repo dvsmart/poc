@@ -1,3 +1,123 @@
-<p>
-  field-spec works!
-</p>
+<form [formGroup]="settingForm">
+  <div [ngSwitch]="type">
+    <div *ngSwitchCase="'text'" fxLayout="column">
+      <mat-form-field appearance="outline">
+        <input matInput placeholder="Minimum Length" formControlName="minimumLength">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Maximum Length" formControlName="maximumLength">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Placeholder" formControlName="placeHolder">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Description" formControlName="hintText">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Initial Value" formControlName="initialValue">
+      </mat-form-field>
+      <mat-button-toggle-group name="inputSize" aria-label="Input Size" formControlName="inputSize" fxLayout="row"
+        fxLayoutAlign="center center">
+        <mat-button-toggle *ngFor="let item of setting.inputSize" value="item.id">{{item.value}}</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <div *ngSwitchCase="'number'" fxLayout="column">
+      <mat-form-field appearance="outline">
+        <input matInput placeholder="Minimum Length" formControlName="minimumLength">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Maximum Length" formControlName="maximumLength">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Placeholder" formControlName="placeHolder">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Description" formControlName="hintText">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Initial Value" formControlName="initialValue">
+      </mat-form-field>
+      <mat-button-toggle-group name="inputSize" aria-label="Input Size" formControlName="inputSize">
+        <mat-button-toggle *ngFor="let item of setting.inputSize" value="item.id">{{item.value}}</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <div *ngSwitchCase="'textarea'" fxLayout="column">
+      <mat-form-field>
+        <input matInput placeholder="Character Limit" formControlName="characterLimit" type="number" max="1000"
+          maxlength="4">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Description" formControlName="hintText">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Initial Value" formControlName="initialValue">
+      </mat-form-field>
+      <mat-button-toggle-group name="inputSize" aria-label="Input Size" formControlName="inputSize">
+        <mat-button-toggle *ngFor="let item of setting.inputSize" value="item.id">{{item.value}}</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <div *ngSwitchCase="'date'" fxLayout="column">
+      <mat-form-field>
+        <input matInput [matDatepicker]="rangeFromPicker" placeholder="Range From" formControlName="rangeFrom">
+        <mat-datepicker-toggle matSuffix [for]="rangeFromPicker"></mat-datepicker-toggle>
+        <mat-datepicker #rangeFromPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [matDatepicker]="rangeToPicker" placeholder="Range To" formControlName="rangeTo">
+        <mat-datepicker-toggle matSuffix [for]="rangeToPicker"></mat-datepicker-toggle>
+        <mat-datepicker #rangeToPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-checkbox formControlName="autoFillCurrentDate">Auto fill current Date</mat-checkbox>
+      <mat-form-field>
+        <input matInput [matDatepicker]="initialValuePicker" placeholder="Initial Value" formControlName="initialValue">
+        <mat-datepicker-toggle matSuffix [for]="initialValuePicker"></mat-datepicker-toggle>
+        <mat-datepicker #initialValuePicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <ng-container *ngIf="isChoiceAvailable" class="mb-12" fxLayout="column">
+      <mat-label class="nav-subheader">Options</mat-label>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <mat-form-field>
+          <input matInput placeholder="Input" name="option" #newItem>
+        </mat-form-field>
+        <button mat-icon-button (click)="addOption(newItem.value);newItem.value=''">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <ng-container *ngIf="setting.sort != null">
+        <mat-label class="nav-subheader">Sort</mat-label>
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <mat-form-field floatLabel="never">
+            <mat-select class="account-selection" placeholder="choice Sort">
+              <mat-option *ngFor="let sort of setting.sort; let i = index;" [value]="sort.id">
+                {{sort.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </ng-container>
+    </ng-container>
+    <div *ngSwitchCase="'time'" fxLayout="column">
+      <mat-button-toggle-group name="fontStyle" aria-label="Font Style" formControlName="format">
+        <mat-button-toggle value="12">12 Hour</mat-button-toggle>
+        <mat-button-toggle value="24">24 Hour</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <div class="mb-12">
+      <mat-label class="nav-subheader">Visibility</mat-label>
+      <section class="p-12" fxLayout="column">
+        <mat-checkbox formControlName="hidden">Hidden</mat-checkbox>
+        <mat-checkbox formControlName="disabled">Disabled</mat-checkbox>
+      </section>
+    </div>
+    <div fxLayout="column">
+      <mat-label class="nav-subheader">Validation</mat-label>
+      <section class="p-12" fxLayout="column">
+        <mat-checkbox formControlName="required">Required</mat-checkbox>
+      </section>
+    </div>
+    <div *ngSwitchDefault>
+
+    </div>
+  </div>
+</form>

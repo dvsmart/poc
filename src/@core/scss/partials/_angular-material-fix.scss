@@ -1,6 +1,8 @@
 // Fix: "Remove the cdk-global-scrollblock effects from the HTML"
 // Fuse already blocks the body scroll so it doesn't need this feature. We are disabling it
 // because on Windows, it causes a scrollbar to show up.
+$font-size: 12px;
+
 html {
     &.cdk-global-scrollblock {
         position: relative !important;
@@ -35,11 +37,11 @@ button {
 
 // Fix: "Inconsistent font sizes across elements"
 .mat-checkbox {
-    font-size: 16px;
+    font-size: $font-size;
 }
 
 .mat-radio-button {
-    font-size: 16px;
+    font-size: $font-size;
 }
 
 .mat-pseudo-checkbox-checked:after {
@@ -52,12 +54,20 @@ button {
     background-color: rgba(0, 0, 0, 0.12);
 }
 
+.mat-expansion-panel-header {
+    font-size: $font-size !important;
+}
+
 .mat-form-field-label {
     color: rgba(0, 0, 0, 0.925) !important;
 }
 
 .mat-form-field-outline {
     color: rgba(0, 0, 0, 0.63) !important;
+}
+
+.mat-raised-button {
+    font-size: $font-size!important;
 }
 
 .mat-form-field {
@@ -80,7 +90,7 @@ button {
                 }
             }
             .mat-select-placeholder {
-                font-weight: 600 !important;
+                font-weight: 400 !important;
             }
         }
     }

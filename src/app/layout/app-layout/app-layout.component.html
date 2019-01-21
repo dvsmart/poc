@@ -1,10 +1,10 @@
 <div id="main">
-    <div id="container-1" class="container" fusePerfectScrollbar [fusePerfectScrollbarOptions]="{suppressScrollX: true, updateOnRouteChange : true}">
+    <div id="container-1" class="container">
         <ng-container>
             <ng-container *ngTemplateOutlet="leftNavbar"></ng-container>
         </ng-container>
         <div id="container-2" class="container">
-            <div id="container-3" class="container">
+            <div id="container-3" class="container" fusePerfectScrollbar [fusePerfectScrollbarOptions]="{suppressScrollX: true, updateOnRouteChange : true}">
                 <ng-container>
                     <ng-container *ngTemplateOutlet="toolbar"></ng-container>
                 </ng-container>
@@ -22,8 +22,7 @@
 </fuse-sidebar>
 
 <ng-template #toolbar>
-    <toolbar *ngIf="!config.layout.toolbar.hidden"
-             [ngClass]="config.layout.toolbar.customBackgroundColor === true ? config.layout.toolbar.position + ' ' + config.layout.toolbar.background : config.layout.toolbar.position">
+    <toolbar *ngIf="!config.layout.toolbar.hidden" [ngClass]="config.layout.toolbar.customBackgroundColor === true ? config.layout.toolbar.position + ' ' + config.layout.toolbar.background : config.layout.toolbar.position">
     </toolbar>
 </ng-template>
 

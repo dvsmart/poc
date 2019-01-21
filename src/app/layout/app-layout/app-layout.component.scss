@@ -31,7 +31,6 @@ app-layout {
                     display: flex;
                     flex: 1 1 0%;
                     flex-direction: column;
-                    transform: translateZ(0);
                     overflow-x: hidden;
                     overflow-y: auto;
                     -webkit-overflow-scrolling: touch; // Content component
